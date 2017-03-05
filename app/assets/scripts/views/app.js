@@ -17,6 +17,15 @@ var App = React.createClass({
 
     return (
       <div className={c('page', pageClass)}>
+        <header id="page-header">
+          <h1>It's my party and I cry if I want to</h1>
+          <ul>
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Glossário</a></li>
+            <li><a href="#">Relatório</a></li>
+            <li><a href="#">Dados</a></li>
+          </ul>
+        </header>
         <main className='page__body' role='main'>
           {this.props.children}
         </main>

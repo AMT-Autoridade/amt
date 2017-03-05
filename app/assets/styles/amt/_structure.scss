@@ -1,0 +1,22 @@
+#page-content {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: green;
+}
+
+.section-wrapper {
+  height: 100vh;
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.map-wrapper {
+  @include column(4/12);
+  height: 100vh;
+  background: red;
+}
+
+.content-wrapper {
+  @include column(8/12);
+}
