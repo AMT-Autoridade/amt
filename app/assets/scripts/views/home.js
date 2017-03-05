@@ -2,6 +2,8 @@
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 
+import { fetchNational } from '../actions';
+
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
 import SectionMobilidade from '../components/sections/section-mobilidade';
@@ -12,9 +14,29 @@ var Home = React.createClass({
   displayName: 'Home',
 
   propTypes: {
+    national: T.object,
+    _fetchNational: T.func
+  },
+
+  componentDidMount: function () {
+    this.props._fetchNational();
   },
 
   render: function () {
+    let { fetched, fetching, error, data } = this.props.national;
+
+    if (!fetched && !fetching) {
+      return null;
+    }
+
+    if (fetching) {
+      return <p>Loading</p>;
+    }
+
+    if (error) {
+      return <div>Error: {error}</div>;
+    }
+
     return (
       <div>
         <SectionIntro />
@@ -27,10 +49,10 @@ var Home = React.createClass({
 
           <div className='content-wrapper'>
 
-            <SectionLicencas />
-            <SectionMobilidade />
-            <SectionEstacionamento />
-            <SectionDistribuicao />
+            <SectionLicencas data={data} />
+            <SectionMobilidade data={data} />
+            <SectionEstacionamento data={data} />
+            <SectionDistribuicao data={data} />
 
           </div>
 
@@ -45,11 +67,13 @@ var Home = React.createClass({
 
 function selector (state) {
   return {
+    national: state.national
   };
 }
 
 function dispatcher (dispatch) {
   return {
+    _fetchNational: (...args) => dispatch(fetchNational(...args))
   };
 }
 

@@ -5,6 +5,7 @@ var SectionDistribuicao = React.createClass({
   displayName: 'SectionDistribuicao',
 
   propTypes: {
+    data: T.object
   },
 
   render: function () {
