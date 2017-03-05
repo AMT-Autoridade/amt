@@ -9,6 +9,10 @@ var SectionMobilidade = React.createClass({
   },
 
   render: function () {
+    let data = this.props.data;
+
+    let percentMobRed = Math.round(data.totalMunicipiosMobReduzida / data.totalMunicipios * 100 * 100) / 100;
+
     return (
       <div id='section-mobilidade' className='section-wrapper'>
         <section className='section-container'>
@@ -20,8 +24,8 @@ var SectionMobilidade = React.createClass({
           <div className='section-content'>
             <ul className='section-stats'>
               <li>
-                <span className='stat-number'>8.6%</span>
-                <span className='stat-description'>Municípios com contingentes mobilidade reduzida.</span>
+                <span className='stat-number'>{percentMobRed}</span>
+                <span className='stat-description'>Municípios ({data.totalMunicipiosMobReduzida}) com contingentes mobilidade reduzida.</span>
               </li>
               <li>
                 <span className='stat-number'>78</span>
