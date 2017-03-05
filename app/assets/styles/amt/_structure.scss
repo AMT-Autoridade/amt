@@ -20,3 +20,26 @@
 .content-wrapper {
   @include column(8/12);
 }
+
+.three-columns {
+  li {
+    @include column(4/12);
+  }
+}
+
+.section-stats {
+  list-style: none;
+  margin: 0 0 40px 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+
+
+/*To Delete*/
+
+#section-licencas .graph{
+  width: 100%;
+  height: 320px;
+  background: #f9f9f9;
+} 

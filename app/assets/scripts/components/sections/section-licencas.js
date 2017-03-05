@@ -90,7 +90,7 @@ var SectionLicencas = React.createClass({
             <p>A prestação de serviços de transporte em táxi implica que o prestador detenha um alvará emitido pelo IMT (acesso à actividade) e, simultaneamente, possua uma licença atribuída pelo município (acesso ao mercado). </p>
           </header>
           <div className='section-content'>
-            <ul className='section-stats'>
+            <ul className='section-stats three-columns'>
               <li>
                 <span className='stat-number'>{data.licencas2016}</span>
                 <span className='stat-description'>Total de táxis licenciados em Agosto de 2016.</span>
