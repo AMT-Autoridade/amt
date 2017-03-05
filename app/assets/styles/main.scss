@@ -19,6 +19,32 @@
 
 @import "jeet";
 
+/**
+ * Normalize.css, a modern, HTML5-ready alternative to CSS resets:
+ * http://necolas.github.io/normalize.css/
+ */
+
+@import "vendor/normalize";
+
+/**
+ * Kenneth Ormandy's OpenType features—ligatures, kerning, and more—to Normalize.css:
+ * https://github.com/kennethormandy/normalize-opentype.css
+ */
+
+@import "vendor/normalize-opentype";
+
+
+/* Settings
+   ========================================================================== */
+
+@import "settings/variables";
+
+
+/* Core
+   ========================================================================== */
+
+@import "core/base";
+
 
 /* Global
    ========================================================================== */
