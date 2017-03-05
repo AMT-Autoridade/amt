@@ -5,6 +5,7 @@ var SectionMobilidade = React.createClass({
   displayName: 'SectionMobilidade',
 
   propTypes: {
+    data: T.object
   },
 
   render: function () {

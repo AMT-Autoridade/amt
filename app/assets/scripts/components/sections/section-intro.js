@@ -5,6 +5,7 @@ var SectionIntro = React.createClass({
   displayName: 'SectionIntro',
 
   propTypes: {
+    data: T.object
   },
 
   render: function () {
