@@ -10,11 +10,24 @@
    ========================================================================== */
 
 // We use these to control header font sizes
-$h1-font-size: rem(48);
-$h2-font-size: rem(32);
-$h3-font-size: rem(24);
-$h4-font-size: rem(20);
-$h5-font-size: rem(18);
-$h6-font-size: rem(16);
+$h1-font-size: 3rem; //48
+$h2-font-size: 2rem; //32
+$h3-font-size: 1.5rem; //24
+$h4-font-size: 1.25rem; //20
+$h5-font-size: 1.125rem; //18
+$h6-font-size: 1rem; //16
 
 $root-font-size: 16px;
+
+
+/* Media Queries
+   ========================================================================== */
+
+// Here we define the lower and upper bounds for each media size
+$small-range: (30em, 48.000em); /* 480px, 768px */
+$medium-range: (48.063em, 61.250em); /* 769px, 980px */
+$large-range: (61.313em, 90em); /* 981px, 1440px */
+$xlarge-range: (90.063em, 120em); /* 1441px, 1920px */
+$xxlarge-range: (120.063em); /* 1921px */
+
+$screen: "only screen";

@@ -85,9 +85,9 @@ var SectionLicencas = React.createClass({
       <div id='section-licencas' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3>Portugal</h3>
+            <h3 className='section-category'>Portugal</h3>
             <h1>Licenças e Contingentes</h1>
-            <p>A prestação de serviços de transporte em táxi implica que o prestador detenha um alvará emitido pelo IMT (acesso à actividade) e, simultaneamente, possua uma licença atribuída pelo município (acesso ao mercado). </p>
+            <p className="lead">A prestação de serviços de transporte em táxi implica que o prestador detenha um alvará emitido pelo IMT (acesso à actividade) e, simultaneamente, possua uma licença atribuída pelo município (acesso ao mercado). </p>
           </header>
           <div className='section-content'>
             <ul className='section-stats three-columns'>
