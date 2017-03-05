@@ -25,6 +25,7 @@ render((
   <Provider store={store}>
     <Router history={history} render={applyRouterMiddleware(scrollerMiddleware)}>
       <Route path='/' component={App}>
+        <Route path="404" component={UhOh}/>
         <IndexRoute component={Home} pageClass='page--homepage' />
         <Route path="*" component={UhOh}/>
       </Route>
