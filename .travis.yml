@@ -6,7 +6,7 @@ env:
   global:
   - CXX=g++-4.8
   - DEPLOY_BRANCH=master
-  - secure:
+  - secure: "N8IVQT6QSrwn+vxPL0Wa7rBfNPyoT6BV0JP6wjWeoJ5p39GvFfyDYQBgR+stw0wkvioifY10jbxfRyn21Yw9zACufVtrDSEykcR/I5+BxhFTuSh007jVgSapE/H+pvkt6F2nC28pNFGEjFJU+PqGD2yOcjlPYhInSTgAny9KWsJJcYKJkZVIauj9ipFcKG6NKNVqks9JAkUR+/LSMqwSk0MdyaaKITOYpKwm7PLve1SQWo1UeILRdqRIvgueey223UnmIdnzhS0J0JlzR6S/+evE+NjXHoZATKhd7+Hkcm8FIzWJ69q/ED5tOoAyvgAYZa1jtp34PXl+0YKGSs+Voyg/Wv848akRHksle7I8eYcQhbRHIpfRiKgaxt1VP1jIFqfadMpUkW0qCrNKZDBjMGJK4oGfehxKWq8iKbkNA8TOWYpMtmODBtAsBSObKTtfeUZax+NQJPmsOXiHf20rrMlcyT/E7NNncmHrSP0JX4PaSGDqpKFyZBF4/LwX6ytkDqZnnD7ZUtjefPI/Veay9GYOuGZ9sIda6qUwr1mfOuwWVZjoiD5wwPa3Hi1tJvAUgP6uYttRYY5e28iMs+nVYaFpV6lO6M0iCSoI9ORXuiqtZztJNPLBVn3awdMVcjeVgYMW49011VBpEPqvWIUuLdx6YiEYofjwcYKRYcNwN3o="
 
 addons:
   apt:
@@ -24,8 +24,8 @@ before_install:
 - chmod +x ./.build_scripts/deploy.sh
 
 before_script:
-- npm run lint
-- npm test
+# - npm run lint
+# - npm test
 
 script:
 - npm run build
