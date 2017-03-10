@@ -60,7 +60,7 @@ function processData (distritos) {
 
   data.totalMunicipios = _.sumBy(distritos, d => d.concelhos.length);
 
-  // Number of municípios with lic-mob-reduzida
+  // Number of municípios with lic-mob-reduzida.
   data.totalMunicipiosMobReduzida = _.sumBy(distritos, d => d.concelhos.filter(o => {
     if (!o.data['lic-mob-reduzida']) {
       console.error(`Concelho: ${o.name} doesn't have data on "lic-mob-reduzida"`);
@@ -68,6 +68,34 @@ function processData (distritos) {
     }
     return _.last(o.data['lic-mob-reduzida']).value !== 0;
   }).length);
+
+  // Compute the timeline at the national level.
+  data.licencasTimeline = _.range(2006, 2017).map((y, i) => {
+    return {
+      year: y,
+      'lic-geral': _.sumBy(distritos, `data['lic-geral'][${i}].value`),
+      'lic-mob-reduzida': _.sumBy(distritos, `data['lic-mob-reduzida'][${i}].value`),
+      'max-lic-geral': _.sumBy(distritos, `data['max-lic-geral'][${i}].value`),
+      'max-lic-mob-reduzida': _.sumBy(distritos, `data['max-lic-mob-reduzida'][${i}].value`)
+    };
+  });
+
+  // For each município compute the change on the total number of licenças.
+  distritos = distritos.map(d => {
+    var indexLast = d.data['lic-geral'].length - 1;
+    d.concelhos = d.concelhos.map(c => {
+      if (!c.data['lic-geral']) {
+        console.error(`Concelho: ${c.name} doesn't have data on "lic-geral"`);
+      }
+      // They all have the same length.
+      let licencas2006 = _.get(c.data, 'lic-geral[0].value', 0) + _.get(c.data, 'lic-mob-reduzida[0].value', 0);
+      let licencas2016 = _.get(c.data, `lic-geral[${indexLast}].value`, 0) + _.get(c.data, `lic-mob-reduzida[${indexLast}].value`, 0);
+      c.data.change = licencas2016 - licencas2006;
+      return c;
+    });
+    return d;
+  });
+
 
   return data;
 }
