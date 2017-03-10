@@ -4,6 +4,7 @@ import { Pie as PieChart, Bar as BarChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
+import { percent } from '../../utils/utils';
 
 var SectionMobilidade = React.createClass({
   displayName: 'SectionMobilidade',
@@ -87,13 +88,13 @@ var SectionMobilidade = React.createClass({
       {
         label: 'Contingente Geral',
         value: licencas2016Geral,
-        percent: Math.round(licencas2016Geral / licencas2016 * 100 * 100) / 100,
+        percent: percent(licencas2016Geral, licencas2016),
         backgroundColor: 'aqua'
       },
       {
         label: 'Contingente Mobilidade Reduzida',
         value: licencasMobReduzida2016,
-        percent: Math.round(licencasMobReduzida2016 / licencas2016 * 100 * 100) / 100,
+        percent: percent(licencasMobReduzida2016, licencas2016),
         backgroundColor: 'darkred'
       }
     ];
@@ -136,10 +137,10 @@ var SectionMobilidade = React.createClass({
   render: function () {
     let data = this.props.data;
 
-    let percentMobRed = Math.round(data.totalMunicipiosMobReduzida / data.totalMunicipios * 100 * 100) / 100;
+    let percentMobRed = percent(data.totalMunicipiosMobReduzida, data.totalMunicipios);
     let newLicencas = data.licencas2016 - data.licencas2006;
     let newMobReduzida = data.licencasMobReduzida2016 - data.licencasMobReduzida2006;
-    let percentNewMobRed = Math.round(newMobReduzida / newLicencas * 100 * 100) / 100;
+    let percentNewMobRed = percent(newMobReduzida, newLicencas);
 
     return (
       <div id='section-mobilidade' className='section-wrapper'>
@@ -152,7 +153,7 @@ var SectionMobilidade = React.createClass({
           <div className='section-content'>
             <ul className='section-stats'>
               <li>
-                <span className='stat-number'>{percentMobRed}</span>
+                <span className='stat-number'>{percentMobRed}%</span>
                 <span className='stat-description'>Municípios ({data.totalMunicipiosMobReduzida}) com contingentes mobilidade reduzida.</span>
               </li>
               <li>
