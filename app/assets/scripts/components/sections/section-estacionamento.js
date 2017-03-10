@@ -2,8 +2,6 @@
 import React, { PropTypes as T } from 'react';
 
 var SectionEstacionamento = React.createClass({
-  displayName: 'SectionEstacionamento',
-
   propTypes: {
     data: T.object
   },
@@ -29,7 +27,7 @@ var SectionEstacionamento = React.createClass({
               </li>
               <li>
                 <span className='stat-number'>F</span>
-                <span className='stat-description'><strong>Fixo:</strong> locais determinados e  constantes da respetiva licença</span>
+                <span className='stat-description'><strong>Fixo:</strong> locais determinados e constantes da respetiva licença</span>
               </li>
               <li>
                 <span className='stat-number'>L</span>

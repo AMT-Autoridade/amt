@@ -5,8 +5,6 @@ import _ from 'lodash';
 import c from 'classnames';
 
 var App = React.createClass({
-  displayName: 'App',
-
   propTypes: {
     routes: T.array,
     children: T.object

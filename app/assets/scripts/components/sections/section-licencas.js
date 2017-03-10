@@ -7,8 +7,6 @@ import makeTooltip from '../../utils/tooltip';
 import { round } from '../../utils/utils';
 
 var SectionLicencas = React.createClass({
-  displayName: 'SectionLicencas',
-
   propTypes: {
     data: T.object
   },

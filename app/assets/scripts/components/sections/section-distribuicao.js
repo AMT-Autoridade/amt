@@ -6,8 +6,6 @@ import _ from 'lodash';
 import { percent, round } from '../../utils/utils';
 
 var SectionDistribuicao = React.createClass({
-  displayName: 'SectionDistribuicao',
-
   propTypes: {
     data: T.object
   },
@@ -56,11 +54,6 @@ var SectionDistribuicao = React.createClass({
     let percentNational = percent(adminArea.data.licencas2016, totNat2016);
     let pop = _.last(adminArea.data['pop-residente']).value;
     let licencas1000Hab = licencas2016 / (pop / 1000);
-
-    if (adminArea.id === 7) {
-      //évora
-      console.log('lic-geral', adminArea.data['lic-geral']);
-    }
 
     return (
       <tr key={adminArea.id}>

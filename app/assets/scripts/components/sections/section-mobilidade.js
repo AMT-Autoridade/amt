@@ -7,8 +7,6 @@ import makeTooltip from '../../utils/tooltip';
 import { percent } from '../../utils/utils';
 
 var SectionMobilidade = React.createClass({
-  displayName: 'SectionMobilidade',
-
   propTypes: {
     data: T.object
   },

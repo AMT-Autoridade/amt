@@ -2,8 +2,6 @@
 import React, { PropTypes as T } from 'react';
 
 var SectionIntro = React.createClass({
-  displayName: 'SectionIntro',
-
   propTypes: {
     data: T.object
   },
