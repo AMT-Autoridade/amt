@@ -146,34 +146,33 @@ var SectionMobilidade = React.createClass({
           <header className='section-header'>
             <h3>Portugal</h3>
             <h1>Mobilidade Reduzida</h1>
-            <p>A prestação de serviços de transporte em táxi implica que o prestador detenha um alvará emitido pelo IMT (acesso à actividade) e, simultaneamente, possua uma licença atribuída pelo município (acesso ao mercado).</p>
+            <p>A legislação prevê a possibilidade de existência de contingentes específicos de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
           </header>
-          <div className='section-content'>
-            <ul className='section-stats'>
-              <li>
-                <span className='stat-number'>{percentMobRed}%</span>
-                <span className='stat-description'>Municípios ({data.totalMunicipiosMobReduzida}) com contingentes mobilidade reduzida.</span>
-              </li>
-              <li>
-                <span className='stat-number'>{newMobReduzida}</span>
-                <span className='stat-description'>Número de novas licenças de Mobiliade Reduzida.</span>
-              </li>
-              <li>
-                <span className='stat-number'>{percentNewMobRed}%</span>
-                <span className='stat-description'>Das novas licenças emitadas foram de Mobilidade Reduzida.</span>
-              </li>
-            </ul>
-
-            { /*
-            // Graph goes here
-           */}
+          
+          <div className='section-content three-columns'>
+            <div>
+              <ul className='section-stats '>
+                <li>
+                  <span className='stat-number'>{percentMobRed}%</span>
+                  <span className='stat-description'>Municípios ({data.totalMunicipiosMobReduzida}) com contingentes mobilidade reduzida.</span>
+                </li>
+                <li>
+                  <span className='stat-number'>{newMobReduzida}</span>
+                  <span className='stat-description'>Número de novas licenças emitidas em CMR.</span>
+                </li>
+                <li>
+                  <span className='stat-number'>{percentNewMobRed}%</span>
+                  <span className='stat-description'>Do aumento de licenças resulta do crescimento de licenças emitidas em CMR.</span>
+                </li>
+              </ul>
+            </div>
 
             <div>{this.renderLicencasChart()}</div>
             <div>{this.renderEvolutionChart()}</div>
-
+            
           </div>
           <footer className='section-footer'>
-            <p><strong>Notas:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>
+            <p><strong>Notas:</strong>   O número de veículos habilitados ao transporte de pessoas com mobilidade reduzida será superior ao apresentado. Este tipo de veículos podem estar licenciados no âmbito dos contingentes gerais. A AMT pretende aprofundar o conhecimento sobre esta matéria.</p>
           </footer>
         </section>
       </div>

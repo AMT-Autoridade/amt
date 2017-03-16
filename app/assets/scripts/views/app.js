@@ -16,7 +16,7 @@ var App = React.createClass({
     return (
       <div className={c('page', pageClass)}>
         <header id="page-header">
-          <h1>It's my party and I cry if I want to</h1>
+          <h1><a href="#">AMT</a></h1>
           <ul>
             <li><a href="#">Sobre</a></li>
             <li><a href="#">Glossário</a></li>
