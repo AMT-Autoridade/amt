@@ -9,10 +9,9 @@ import SectionLicencas from '../components/sections/section-licencas';
 import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
 import SectionDistribuicao from '../components/sections/section-distribuicao';
+import SectionEvolucao from '../components/sections/section-evolucao';
 
 var Home = React.createClass({
-  displayName: 'Home',
-
   propTypes: {
     national: T.object,
     _fetchNational: T.func
@@ -53,6 +52,7 @@ var Home = React.createClass({
             <SectionMobilidade data={data} />
             <SectionEstacionamento data={data} />
             <SectionDistribuicao data={data} />
+            <SectionEvolucao data={data} />
 
           </div>
 

@@ -1,11 +1,90 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import { Line as LineChart } from 'react-chartjs-2';
+import _ from 'lodash';
+
+import { percent, round } from '../../utils/utils';
 
 var SectionDistribuicao = React.createClass({
-  displayName: 'SectionDistribuicao',
-
   propTypes: {
     data: T.object
+  },
+
+  renderTrendLineChart: function (data) {
+    let chartData = {
+      labels: data.map(o => o.year),
+      datasets: [{
+        data: data.map(o => o.value),
+        lineTension: 0,
+        pointRadius: 0
+      }]
+    };
+
+    let chartOptions = {
+      events: [],
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          display: false
+        }],
+        yAxes: [{
+          display: false,
+          ticks: {
+            min: 0
+          }
+        }]
+      },
+      tooltips: {
+        enabled: false
+      }
+    };
+
+    return (
+      <LineChart data={chartData} options={chartOptions} height={50} />
+    );
+  },
+
+  renderTableRow: function (adminArea) {
+    let totNat2016 = this.props.data.licencas2016;
+
+    let licencas2016 = adminArea.data.licencas2016;
+    let availableLicencas = adminArea.data.max2016 - licencas2016;
+    let percentNational = percent(adminArea.data.licencas2016, totNat2016);
+    let pop = _.last(adminArea.data['pop-residente']).value;
+    let licencas1000Hab = licencas2016 / (pop / 1000);
+
+    return (
+      <tr key={adminArea.id}>
+        <td>{adminArea.name}</td>
+        <td>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</td>
+        <td>{availableLicencas}</td>
+        <td>{percentNational}%</td>
+        <td>{round(licencas1000Hab, 1)}</td>
+      </tr>
+    );
+  },
+
+  renderTable: function () {
+    let data = this.props.data;
+
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Distrito</th>
+            <th>Licenças Geral</th>
+            <th>Vagas</th>
+            <th>Percentagem Taxis Nacional</th>
+            <th>Taxis por 1000 residentes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.distritos.map(this.renderTableRow)}
+        </tbody>
+      </table>
+    );
   },
 
   render: function () {
@@ -14,36 +93,11 @@ var SectionDistribuicao = React.createClass({
         <section className='section-container'>
           <header className='section-header'>
             <h3>Portugal</h3>
-            <h1>Distribuição Distrital</h1>
+            <h1>Distribuição Geográfica</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies, in rhoncus nulla volutpat. Donec id imperdiet ipsum. Morbi interdum eros rhoncus metus ultricies.</p>
           </header>
           <div className='section-content'>
-            <ul className='section-stats'>
-              <li>
-                <span className='stat-number'>C</span>
-                <span className='stat-description'>Municípios com contingentes mobilidade reduzida.</span>
-              </li>
-              <li>
-                <span className='stat-number'>E</span>
-                <span className='stat-description'>Número de novas licenças de Mobiliade Reduzida.</span>
-              </li>
-              <li>
-                <span className='stat-number'>F</span>
-                <span className='stat-description'><strong>Fixo:</strong> locais determinados e constantes da respetiva licença</span>
-              </li>
-              <li>
-                <span className='stat-number'>L</span>
-                <span className='stat-description'><strong>Livre:</strong> não existem locais de estacionamento obrigatórios </span>
-              </li>
-            </ul>
-
-            { /*
-            // Graph goes here
-           */}
-
-            <p><strong>Graph goes here</strong> Barchart - Percentagem de Municípios Regime de Estacionamento</p>
-            <p><strong>Graph goes here</strong> Polarchart - Número de Municípios por Regime de Estacionamento</p>
-
+            {this.renderTable()}
           </div>
           <footer className='section-footer'>
             <p><strong>Notas:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>

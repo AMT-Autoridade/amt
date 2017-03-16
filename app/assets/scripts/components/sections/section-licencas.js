@@ -1,20 +1,17 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
-import { render } from 'react-dom';
 import { Bar as BarChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
+import { round } from '../../utils/utils';
 
 var SectionLicencas = React.createClass({
-  displayName: 'SectionLicencas',
-
   propTypes: {
     data: T.object
   },
 
-  render: function () {
-    let data = this.props.data;
+  renderChart: function () {
     let distritos = _.sortBy(this.props.data.distritos, 'data.licencas2016').reverse();
 
     let tooltipFn = makeTooltip(entryIndex => {
@@ -81,6 +78,12 @@ var SectionLicencas = React.createClass({
       }
     };
 
+    return <BarChart data={chartData} options={chartOptions} />;
+  },
+
+  render: function () {
+    let data = this.props.data;
+
     return (
       <div id='section-licencas' className='section-wrapper'>
         <section className='section-container'>
@@ -100,12 +103,12 @@ var SectionLicencas = React.createClass({
                 <span className='stat-description'>Total dos contingentes em Agosto de 2016.</span>
               </li>
               <li>
-                <span className='stat-number'>{Math.round(data.licencasHab * 10) / 10}</span>
+                <span className='stat-number'>{round(data.licencasHab, 1)}</span>
                 <span className='stat-description'>Licenças activas por 1000 Habitantes</span>
               </li>
             </ul>
 
-            <BarChart data={chartData} options={chartOptions} />
+            {this.renderChart()}
 
           </div>
           <footer className='section-footer'>
