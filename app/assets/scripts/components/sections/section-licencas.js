@@ -90,21 +90,21 @@ var SectionLicencas = React.createClass({
           <header className='section-header'>
             <h3 className='section-category'>Portugal</h3>
             <h1>Licenças e Contingentes</h1>
-            <p className="lead">A prestação de serviços de transporte em táxi implica que o prestador detenha um alvará emitido pelo IMT (acesso à actividade) e, simultaneamente, possua uma licença atribuída pelo município (acesso ao mercado). </p>
+            <p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p>
           </header>
           <div className='section-content'>
             <ul className='section-stats three-columns'>
               <li>
                 <span className='stat-number'>{data.licencas2016}</span>
-                <span className='stat-description'>Total de táxis licenciados em Agosto de 2016.</span>
+                <span className='stat-description'>Total de táxis licenciados em agosto de 2016.</span>
               </li>
               <li>
                 <span className='stat-number'>{data.max2016}</span>
-                <span className='stat-description'>Total dos contingentes em Agosto de 2016.</span>
+                <span className='stat-description'>Total dos contingentes  em agosto de 2016.</span>
               </li>
               <li>
                 <span className='stat-number'>{round(data.licencasHab, 1)}</span>
-                <span className='stat-description'>Licenças activas por 1000 Habitantes</span>
+                <span className='stat-description'>Licenças activas por 1000 residentes.</span>
               </li>
             </ul>
 
@@ -112,7 +112,6 @@ var SectionLicencas = React.createClass({
 
           </div>
           <footer className='section-footer'>
-            <p><strong>Notas:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>
           </footer>
         </section>
       </div>
