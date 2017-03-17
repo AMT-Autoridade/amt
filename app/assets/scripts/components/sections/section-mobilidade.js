@@ -61,9 +61,7 @@ var SectionMobilidade = React.createClass({
           }
         }],
         yAxes: [{
-          gridLines: {
-            display: false
-          }
+          display: false
         }]
       },
       tooltips: {
