@@ -167,12 +167,12 @@ var SectionMobilidade = React.createClass({
               </ul>
             </div>
 
-            <div>{this.renderLicencasChart()}</div>
-            <div>{this.renderEvolutionChart()}</div>
+            <div className='graph'>{this.renderLicencasChart()}</div>
+            <div className='graph'>{this.renderEvolutionChart()}</div>
             
           </div>
           <footer className='section-footer'>
-            <p><strong>Notas:</strong>   O número de veículos habilitados ao transporte de pessoas com mobilidade reduzida será superior ao apresentado. Este tipo de veículos podem estar licenciados no âmbito dos contingentes gerais. A AMT pretende aprofundar o conhecimento sobre esta matéria.</p>
+            <p><strong>Notas:</strong> O número de veículos habilitados ao transporte de pessoas com mobilidade reduzida será superior ao apresentado. Este tipo de veículos podem estar licenciados no âmbito dos contingentes gerais. A AMT pretende aprofundar o conhecimento sobre esta matéria.</p>
           </footer>
         </section>
       </div>
