@@ -1,6 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
-import { Line as LineChart } from 'react-chartjs-2';
+import { Line as LineChart, Bar as BarChart, Doughnut as DoughnutChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
@@ -27,11 +27,14 @@ var SectionEvolucao = React.createClass({
 
     let chartData = {
       labels: nationalTimeline.map(o => o.year),
-      datasets: [
-        {
-          data: nationalTimeline.map(o => o['lic-geral'] + o['lic-mob-reduzida'])
-        }
-      ]
+      datasets: [{
+        data: nationalTimeline.map(o => o['lic-geral'] + o['lic-mob-reduzida']),
+        backgroundColor: '#FFE7A2',
+        borderColor: '#F6B600',
+        pointBorderWidth: 0,
+        pointBackgroundColor: '#F6B600',
+        pointRadius: 2
+      }]
     };
 
     let chartOptions = {
@@ -45,9 +48,7 @@ var SectionEvolucao = React.createClass({
           }
         }],
         yAxes: [{
-          gridLines: {
-            display: false
-          },
+          display: false,
           ticks: {
             min: 0
           }
@@ -61,7 +62,119 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} />;
+    return <LineChart data={chartData} options={chartOptions} height={220}/>;
+  },
+
+  renderTopMunicipiosChart: function () {
+    const distritos = this.props.data.distritos;
+    const topMunicipios = _(distritos)
+      .thru(distritos => distritos.reduce((acc, distrito) => acc.concat(distrito.concelhos), []))
+      .sortBy('data.change')
+      .reverse()
+      .take(5)
+      .value();
+
+    let tooltipFn = makeTooltip(entryIndex => {
+      let municipio = topMunicipios[entryIndex];
+      return (
+        <div>
+          <p>{municipio.name}</p>
+          <p>aumento {municipio.data.change}</p>
+        </div>
+      );
+    });
+
+    let chartData = {
+      labels: topMunicipios.map(o => o.name),
+      datasets: [
+        {
+          data: topMunicipios.map(o => o.data.change),
+          backgroundColor: '#F6B600'
+        }
+      ]
+    };
+
+    let chartOptions = {
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          categoryPercentage: 1,
+          gridLines: {
+            display: false
+          }
+        }],
+        yAxes: [{
+          display: false
+        }]
+      },
+      tooltips: {
+        enabled: false,
+        mode: 'index',
+        position: 'nearest',
+        custom: tooltipFn
+      }
+    };
+
+    return <BarChart data={chartData} options={chartOptions} height={260}/>;
+  },
+
+  renderChangeLicencasChart: function () {
+    const {distritos, totalMunicipios} = this.props.data;
+
+    const licencasChange = _(distritos)
+      .thru(distritos => distritos.reduce((acc, distrito) => acc.concat(distrito.concelhos), []))
+      .groupBy(d => {
+        if (d.data.change > 0) {
+          return 'increase';
+        } else if (d.data.change < 0) {
+          return 'decrease';
+        } else {
+          return 'equal';
+        }
+      })
+      .map((v, k) => ({key: k, value: v.length, percent: v.length / totalMunicipios * 100}))
+      .value();
+
+    const keyIndex = {
+      increase: 'Aumento',
+      equal: 'Manteve',
+      decrease: 'Diminuiu'
+    };
+
+    let tooltipFn = makeTooltip(entryIndex => {
+      let entry = licencasChange[entryIndex];
+      return (
+        <div>
+          <p>{round(entry.percent)}%</p>
+          <p>{keyIndex[entry.key]}</p>
+        </div>
+      );
+    });
+
+    let chartData = {
+      labels: licencasChange.map(o => o.key),
+      datasets: [{
+        data: licencasChange.map(o => o.value),
+        borderWidth: 0,
+        backgroundColor: ['#FFC700', '#FDD259', '#FDDC7E']
+      }]
+    };
+
+    let chartOptions = {
+      legend: {
+        display: false
+      },
+      tooltips: {
+        enabled: false,
+        mode: 'index',
+        position: 'nearest',
+        custom: tooltipFn
+      }
+    };
+
+    return <DoughnutChart data={chartData} options={chartOptions} height={240}/>;
   },
 
   render: function () {
@@ -71,7 +184,7 @@ var SectionEvolucao = React.createClass({
     let increaseLicencas = newLicencas / data.licencas2006 * 100;
 
     // Municipios without change in number on licenças.
-    let municipiosNoChange = data.distritos.reduce((acc, distrito) => {
+    let totalMunicipiosNoChange = data.distritos.reduce((acc, distrito) => {
       return acc + distrito.concelhos.reduce((acc_, concelho) => concelho.data.change === 0 ? acc_ + 1 : acc_, 0);
     }, 0);
 
@@ -81,7 +194,7 @@ var SectionEvolucao = React.createClass({
           <header className='section-header'>
             <h3>Portugal</h3>
             <h1>Evolução 2006 - 2016</h1>
-            <p>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa,  e a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
+            <p>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, é a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
           </header>
           <div className='section-content'>
             <ul className='section-stats three-columns'>
@@ -94,7 +207,7 @@ var SectionEvolucao = React.createClass({
                 <span className='stat-description'>Crescimento dos táxis licenciados desde 2006.</span>
               </li>
               <li>
-                <span className='stat-number'>{percent(municipiosNoChange, data.totalMunicipios)}%</span>
+                <span className='stat-number'>{percent(totalMunicipiosNoChange, data.totalMunicipios)}%</span>
                 <span className='stat-description'>Dos municípios não registaram alteração no número de licenças.</span>
               </li>
             </ul>
@@ -105,16 +218,15 @@ var SectionEvolucao = React.createClass({
                 <p>Evolução das licenças 2006 a 2016.</p>
               </div>
               <div className='graph'>
-                <strong>Graph goes here</strong>
+                {this.renderTopMunicipiosChart()}
                 <p>Municipios com maior aumento.</p>
               </div>
               <div className='graph'>
-                <strong>Graph goes here</strong>
+                {this.renderChangeLicencasChart()}
                 <p>Alterações do número de licenças.</p>
               </div>
             </div>
 
-            
           </div>
           <footer className='section-footer'>
             <p><strong>Notas:</strong> Para os concelhos em que não existia informação disponível para todos os anos existiu interpolação de valores. A percentagem de valores interpolados correspondeu a apenas 0,2% do total de valores considerados. <a href="#">Saber mais</a></p>

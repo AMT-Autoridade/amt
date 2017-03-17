@@ -14,7 +14,9 @@
 .map-wrapper {
   @include column(4/12);
   height: 100vh;
-  background: red;
+  border: 1px dashed #aaa;
+  text-align: center;
+  padding: 15rem 0;
 }
 
 .content-wrapper {

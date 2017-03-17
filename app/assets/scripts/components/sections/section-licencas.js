@@ -31,11 +31,11 @@ var SectionLicencas = React.createClass({
       datasets: [
         {
           data: distritos.map(o => o.data.licencas2016),
-          backgroundColor: '#ccc'
+          backgroundColor: '#F6B600'
         },
         {
           data: distritos.map(o => o.data.max2016 - o.data.licencas2016),
-          backgroundColor: '#444'
+          backgroundColor: '#2EB199'
         }
       ]
     };
