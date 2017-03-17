@@ -27,11 +27,14 @@ var SectionEvolucao = React.createClass({
 
     let chartData = {
       labels: nationalTimeline.map(o => o.year),
-      datasets: [
-        {
-          data: nationalTimeline.map(o => o['lic-geral'] + o['lic-mob-reduzida'])
-        }
-      ]
+      datasets: [{
+        data: nationalTimeline.map(o => o['lic-geral'] + o['lic-mob-reduzida']),
+        backgroundColor: '#FFE7A2',
+        borderColor: '#F6B600',
+        pointBorderWidth: 0,
+        pointBackgroundColor: '#F6B600',
+        pointRadius: 2
+      }]
     };
 
     let chartOptions = {
@@ -45,9 +48,7 @@ var SectionEvolucao = React.createClass({
           }
         }],
         yAxes: [{
-          gridLines: {
-            display: false
-          },
+          display: false,
           ticks: {
             min: 0
           }
@@ -61,7 +62,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} />;
+    return <LineChart data={chartData} options={chartOptions} height={220}/>;
   },
 
   renderTopMunicipiosChart: function () {
@@ -88,7 +89,7 @@ var SectionEvolucao = React.createClass({
       datasets: [
         {
           data: topMunicipios.map(o => o.data.change),
-          backgroundColor: '#ccc'
+          backgroundColor: '#F6B600'
         }
       ]
     };
@@ -99,14 +100,13 @@ var SectionEvolucao = React.createClass({
       },
       scales: {
         xAxes: [{
+          categoryPercentage: 1,
           gridLines: {
             display: false
           }
         }],
         yAxes: [{
-          gridLines: {
-            display: false
-          }
+          display: false
         }]
       },
       tooltips: {
@@ -117,10 +117,10 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} />;
+    return <BarChart data={chartData} options={chartOptions} height={260}/>;
   },
 
-  renderChangeLicencas: function () {
+  renderChangeLicencasChart: function () {
     const {distritos, totalMunicipios} = this.props.data;
 
     const licencasChange = _(distritos)
@@ -155,11 +155,11 @@ var SectionEvolucao = React.createClass({
 
     let chartData = {
       labels: licencasChange.map(o => o.key),
-      datasets: [
-        {
-          data: licencasChange.map(o => o.value)
-        }
-      ]
+      datasets: [{
+        data: licencasChange.map(o => o.value),
+        borderWidth: 0,
+        backgroundColor: ['#FFC700', '#FDD259', '#FDDC7E']
+      }]
     };
 
     let chartOptions = {
@@ -174,7 +174,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <DoughnutChart data={chartData} options={chartOptions} />;
+    return <DoughnutChart data={chartData} options={chartOptions} height={240}/>;
   },
 
   render: function () {
@@ -222,7 +222,7 @@ var SectionEvolucao = React.createClass({
                 <p>Municipios com maior aumento.</p>
               </div>
               <div className='graph'>
-                {this.renderChangeLicencas()}
+                {this.renderChangeLicencasChart()}
                 <p>Alterações do número de licenças.</p>
               </div>
             </div>

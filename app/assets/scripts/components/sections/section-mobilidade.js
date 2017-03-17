@@ -19,14 +19,12 @@ var SectionMobilidade = React.createClass({
       {
         label: '2006',
         display: 'Contingente Mobilidade Reduzida em 2006',
-        value: licencasMobReduzida2006,
-        backgroundColor: 'aqua'
+        value: licencasMobReduzida2006
       },
       {
         label: '2016',
         display: 'Contingente Mobilidade Reduzida em 2016',
-        value: licencasMobReduzida2016,
-        backgroundColor: 'darkred'
+        value: licencasMobReduzida2016
       }
     ];
 
@@ -45,7 +43,7 @@ var SectionMobilidade = React.createClass({
       datasets: [
         {
           data: _.map(data, 'value'),
-          backgroundColor: _.map(data, 'backgroundColor')
+          backgroundColor: '#2EB199'
         }
       ]
     };
@@ -72,7 +70,7 @@ var SectionMobilidade = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} />;
+    return <BarChart data={chartData} options={chartOptions} height={240}/>;
   },
 
   renderLicencasChart: function () {
@@ -85,13 +83,13 @@ var SectionMobilidade = React.createClass({
         label: 'Contingente Geral',
         value: licencas2016Geral,
         percent: percent(licencas2016Geral, licencas2016),
-        backgroundColor: 'aqua'
+        backgroundColor: '#2EB199'
       },
       {
         label: 'Contingente Mobilidade Reduzida',
         value: licencasMobReduzida2016,
         percent: percent(licencasMobReduzida2016, licencas2016),
-        backgroundColor: 'darkred'
+        backgroundColor: '#227868'
       }
     ];
 
@@ -110,7 +108,8 @@ var SectionMobilidade = React.createClass({
       datasets: [
         {
           data: _.map(data, 'value'),
-          backgroundColor: _.map(data, 'backgroundColor')
+          backgroundColor: _.map(data, 'backgroundColor'),
+          borderWidth: 0
         }
       ]
     };
@@ -127,7 +126,7 @@ var SectionMobilidade = React.createClass({
       }
     };
 
-    return <PieChart data={chartData} options={chartOptions} />;
+    return <PieChart data={chartData} options={chartOptions} height={240}/>;
   },
 
   render: function () {
@@ -146,7 +145,7 @@ var SectionMobilidade = React.createClass({
             <h1>Mobilidade Reduzida</h1>
             <p>A legislação prevê a possibilidade de existência de contingentes específicos de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
           </header>
-          
+
           <div className='section-content three-columns'>
             <div>
               <ul className='section-stats '>
@@ -167,7 +166,7 @@ var SectionMobilidade = React.createClass({
 
             <div className='graph'>{this.renderLicencasChart()}</div>
             <div className='graph'>{this.renderEvolutionChart()}</div>
-            
+
           </div>
           <footer className='section-footer'>
             <p><strong>Notas:</strong> O número de veículos habilitados ao transporte de pessoas com mobilidade reduzida será superior ao apresentado. Este tipo de veículos podem estar licenciados no âmbito dos contingentes gerais. A AMT pretende aprofundar o conhecimento sobre esta matéria.</p>

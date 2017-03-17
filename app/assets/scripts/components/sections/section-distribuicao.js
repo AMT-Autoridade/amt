@@ -16,7 +16,10 @@ var SectionDistribuicao = React.createClass({
       datasets: [{
         data: data.map(o => o.value),
         lineTension: 0,
-        pointRadius: 0
+        pointRadius: 0,
+        // backgroundColor: 'transparent',
+        borderColor: '#2EB199',
+        borderWidth: 1
       }]
     };
 
@@ -42,7 +45,7 @@ var SectionDistribuicao = React.createClass({
     };
 
     return (
-      <LineChart data={chartData} options={chartOptions} height={50} />
+      <LineChart data={chartData} options={chartOptions} height={30} />
     );
   },
 
