@@ -6,9 +6,9 @@
 }
 
 .section-wrapper {
-  min-height: 100vh;
   max-width: 1170px;
   margin: 0 auto;
+  padding: 100px 0;
 }
 
 .map-wrapper {
@@ -33,9 +33,17 @@
    overflow: hidden;
 }
 
+.two-columns {
+  > li,
+  >div {
+    @include column(6/12, $cycle: 2);
+  }
+} 
+
 .three-columns {
   > li,
   >div {
-    @include column(4/12);
+    @include column(4/12, $cycle: 3);
   }
 } 
+
