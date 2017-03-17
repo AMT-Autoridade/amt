@@ -6,15 +6,17 @@
 }
 
 .section-wrapper {
-  min-height: 100vh;
   max-width: 1170px;
   margin: 0 auto;
+  padding: 100px 0;
 }
 
 .map-wrapper {
   @include column(4/12);
   height: 100vh;
-  background: red;
+  border: 1px dashed #aaa;
+  text-align: center;
+  padding: 15rem 0;
 }
 
 .content-wrapper {
@@ -28,9 +30,22 @@
   padding: 0;
 }
 
+.section-content {
+   clear: both;
+   overflow: hidden;
+}
 
-.three-columns {
-  li {
-    @include column(4/12);
+.two-columns {
+  > li,
+  >div {
+    @include column(6/12, $cycle: 2);
   }
 } 
+
+.three-columns {
+  > li,
+  >div {
+    @include column(4/12, $cycle: 3);
+  }
+} 
+

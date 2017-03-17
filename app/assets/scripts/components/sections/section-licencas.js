@@ -1,20 +1,17 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
-import { render } from 'react-dom';
 import { Bar as BarChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
+import { round } from '../../utils/utils';
 
 var SectionLicencas = React.createClass({
-  displayName: 'SectionLicencas',
-
   propTypes: {
     data: T.object
   },
 
-  render: function () {
-    let data = this.props.data;
+  renderChart: function () {
     let distritos = _.sortBy(this.props.data.distritos, 'data.licencas2016').reverse();
 
     let tooltipFn = makeTooltip(entryIndex => {
@@ -34,11 +31,11 @@ var SectionLicencas = React.createClass({
       datasets: [
         {
           data: distritos.map(o => o.data.licencas2016),
-          backgroundColor: '#ccc'
+          backgroundColor: '#F6B600'
         },
         {
           data: distritos.map(o => o.data.max2016 - o.data.licencas2016),
-          backgroundColor: '#444'
+          backgroundColor: '#2EB199'
         }
       ]
     };
@@ -81,35 +78,40 @@ var SectionLicencas = React.createClass({
       }
     };
 
+    return <BarChart data={chartData} options={chartOptions} />;
+  },
+
+  render: function () {
+    let data = this.props.data;
+
     return (
       <div id='section-licencas' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
             <h3 className='section-category'>Portugal</h3>
             <h1>Licenças e Contingentes</h1>
-            <p className="lead">A prestação de serviços de transporte em táxi implica que o prestador detenha um alvará emitido pelo IMT (acesso à actividade) e, simultaneamente, possua uma licença atribuída pelo município (acesso ao mercado). </p>
+            <p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p>
           </header>
           <div className='section-content'>
             <ul className='section-stats three-columns'>
               <li>
                 <span className='stat-number'>{data.licencas2016}</span>
-                <span className='stat-description'>Total de táxis licenciados em Agosto de 2016.</span>
+                <span className='stat-description'>Total de táxis licenciados em agosto de 2016.</span>
               </li>
               <li>
                 <span className='stat-number'>{data.max2016}</span>
-                <span className='stat-description'>Total dos contingentes em Agosto de 2016.</span>
+                <span className='stat-description'>Total dos contingentes  em agosto de 2016.</span>
               </li>
               <li>
-                <span className='stat-number'>{Math.round(data.licencasHab * 10) / 10}</span>
-                <span className='stat-description'>Licenças activas por 1000 Habitantes</span>
+                <span className='stat-number'>{round(data.licencasHab, 1)}</span>
+                <span className='stat-description'>Licenças activas por 1000 residentes.</span>
               </li>
             </ul>
 
-            <BarChart data={chartData} options={chartOptions} />
+            {this.renderChart()}
 
           </div>
           <footer className='section-footer'>
-            <p><strong>Notas:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>
           </footer>
         </section>
       </div>
