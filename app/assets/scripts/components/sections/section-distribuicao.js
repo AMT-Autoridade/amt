@@ -45,7 +45,7 @@ var SectionDistribuicao = React.createClass({
     };
 
     return (
-      <LineChart data={chartData} options={chartOptions} height={30} />
+      <LineChart data={chartData} options={chartOptions} height={20} />
     );
   },
 
@@ -76,11 +76,11 @@ var SectionDistribuicao = React.createClass({
       <table>
         <thead>
           <tr>
-            <th>Distrito</th>
-            <th>Licenças Geral</th>
-            <th>Vagas</th>
-            <th>Percentagem Taxis Nacional</th>
-            <th>Taxis por 1000 residentes</th>
+            <th>Região</th>
+            <th>Total de Licenças</th>
+            <th>Vagas Disponíveis</th>
+            <th>% do Total Nacional de Licenças</th>
+            <th>% do Total de População</th>
           </tr>
         </thead>
         <tbody>
@@ -97,7 +97,7 @@ var SectionDistribuicao = React.createClass({
           <header className='section-header'>
             <h3>Portugal</h3>
             <h1>Distribuição Geográfica</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies, in rhoncus nulla volutpat. Donec id imperdiet ipsum. Morbi interdum eros rhoncus metus ultricies.</p>
+            <p className='lead'>Não obstante as licenças de táxi serem atribuídas a nível municipal apresenta-se a sua distribuição pelas regiões autónomas, pelos distritos e pelas áreas metropolitanas de Lisboa e do Porto.</p>
           </header>
           <div className='section-content'>
             {this.renderTable()}
