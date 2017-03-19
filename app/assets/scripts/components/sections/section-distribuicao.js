@@ -7,7 +7,10 @@ import { percent, round } from '../../utils/utils';
 
 var SectionDistribuicao = React.createClass({
   propTypes: {
-    data: T.object
+    adminLevel: T.string,
+    adminName: T.string,
+    adminList: T.array,
+    licencas2016: T.number
   },
 
   renderTrendLineChart: function (data) {
@@ -50,7 +53,7 @@ var SectionDistribuicao = React.createClass({
   },
 
   renderTableRow: function (adminArea) {
-    let totNat2016 = this.props.data.licencas2016;
+    let totNat2016 = this.props.licencas2016;
 
     let licencas2016 = adminArea.data.licencas2016;
     let availableLicencas = adminArea.data.max2016 - licencas2016;
@@ -59,34 +62,32 @@ var SectionDistribuicao = React.createClass({
     let licencas1000Hab = licencas2016 / (pop / 1000);
 
     return (
-      <tr key={adminArea.id}>
-        <td>{adminArea.name}</td>
-        <td>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</td>
-        <td>{availableLicencas}</td>
-        <td>{percentNational}%</td>
-        <td>{round(licencas1000Hab, 1)}</td>
-      </tr>
+      <li key={adminArea.id}>
+        <span>{adminArea.name}</span>
+        <div>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
+        <span>{availableLicencas}</span>
+        <span>{percentNational}%</span>
+        <span>{round(licencas1000Hab, 1)}</span>
+      </li>
     );
   },
 
   renderTable: function () {
-    let data = this.props.data;
+    let adminList = this.props.adminList;
+
+    let colLabel = this.props.adminLevel === 'national' ? 'Região' : 'Concelho';
 
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>Região</th>
-            <th>Total de Licenças</th>
-            <th>Vagas Disponíveis</th>
-            <th>% do Total Nacional de Licenças</th>
-            <th>% do Total de População</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.nuts.map(this.renderTableRow)}
-        </tbody>
-      </table>
+      <ul>
+        <li>
+          <span>{colLabel}</span>
+          <span>Total de Licenças</span>
+          <span>Vagas Disponíveis</span>
+          <span>% do Total Nacional de Licenças</span>
+          <span>% do Total de População</span>
+        </li>
+        {adminList.map(this.renderTableRow)}
+      </ul>
     );
   },
 
@@ -95,7 +96,7 @@ var SectionDistribuicao = React.createClass({
       <div id='section-distribuicao' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3>Portugal</h3>
+            <h3>{this.props.adminName}</h3>
             <h1>Distribuição Geográfica</h1>
             <p className='lead'>Não obstante as licenças de táxi serem atribuídas a nível municipal apresenta-se a sua distribuição pelas regiões autónomas, pelos distritos e pelas áreas metropolitanas de Lisboa e do Porto.</p>
           </header>

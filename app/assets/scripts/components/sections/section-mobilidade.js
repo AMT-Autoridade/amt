@@ -8,12 +8,19 @@ import { percent } from '../../utils/utils';
 
 var SectionMobilidade = React.createClass({
   propTypes: {
-    data: T.object
+    adminLevel: T.string,
+    adminName: T.string,
+    totalMunicipiosMobReduzida: T.number,
+    totalMunicipios: T.number,
+    licencas2016: T.number,
+    licencas2006: T.number,
+    licencasMobReduzida2016: T.number,
+    licencasMobReduzida2006: T.number
   },
 
   renderEvolutionChart: function () {
-    let licencasMobReduzida2016 = this.props.data.licencasMobReduzida2016;
-    let licencasMobReduzida2006 = this.props.data.licencasMobReduzida2006;
+    let licencasMobReduzida2016 = this.props.licencasMobReduzida2016;
+    let licencasMobReduzida2006 = this.props.licencasMobReduzida2006;
 
     let data = [
       {
@@ -74,8 +81,8 @@ var SectionMobilidade = React.createClass({
   },
 
   renderLicencasChart: function () {
-    let licencas2016 = this.props.data.licencas2016;
-    let licencasMobReduzida2016 = this.props.data.licencasMobReduzida2016;
+    let licencas2016 = this.props.licencas2016;
+    let licencasMobReduzida2016 = this.props.licencasMobReduzida2016;
     let licencas2016Geral = licencas2016 - licencasMobReduzida2016;
 
     let data = [
@@ -130,18 +137,25 @@ var SectionMobilidade = React.createClass({
   },
 
   render: function () {
-    let data = this.props.data;
+    let {
+      totalMunicipiosMobReduzida,
+      totalMunicipios,
+      licencas2016,
+      licencas2006,
+      licencasMobReduzida2016,
+      licencasMobReduzida2006
+    } = this.props;
 
-    let percentMobRed = percent(data.totalMunicipiosMobReduzida, data.totalMunicipios);
-    let newLicencas = data.licencas2016 - data.licencas2006;
-    let newMobReduzida = data.licencasMobReduzida2016 - data.licencasMobReduzida2006;
+    let percentMobRed = percent(totalMunicipiosMobReduzida, totalMunicipios);
+    let newLicencas = licencas2016 - licencas2006;
+    let newMobReduzida = licencasMobReduzida2016 - licencasMobReduzida2006;
     let percentNewMobRed = percent(newMobReduzida, newLicencas);
 
     return (
       <div id='section-mobilidade' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3>Portugal</h3>
+            <h3>{this.props.adminName}</h3>
             <h1>Mobilidade Reduzida</h1>
             <p className='lead'>A legislação prevê a possibilidade de existência de contingentes específicos de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
           </header>
@@ -151,7 +165,7 @@ var SectionMobilidade = React.createClass({
               <ul>
                 <li>
                   <span className='stat-number'>{percentMobRed}%</span>
-                  <span className='stat-description'>Municípios ({data.totalMunicipiosMobReduzida}) com contingentes mobilidade reduzida.</span>
+                  <span className='stat-description'>Municípios ({totalMunicipiosMobReduzida}) com contingentes mobilidade reduzida.</span>
                 </li>
                 <li>
                   <span className='stat-number'>{newMobReduzida}</span>

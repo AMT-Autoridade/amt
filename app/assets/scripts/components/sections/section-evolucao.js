@@ -8,11 +8,19 @@ import { round, percent } from '../../utils/utils';
 
 var SectionEvolucao = React.createClass({
   propTypes: {
+    adminLevel: T.string,
+    adminName: T.string,
+    licencas2016: T.number,
+    licencas2006: T.number,
+    totalMunicipios: T.number,
+    municipios: T.array,
+    licencasTimeline: T.array,
     data: T.object
   },
 
   renderTimelineChart: function () {
-    let nationalTimeline = this.props.data.licencasTimeline;
+    let nationalTimeline = this.props.licencasTimeline;
+    console.log('nationalTimeline', nationalTimeline);
 
     let tooltipFn = makeTooltip(entryIndex => {
       let year = nationalTimeline[entryIndex];
@@ -66,9 +74,7 @@ var SectionEvolucao = React.createClass({
   },
 
   renderTopMunicipiosChart: function () {
-    const nuts = this.props.data.nuts;
-    const topMunicipios = _(nuts)
-      .thru(nuts => nuts.reduce((acc, distrito) => acc.concat(distrito.concelhos), []))
+    const topMunicipios = _(this.props.municipios)
       .sortBy('data.change')
       .reverse()
       .take(5)
@@ -121,10 +127,9 @@ var SectionEvolucao = React.createClass({
   },
 
   renderChangeLicencasChart: function () {
-    const {nuts, totalMunicipios} = this.props.data;
+    const {municipios, totalMunicipios} = this.props;
 
-    const licencasChange = _(nuts)
-      .thru(nuts => nuts.reduce((acc, distrito) => acc.concat(distrito.concelhos), []))
+    const licencasChange = _(municipios)
       .groupBy(d => {
         if (d.data.change > 0) {
           return 'increase';
@@ -178,21 +183,20 @@ var SectionEvolucao = React.createClass({
   },
 
   render: function () {
-    let data = this.props.data;
+    let { licencas2016, licencas2006, totalMunicipios } = this.props;
 
-    let newLicencas = data.licencas2016 - data.licencas2006;
-    let increaseLicencas = newLicencas / data.licencas2006 * 100;
+    let newLicencas = licencas2016 - licencas2006;
+    let increaseLicencas = newLicencas / licencas2006 * 100;
 
     // Municipios without change in number on licenças.
-    let totalMunicipiosNoChange = data.nuts.reduce((acc, distrito) => {
-      return acc + distrito.concelhos.reduce((acc_, concelho) => concelho.data.change === 0 ? acc_ + 1 : acc_, 0);
-    }, 0);
+    let totalMunicipiosNoChange = this.props.municipios.reduce((acc, c) => c.data.change === 0 ? acc + 1 : acc, 0);
+    console.log('this.props.totalMunicipios', totalMunicipios);
 
     return (
       <div id='section-evolucao' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3>Portugal</h3>
+            <h3>{this.props.adminName}</h3>
             <h1>Evolução 2006 - 2016</h1>
             <p className='lead'>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, é a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
           </header>
@@ -208,7 +212,7 @@ var SectionEvolucao = React.createClass({
                   <span className='stat-description'>Crescimento dos táxis licenciados desde 2006.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>{percent(totalMunicipiosNoChange, data.totalMunicipios)}%</span>
+                  <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios)}%</span>
                   <span className='stat-description'>Dos municípios não registaram alteração no número de licenças.</span>
                 </li>
               </ul>

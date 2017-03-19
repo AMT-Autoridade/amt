@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import _ from 'lodash';
 
 import config from '../config';
 
@@ -6,7 +7,11 @@ export const REQUEST_NATIONAL = 'REQUEST_NATIONAL';
 export const RECEIVE_NATIONAL = 'RECEIVE_NATIONAL';
 export const INVALIDATE_NATIONAL = 'INVALIDATE_NATIONAL';
 
-// Projects
+export const REQUEST_NUT = 'REQUEST_NUT';
+export const RECEIVE_NUT = 'RECEIVE_NUT';
+export const INVALIDATE_NUT = 'INVALIDATE_NUT';
+
+// National
 
 export function invalidateNational () {
   return { type: INVALIDATE_NATIONAL };
@@ -26,6 +31,31 @@ export function fetchNational () {
     var national = require('../data/national.json');
     dispatch(requestNational());
     setTimeout(() => dispatch(receiveNational(national)), 300);
+  };
+  // return getAndDispatch(`${config.api}/National`, requestNational, receiveNational);
+}
+
+// National
+
+export function invalidateNut () {
+  return { type: INVALIDATE_NUT };
+}
+
+export function requestNut () {
+  return { type: REQUEST_NUT };
+}
+
+export function receiveNut (data, error = null) {
+  return { type: RECEIVE_NUT, data: data, error, receivedAt: Date.now() };
+}
+
+export function fetchNut (nut) {
+  // Fake data load.
+  return (dispatch) => {
+    var national = require('../data/national.json');
+    var res = national.results.find(o => _.kebabCase(o.name) === nut);
+    dispatch(requestNut());
+    setTimeout(() => dispatch(receiveNut(res)), 300);
   };
   // return getAndDispatch(`${config.api}/National`, requestNational, receiveNational);
 }
