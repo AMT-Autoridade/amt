@@ -1,0 +1,22 @@
+#section-evolucao {
+
+	.section-content {
+		@include media (small-up) {
+			> div {
+				@include column(4/12);
+			}
+
+			.section-stats,
+			.graph-container {
+				@include column(12/12);
+
+				li, div {
+					@include column(4/12);
+				}
+			}
+
+		}
+
+	}
+
+}

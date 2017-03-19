@@ -24,9 +24,12 @@
 .section-footer {
 	border-top: 1px solid #ccc;
 	padding-top: 20px;
-	
+
 	p {
 		font-size: .875rem;
 		color: tint($text-color, 25%);
+		strong {
+			color: $text-color;
+		}
 	}
 }

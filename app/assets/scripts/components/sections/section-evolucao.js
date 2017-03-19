@@ -194,36 +194,38 @@ var SectionEvolucao = React.createClass({
           <header className='section-header'>
             <h3>Portugal</h3>
             <h1>Evolução 2006 - 2016</h1>
-            <p>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, é a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
+            <p className='lead'>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, é a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
           </header>
           <div className='section-content'>
-            <ul className='section-stats three-columns'>
-              <li>
-                <span className='stat-number'>{newLicencas}</span>
-                <span className='stat-description'>Aumento do número de licenças entre 2006 e 2016.</span>
-              </li>
-              <li>
-                <span className='stat-number'>{round(increaseLicencas, 2)}%</span>
-                <span className='stat-description'>Crescimento dos táxis licenciados desde 2006.</span>
-              </li>
-              <li>
-                <span className='stat-number'>{percent(totalMunicipiosNoChange, data.totalMunicipios)}%</span>
-                <span className='stat-description'>Dos municípios não registaram alteração no número de licenças.</span>
-              </li>
-            </ul>
+            <div className='section-stats'>
+              <ul>
+                <li>
+                  <span className='stat-number'>{newLicencas}</span>
+                  <span className='stat-description'>Aumento do número de licenças entre 2006 e 2016.</span>
+                </li>
+                <li>
+                  <span className='stat-number'>{round(increaseLicencas, 2)}%</span>
+                  <span className='stat-description'>Crescimento dos táxis licenciados desde 2006.</span>
+                </li>
+                <li>
+                  <span className='stat-number'>{percent(totalMunicipiosNoChange, data.totalMunicipios)}%</span>
+                  <span className='stat-description'>Dos municípios não registaram alteração no número de licenças.</span>
+                </li>
+              </ul>
+            </div>
 
-            <div className='three-columns'>
+            <div className='graph-container'>
               <div className='graph'>
                 {this.renderTimelineChart()}
-                <p>Evolução das licenças 2006 a 2016.</p>
+                <p className='graph-description'>Evolução das licenças 2006 a 2016.</p>
               </div>
               <div className='graph'>
                 {this.renderTopMunicipiosChart()}
-                <p>Municipios com maior aumento.</p>
+                <p className='graph-description'>Municipios com maior aumento.</p>
               </div>
               <div className='graph'>
                 {this.renderChangeLicencasChart()}
-                <p>Alterações do número de licenças.</p>
+                <p className='graph-description'>Alterações do número de licenças.</p>
               </div>
             </div>
 
