@@ -4,6 +4,9 @@
 
 /* Colors
    ========================================================================== */
+   $primary-color: #2EB199;
+   $secondary-color: #FFCA00;
+   $text-color: #081A16;
 
 
 /* Typography
@@ -30,3 +33,4 @@ $small-range: (30em, 48.000em); /* 480px, 768px */
 $medium-range: (48.063em, 61.250em); /* 769px, 980px */
 $large-range: (61.313em, 90em); /* 981px, 1440px */
 $xlarge-range: (90.063em, 120em); /* 1441px, 1920px */
+$screen: "only screen";

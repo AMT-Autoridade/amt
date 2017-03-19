@@ -8,21 +8,6 @@ h1, h2, h3, h4 {
 	margin: 0;
 }
 
-.stat-number {
-	font-size: $h2-font-size;	
-	display: block;
-	font-weight: bold;
-}
-
-.lead {
-	font-size: 1.25rem;
-}
-
-.section-category {
-	font-size: 1.25rem;
-	text-transform: uppercase;
-}
-
 h1 { font-size: $h1-font-size;}
 h2 { font-size: $h2-font-size;}
 h3 { font-size: $h3-font-size;}
@@ -32,4 +17,24 @@ h6 { font-size: $h6-font-size;}
 
 p {
 	margin: 0 0 20px 0;
+}
+
+
+.stat-number {
+	font-size: $h2-font-size;	
+	display: block;
+	font-weight: bold;
+}
+
+.lead {
+	font-size: 1.25rem;
+	color: tint($text-color, 50%);
+}
+
+
+
+.graph-description {
+	font-size: .875rem;
+	color: tint($text-color, 25%);
+	text-align: center;
 }

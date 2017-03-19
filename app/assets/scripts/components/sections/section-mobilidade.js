@@ -143,12 +143,12 @@ var SectionMobilidade = React.createClass({
           <header className='section-header'>
             <h3>Portugal</h3>
             <h1>Mobilidade Reduzida</h1>
-            <p>A legislação prevê a possibilidade de existência de contingentes específicos de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
+            <p className='lead'>A legislação prevê a possibilidade de existência de contingentes específicos de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
           </header>
 
-          <div className='section-content three-columns'>
-            <div>
-              <ul className='section-stats '>
+          <div className='section-content'>
+            <div className='section-stats'>
+              <ul>
                 <li>
                   <span className='stat-number'>{percentMobRed}%</span>
                   <span className='stat-description'>Municípios ({data.totalMunicipiosMobReduzida}) com contingentes mobilidade reduzida.</span>
@@ -164,8 +164,14 @@ var SectionMobilidade = React.createClass({
               </ul>
             </div>
 
-            <div className='graph'>{this.renderLicencasChart()}</div>
-            <div className='graph'>{this.renderEvolutionChart()}</div>
+            <div className='graph'>
+              {this.renderLicencasChart()}
+              <p className='graph-description'>Licenças por contingente (%)</p>
+            </div>
+            <div className='graph'>
+              {this.renderEvolutionChart()}
+              <p className='graph-description'>Evolução do contingente</p>
+            </div>
 
           </div>
           <footer className='section-footer'>
