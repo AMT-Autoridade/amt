@@ -66,9 +66,9 @@ var SectionEvolucao = React.createClass({
   },
 
   renderTopMunicipiosChart: function () {
-    const distritos = this.props.data.distritos;
-    const topMunicipios = _(distritos)
-      .thru(distritos => distritos.reduce((acc, distrito) => acc.concat(distrito.concelhos), []))
+    const nuts = this.props.data.nuts;
+    const topMunicipios = _(nuts)
+      .thru(nuts => nuts.reduce((acc, distrito) => acc.concat(distrito.concelhos), []))
       .sortBy('data.change')
       .reverse()
       .take(5)
@@ -121,10 +121,10 @@ var SectionEvolucao = React.createClass({
   },
 
   renderChangeLicencasChart: function () {
-    const {distritos, totalMunicipios} = this.props.data;
+    const {nuts, totalMunicipios} = this.props.data;
 
-    const licencasChange = _(distritos)
-      .thru(distritos => distritos.reduce((acc, distrito) => acc.concat(distrito.concelhos), []))
+    const licencasChange = _(nuts)
+      .thru(nuts => nuts.reduce((acc, distrito) => acc.concat(distrito.concelhos), []))
       .groupBy(d => {
         if (d.data.change > 0) {
           return 'increase';
@@ -184,7 +184,7 @@ var SectionEvolucao = React.createClass({
     let increaseLicencas = newLicencas / data.licencas2006 * 100;
 
     // Municipios without change in number on licenças.
-    let totalMunicipiosNoChange = data.distritos.reduce((acc, distrito) => {
+    let totalMunicipiosNoChange = data.nuts.reduce((acc, distrito) => {
       return acc + distrito.concelhos.reduce((acc_, concelho) => concelho.data.change === 0 ? acc_ + 1 : acc_, 0);
     }, 0);
 

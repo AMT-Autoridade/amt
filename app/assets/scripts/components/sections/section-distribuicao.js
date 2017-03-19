@@ -84,7 +84,7 @@ var SectionDistribuicao = React.createClass({
           </tr>
         </thead>
         <tbody>
-          {data.distritos.map(this.renderTableRow)}
+          {data.nuts.map(this.renderTableRow)}
         </tbody>
       </table>
     );

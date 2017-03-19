@@ -12,10 +12,10 @@ var SectionLicencas = React.createClass({
   },
 
   renderChart: function () {
-    let distritos = _.sortBy(this.props.data.distritos, 'data.licencas2016').reverse();
+    let nuts = _.sortBy(this.props.data.nuts, 'data.licencas2016').reverse();
 
     let tooltipFn = makeTooltip(entryIndex => {
-      let distrito = distritos[entryIndex];
+      let distrito = nuts[entryIndex];
       return (
         <div>
           <p>{distrito.name}</p>
@@ -27,14 +27,14 @@ var SectionLicencas = React.createClass({
     });
 
     let chartData = {
-      labels: distritos.map(o => o.name),
+      labels: nuts.map(o => o.name),
       datasets: [
         {
-          data: distritos.map(o => o.data.licencas2016),
+          data: nuts.map(o => o.data.licencas2016),
           backgroundColor: '#F6B600'
         },
         {
-          data: distritos.map(o => o.data.max2016 - o.data.licencas2016),
+          data: nuts.map(o => o.data.max2016 - o.data.licencas2016),
           backgroundColor: '#2EB199'
         }
       ]

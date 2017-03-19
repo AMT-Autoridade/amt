@@ -26,62 +26,16 @@ export default function reducer (state = initialState, action) {
   return state;
 }
 
-function processData (distritos) {
-  let data = {distritos};
+function processData (nuts) {
+  let data = {nuts};
 
   // Licenças and max per district.
-  distritos = distritos.map(d => {
+  nuts = nuts.map(d => {
     d.data.licencas2006 = d.data['lic-geral'][0].value + d.data['lic-mob-reduzida'][0].value;
     d.data.licencas2016 = _.last(d.data['lic-geral']).value + _.last(d.data['lic-mob-reduzida']).value;
     d.data.max2016 = _.last(d.data['max-lic-geral']).value + _.last(d.data['max-lic-mob-reduzida']).value;
-    return d;
-  });
 
-  // Total licenças 2006.
-  data.licencas2006 = _.sumBy(distritos, 'data.licencas2006');
-
-  // Total licenças mob reduzida 2006.
-  data.licencasMobReduzida2006 = _.sumBy(distritos, d => d.data['lic-mob-reduzida'][0].value);
-
-  // Total licenças mob reduzida 2016.
-  data.licencasMobReduzida2016 = _.sumBy(distritos, d => _.last(d.data['lic-mob-reduzida']).value);
-
-  // Total licenças 2016.
-  data.licencas2016 = _.sumBy(distritos, 'data.licencas2016');
-
-  // Max licenças 2016
-  data.max2016 = _.sumBy(distritos, 'data.max2016');
-
-  // Pouplação
-  data.populacao = _.sumBy(distritos, distrito => _.last(distrito.data['pop-residente']).value);
-
-  // Licenças per 1000 habitants.
-  data.licencasHab = data.licencas2016 / (data.populacao / 1000);
-
-  data.totalMunicipios = _.sumBy(distritos, d => d.concelhos.length);
-
-  // Number of municípios with lic-mob-reduzida.
-  data.totalMunicipiosMobReduzida = _.sumBy(distritos, d => d.concelhos.filter(o => {
-    if (!o.data['lic-mob-reduzida']) {
-      console.error(`Concelho: ${o.name} doesn't have data on "lic-mob-reduzida"`);
-      return false;
-    }
-    return _.last(o.data['lic-mob-reduzida']).value !== 0;
-  }).length);
-
-  // Compute the timeline at the national level.
-  data.licencasTimeline = _.range(2006, 2017).map((y, i) => {
-    return {
-      year: y,
-      'lic-geral': _.sumBy(distritos, `data['lic-geral'][${i}].value`),
-      'lic-mob-reduzida': _.sumBy(distritos, `data['lic-mob-reduzida'][${i}].value`),
-      'max-lic-geral': _.sumBy(distritos, `data['max-lic-geral'][${i}].value`),
-      'max-lic-mob-reduzida': _.sumBy(distritos, `data['max-lic-mob-reduzida'][${i}].value`)
-    };
-  });
-
-  // For each município compute the change on the total number of licenças.
-  distritos = distritos.map(d => {
+    // For each município compute the change on the total number of licenças.
     var indexLast = d.data['lic-geral'].length - 1;
     d.concelhos = d.concelhos.map(c => {
       if (!c.data['lic-geral']) {
@@ -96,6 +50,48 @@ function processData (distritos) {
     return d;
   });
 
+  // Total licenças 2006.
+  data.licencas2006 = _.sumBy(nuts, 'data.licencas2006');
+
+  // Total licenças mob reduzida 2006.
+  data.licencasMobReduzida2006 = _.sumBy(nuts, d => d.data['lic-mob-reduzida'][0].value);
+
+  // Total licenças mob reduzida 2016.
+  data.licencasMobReduzida2016 = _.sumBy(nuts, d => _.last(d.data['lic-mob-reduzida']).value);
+
+  // Total licenças 2016.
+  data.licencas2016 = _.sumBy(nuts, 'data.licencas2016');
+
+  // Max licenças 2016
+  data.max2016 = _.sumBy(nuts, 'data.max2016');
+
+  // Pouplação
+  data.populacao = _.sumBy(nuts, distrito => _.last(distrito.data['pop-residente']).value);
+
+  // Licenças per 1000 habitants.
+  data.licencasHab = data.licencas2016 / (data.populacao / 1000);
+
+  data.totalMunicipios = _.sumBy(nuts, d => d.concelhos.length);
+
+  // Number of municípios with lic-mob-reduzida.
+  data.totalMunicipiosMobReduzida = _.sumBy(nuts, d => d.concelhos.filter(o => {
+    if (!o.data['lic-mob-reduzida']) {
+      console.error(`Concelho: ${o.name} doesn't have data on "lic-mob-reduzida"`);
+      return false;
+    }
+    return _.last(o.data['lic-mob-reduzida']).value !== 0;
+  }).length);
+
+  // Compute the timeline at the national level.
+  data.licencasTimeline = _.range(2006, 2017).map((y, i) => {
+    return {
+      year: y,
+      'lic-geral': _.sumBy(nuts, `data['lic-geral'][${i}].value`),
+      'lic-mob-reduzida': _.sumBy(nuts, `data['lic-mob-reduzida'][${i}].value`),
+      'max-lic-geral': _.sumBy(nuts, `data['max-lic-geral'][${i}].value`),
+      'max-lic-mob-reduzida': _.sumBy(nuts, `data['max-lic-mob-reduzida'][${i}].value`)
+    };
+  });
 
   return data;
 }
