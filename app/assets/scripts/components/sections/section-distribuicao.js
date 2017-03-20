@@ -3,6 +3,7 @@ import React, { PropTypes as T } from 'react';
 import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
+import makeTooltip from '../../utils/tooltip';
 import { percent, round } from '../../utils/utils';
 
 var SectionDistribuicao = React.createClass({
@@ -14,20 +15,40 @@ var SectionDistribuicao = React.createClass({
   },
 
   renderTrendLineChart: function (data) {
+    let l = data.length - 1;
+
+    let tooltipFn = makeTooltip(entryIndex => {
+      let year = data[entryIndex];
+      return (
+        <div>
+          <p>total {year.value}</p>
+        </div>
+      );
+    });
+
+    let pointRadius = data.map((o, i) => i === 0 || i === l ? 2 : 0);
+
     let chartData = {
       labels: data.map(o => o.year),
       datasets: [{
         data: data.map(o => o.value),
         lineTension: 0,
-        pointRadius: 0,
-        // backgroundColor: 'transparent',
+        pointRadius: pointRadius,
+        pointBorderWidth: 0,
+        pointBackgroundColor: '#2EB199',
         borderColor: '#2EB199',
         borderWidth: 1
       }]
     };
 
     let chartOptions = {
-      events: [],
+      layout: {
+        padding: {
+          left: 5,
+          top: 2,
+          right: 5
+        }
+      },
       legend: {
         display: false
       },
@@ -43,7 +64,10 @@ var SectionDistribuicao = React.createClass({
         }]
       },
       tooltips: {
-        enabled: false
+        enabled: false,
+        mode: 'index',
+        position: 'nearest',
+        custom: tooltipFn
       }
     };
 
@@ -75,12 +99,10 @@ var SectionDistribuicao = React.createClass({
   renderTable: function () {
     let adminList = this.props.adminList;
 
-    let colLabel = this.props.adminLevel === 'national' ? 'Região' : 'Concelho';
-
     return (
       <ul className='table-distribution'>
         <li className='table-header'>
-          <span className='table-region'>{colLabel}</span>
+          <span className='table-region'>Região</span>
           <span className='table-graph'>Total de Licenças</span>
           <span className='table-available'>Vagas Disponíveis</span>
           <span className='table-national'>% do Total de Licenças</span>
