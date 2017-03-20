@@ -25,9 +25,9 @@ var SectionEvolucao = React.createClass({
       let year = nationalTimeline[entryIndex];
       return (
         <div>
-          <p>total {year['lic-geral'] + year['lic-mob-reduzida']}</p>
-          <p>geral {year['lic-geral']}</p>
-          <p>reduzida {year['lic-mob-reduzida']}</p>
+          <p>total {(year['lic-geral'] + year['lic-mob-reduzida']).toLocaleString()}</p>
+          <p>geral {year['lic-geral'].toLocaleString()}</p>
+          <p>reduzida {year['lic-mob-reduzida'].toLocaleString()}</p>
         </div>
       );
     });
@@ -151,7 +151,7 @@ var SectionEvolucao = React.createClass({
       let entry = licencasChange[entryIndex];
       return (
         <div>
-          <p>{round(entry.percent)}%</p>
+          <p>{round(entry.percent).toLocaleString()}%</p>
           <p>{keyIndex[entry.key]}</p>
         </div>
       );
@@ -189,7 +189,6 @@ var SectionEvolucao = React.createClass({
 
     // Municipios without change in number on licenças.
     let totalMunicipiosNoChange = this.props.municipios.reduce((acc, c) => c.data.change === 0 ? acc + 1 : acc, 0);
-    console.log('this.props.totalMunicipios', totalMunicipios);
 
     return (
       <div id='section-evolucao' className='section-wrapper'>
@@ -203,15 +202,15 @@ var SectionEvolucao = React.createClass({
             <div className='section-stats'>
               <ul>
                 <li>
-                  <span className='stat-number'>{newLicencas}</span>
+                  <span className='stat-number'>{newLicencas.toLocaleString()}</span>
                   <span className='stat-description'>Aumento do número de licenças entre 2006 e 2016.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>{round(increaseLicencas, 2)}%</span>
+                  <span className='stat-number'>{round(increaseLicencas, 2).toLocaleString()}%</span>
                   <span className='stat-description'>Crescimento dos táxis licenciados desde 2006.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios)}%</span>
+                  <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios).toLocaleString()}%</span>
                   <span className='stat-description'>Dos municípios não registaram alteração no número de licenças.</span>
                 </li>
               </ul>

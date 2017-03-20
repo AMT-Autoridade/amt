@@ -19,7 +19,7 @@ var SectionDistribuicao = React.createClass({
       let year = data[entryIndex];
       return (
         <div>
-          <p>total {year.value}</p>
+          <p>total {year.value.toLocaleString()}</p>
         </div>
       );
     });

@@ -21,7 +21,7 @@ var SectionDistribuicao = React.createClass({
       let year = data[entryIndex];
       return (
         <div>
-          <p>total {year.value}</p>
+          <p>total {year.value.toLocaleString()}</p>
         </div>
       );
     });
@@ -89,9 +89,9 @@ var SectionDistribuicao = React.createClass({
       <li key={adminArea.id}>
         <span className='table-region'>{adminArea.name}</span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
-        <span className='table-available'>{availableLicencas}</span>
-        <span className='table-national'>{percentNational}%</span>
-        <span className='table-residents'>{round(licencas1000Hab, 1)}</span>
+        <span className='table-available'>{availableLicencas.toLocaleString()}</span>
+        <span className='table-national'>{percentNational.toLocaleString()}%</span>
+        <span className='table-residents'>{round(licencas1000Hab, 1).toLocaleString()}</span>
       </li>
     );
   },

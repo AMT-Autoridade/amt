@@ -39,7 +39,7 @@ var SectionMobilidade = React.createClass({
       let datum = data[entryIndex];
       return (
         <div>
-          <p>{datum.value}</p>
+          <p>{datum.value.toLocaleString()}</p>
         </div>
       );
     });
@@ -104,7 +104,7 @@ var SectionMobilidade = React.createClass({
       return (
         <div>
           <p>{datum.label}</p>
-          <p>{datum.value} ({datum.percent}%)</p>
+          <p>{datum.value.toLocaleString()} ({datum.percent.toLocaleString()}%)</p>
         </div>
       );
     });
@@ -163,15 +163,15 @@ var SectionMobilidade = React.createClass({
             <div className='section-stats'>
               <ul>
                 <li>
-                  <span className='stat-number'>{percentMobRed}%</span>
+                  <span className='stat-number'>{percentMobRed.toLocaleString()}%</span>
                   <span className='stat-description'>Municípios ({totalMunicipiosMobReduzida}) com contingentes mobilidade reduzida.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>{newMobReduzida}</span>
+                  <span className='stat-number'>{newMobReduzida.toLocaleString()}</span>
                   <span className='stat-description'>Número de novas licenças emitidas em CMR.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>{percentNewMobRed}%</span>
+                  <span className='stat-number'>{percentNewMobRed.toLocaleString()}%</span>
                   <span className='stat-description'>Do aumento de licenças resulta do crescimento de licenças emitidas em CMR.</span>
                 </li>
               </ul>
