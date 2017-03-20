@@ -19,6 +19,15 @@ p {
 	margin: 0 0 20px 0;
 }
 
+a, a:visited {
+	color: $primary-color;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+		color: shade($primary-color, 75);
+	}
+}
 
 .stat-number {
 	font-size: $h2-font-size;	
@@ -30,8 +39,6 @@ p {
 	font-size: 1.25rem;
 	color: tint($text-color, 50%);
 }
-
-
 
 .graph-description {
 	font-size: .875rem;
