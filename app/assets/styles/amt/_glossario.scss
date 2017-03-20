@@ -20,3 +20,15 @@
 		}
 	}
 }
+
+
+#section-dados,
+#section-sobre {
+	overflow: hidden;
+
+	div {
+		@include media (large-up) {
+      		@include column(6/12, $cycle: 2);
+    	}
+	}
+}

@@ -44,7 +44,7 @@
 
 .two-columns {
   > li,
-  >div {
+  > div {
     @include column(6/12, $cycle: 2);
   }
 } 
