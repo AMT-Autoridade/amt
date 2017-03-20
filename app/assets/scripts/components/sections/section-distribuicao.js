@@ -48,7 +48,7 @@ var SectionDistribuicao = React.createClass({
     };
 
     return (
-      <LineChart data={chartData} options={chartOptions} height={20} />
+      <LineChart data={chartData} options={chartOptions} height={40} />
     );
   },
 
@@ -63,11 +63,11 @@ var SectionDistribuicao = React.createClass({
 
     return (
       <li key={adminArea.id}>
-        <span>{adminArea.name}</span>
-        <div>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
-        <span>{availableLicencas}</span>
-        <span>{percentNational}%</span>
-        <span>{round(licencas1000Hab, 1)}</span>
+        <span className='table-region'>{adminArea.name}</span>
+        <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
+        <span className='table-available'>{availableLicencas}</span>
+        <span className='table-national'>{percentNational}%</span>
+        <span className='table-residents'>{round(licencas1000Hab, 1)}</span>
       </li>
     );
   },
@@ -78,13 +78,13 @@ var SectionDistribuicao = React.createClass({
     let colLabel = this.props.adminLevel === 'national' ? 'Região' : 'Concelho';
 
     return (
-      <ul>
-        <li>
-          <span>{colLabel}</span>
-          <span>Total de Licenças</span>
-          <span>Vagas Disponíveis</span>
-          <span>% do Total Nacional de Licenças</span>
-          <span>% do Total de População</span>
+      <ul className='table-distribution'>
+        <li className='table-header'>
+          <span className='table-region'>{colLabel}</span>
+          <span className='table-graph'>Total de Licenças</span>
+          <span className='table-available'>Vagas Disponíveis</span>
+          <span className='table-national'>% do Total de Licenças</span>
+          <span className='table-residents'>% do Total de População</span>
         </li>
         {adminList.map(this.renderTableRow)}
       </ul>
@@ -103,9 +103,6 @@ var SectionDistribuicao = React.createClass({
           <div className='section-content'>
             {this.renderTable()}
           </div>
-          <footer className='section-footer'>
-            <p><strong>Notas:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>
-          </footer>
         </section>
       </div>
     );
