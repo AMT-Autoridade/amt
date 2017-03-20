@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import { Link } from 'react-router';
 import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
@@ -87,7 +88,7 @@ var SectionDistribuicao = React.createClass({
 
     return (
       <li key={adminArea.id}>
-        <span className='table-region'>{adminArea.name}</span>
+        <span className='table-region'><Link to={`/nuts/${_.kebabCase(adminArea.name)}`} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
         <span className='table-available'>{availableLicencas.toLocaleString()}</span>
         <span className='table-national'>{percentNational.toLocaleString()}%</span>

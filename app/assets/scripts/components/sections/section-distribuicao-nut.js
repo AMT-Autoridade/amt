@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import { Link } from 'react-router';
 import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
@@ -7,6 +8,7 @@ import makeTooltip from '../../utils/tooltip';
 
 var SectionDistribuicao = React.createClass({
   propTypes: {
+    parentSlug: T.string,
     adminLevel: T.string,
     adminName: T.string,
     adminList: T.array
@@ -75,9 +77,10 @@ var SectionDistribuicao = React.createClass({
   },
 
   renderTableRow: function (adminArea) {
+    let url = `/nuts/${this.props.parentSlug}/concelhos/${_.kebabCase(adminArea.name)}`;
     return (
       <li key={adminArea.id}>
-        <span className='table-region'>{adminArea.name}</span>
+        <span className='table-region'><Link to={url} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
         <span className='table-parking'>Estacionamento</span>
         <span className='table-scope'>ambito</span>

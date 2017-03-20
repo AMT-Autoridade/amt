@@ -58,6 +58,7 @@ var Home = React.createClass({
             <SectionEstacionamento data={data} />
             <SectionDistribuicaoNut
               adminLevel='nut'
+              parentSlug={this.props.params.nut}
               adminName={data.name}
               adminList={data.concelhos}
               />
