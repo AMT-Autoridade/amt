@@ -1,25 +1,12 @@
 #section-distribuicao {
 
-	table {
-		iframe {
-			max-width: 100px;
+	.table-distribution {
+		list-style: none;
+
+		li {
+			border-bottom: 1px solid #ccc;
+			padding: 10px 0;
 		}
 	}
 
-	th {
-		text-transform: uppercase;
-		color: tint($text-color, 50%);
-		font-size: .625rem;
-		text-align: left;
-		font-weight: normal;
-
-		&.table-region {
-			width: 25%;
-		}
-
-		&.table-graph {
-			width: 25%;
-
-		}
-	}
 }
