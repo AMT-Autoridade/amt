@@ -8,33 +8,41 @@ import { round } from '../../utils/utils';
 
 var SectionLicencas = React.createClass({
   propTypes: {
-    data: T.object
+    adminLevel: T.string,
+    adminName: T.string,
+    adminList: T.array,
+    licencas2016: T.number,
+    max2016: T.number,
+    licencasHab: T.number
   },
 
   renderChart: function () {
-    let nuts = _.sortBy(this.props.data.nuts, 'data.licencas2016').reverse();
+    let dataList = _(this.props.adminList)
+      .sortBy('data.licencas2016')
+      .reverse()
+      .value();
 
     let tooltipFn = makeTooltip(entryIndex => {
-      let distrito = nuts[entryIndex];
+      let datum = dataList[entryIndex];
       return (
         <div>
-          <p>{distrito.name}</p>
-          <p>geral {distrito.data.licencas2016}</p>
-          <p>max {distrito.data.max2016}</p>
-          <p>Vagas {distrito.data.max2016 - distrito.data.licencas2016}</p>
+          <p>{datum.name}</p>
+          <p>geral {datum.data.licencas2016}</p>
+          <p>max {datum.data.max2016}</p>
+          <p>Vagas {datum.data.max2016 - datum.data.licencas2016}</p>
         </div>
       );
     });
 
     let chartData = {
-      labels: nuts.map(o => o.name),
+      labels: dataList.map(o => o.name),
       datasets: [
         {
-          data: nuts.map(o => o.data.licencas2016),
+          data: dataList.map(o => o.data.licencas2016),
           backgroundColor: '#F6B600'
         },
         {
-          data: nuts.map(o => o.data.max2016 - o.data.licencas2016),
+          data: dataList.map(o => o.data.max2016 - o.data.licencas2016),
           backgroundColor: '#2EB199'
         }
       ]
@@ -82,28 +90,28 @@ var SectionLicencas = React.createClass({
   },
 
   render: function () {
-    let data = this.props.data;
+    let { licencas2016, max2016, licencasHab } = this.props;
 
     return (
       <div id='section-licencas' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3 className='section-category'>Portugal</h3>
+            <h3 className='section-category'>{this.props.adminName}</h3>
             <h1>Licenças e Contingentes</h1>
             <p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p>
           </header>
           <div className='section-content'>
             <ul className='section-stats three-columns'>
               <li>
-                <span className='stat-number'>{data.licencas2016}</span>
+                <span className='stat-number'>{licencas2016}</span>
                 <span className='stat-description'>Total de táxis licenciados em agosto de 2016.</span>
               </li>
               <li>
-                <span className='stat-number'>{data.max2016}</span>
-                <span className='stat-description'>Total dos contingentes  em agosto de 2016.</span>
+                <span className='stat-number'>{max2016}</span>
+                <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
               </li>
               <li>
-                <span className='stat-number'>{round(data.licencasHab, 1)}</span>
+                <span className='stat-number'>{round(licencasHab, 1)}</span>
                 <span className='stat-description'>Licenças activas por 1000 residentes.</span>
               </li>
             </ul>

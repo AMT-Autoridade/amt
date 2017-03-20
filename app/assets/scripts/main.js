@@ -12,6 +12,7 @@ import store from './utils/store';
 // Views.
 import App from './views/app';
 import Home from './views/home';
+import Nuts from './views/nuts';
 import UhOh from './views/uhoh';
 
 const history = syncHistoryWithStore(hashHistory, store);
@@ -21,11 +22,26 @@ const scrollerMiddleware = useScroll((prevRouterProps, currRouterProps) => {
     decodeURIComponent(currRouterProps.location.pathname) !== decodeURIComponent(prevRouterProps.location.pathname);
 });
 
+// TEMP.
+// We need to use a meta file for the navigation.
+// Or check the value on component enter.
+var admin = require('./data/national.json');
+import _ from 'lodash';
+
+var onEnter = (nextState, replace) => {
+  let nuts = admin.results.map(o => _.kebabCase(o.name));
+  let nut = nextState.params.nut;
+  if (nuts.indexOf(nut) === -1) {
+    return replace('/404');
+  }
+};
+
 render((
   <Provider store={store}>
     <Router history={history} render={applyRouterMiddleware(scrollerMiddleware)}>
       <Route path='/' component={App}>
         <Route path="404" component={UhOh}/>
+        <Route path='/nuts/:nut' component={Nuts} onEnter={onEnter} />
         <IndexRoute component={Home} pageClass='page--homepage' />
         <Route path="*" component={UhOh}/>
       </Route>

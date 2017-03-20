@@ -2,7 +2,7 @@
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchNational } from '../actions';
+import { fetchNut } from '../actions';
 
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
@@ -13,16 +13,17 @@ import SectionEvolucao from '../components/sections/section-evolucao';
 
 var Home = React.createClass({
   propTypes: {
-    national: T.object,
-    _fetchNational: T.func
+    params: T.object,
+    nut: T.object,
+    _fetchNut: T.func
   },
 
   componentDidMount: function () {
-    this.props._fetchNational();
+    this.props._fetchNut(this.props.params.nut);
   },
 
   render: function () {
-    let { fetched, fetching, error, data } = this.props.national;
+    let { fetched, fetching, error, data } = this.props.nut;
 
     if (!fetched && !fetching) {
       return null;
@@ -49,38 +50,39 @@ var Home = React.createClass({
           <div className='content-wrapper'>
 
             <SectionLicencas
-              adminLevel='national'
-              adminName='Portugal'
-              adminList={data.nuts}
-              licencas2016={data.licencas2016}
-              max2016={data.max2016}
-              licencasHab={data.licencasHab}
+              adminLevel='nut'
+              adminName={data.name}
+              adminList={data.concelhos}
+              licencas2016={data.data.licencas2016}
+              max2016={data.data.max2016}
+              licencasHab={data.data.licencasHab}
             />
             <SectionMobilidade
-              adminLevel='national'
-              adminName='Portugal'
-              totalMunicipiosMobReduzida={data.totalMunicipiosMobReduzida}
-              totalMunicipios={data.totalMunicipios}
-              licencas2016={data.licencas2016}
-              licencas2006={data.licencas2006}
-              licencasMobReduzida2016={data.licencasMobReduzida2016}
-              licencasMobReduzida2006={data.licencasMobReduzida2006}
+              adminLevel='nut'
+              adminName={data.name}
+              totalMunicipiosMobReduzida={data.data.totalMunicipiosMobReduzida}
+              totalMunicipios={data.data.totalMunicipios}
+              licencas2016={data.data.licencas2016}
+              licencas2006={data.data.licencas2006}
+              licencasMobReduzida2016={data.data.licencasMobReduzida2016}
+              licencasMobReduzida2006={data.data.licencasMobReduzida2006}
             />
             <SectionEstacionamento data={data} />
             <SectionDistribuicao
-              adminLevel='national'
-              adminName='Portugal'
-              adminList={data.nuts}
-              licencas2016={data.licencas2016}
-            />
+              adminLevel='nut'
+              adminName={data.name}
+              adminList={data.concelhos}
+              licencas2016={data.data.licencas2016}
+              />
             <SectionEvolucao
-              adminLevel='national'
-              adminName='Portugal'
-              licencas2016={data.licencas2016}
-              licencas2006={data.licencas2006}
-              municipios={data.nuts.reduce((acc, nut) => acc.concat(nut.concelhos), [])}
-              totalMunicipios={data.totalMunicipios}
-              licencasTimeline={data.licencasTimeline}
+              adminLevel='nut'
+              adminName={data.name}
+              licencas2016={data.data.licencas2016}
+              licencas2006={data.data.licencas2006}
+              municipios={data.concelhos}
+              totalMunicipios={data.data.totalMunicipios}
+              licencasTimeline={data.data.licencasTimeline}
+              data={data}
             />
 
           </div>
@@ -96,13 +98,13 @@ var Home = React.createClass({
 
 function selector (state) {
   return {
-    national: state.national
+    nut: state.nut
   };
 }
 
 function dispatcher (dispatch) {
   return {
-    _fetchNational: (...args) => dispatch(fetchNational(...args))
+    _fetchNut: (...args) => dispatch(fetchNut(...args))
   };
 }
 
