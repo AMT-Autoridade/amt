@@ -20,7 +20,6 @@ var SectionEvolucao = React.createClass({
 
   renderTimelineChart: function () {
     let nationalTimeline = this.props.licencasTimeline;
-    console.log('nationalTimeline', nationalTimeline);
 
     let tooltipFn = makeTooltip(entryIndex => {
       let year = nationalTimeline[entryIndex];
