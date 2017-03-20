@@ -27,9 +27,9 @@ var SectionLicencas = React.createClass({
       return (
         <ul>
           <li><span className='tooltip-title'>{datum.name}</span></li>
-          <li><span className='tooltip-label'>Contingente:</span><span className='tooltip-number'>{datum.data.max2016}</span></li>
-          <li><span className='tooltip-label'>Licenças activas:</span> <span className='tooltip-number'>{datum.data.licencas2016}</span></li>
-          <li><span className='tooltip-label'>Vagas disponíveis:</span> <span className='tooltip-number'>{datum.data.max2016 - datum.data.licencas2016}</span></li>
+          <li><span className='tooltip-label'>Contingente:</span><span className='tooltip-number'>{datum.data.max2016.toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>Licenças activas:</span> <span className='tooltip-number'>{datum.data.licencas2016.toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>Vagas disponíveis:</span> <span className='tooltip-number'>{(datum.data.max2016 - datum.data.licencas2016).toLocaleString()}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -72,7 +72,7 @@ var SectionLicencas = React.createClass({
               if (tick === 0) {
                 return '0';
               } else if (remain === 1 || remain === 2 || remain === 5 || index === 0 || index === ticks.length - 1) {
-                return tick;
+                return tick.toLocaleString();
               }
               return '';
             }
@@ -105,16 +105,16 @@ var SectionLicencas = React.createClass({
             <div className='section-stats'>
               <ul>
                 <li>
-                  <span className='stat-number'>{licencas2016}</span>
+                  <span className='stat-number'>{licencas2016.toLocaleString()}</span>
                   <span className='stat-description'>Total de táxis licenciados em agosto de 2016.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>{max2016}</span>
+                  <span className='stat-number'>{max2016.toLocaleString()}</span>
                   <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>{round(licencasHab, 1)}</span>
-                  <span className='stat-description'>Licenças activas por 1000 residentes.</span>
+                  <span className='stat-number'>{round(licencasHab, 1).toLocaleString()}</span>
+                  <span className='stat-description'>Licenças activas por 1 000 residentes.</span>
                 </li>
               </ul>
             </div>
