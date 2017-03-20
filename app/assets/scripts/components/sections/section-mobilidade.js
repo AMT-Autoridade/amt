@@ -39,7 +39,6 @@ var SectionMobilidade = React.createClass({
       let datum = data[entryIndex];
       return (
         <div>
-          <p>{datum.display}</p>
           <p>{datum.value}</p>
         </div>
       );
@@ -90,7 +89,7 @@ var SectionMobilidade = React.createClass({
         label: 'Contingente Geral',
         value: licencas2016Geral,
         percent: percent(licencas2016Geral, licencas2016),
-        backgroundColor: '#2EB199'
+        backgroundColor: '#41D6B9'
       },
       {
         label: 'Contingente Mobilidade Reduzida',
