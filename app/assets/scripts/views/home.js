@@ -10,6 +10,9 @@ import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
 import SectionDistribuicao from '../components/sections/section-distribuicao';
 import SectionEvolucao from '../components/sections/section-evolucao';
+import SectionSobre from '../components/sections/section-sobre';
+import SectionDados from '../components/sections/section-dados';
+import SectionGlossario from '../components/sections/section-glossario';
 
 var Home = React.createClass({
   propTypes: {
@@ -84,8 +87,12 @@ var Home = React.createClass({
             />
 
           </div>
-
         </div>
+           <div class="container-wrapper">
+            <SectionSobre />
+            <SectionDados />
+            <SectionGlossario />
+          </div>
       </div>
     );
   }
