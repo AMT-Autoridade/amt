@@ -101,26 +101,26 @@ var SectionLicencas = React.createClass({
             <p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p>
           </header>
           <div className='section-content'>
-            <ul className='section-stats three-columns'>
-              <li>
-                <span className='stat-number'>{licencas2016}</span>
-                <span className='stat-description'>Total de táxis licenciados em agosto de 2016.</span>
-              </li>
-              <li>
-                <span className='stat-number'>{max2016}</span>
-                <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
-              </li>
-              <li>
-                <span className='stat-number'>{round(licencasHab, 1)}</span>
-                <span className='stat-description'>Licenças activas por 1000 residentes.</span>
-              </li>
-            </ul>
+            <div className='section-stats'>
+              <ul>
+                <li>
+                  <span className='stat-number'>{licencas2016}</span>
+                  <span className='stat-description'>Total de táxis licenciados em agosto de 2016.</span>
+                </li>
+                <li>
+                  <span className='stat-number'>{max2016}</span>
+                  <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
+                </li>
+                <li>
+                  <span className='stat-number'>{round(licencasHab, 1)}</span>
+                  <span className='stat-description'>Licenças activas por 1000 residentes.</span>
+                </li>
+              </ul>
+            </div>
 
             {this.renderChart()}
 
           </div>
-          <footer className='section-footer'>
-          </footer>
         </section>
       </div>
     );
