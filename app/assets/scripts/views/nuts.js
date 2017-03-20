@@ -6,10 +6,8 @@ import { fetchNut } from '../actions';
 
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
-import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
-import SectionDistribuicao from '../components/sections/section-distribuicao';
-import SectionEvolucao from '../components/sections/section-evolucao';
+import SectionDistribuicaoNut from '../components/sections/section-distribuicao-nut';
 
 var Home = React.createClass({
   propTypes: {
@@ -57,34 +55,12 @@ var Home = React.createClass({
               max2016={data.data.max2016}
               licencasHab={data.data.licencasHab}
             />
-            <SectionMobilidade
-              adminLevel='nut'
-              adminName={data.name}
-              totalMunicipiosMobReduzida={data.data.totalMunicipiosMobReduzida}
-              totalMunicipios={data.data.totalMunicipios}
-              licencas2016={data.data.licencas2016}
-              licencas2006={data.data.licencas2006}
-              licencasMobReduzida2016={data.data.licencasMobReduzida2016}
-              licencasMobReduzida2006={data.data.licencasMobReduzida2006}
-            />
             <SectionEstacionamento data={data} />
-            <SectionDistribuicao
+            <SectionDistribuicaoNut
               adminLevel='nut'
               adminName={data.name}
               adminList={data.concelhos}
-              licencas2016={data.data.licencas2016}
               />
-            <SectionEvolucao
-              adminLevel='nut'
-              adminName={data.name}
-              licencas2016={data.data.licencas2016}
-              licencas2006={data.data.licencas2006}
-              municipios={data.concelhos}
-              totalMunicipios={data.data.totalMunicipios}
-              licencasTimeline={data.data.licencasTimeline}
-              data={data}
-            />
-
           </div>
 
         </div>
