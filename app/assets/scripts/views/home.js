@@ -40,7 +40,7 @@ var Home = React.createClass({
       <div>
         <SectionIntro />
 
-        <div id="page-content">
+        <div id="page-content" className='container-wrapper'>
 
           <div className='map-wrapper'>
             This is a map

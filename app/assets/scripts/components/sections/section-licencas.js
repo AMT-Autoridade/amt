@@ -25,12 +25,13 @@ var SectionLicencas = React.createClass({
     let tooltipFn = makeTooltip(entryIndex => {
       let datum = dataList[entryIndex];
       return (
-        <div>
-          <p>{datum.name}</p>
-          <p>geral {datum.data.licencas2016}</p>
-          <p>max {datum.data.max2016}</p>
-          <p>Vagas {datum.data.max2016 - datum.data.licencas2016}</p>
-        </div>
+        <ul>
+          <li><span className='tooltip-title'>{datum.name}</span></li>
+          <li><span className='tooltip-label'>Contingente:</span><span className='tooltip-number'>{datum.data.max2016}</span></li>
+          <li><span className='tooltip-label'>Licenças activas:</span> <span className='tooltip-number'>{datum.data.licencas2016}</span></li>
+          <li><span className='tooltip-label'>Vagas disponíveis:</span> <span className='tooltip-number'>{datum.data.max2016 - datum.data.licencas2016}</span></li>
+          <span className='triangle'></span>
+        </ul>
       );
     });
 

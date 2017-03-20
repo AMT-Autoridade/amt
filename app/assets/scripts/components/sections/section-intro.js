@@ -8,7 +8,7 @@ var SectionIntro = React.createClass({
 
   render: function () {
     return (
-      <div id='section-intro' className='section-wrapper'>
+      <div id='section-intro' className='container-wrapper'>
         <section id='intro'>
           <h2>Observatório da Mobilidade:</h2>
           <h1> Táxis em Portugal 2006-2016</h1>
