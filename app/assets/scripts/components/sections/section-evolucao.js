@@ -20,6 +20,7 @@ var SectionEvolucao = React.createClass({
 
   renderTimelineChart: function () {
     let nationalTimeline = this.props.licencasTimeline;
+    let l = nationalTimeline.length - 1;
 
     let tooltipFn = makeTooltip(entryIndex => {
       let year = nationalTimeline[entryIndex];
@@ -32,8 +33,10 @@ var SectionEvolucao = React.createClass({
       );
     });
 
+    let labels = nationalTimeline.map((o, i) => i === 0 || i === l ? o.year : '');
+
     let chartData = {
-      labels: nationalTimeline.map(o => o.year),
+      labels: labels,
       datasets: [{
         data: nationalTimeline.map(o => o['lic-geral'] + o['lic-mob-reduzida']),
         backgroundColor: '#FFE7A2',
@@ -52,6 +55,9 @@ var SectionEvolucao = React.createClass({
         xAxes: [{
           gridLines: {
             display: false
+          },
+          ticks: {
+            maxRotation: 0
           }
         }],
         yAxes: [{
