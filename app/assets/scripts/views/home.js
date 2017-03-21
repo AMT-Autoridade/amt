@@ -11,6 +11,8 @@ import SectionEstacionamento from '../components/sections/section-estacionamento
 import SectionDistribuicao from '../components/sections/section-distribuicao';
 import SectionEvolucao from '../components/sections/section-evolucao';
 
+import Map from '../components/map';
+
 var Home = React.createClass({
   propTypes: {
     national: T.object,
@@ -44,9 +46,7 @@ var Home = React.createClass({
 
         <div id="page-content" className='container-wrapper'>
 
-          <div className='map-wrapper'>
-            This is a map
-          </div>
+          <Map />
 
           <div className='content-wrapper'>
 
