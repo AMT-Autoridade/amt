@@ -38,9 +38,10 @@ var SectionMobilidade = React.createClass({
     let tooltipFn = makeTooltip(entryIndex => {
       let datum = data[entryIndex];
       return (
-        <div>
-          <p>{datum.value.toLocaleString()}</p>
-        </div>
+        <ul className='x-small'>
+          <li><span className='tooltip-label'>{datum.label.toLocaleString()}:</span><span className='tooltip-number'>{datum.value.toLocaleString()}</span></li>
+          <span className='triangle'></span>
+        </ul>
       );
     });
 
@@ -86,13 +87,13 @@ var SectionMobilidade = React.createClass({
 
     let data = [
       {
-        label: 'Contingente Geral',
+        label: 'Geral',
         value: licencas2016Geral,
         percent: percent(licencas2016Geral, licencas2016),
         backgroundColor: '#41D6B9'
       },
       {
-        label: 'Contingente Mobilidade Reduzida',
+        label: 'CMR',
         value: licencasMobReduzida2016,
         percent: percent(licencasMobReduzida2016, licencas2016),
         backgroundColor: '#227868'
@@ -102,10 +103,10 @@ var SectionMobilidade = React.createClass({
     let tooltipFn = makeTooltip(entryIndex => {
       let datum = data[entryIndex];
       return (
-        <div>
-          <p>{datum.label}</p>
-          <p>{datum.value.toLocaleString()} ({datum.percent.toLocaleString()}%)</p>
-        </div>
+        <ul className='small'>
+          <li><span className='tooltip-label'>{datum.label.toLocaleString()}:</span><span className='tooltip-number'>{datum.percent.toLocaleString()}%</span></li>
+          <span className='triangle'></span>
+        </ul>
       );
     });
 

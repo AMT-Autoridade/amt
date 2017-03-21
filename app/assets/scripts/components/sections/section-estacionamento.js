@@ -28,7 +28,7 @@ var SectionEstacionamento = React.createClass({
             
           </div>
           <footer className='section-footer'>
-            <p><strong>Notas:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>
+            <p><strong>Legenda:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>
           </footer>
         </section>
       </div>
