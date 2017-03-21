@@ -16,8 +16,14 @@ var App = React.createClass({
     return (
       <div className={c('page', pageClass)}>
         <header id="page-header">
-          <h1><a href="#">AMT</a></h1>
-          <ul>
+          <h1 id='page-logo'><a href="#">AMT</a></h1>
+          <ul className='primary-nav'>
+            <li><a href="/#/#licenças">Licenças</a></li>
+            <li><a href="/#/glossario">Glossário</a></li>
+            <li><a href="#">Relatório</a></li>
+            <li><a href="/#/dados">Dados</a></li>
+          </ul>
+          <ul className='secondary-nav'>
             <li><a href="/#/sobre">Sobre</a></li>
             <li><a href="/#/glossario">Glossário</a></li>
             <li><a href="#">Relatório</a></li>
