@@ -1,0 +1,43 @@
+.section-wrapper {
+    padding: 100px 0;
+}
+
+.section-category {
+	font-size: 1.25rem;
+	text-transform: uppercase;
+  font-weight: 400;
+  color: tint($text-color, 50);
+}
+
+.section-stats ul{
+  list-style: none;
+  margin: 0 0 40px 0;
+  overflow: hidden;
+  padding: 0;
+
+  li {
+  	margin-bottom: 20px;
+  	span{
+  		max-width: 220px;
+  		display: block;
+  	}
+  }
+}
+
+.section-content {
+   clear: both;
+   overflow: hidden;
+}
+
+.section-footer {
+	border-top: 1px solid #ccc;
+	padding-top: 20px;
+
+	p {
+		font-size: .875rem;
+		color: tint($text-color, 25%);
+		strong {
+			color: $text-color;
+		}
+	}
+}

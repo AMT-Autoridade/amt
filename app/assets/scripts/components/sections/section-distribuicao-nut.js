@@ -5,14 +5,13 @@ import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
-import { percent, round } from '../../utils/utils';
 
 var SectionDistribuicao = React.createClass({
   propTypes: {
+    parentSlug: T.string,
     adminLevel: T.string,
     adminName: T.string,
-    adminList: T.array,
-    licencas2016: T.number
+    adminList: T.array
   },
 
   renderTrendLineChart: function (data) {
@@ -21,7 +20,7 @@ var SectionDistribuicao = React.createClass({
     let tooltipFn = makeTooltip(entryIndex => {
       let year = data[entryIndex];
       return (
-        <ul className='x-small'>
+         <ul className='x-small'>
           <li><span className='tooltip-label'>Year:</span><span className='tooltip-number'>{year.value.toLocaleString()}</span></li>
           <span className='triangle'></span>
         </ul>
@@ -79,21 +78,13 @@ var SectionDistribuicao = React.createClass({
   },
 
   renderTableRow: function (adminArea) {
-    let totNat2016 = this.props.licencas2016;
-
-    let licencas2016 = adminArea.data.licencas2016;
-    let availableLicencas = adminArea.data.max2016 - licencas2016;
-    let percentNational = percent(adminArea.data.licencas2016, totNat2016);
-    let pop = _.last(adminArea.data['pop-residente']).value;
-    let licencas1000Hab = licencas2016 / (pop / 1000);
-
+    let url = `/nuts/${this.props.parentSlug}/concelhos/${_.kebabCase(adminArea.name)}`;
     return (
       <li key={adminArea.id}>
-        <span className='table-region'><Link to={`/nuts/${_.kebabCase(adminArea.name)}`} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
+        <span className='table-region'><Link to={url} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
-        <span className='table-available'>{availableLicencas.toLocaleString()}</span>
-        <span className='table-national'>{percentNational.toLocaleString()}%</span>
-        <span className='table-residents'>{round(licencas1000Hab, 1).toLocaleString()}</span>
+        <span className='table-parking'>Estacionamento</span>
+        <span className='table-scope'>ambito</span>
       </li>
     );
   },
@@ -104,11 +95,10 @@ var SectionDistribuicao = React.createClass({
     return (
       <ul className='table-distribution'>
         <li className='table-header'>
-          <span className='table-region'>Região</span>
+          <span className='table-region'>Concelho</span>
           <span className='table-graph'>Total de Licenças</span>
-          <span className='table-available'>Vagas Disponíveis</span>
-          <span className='table-national'>% do Total de Licenças</span>
-          <span className='table-residents'>% do Total de População</span>
+          <span className='table-parking'>Estacionamento</span>
+          <span className='table-scope'>Âmbito Geográfico</span>
         </li>
         {adminList.map(this.renderTableRow)}
       </ul>
@@ -122,7 +112,6 @@ var SectionDistribuicao = React.createClass({
           <header className='section-header'>
             <h3>{this.props.adminName}</h3>
             <h1>Distribuição Geográfica</h1>
-            <p className='lead'>Não obstante as licenças de táxi serem atribuídas a nível municipal apresenta-se a sua distribuição pelas regiões autónomas, pelos distritos e pelas áreas metropolitanas de Lisboa e do Porto.</p>
           </header>
           <div className='section-content'>
             {this.renderTable()}

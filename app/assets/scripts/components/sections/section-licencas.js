@@ -8,33 +8,42 @@ import { round } from '../../utils/utils';
 
 var SectionLicencas = React.createClass({
   propTypes: {
-    data: T.object
+    adminLevel: T.string,
+    adminName: T.string,
+    adminList: T.array,
+    licencas2016: T.number,
+    max2016: T.number,
+    licencasHab: T.number
   },
 
   renderChart: function () {
-    let distritos = _.sortBy(this.props.data.distritos, 'data.licencas2016').reverse();
+    let dataList = _(this.props.adminList)
+      .sortBy('data.licencas2016')
+      .reverse()
+      .value();
 
     let tooltipFn = makeTooltip(entryIndex => {
-      let distrito = distritos[entryIndex];
+      let datum = dataList[entryIndex];
       return (
-        <div>
-          <p>{distrito.name}</p>
-          <p>geral {distrito.data.licencas2016}</p>
-          <p>max {distrito.data.max2016}</p>
-          <p>Vagas {distrito.data.max2016 - distrito.data.licencas2016}</p>
-        </div>
+        <ul>
+          <li><span className='tooltip-title'>{datum.name}</span></li>
+          <li><span className='tooltip-label'>Contingente:</span><span className='tooltip-number'>{datum.data.max2016.toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>Licenças activas:</span> <span className='tooltip-number'>{datum.data.licencas2016.toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>Vagas disponíveis:</span> <span className='tooltip-number'>{(datum.data.max2016 - datum.data.licencas2016).toLocaleString()}</span></li>
+          <span className='triangle'></span>
+        </ul>
       );
     });
 
     let chartData = {
-      labels: distritos.map(o => o.name),
+      labels: dataList.map(o => o.name),
       datasets: [
         {
-          data: distritos.map(o => o.data.licencas2016),
+          data: dataList.map(o => o.data.licencas2016),
           backgroundColor: '#F6B600'
         },
         {
-          data: distritos.map(o => o.data.max2016 - o.data.licencas2016),
+          data: dataList.map(o => o.data.max2016 - o.data.licencas2016),
           backgroundColor: '#2EB199'
         }
       ]
@@ -63,7 +72,7 @@ var SectionLicencas = React.createClass({
               if (tick === 0) {
                 return '0';
               } else if (remain === 1 || remain === 2 || remain === 5 || index === 0 || index === ticks.length - 1) {
-                return tick;
+                return tick.toLocaleString();
               }
               return '';
             }
@@ -82,37 +91,37 @@ var SectionLicencas = React.createClass({
   },
 
   render: function () {
-    let data = this.props.data;
+    let { licencas2016, max2016, licencasHab } = this.props;
 
     return (
       <div id='section-licencas' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3 className='section-category'>Portugal</h3>
+            <h3 className='section-category'>{this.props.adminName}</h3>
             <h1>Licenças e Contingentes</h1>
             <p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p>
           </header>
           <div className='section-content'>
-            <ul className='section-stats three-columns'>
-              <li>
-                <span className='stat-number'>{data.licencas2016}</span>
-                <span className='stat-description'>Total de táxis licenciados em agosto de 2016.</span>
-              </li>
-              <li>
-                <span className='stat-number'>{data.max2016}</span>
-                <span className='stat-description'>Total dos contingentes  em agosto de 2016.</span>
-              </li>
-              <li>
-                <span className='stat-number'>{round(data.licencasHab, 1)}</span>
-                <span className='stat-description'>Licenças activas por 1000 residentes.</span>
-              </li>
-            </ul>
+            <div className='section-stats'>
+              <ul>
+                <li>
+                  <span className='stat-number'>{licencas2016.toLocaleString()}</span>
+                  <span className='stat-description'>Total de táxis licenciados em agosto de 2016.</span>
+                </li>
+                <li>
+                  <span className='stat-number'>{max2016.toLocaleString()}</span>
+                  <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
+                </li>
+                <li>
+                  <span className='stat-number'>{round(licencasHab, 1).toLocaleString()}</span>
+                  <span className='stat-description'>Licenças activas por 1 000 residentes.</span>
+                </li>
+              </ul>
+            </div>
 
             {this.renderChart()}
 
           </div>
-          <footer className='section-footer'>
-          </footer>
         </section>
       </div>
     );

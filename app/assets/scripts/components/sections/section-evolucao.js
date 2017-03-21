@@ -8,25 +8,35 @@ import { round, percent } from '../../utils/utils';
 
 var SectionEvolucao = React.createClass({
   propTypes: {
+    adminLevel: T.string,
+    adminName: T.string,
+    licencas2016: T.number,
+    licencas2006: T.number,
+    totalMunicipios: T.number,
+    municipios: T.array,
+    licencasTimeline: T.array,
     data: T.object
   },
 
   renderTimelineChart: function () {
-    let nationalTimeline = this.props.data.licencasTimeline;
+    let nationalTimeline = this.props.licencasTimeline;
+    let l = nationalTimeline.length - 1;
 
     let tooltipFn = makeTooltip(entryIndex => {
       let year = nationalTimeline[entryIndex];
       return (
         <div>
-          <p>total {year['lic-geral'] + year['lic-mob-reduzida']}</p>
-          <p>geral {year['lic-geral']}</p>
-          <p>reduzida {year['lic-mob-reduzida']}</p>
+          <p>total {(year['lic-geral'] + year['lic-mob-reduzida']).toLocaleString()}</p>
+          <p>geral {year['lic-geral'].toLocaleString()}</p>
+          <p>reduzida {year['lic-mob-reduzida'].toLocaleString()}</p>
         </div>
       );
     });
 
+    let labels = nationalTimeline.map((o, i) => i === 0 || i === l ? o.year : '');
+
     let chartData = {
-      labels: nationalTimeline.map(o => o.year),
+      labels: labels,
       datasets: [{
         data: nationalTimeline.map(o => o['lic-geral'] + o['lic-mob-reduzida']),
         backgroundColor: '#FFE7A2',
@@ -45,6 +55,9 @@ var SectionEvolucao = React.createClass({
         xAxes: [{
           gridLines: {
             display: false
+          },
+          ticks: {
+            maxRotation: 0
           }
         }],
         yAxes: [{
@@ -66,9 +79,7 @@ var SectionEvolucao = React.createClass({
   },
 
   renderTopMunicipiosChart: function () {
-    const distritos = this.props.data.distritos;
-    const topMunicipios = _(distritos)
-      .thru(distritos => distritos.reduce((acc, distrito) => acc.concat(distrito.concelhos), []))
+    const topMunicipios = _(this.props.municipios)
       .sortBy('data.change')
       .reverse()
       .take(5)
@@ -121,10 +132,9 @@ var SectionEvolucao = React.createClass({
   },
 
   renderChangeLicencasChart: function () {
-    const {distritos, totalMunicipios} = this.props.data;
+    const {municipios, totalMunicipios} = this.props;
 
-    const licencasChange = _(distritos)
-      .thru(distritos => distritos.reduce((acc, distrito) => acc.concat(distrito.concelhos), []))
+    const licencasChange = _(municipios)
       .groupBy(d => {
         if (d.data.change > 0) {
           return 'increase';
@@ -147,7 +157,7 @@ var SectionEvolucao = React.createClass({
       let entry = licencasChange[entryIndex];
       return (
         <div>
-          <p>{round(entry.percent)}%</p>
+          <p>{round(entry.percent).toLocaleString()}%</p>
           <p>{keyIndex[entry.key]}</p>
         </div>
       );
@@ -178,52 +188,52 @@ var SectionEvolucao = React.createClass({
   },
 
   render: function () {
-    let data = this.props.data;
+    let { licencas2016, licencas2006, totalMunicipios } = this.props;
 
-    let newLicencas = data.licencas2016 - data.licencas2006;
-    let increaseLicencas = newLicencas / data.licencas2006 * 100;
+    let newLicencas = licencas2016 - licencas2006;
+    let increaseLicencas = newLicencas / licencas2006 * 100;
 
     // Municipios without change in number on licenças.
-    let totalMunicipiosNoChange = data.distritos.reduce((acc, distrito) => {
-      return acc + distrito.concelhos.reduce((acc_, concelho) => concelho.data.change === 0 ? acc_ + 1 : acc_, 0);
-    }, 0);
+    let totalMunicipiosNoChange = this.props.municipios.reduce((acc, c) => c.data.change === 0 ? acc + 1 : acc, 0);
 
     return (
       <div id='section-evolucao' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3>Portugal</h3>
+            <h3>{this.props.adminName}</h3>
             <h1>Evolução 2006 - 2016</h1>
-            <p>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, é a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
+            <p className='lead'>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, é a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
           </header>
           <div className='section-content'>
-            <ul className='section-stats three-columns'>
-              <li>
-                <span className='stat-number'>{newLicencas}</span>
-                <span className='stat-description'>Aumento do número de licenças entre 2006 e 2016.</span>
-              </li>
-              <li>
-                <span className='stat-number'>{round(increaseLicencas, 2)}%</span>
-                <span className='stat-description'>Crescimento dos táxis licenciados desde 2006.</span>
-              </li>
-              <li>
-                <span className='stat-number'>{percent(totalMunicipiosNoChange, data.totalMunicipios)}%</span>
-                <span className='stat-description'>Dos municípios não registaram alteração no número de licenças.</span>
-              </li>
-            </ul>
+            <div className='section-stats'>
+              <ul>
+                <li>
+                  <span className='stat-number'>{newLicencas.toLocaleString()}</span>
+                  <span className='stat-description'>Aumento do número de licenças entre 2006 e 2016.</span>
+                </li>
+                <li>
+                  <span className='stat-number'>{round(increaseLicencas, 2).toLocaleString()}%</span>
+                  <span className='stat-description'>Crescimento dos táxis licenciados desde 2006.</span>
+                </li>
+                <li>
+                  <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios).toLocaleString()}%</span>
+                  <span className='stat-description'>Dos municípios não registaram alteração no número de licenças.</span>
+                </li>
+              </ul>
+            </div>
 
-            <div className='three-columns'>
+            <div className='graph-container'>
               <div className='graph'>
                 {this.renderTimelineChart()}
-                <p>Evolução das licenças 2006 a 2016.</p>
+                <p className='graph-description'>Evolução das licenças 2006 a 2016.</p>
               </div>
               <div className='graph'>
                 {this.renderTopMunicipiosChart()}
-                <p>Municipios com maior aumento.</p>
+                <p className='graph-description'>Municipios com maior aumento.</p>
               </div>
               <div className='graph'>
                 {this.renderChangeLicencasChart()}
-                <p>Alterações do número de licenças.</p>
+                <p className='graph-description'>Alterações do número de licenças.</p>
               </div>
             </div>
 

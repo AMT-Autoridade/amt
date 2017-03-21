@@ -40,7 +40,7 @@ var Home = React.createClass({
       <div>
         <SectionIntro />
 
-        <div id="page-content">
+        <div id="page-content" className='container-wrapper'>
 
           <div className='map-wrapper'>
             This is a map
@@ -48,14 +48,42 @@ var Home = React.createClass({
 
           <div className='content-wrapper'>
 
-            <SectionLicencas data={data} />
-            <SectionMobilidade data={data} />
+            <SectionLicencas
+              adminLevel='national'
+              adminName='Portugal'
+              adminList={data.nuts}
+              licencas2016={data.licencas2016}
+              max2016={data.max2016}
+              licencasHab={data.licencasHab}
+            />
+            <SectionMobilidade
+              adminLevel='national'
+              adminName='Portugal'
+              totalMunicipiosMobReduzida={data.totalMunicipiosMobReduzida}
+              totalMunicipios={data.totalMunicipios}
+              licencas2016={data.licencas2016}
+              licencas2006={data.licencas2006}
+              licencasMobReduzida2016={data.licencasMobReduzida2016}
+              licencasMobReduzida2006={data.licencasMobReduzida2006}
+            />
             <SectionEstacionamento data={data} />
-            <SectionDistribuicao data={data} />
-            <SectionEvolucao data={data} />
+            <SectionDistribuicao
+              adminLevel='national'
+              adminName='Portugal'
+              adminList={data.nuts}
+              licencas2016={data.licencas2016}
+            />
+            <SectionEvolucao
+              adminLevel='national'
+              adminName='Portugal'
+              licencas2016={data.licencas2016}
+              licencas2006={data.licencas2006}
+              municipios={data.nuts.reduce((acc, nut) => acc.concat(nut.concelhos), [])}
+              totalMunicipios={data.totalMunicipios}
+              licencasTimeline={data.licencasTimeline}
+            />
 
           </div>
-
         </div>
       </div>
     );

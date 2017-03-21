@@ -1,0 +1,70 @@
+#section-distribuicao {
+
+	.table-distribution {
+		list-style: none;
+		padding: 0;
+
+		li {
+			border-bottom: 1px solid #ccc;
+			padding: 10px 0;
+			overflow: hidden;
+			font-size: .8125rem;
+			@include media (small-up) { 
+				font-size: 1rem;
+			}
+
+			> span,
+			> div {
+				float: left;
+				width: 18%;
+				text-align: center;
+				@include media (medium-up) {  
+					width: 15%;
+				}
+
+				&.table-region {
+					width: 44%;
+					@include media (medium-up) {  
+						width: 30%;
+					}
+				}
+
+				&.table-national,
+				&.table-graph {
+					width: 20%;
+				}
+
+				&.table-region,
+				&.table-graph {
+					text-align: left;
+				}
+
+				&.table-graph {
+					display: none;
+					@include media (medium-up) { 
+						display: block;
+					}
+				}
+
+				a, a:visited {
+					color: shade($primary-color, 75);
+
+					&:hover {
+						color: $primary-color;		
+					}
+				}
+			}
+
+			&.table-header {
+				text-transform: uppercase;
+				font-size: .5rem;
+				color: tint($text-color, 50%);
+				text-align: center;
+				@include media (medium-up) { 
+					font-size: .625rem;
+				}
+			}
+		}
+	}
+
+}
