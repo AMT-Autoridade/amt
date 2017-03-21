@@ -37,7 +37,6 @@ var Nuts = React.createClass({
 
     return (
       <div>
-        <SectionIntro />
 
         <div id="page-content">
 

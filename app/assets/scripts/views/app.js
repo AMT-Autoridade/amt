@@ -18,10 +18,10 @@ var App = React.createClass({
         <header id="page-header">
           <h1><a href="#">AMT</a></h1>
           <ul>
-            <li><a href="#">Sobre</a></li>
-            <li><a href="#">Glossário</a></li>
+            <li><a href="/#/sobre">Sobre</a></li>
+            <li><a href="/#/glossario">Glossário</a></li>
             <li><a href="#">Relatório</a></li>
-            <li><a href="#">Dados</a></li>
+            <li><a href="/#/dados">Dados</a></li>
           </ul>
         </header>
         <main className='page__body' role='main'>

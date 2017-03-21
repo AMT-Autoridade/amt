@@ -1,3 +1,26 @@
+#section-intro {
+	height: 100vh;
+
+	@include media (large-up) { 
+		max-width: 670px;
+		text-align: center;
+
+		.lead {
+			max-width: 570px;
+			margin: 0 auto;
+		}
+	}
+
+	ul {
+		list-style: none;
+		li {
+			display: inline;
+			margin: 0 10px;
+		}
+	}
+}
+
+
 #section-glossario {
 	ul {
 		padding: 0;
