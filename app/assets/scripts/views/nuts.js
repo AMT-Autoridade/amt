@@ -9,7 +9,7 @@ import SectionLicencas from '../components/sections/section-licencas';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
 import SectionDistribuicaoNut from '../components/sections/section-distribuicao-nut';
 
-var Home = React.createClass({
+var Nuts = React.createClass({
   propTypes: {
     params: T.object,
     nut: T.object,
@@ -85,4 +85,4 @@ function dispatcher (dispatch) {
   };
 }
 
-module.exports = connect(selector, dispatcher)(Home);
+module.exports = connect(selector, dispatcher)(Nuts);

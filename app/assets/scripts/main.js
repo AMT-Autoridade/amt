@@ -13,6 +13,10 @@ import store from './utils/store';
 import App from './views/app';
 import Home from './views/home';
 import Nuts from './views/nuts';
+import Concelhos from './views/concelhos';
+import Glossario from './views/glossario';
+import Sobre from './views/sobre';
+import Dados from './views/dados';
 import UhOh from './views/uhoh';
 
 const history = syncHistoryWithStore(hashHistory, store);
@@ -41,7 +45,11 @@ render((
     <Router history={history} render={applyRouterMiddleware(scrollerMiddleware)}>
       <Route path='/' component={App}>
         <Route path="404" component={UhOh}/>
+        <Route path="glossario" component={Glossario}/>
+        <Route path="sobre" component={Sobre}/>
+        <Route path="dados" component={Dados}/>
         <Route path='/nuts/:nut' component={Nuts} onEnter={onEnter} />
+        <Route path='/nuts/:nut/concelhos/:concelho' component={Concelhos} />
         <IndexRoute component={Home} pageClass='page--homepage' />
         <Route path="*" component={UhOh}/>
       </Route>
