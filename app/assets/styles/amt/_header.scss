@@ -1,0 +1,25 @@
+#page-header {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #fff;
+	border-top: 1px solid tint($primary-color, 80);
+	overflow: hidden;
+	z-index: 1;
+
+	#page-logo {
+		float: left;
+	}
+
+	.page-nav {
+		float: right;
+	}
+
+	ul {
+		@extend .inline-list;
+		float: left;
+		text-transform: uppercase;
+		overflow: hidden;
+	}
+}

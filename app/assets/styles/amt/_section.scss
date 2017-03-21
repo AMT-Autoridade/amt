@@ -5,6 +5,8 @@
 .section-category {
 	font-size: 1.25rem;
 	text-transform: uppercase;
+  font-weight: 400;
+  color: tint($text-color, 50);
 }
 
 .section-stats ul{

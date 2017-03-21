@@ -84,7 +84,6 @@ var Home = React.createClass({
             />
 
           </div>
-
         </div>
       </div>
     );

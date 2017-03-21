@@ -1,5 +1,5 @@
-
 body {
+	font-family: 'Source Sans Pro', sans-serif;
 	line-height: 1.4;
 }
 
@@ -19,22 +19,31 @@ p {
 	margin: 0 0 20px 0;
 }
 
+a, a:visited {
+	color: $primary-color;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+		color: shade($primary-color, 75);
+	}
+}
 
 .stat-number {
-	font-size: $h2-font-size;	
+	font-family: 'Arvo', serif;
+	font-size: 42px;	
 	display: block;
-	font-weight: bold;
+	font-weight: 400;
+	color: shade($primary-color, 15);
 }
 
 .lead {
 	font-size: 1.25rem;
-	color: tint($text-color, 50%);
+	color: tint($text-color, 35);
 }
-
-
 
 .graph-description {
 	font-size: .875rem;
-	color: tint($text-color, 25%);
+	color: tint($text-color, 35);
 	text-align: center;
 }

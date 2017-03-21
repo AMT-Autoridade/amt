@@ -45,6 +45,14 @@
 						display: block;
 					}
 				}
+
+				a, a:visited {
+					color: shade($primary-color, 75);
+
+					&:hover {
+						color: $primary-color;		
+					}
+				}
 			}
 
 			&.table-header {

@@ -1,0 +1,57 @@
+#section-intro {
+	height: 100vh;
+
+	@include media (large-up) { 
+		max-width: 670px;
+		text-align: center;
+
+		.lead {
+			max-width: 570px;
+			margin: 0 auto;
+		}
+	}
+
+	ul {
+		list-style: none;
+		li {
+			display: inline;
+			margin: 0 10px;
+		}
+	}
+}
+
+
+#section-glossario {
+	ul {
+		padding: 0;
+		list-style: none;
+
+		@include media (medium-up) { 		
+			-webkit-column-count: 2; /* Chrome, Safari, Opera */
+		    -moz-column-count: 2; /* Firefox */
+		    column-count: 2;
+
+		    -webkit-column-gap: 80px; /* Chrome, Safari, Opera */
+		    -moz-column-gap: 80px; /* Firefox */
+		    column-gap: 80px;
+		}
+
+		li {
+			-webkit-column-break-inside: avoid;
+			page-break-inside: avoid;
+			break-inside: avoid;
+		}
+	}
+}
+
+
+#section-dados,
+#section-sobre {
+	overflow: hidden;
+
+	div {
+		@include media (large-up) {
+      		@include column(6/12, $cycle: 2);
+    	}
+	}
+}
