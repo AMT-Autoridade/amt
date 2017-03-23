@@ -36,7 +36,7 @@ var SectionLicencas = React.createClass({
     });
 
     let chartData = {
-      labels: dataList.map(o => o.name),
+      labels: dataList.map(o => o.display),
       datasets: [
         {
           data: dataList.map(o => o.data.licencas2016),
