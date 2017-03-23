@@ -25,54 +25,61 @@ var Map = React.createClass({
       return topojson.feature(natTopo, island);
     };
 
+    const baseSize = 374;
+    let newSize = 374;
+
+    const s = (v) => newSize * v / baseSize;
+
+    let scaleValue = s(6000);
+
     let acores = [
       {
         id: 41,
         center: [-25.1312, 36.9762],
         feature: getIsland([41]),
-        offset: [111, 72]
+        offset: [s(111), s(72)]
       },
       {
         id: 42,
         center: [-25.4883, 37.7751],
         feature: getIsland([42]),
-        offset: [101, 55]
+        offset: [s(101), s(55)]
       },
       {
         id: 43,
         center: [-27.2131, 38.7069],
         feature: getIsland([43]),
-        offset: [65, 20]
+        offset: [s(65), s(20)]
       },
       {
         id: 44,
         center: [-28.0151, 39.0533],
         feature: getIsland([44]),
-        offset: [28, 1]
+        offset: [s(28), s(1)]
       },
       {
         id: 45,
         center: [-28.0261, 38.6340],
         feature: getIsland([45]),
-        offset: [34, 24]
+        offset: [s(34), s(24)]
       },
       {
         id: 4647,
         center: [-28.5370, 38.5138],
         feature: getIsland([46, 47]),
-        offset: [9, 37]
+        offset: [s(9), s(37)]
       },
       {
         id: 48,
         center: [-31.2067, 39.4320],
         feature: getIsland([48]),
-        offset: [-23, 7]
+        offset: [s(-23), s(7)]
       },
       {
         id: 49,
         center: [-31.1188, 39.7030],
         feature: getIsland([49]),
-        offset: [-8, -13]
+        offset: [s(-8), s(-13)]
       }
     ];
 
@@ -81,25 +88,25 @@ var Map = React.createClass({
         id: 31,
         center: [-16.7473, 32.6220],
         feature: getIsland([31]),
-        offset: [-101, 34]
+        offset: [s(-101), s(34)]
       },
       {
         id: 32,
         center: [-16.3435, 33.0754],
         feature: getIsland([32]),
-        offset: [-95, -3]
+        offset: [s(-95), s(-3)]
       }
     ];
 
-    let w = 200;
-    let h = 780;
+    let w = s(200);
+    let h = s(780);
 
     function drawIsland (selection) {
       selection.each(function (d, i) {
         let el = d3.select(this);
 
         let projection = d3.geoMercator()
-          .scale(6000)
+          .scale(scaleValue)
           .center(d.center)
           .translate([w + d.offset[0], h + d.offset[1]]);
 
@@ -149,9 +156,9 @@ var Map = React.createClass({
     portugal.geometries = portugal.geometries.filter(o => o.properties.type === 'nut3' && ['PT200', 'PT300'].indexOf(o.properties.id) === -1);
 
     var projection = d3.geoMercator()
-      .scale(6000)
+      .scale(scaleValue)
       .center([-8, 38])
-      .translate([180, 600]);
+      .translate([s(180), s(600)]);
 
     var path = d3.geoPath()
       .projection(projection);
