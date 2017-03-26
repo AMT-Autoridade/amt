@@ -110,7 +110,7 @@ var SectionDistribuicao = React.createClass({
       <div id='section-distribuicao'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3>{this.props.adminName}</h3>
+            <h3 className='section-category'>{this.props.adminName}</h3>
             <h1>Distribuição Geográfica</h1>
           </header>
           <div className='section-content'>

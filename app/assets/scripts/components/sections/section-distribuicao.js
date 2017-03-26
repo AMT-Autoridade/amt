@@ -120,7 +120,7 @@ var SectionDistribuicao = React.createClass({
       <div id='section-distribuicao'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3>{this.props.adminName}</h3>
+            <h3 className='section-category'>{this.props.adminName}</h3>
             <h1>Distribuição Geográfica</h1>
             <p className='lead'>Não obstante as licenças de táxi serem atribuídas a nível municipal apresenta-se a sua distribuição pelas regiões autónomas, pelos distritos e pelas áreas metropolitanas de Lisboa e do Porto.</p>
           </header>

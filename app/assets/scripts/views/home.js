@@ -6,6 +6,7 @@ import { fetchNational } from '../actions';
 
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
+import SectionResidentes from '../components/sections/section-residentes';
 import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
 import SectionDistribuicao from '../components/sections/section-distribuicao';
@@ -58,6 +59,7 @@ var Home = React.createClass({
               max2016={data.max2016}
               licencasHab={data.licencasHab}
             />
+            <SectionResidentes />
             <SectionMobilidade
               adminLevel='national'
               adminName='Portugal'

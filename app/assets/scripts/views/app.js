@@ -20,8 +20,8 @@ var App = React.createClass({
           <h1 id='page-logo'><a href='#'>AMT</a></h1>
           <nav className='page-nav'>
             <ul className='primary-nav'>
-              <li><a href='#'>Licenças</a></li>
-              <li><a href='#'>Mobilidade Reduzida</a></li>
+              <li><a href='#licencas'>Licenças</a></li>
+              <li><a href='#mobilidade'>Mobilidade Reduzida</a></li>
               <li><a href='#'>Estacionamento</a></li>
               <li><a href='#'>Distribuição</a></li>
               <li><a href='#'>Evolução</a></li> 
