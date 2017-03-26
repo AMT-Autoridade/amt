@@ -20,7 +20,7 @@
     width: 150px;
 
     &.small {
-      width: 80px;
+      width: 90px;
     }
 
     &.x-small {
@@ -41,6 +41,7 @@
 
     li {
       width: 100%;
+      display: inline-block;
     }
 
     .tooltip-title {
