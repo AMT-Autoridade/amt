@@ -25,7 +25,7 @@ var SectionEstacionamento = React.createClass({
               <p><strong>Graph goes here</strong> Número de municípios por (conjunto de) regimes de estacionamento</p>
              </div>
            </div>
-            
+
           </div>
           <footer className='section-footer'>
             <p><strong>Legenda:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>
