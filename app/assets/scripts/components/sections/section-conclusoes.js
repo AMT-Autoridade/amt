@@ -1,35 +1,46 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 
-var SectionResidentes = React.createClass({
+var SectionConclusoes = React.createClass({
   propTypes: {
     data: T.object
   },
 
   render: function () {
     return (
-       <div id='residentes' className='section-wrapper'>
+       <div id='conclusoes' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
             <h3 className='section-category'>PORTUGAL</h3>
-            <h1>Residentes</h1>
+            <h1>Conclusões</h1>
             <p className='lead'>Lorem ipsum dolor sit amet.</p>
           </header>
 
           <div className='section-content'>
             <div className='section-stats'>
               <ul>
-  
+                 <li>
+                  <span className='stat-number'>49%</span>
+                  <span className='stat-description'>Dos táxis licenciados estão nas Áreas Metropolitanas de Lisboa e Porto.</span>
+                </li>
+                <li>
+                  <span className='stat-number'></span>
+                  <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
+                </li>
+                <li>
+                  <span className='stat-number'></span>
+                  <span className='stat-description'>Licenças activas por 1 000 residentes.</span>
+                </li>
               </ul>
             </div>
 
-             <div className='graph'>
-              
-              <p className='graph-description'>Evolução das licenças por 1000 residentes</p>
+            <div className='graph'>
+   
+              <p className='graph-description'>Licenças por contingente (%)</p>
             </div>
             <div className='graph'>
               
-              <p className='graph-description'>Evolução das licenças por 1000 dormidas</p>
+              <p className='graph-description'>Evolução do contingente</p>
             </div>
 
           </div>
@@ -42,4 +53,4 @@ var SectionResidentes = React.createClass({
   }
 });
 
-module.exports = SectionResidentes;
+module.exports = SectionConclusoes;

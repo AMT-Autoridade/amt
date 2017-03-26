@@ -8,7 +8,7 @@ var SectionEstacionamento = React.createClass({
 
   render: function () {
     return (
-      <div id='section-estacionamento' className='section-wrapper'>
+      <div id='estacionamento' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
             <h3 className='section-category'>Portugal</h3>

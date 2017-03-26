@@ -11,6 +11,7 @@ import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
 import SectionDistribuicao from '../components/sections/section-distribuicao';
 import SectionEvolucao from '../components/sections/section-evolucao';
+import SectionConclusoes from '../components/sections/section-conclusoes';
 
 var Home = React.createClass({
   propTypes: {
@@ -86,7 +87,7 @@ var Home = React.createClass({
               totalMunicipios={data.totalMunicipios}
               licencasTimeline={data.licencasTimeline}
             />
-
+            <SectionConclusoes />
           </div>
         </div>
       </div>

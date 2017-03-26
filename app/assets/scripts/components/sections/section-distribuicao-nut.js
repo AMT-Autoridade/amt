@@ -107,7 +107,7 @@ var SectionDistribuicao = React.createClass({
 
   render: function () {
     return (
-      <div id='section-distribuicao'>
+      <div id='distribuicao'>
         <section className='section-container'>
           <header className='section-header'>
             <h3 className='section-category'>{this.props.adminName}</h3>

@@ -199,7 +199,7 @@ var SectionEvolucao = React.createClass({
     let totalMunicipiosNoChange = this.props.municipios.reduce((acc, c) => c.data.change === 0 ? acc + 1 : acc, 0);
 
     return (
-      <div id='section-evolucao' className='section-wrapper'>
+      <div id='evolucao' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
             <h3 className='section-category'>{this.props.adminName}</h3>

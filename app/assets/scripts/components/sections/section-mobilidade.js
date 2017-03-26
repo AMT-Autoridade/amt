@@ -152,7 +152,7 @@ var SectionMobilidade = React.createClass({
     let percentNewMobRed = percent(newMobReduzida, newLicencas);
 
     return (
-      <div id='section-mobilidade' className='section-wrapper'>
+      <div id='mobilidade' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
             <h3 className='section-category'>{this.props.adminName}</h3>

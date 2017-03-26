@@ -1,4 +1,4 @@
-#section-intro {
+#intro {
 	height: 100vh;
 
 	@include media (large-up) { 
@@ -21,7 +21,7 @@
 }
 
 
-#section-glossario {
+#glossario {
 	ul {
 		padding: 0;
 		list-style: none;
@@ -45,8 +45,8 @@
 }
 
 
-#section-dados,
-#section-sobre {
+#dados,
+#sobre {
 	overflow: hidden;
 
 	div {

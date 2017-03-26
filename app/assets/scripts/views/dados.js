@@ -11,7 +11,7 @@ var Dados = React.createClass({
 
   render: function () {
     return (
-      <div id='section-dados' className='container-wrapper section-wrapper'>
+      <div id='dados' className='container-wrapper section-wrapper'>
         
         <h1>Sobre os dados</h1>   
 
