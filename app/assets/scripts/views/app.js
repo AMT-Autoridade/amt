@@ -10,23 +10,34 @@ var App = React.createClass({
   propTypes: {
     routes: T.array,
     location: T.object,
-    children: T.object
+    children: T.object,
+    national: T.object
   },
 
   goToAnchor: function (hash) {
-    let el = document.getElementById(hash);
+    if (!hash) return;
+    let el = document.querySelector(hash);
     if (el) {
       scrollToElement(el);
     }
   },
 
   componentDidMount: function () {
-    scrollToElement(this.props.location.hash);
+    this.goToAnchor(this.props.location.hash);
   },
 
   componentWillReceiveProps: function (nextProps) {
     if (this.props.location.hash !== nextProps.location.hash) {
-      scrollToElement(nextProps.location.hash);
+      this.goToAnchor(nextProps.location.hash);
+    }
+  },
+
+  componentDidUpdate: function (prevProps) {
+    // Once national is loaded navigate.
+    // Use componentDidUpdate because we have to ensure that the elements
+    // were actually rendered.
+    if (!prevProps.national.fetched && this.props.national.fetched) {
+      this.goToAnchor(this.props.location.hash);
     }
   },
 
@@ -67,6 +78,7 @@ var App = React.createClass({
 
 function selector (state) {
   return {
+    national: state.national
   };
 }
 
