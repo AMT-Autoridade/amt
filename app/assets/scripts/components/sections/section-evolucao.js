@@ -25,11 +25,13 @@ var SectionEvolucao = React.createClass({
     let tooltipFn = makeTooltip(entryIndex => {
       let year = nationalTimeline[entryIndex];
       return (
-        <div>
-          <p>total {(year['lic-geral'] + year['lic-mob-reduzida']).toLocaleString()}</p>
-          <p>geral {year['lic-geral'].toLocaleString()}</p>
-          <p>reduzida {year['lic-mob-reduzida'].toLocaleString()}</p>
-        </div>
+        <ul>
+          <li><span className='tooltip-title'>Contingentes:</span></li>
+          <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{year['lic-geral'].toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>Mob. Reduzida:</span> <span className='tooltip-number'>{year['lic-mob-reduzida'].toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>Total Contingentes:</span><span className='tooltip-number'>{(year['lic-geral'] + year['lic-mob-reduzida']).toLocaleString()}</span></li>
+          <span className='triangle'></span>
+        </ul>
       );
     });
 
@@ -88,10 +90,10 @@ var SectionEvolucao = React.createClass({
     let tooltipFn = makeTooltip(entryIndex => {
       let municipio = topMunicipios[entryIndex];
       return (
-        <div>
-          <p>{municipio.name}</p>
-          <p>aumento {municipio.data.change}</p>
-        </div>
+        <ul className='small'>
+          <li><span className='tooltip-label'>{municipio.name}:</span> <span className='tooltip-number'>+{municipio.data.change}</span></li>
+          <span className='triangle'></span>
+        </ul>
       );
     });
 
@@ -148,7 +150,7 @@ var SectionEvolucao = React.createClass({
       .value();
 
     const keyIndex = {
-      increase: 'Aumento',
+      increase: 'Aumentou',
       equal: 'Manteve',
       decrease: 'Diminuiu'
     };
@@ -156,10 +158,10 @@ var SectionEvolucao = React.createClass({
     let tooltipFn = makeTooltip(entryIndex => {
       let entry = licencasChange[entryIndex];
       return (
-        <div>
-          <p>{round(entry.percent).toLocaleString()}%</p>
-          <p>{keyIndex[entry.key]}</p>
-        </div>
+        <ul className='small'>
+          <li><span className='tooltip-label'>{keyIndex[entry.key]}:</span><span className='tooltip-number'>{round(entry.percent).toLocaleString()}%</span></li>
+          <span className='triangle'></span>
+        </ul>
       );
     });
 
@@ -200,9 +202,9 @@ var SectionEvolucao = React.createClass({
       <div id='section-evolucao' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3>{this.props.adminName}</h3>
+            <h3 className='section-category'>{this.props.adminName}</h3>
             <h1>Evolução 2006 - 2016</h1>
-            <p className='lead'>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, é a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
+            <p className='lead'>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, e a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
           </header>
           <div className='section-content'>
             <div className='section-stats'>
