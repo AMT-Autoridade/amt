@@ -1,6 +1,7 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { fetchNational } from '../actions';
 
@@ -12,6 +13,8 @@ import SectionDistribuicao from '../components/sections/section-distribuicao';
 import SectionEvolucao from '../components/sections/section-evolucao';
 
 import Map from '../components/map';
+
+var natTopo = require('../data/admin-areas.json');
 
 var Home = React.createClass({
   propTypes: {
@@ -40,13 +43,45 @@ var Home = React.createClass({
       return <div>Error: {error}</div>;
     }
 
+    const getColor = (v) => {
+      if (v <= 10) return '#7FECDA';
+      if (v <= 30) return '#00DFC1';
+      if (v <= 100) return '#2D8374';
+      if (v <= 1000) return '#1F574D';
+      return '#0F2B26';
+    };
+
+    let vv = [];
+
+    let municipiosBuckets = data.nuts.reduce((acc, nut) => acc.concat(nut.concelhos), [])
+      .map(m => {
+        let licencas = _.last(m.data['lic-geral']).value;
+
+        if (!vv[licencas]) vv[licencas] = 0;
+
+        vv[licencas]++;
+
+        return {
+          id: m.id,
+          color: getColor(licencas)
+        };
+      });
+
+    vv.forEach((o, i) => {
+      console.log(i, o);
+    });
+
     return (
       <div>
         <SectionIntro />
 
         <div id="page-content" className='container-wrapper'>
 
-          <Map />
+          <div className='map-wrapper'>
+            <Map
+              geometries={natTopo}
+              data={municipiosBuckets} />
+          </div>
 
           <div className='content-wrapper'>
 
