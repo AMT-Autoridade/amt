@@ -18,7 +18,9 @@ var Home = React.createClass({
   },
 
   componentDidMount: function () {
-    this.props._fetchNational();
+    if (!this.props.national.fetched) {
+      this.props._fetchNational();
+    }
   },
 
   render: function () {
