@@ -43,38 +43,77 @@ var Home = React.createClass({
       return <div>Error: {error}</div>;
     }
 
-    const getColor = (v) => {
-      if (v <= 10) return '#7FECDA';
-      if (v <= 30) return '#00DFC1';
-      if (v <= 100) return '#2D8374';
-      if (v <= 1000) return '#1F574D';
-      return '#0F2B26';
-    };
+    let licencasMunicipios = data.concelhos.map(m => {
+      let licencas = _.last(m.data['lic-geral']).value;
 
-    let municipiosBuckets = data.nuts.reduce((acc, nut) => acc.concat(nut.concelhos), [])
-      .map(m => {
-        let licencas = _.last(m.data['lic-geral']).value;
+      const getColor = (v) => {
+        if (v <= 10) return '#7FECDA';
+        if (v <= 30) return '#00DFC1';
+        if (v <= 100) return '#2D8374';
+        if (v <= 1000) return '#1F574D';
+        return '#0F2B26';
+      };
 
-        return {
-          id: m.id,
-          color: getColor(licencas)
-        };
-      });
+      return {
+        id: m.id,
+        color: getColor(licencas)
+      };
+    });
+
+    let mobRedMunicipios = data.concelhos.map(m => {
+      let modred = _.last(m.data['lic-mob-reduzida']).value > 0;
+
+      return {
+        id: m.id,
+        color: modred ? '#2D8374' : '#eaeaea'
+      };
+    });
+
+    let evolucaoMunicipios = data.concelhos.map(m => {
+      let c = '#2D8374';
+      if (m.data.change > 0) {
+        c = '#0F2B26';
+      } else if (m.data.change < 0) {
+        c = '#7FECDA';
+      }
+
+      return {
+        id: m.id,
+        color: c
+      };
+    });
+
+    let licencas1000Hab = data.concelhos.map(m => {
+      let totalLic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
+      let lic1000 = totalLic / (_.last(m.data['pop-residente']).value / 1000);
+
+      const getColor = (v) => {
+        if (v <= 1) return '#7FECDA';
+        if (v <= 2) return '#00DFC1';
+        if (v <= 3) return '#2D8374';
+        if (v <= 4) return '#1F574D';
+        return '#0F2B26';
+      };
+
+      return {
+        id: m.id,
+        color: getColor(lic1000)
+      };
+    });
 
     return (
       <div>
         <SectionIntro />
 
         <div id="page-content" className='container-wrapper'>
-
+        <div style={{overflow: 'hidden'}}>
           <div className='map-wrapper'>
             <Map
               geometries={natTopo}
-              data={municipiosBuckets} />
+              data={licencasMunicipios} />
           </div>
 
           <div className='content-wrapper'>
-
             <SectionLicencas
               adminLevel='national'
               adminName='Portugal'
@@ -83,6 +122,17 @@ var Home = React.createClass({
               max2016={data.max2016}
               licencasHab={data.licencasHab}
             />
+          </div>
+        </div>
+
+        <div style={{overflow: 'hidden'}}>
+          <div className='map-wrapper'>
+            <Map
+              geometries={natTopo}
+              data={mobRedMunicipios} />
+          </div>
+
+          <div className='content-wrapper'>
             <SectionMobilidade
               adminLevel='national'
               adminName='Portugal'
@@ -93,13 +143,45 @@ var Home = React.createClass({
               licencasMobReduzida2016={data.licencasMobReduzida2016}
               licencasMobReduzida2006={data.licencasMobReduzida2006}
             />
+          </div>
+        </div>
+
+        <div style={{overflow: 'hidden'}}>
+          <div className='map-wrapper'>
+
+          </div>
+
+          <div className='content-wrapper'>
             <SectionEstacionamento data={data} />
+          </div>
+        </div>
+
+        <div style={{overflow: 'hidden'}}>
+          <div className='map-wrapper'>
+            <Map
+              geometries={natTopo}
+              data={licencas1000Hab} />
+          </div>
+
+          <div className='content-wrapper'>
             <SectionDistribuicao
               adminLevel='national'
               adminName='Portugal'
               adminList={data.nuts}
               licencas2016={data.licencas2016}
+              populacaoNational={data.populacao}
             />
+          </div>
+        </div>
+
+        <div style={{overflow: 'hidden'}}>
+          <div className='map-wrapper'>
+            <Map
+              geometries={natTopo}
+              data={evolucaoMunicipios} />
+          </div>
+
+          <div className='content-wrapper'>
             <SectionEvolucao
               adminLevel='national'
               adminName='Portugal'
@@ -109,8 +191,9 @@ var Home = React.createClass({
               totalMunicipios={data.totalMunicipios}
               licencasTimeline={data.licencasTimeline}
             />
-
           </div>
+        </div>
+
         </div>
       </div>
     );

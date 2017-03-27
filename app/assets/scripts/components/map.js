@@ -341,9 +341,9 @@ var Chart = function (options) {
         .fitSize([_width, _height], topojson.feature(_geometries, _portugal))
         .scale();
 
-      console.log('_width', _width);
-      console.log('_height', _height);
-      console.log('_projectionScaleValue', _projectionScaleValue);
+      // console.log('_width', _width);
+      // console.log('_height', _height);
+      // console.log('_projectionScaleValue', _projectionScaleValue);
       // Redraw.
       layers.baseGeometries();
       layers.municipioColors();
