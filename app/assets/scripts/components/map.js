@@ -70,13 +70,15 @@ var Chart = function (options) {
   // Pause
   var _pauseUpdate = false;
 
-  // Containters
+  // Containers
   var $el, $svg;
   // Var declaration.
   var margin = {top: 0, right: 0, bottom: 0, left: 0};
   // width and height refer to the data canvas. To know the svg size the margins
   // must be added.
   var _width, _height;
+  // Geo scale.
+  var _projectionScaleValue;
 
   // Update functions.
   var updateData, upateSize;
@@ -119,11 +121,17 @@ var Chart = function (options) {
    * @return {Function}        Path drawing function
    */
   const getPathFn = (center, translate) => {
-    const scaleValue = s(6000);
-    let projection = d3.geoMercator()
-      .scale(scaleValue)
+    const tw = _width / 2;
+    // The vertical value for the translate is computed from the width.
+    const th = 125 / 114 * _width;
+    // The offset values must be scaled according the the projection
+    // scale value.
+    const scalar = (v) => _projectionScaleValue * v / 6439.143067978895;
+
+    const projection = d3.geoMercator()
+      .scale(_projectionScaleValue)
       .center(center)
-      .translate(translate);
+      .translate([tw + scalar(translate[0]), th + scalar(translate[1])]);
 
     return d3.geoPath().projection(projection);
   };
@@ -142,8 +150,8 @@ var Chart = function (options) {
     // Return a function to handle each individual island.
     // Wrapped in a closure to include path variables.
     function drawFeature (data) {
-      let h = type === 'island' ? s(_height * 0.85) : s(_height / 2);
-      let path = getPathFn(data.center, [s(_width / 2) + s(data.offset[0]), h + s(data.offset[1])]);
+      let additionalHOffset = type === 'island' ? 385 : 0;
+      let path = getPathFn(data.center, [data.offset[0], data.offset[1] + additionalHOffset]);
 
       return function (sel) {
         return sel.attr('d', path)
@@ -191,10 +199,6 @@ var Chart = function (options) {
       });
     };
   }
-
-  // Scale function based on a predefined size.
-  const baseSize = 374;
-  const s = (v) => _width * v / baseSize;
 
   function chartFn (selection) {
     $el = selection;
@@ -310,9 +314,9 @@ var Chart = function (options) {
             .selectAll('g.feature')
             .data([{
               id: 1,
-              center: [-8, 38],
+              center: [-8.2245, 39.3999],
               feature: topojson.feature(_geometries, _portugal),
-              offset: [-10, 130]
+              offset: [-42, 0]
             }])
             .call(drawFeatureGroup({name: 'continente', type: 'main'}));
       },
@@ -332,6 +336,14 @@ var Chart = function (options) {
         .attr('width', _width + margin.left + margin.right)
         .attr('height', _height + margin.top + margin.bottom);
 
+      // Compute the scale value by using fitSize on the country.
+      _projectionScaleValue = d3.geoMercator()
+        .fitSize([_width, _height], topojson.feature(_geometries, _portugal))
+        .scale();
+
+      console.log('_width', _width);
+      console.log('_height', _height);
+      console.log('_projectionScaleValue', _projectionScaleValue);
       // Redraw.
       layers.baseGeometries();
       layers.municipioColors();
@@ -355,8 +367,6 @@ var Chart = function (options) {
     _calcSize();
     upateSize();
     updateData();
-    console.log('_width', _width);
-    console.log('_height', _height);
   }
 
   chartFn.checkSize = function () {
