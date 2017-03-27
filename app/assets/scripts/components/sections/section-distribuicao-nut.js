@@ -19,8 +19,7 @@ var SectionDistribuicao = React.createClass({
       let year = data[entryIndex];
       return (
          <ul className='x-small'>
-          <li><span className='tooltip-label'>Year:</span> <span className='tooltip-number'>{year.year}</span></li>
-          <li><span className='tooltip-label'>Value:</span> <span className='tooltip-number'>{year.value.toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{year.value.toLocaleString()}</span></li>
           <span className='triangle'></span>
         </ul>
       );
