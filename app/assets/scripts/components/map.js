@@ -322,7 +322,7 @@ var Chart = function (options) {
       },
 
       municipioColors: function () {
-        d3.selectAll('.aa--concelho').each(function () {
+        $svg.selectAll('.aa--concelho').each(function () {
           let el = d3.select(this);
           let d = el.datum();
           let bucket = _data.find(o => o.id === parseInt(d.properties.id));
