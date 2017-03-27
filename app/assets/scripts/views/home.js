@@ -51,25 +51,15 @@ var Home = React.createClass({
       return '#0F2B26';
     };
 
-    let vv = [];
-
     let municipiosBuckets = data.nuts.reduce((acc, nut) => acc.concat(nut.concelhos), [])
       .map(m => {
         let licencas = _.last(m.data['lic-geral']).value;
-
-        if (!vv[licencas]) vv[licencas] = 0;
-
-        vv[licencas]++;
 
         return {
           id: m.id,
           color: getColor(licencas)
         };
       });
-
-    vv.forEach((o, i) => {
-      console.log(i, o);
-    });
 
     return (
       <div>

@@ -1,7 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import * as d3 from 'd3';
-import { geoConicConformalPortugal } from 'd3-composite-projections';
 import * as topojson from 'topojson';
 import _ from 'lodash';
 
@@ -31,14 +30,6 @@ var Map = React.createClass({
       .geometries(this.props.geometries)
       .data(this.props.data)
     );
-
-    // d3.select(this.refs.container).call(this.chart
-    //   .data(this.props.data)
-    //   .axisLineVal(this.props.axisLineVal)
-    //   .axisValueMax(this.props.axisLineMax)
-    //   .axisValueMin(this.props.axisLineMin)
-    //   .numDaysVisible(this.props.numDaysVisible)
-    //   .dataUnitSuffix(this.props.dataUnitSuffix));
   },
 
   componentWillUnmount: function () {
@@ -54,18 +45,6 @@ var Map = React.createClass({
     if (prevProps.data !== this.props.data) {
       this.chart.data(this.props.data);
     }
-    // if (prevProps.axisLineVal !== this.props.axisLineVal) {
-    //   this.chart.axisLineVal(this.props.axisLineVal);
-    // }
-    // if (prevProps.axisLineMax !== this.props.axisLineMax) {
-    //   this.chart.axisValueMax(this.props.axisLineMax);
-    // }
-    // if (prevProps.axisLineMin !== this.props.axisLineMin) {
-    //   this.chart.axisValueMin(this.props.axisLineMin);
-    // }
-    // if (prevProps.dataUnitSuffix !== this.props.dataUnitSuffix) {
-    //   this.chart.dataUnitSuffix(this.props.dataUnitSuffix);
-    // }
     this.chart.continueUpdate();
   },
 
@@ -78,11 +57,6 @@ var Map = React.createClass({
 
 module.exports = Map;
 
-
-
-
-
-
 var Chart = function (options) {
   // Data related variables for which we have getters and setters.
   var _data = null;
@@ -92,8 +66,6 @@ var Chart = function (options) {
   var _islandsPortugal = null;
   // Continental Portugal.
   var _portugal = null;
-
-  var _axisLineVal, _axisValueMin, _axisValueMax, _numDaysVisible, _dataUnitSuffix;
 
   // Pause
   var _pauseUpdate = false;
@@ -114,8 +86,19 @@ var Chart = function (options) {
     _height = parseInt($el.style('height'), 10) - margin.top - margin.bottom;
   }
 
+  /**
+   * Checks whether the id is in a list of ids.
+   * @param  {String} id  Id to check
+   * @param  {Array} ids List of numeric ids
+   * @return {boolean}
+   */
   const isIn = (id, ids) => ids.indexOf(parseInt(id)) !== -1;
 
+  /**
+   * Returns the topojson with only the features with the given ids.
+   * @param  {Array} ids  ids of the features to find
+   * @return {Object}    Topojson
+   */
   const getIsland = (ids) => {
     var island = _.cloneDeep(_islandsPortugal);
     island.geometries = island.geometries.filter(o => {
@@ -128,6 +111,87 @@ var Chart = function (options) {
     return topojson.feature(_geometries, island);
   };
 
+  /**
+   * Returns the path for drawing the islands taking into account their
+   * new projection.
+   * @param  {array} center    New center
+   * @param  {array} translate Offset from the new center.
+   * @return {Function}        Path drawing function
+   */
+  const getPathFn = (center, translate) => {
+    const scaleValue = s(6000);
+    let projection = d3.geoMercator()
+      .scale(scaleValue)
+      .center(center)
+      .translate(translate);
+
+    return d3.geoPath().projection(projection);
+  };
+
+  // Make charts reusable!
+  // Helper function to draw a group of features. Originally used to draw the
+  // different archipelagos, but extended to include the main land.
+  // Usage: .call(drawFeatureGroup('name'))
+  // opts = {
+  //   name: // Name for the feature group
+  //   type: // What this refers to (island|main)
+  // }
+  function drawFeatureGroup (opts) {
+    let {name, type} = opts;
+    let aaLevel = type === 'island' ? 'distrito' : 'nut3';
+    // Return a function to handle each individual island.
+    // Wrapped in a closure to include path variables.
+    function drawFeature (data) {
+      let h = type === 'island' ? s(_height * 0.85) : s(_height / 2);
+      let path = getPathFn(data.center, [s(_width / 2) + s(data.offset[0]), h + s(data.offset[1])]);
+
+      return function (sel) {
+        return sel.attr('d', path)
+          .attr('class', d => `aa--${d.properties.type}`)
+          .style('stroke', d => d.properties.type === aaLevel ? '#fff' : '#fff')
+          .style('stroke-width', d => d.properties.type === aaLevel ? '1.5px' : '0.5px')
+          .style('fill', d => d.properties.type === aaLevel ? '#fff' : 'none')
+          .style('fill-opacity', d => d.properties.type === aaLevel ? 0.32 : 1)
+          .style('pointer-events', d => d.properties.type === aaLevel ? 'all' : 'none')
+          .on('mouseover', function (d, i) {
+            d3.select(this).style('cursor', 'pointer');
+            let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
+            el.transition()
+              .style('fill-opacity', 0);
+          })
+          .on('mouseout', function (d, i) {
+            d3.select(this).style('cursor', 'default');
+            let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
+            el.transition()
+              .style('fill-opacity', 0.32);
+          });
+      };
+    }
+
+    // Returns a function to draw the archipelago.
+    return function (selection) {
+      selection.enter().each(function (d, i) {
+        let el = d3.select(this);
+
+        el.append('g')
+          .attr('class', d => `feature feature--${d.id}`)
+          .selectAll('path')
+          .data(d.feature.features)
+          .enter()
+          .append('path')
+          .call(drawFeature(d));
+      });
+
+      selection.each(function (d, i) {
+        let el = d3.select(this);
+
+        el.selectAll('path')
+          .data(d.feature.features)
+          .call(drawFeature(d));
+      });
+    };
+  }
+
   // Scale function based on a predefined size.
   const baseSize = 374;
   const s = (v) => _width * v / baseSize;
@@ -137,6 +201,7 @@ var Chart = function (options) {
 
     var layers = {
       baseGeometries: function () {
+        // Açores and their coordinates to allow for reprojetion.
         let acores = [
           {
             id: 41,
@@ -188,6 +253,7 @@ var Chart = function (options) {
           }
         ];
 
+        // MAdeira and their coordinates to allow for reprojetion.
         let madeira = [
           {
             id: 31,
@@ -203,67 +269,7 @@ var Chart = function (options) {
           }
         ];
 
-        const getPathFn = (center, translate) => {
-          const scaleValue = s(6000);
-          let projection = d3.geoMercator()
-            .scale(scaleValue)
-            .center(center)
-            .translate(translate);
-
-          return d3.geoPath().projection(projection);
-        };
-
-        function drawIsland (name) {
-          const draw = function (data) {
-            let path = getPathFn(data.center, [s(_width / 2) + s(data.offset[0]), s(_height * 0.85) + s(data.offset[1])]);
-
-            return function (sel) {
-              return sel.attr('d', path)
-                .attr('class', d => `aa--${d.properties.type}`)
-                .style('stroke', d => d.properties.type === 'distrito' ? '#fff' : '#fff')
-                .style('stroke-width', d => d.properties.type === 'distrito' ? '1.5px' : '0.5px')
-                .style('fill', d => d.properties.type === 'distrito' ? '#fff' : 'none')
-                .style('fill-opacity', d => d.properties.type === 'distrito' ? 0.32 : 1)
-                .style('pointer-events', d => d.properties.type === 'distrito' ? 'all' : 'none')
-                .on('mouseover', function (d, i) {
-                  d3.select(this).style('cursor', 'pointer');
-                  $svg.selectAll(`.${name} .aa--distrito`)
-                    .transition()
-                    .style('fill-opacity', 0);
-                })
-                .on('mouseout', function (d, i) {
-                  d3.select(this).style('cursor', 'default');
-                  $svg.selectAll(`.${name} .aa--distrito`)
-                    .transition()
-                    .style('fill-opacity', 0.32);
-                });
-            };
-          };
-
-          return function (selection) {
-            selection.enter().each(function (d, i) {
-              let el = d3.select(this);
-
-              el.append('g')
-                .attr('class', d => `island island--${d.id}`)
-                .style('transform', 'translate(0px, 0px)')
-                .selectAll('path')
-                .data(d.feature.features)
-                .enter()
-                .append('path')
-                .call(draw(d));
-            });
-
-            selection.each(function (d, i) {
-              let el = d3.select(this);
-
-              el.selectAll('path')
-                .data(d.feature.features)
-                .call(draw(d));
-            });
-          };
-        }
-
+        // Add group for Açores if it doesn't exist.
         let $acoresG = $svg.select('g.acores');
         if ($acoresG.empty()) {
           $acoresG = $svg
@@ -271,11 +277,13 @@ var Chart = function (options) {
             .attr('class', 'acores');
         }
 
+        // Draw Açores.
         $acoresG
-            .selectAll('g.island')
+            .selectAll('g.feature')
             .data(acores)
-            .call(drawIsland('acores'));
+            .call(drawFeatureGroup({name: 'acores', type: 'island'}));
 
+        // Add group for Madeira if it doesn't exist.
         let $madeiraG = $svg.select('g.madeira');
         if ($madeiraG.empty()) {
           $madeiraG = $svg
@@ -283,11 +291,13 @@ var Chart = function (options) {
             .attr('class', 'madeira');
         }
 
+        // Draw Madeira
         $madeiraG
-            .selectAll('g.island')
+            .selectAll('g.feature')
             .data(madeira)
-            .call(drawIsland('madeira'));
+            .call(drawFeatureGroup({name: 'madeira', type: 'island'}));
 
+        // Add group for Portugal if it doesn't exist.
         let $portugalG = $svg.select('g.continente');
         if ($portugalG.empty()) {
           $portugalG = $svg
@@ -295,34 +305,16 @@ var Chart = function (options) {
             .attr('class', 'continente');
         }
 
-        let path = getPathFn([-8, 38], [s(_width / 2) - s(10), s(_height / 2) + s(130)]);
-        let land = topojson.feature(_geometries, _portugal);
-
-        let sel = $portugalG.selectAll('path')
-          .data(land.features);
-
-        sel.enter()
-            .append('path')
-          .merge(sel)
-            .attr('class', d => `aa--${d.properties.type}`)
-            .attr('d', path)
-            .style('stroke', d => d.properties.type === 'nut3' ? '#fff' : '#fff')
-            .style('stroke-width', d => d.properties.type === 'nut3' ? '1.5px' : '0.5px')
-            .style('fill', d => d.properties.type === 'nut3' ? '#fff' : 'none')
-            .style('fill-opacity', d => d.properties.type === 'nut3' ? 0.32 : 1)
-            .style('pointer-events', d => d.properties.type === 'nut3' ? 'all' : 'none')
-            .on('mouseover', function (d, i) {
-              d3.select(this).style('cursor', 'pointer');
-              d3.select(this)
-                .transition()
-                .style('fill-opacity', 0);
-            })
-            .on('mouseout', function (d, i) {
-              d3.select(this).style('cursor', 'default');
-              d3.select(this)
-                .transition()
-                .style('fill-opacity', 0.32);
-            });
+        // Draw continental Portugal.
+        $portugalG
+            .selectAll('g.feature')
+            .data([{
+              id: 1,
+              center: [-8, 38],
+              feature: topojson.feature(_geometries, _portugal),
+              offset: [-10, 130]
+            }])
+            .call(drawFeatureGroup({name: 'continente', type: 'main'}));
       },
 
       municipioColors: function () {
@@ -340,22 +332,9 @@ var Chart = function (options) {
         .attr('width', _width + margin.left + margin.right)
         .attr('height', _height + margin.top + margin.bottom);
 
-      // DEBUG:
-      // To view the area taken by the #clip rect.
-      // $dataCanvas.select('.data-canvas-shadow')
-      //   .attr('x', -margin.left)
-      //   .attr('y', -margin.top)
-      //   .attr('width', _width + margin.left)
-      //   .attr('height', _height + margin.top + margin.bottom);
-
       // Redraw.
       layers.baseGeometries();
       layers.municipioColors();
-      // layers.line();
-      // layers.minMax();
-      // layers.days();
-      // layers.xAxis();
-      // layers.yAxis();
     };
 
     updateData = function () {
@@ -365,11 +344,6 @@ var Chart = function (options) {
 
       // Redraw.
       layers.municipioColors();
-      // layers.line();
-      // layers.minMax();
-      // layers.days();
-      // layers.xAxis();
-      // layers.yAxis();
     };
 
     // -----------------------------------------------------------------
@@ -377,13 +351,6 @@ var Chart = function (options) {
     $svg = $el.append('svg')
       .attr('class', 'chart')
       .style('display', 'block');
-
-    // DEBUG:
-    // To view the area taken by the #clip rect.
-    // $dataCanvas.append('rect')
-    //   .attr('class', 'data-canvas-shadow')
-    //   .style('fill', '#000')
-    //   .style('opacity', 0.326);
 
     _calcSize();
     upateSize();
@@ -436,42 +403,6 @@ var Chart = function (options) {
       }
     });
 
-    // if (typeof updateData === 'function') updateData();
-    return chartFn;
-  };
-
-  chartFn.axisLineVal = function (d) {
-    if (!arguments.length) return _axisLineVal;
-    _axisLineVal = d;
-    if (typeof updateData === 'function') updateData();
-    return chartFn;
-  };
-
-  chartFn.axisValueMin = function (d) {
-    if (!arguments.length) return _axisValueMin;
-    _axisValueMin = d;
-    if (typeof updateData === 'function') updateData();
-    return chartFn;
-  };
-
-  chartFn.axisValueMax = function (d) {
-    if (!arguments.length) return _axisValueMax;
-    _axisValueMax = d;
-    if (typeof updateData === 'function') updateData();
-    return chartFn;
-  };
-
-  chartFn.numDaysVisible = function (d) {
-    if (!arguments.length) return _numDaysVisible;
-    _numDaysVisible = d;
-    if (typeof updateData === 'function') updateData();
-    return chartFn;
-  };
-
-  chartFn.dataUnitSuffix = function (d) {
-    if (!arguments.length) return _dataUnitSuffix;
-    _dataUnitSuffix = d;
-    if (typeof updateData === 'function') updateData();
     return chartFn;
   };
 
