@@ -86,7 +86,7 @@ export function receiveMapData (data, error = null) {
 
 export function fetchMapData () {
   // return getAndDispatch(`${config.api}/National`, requestNational, receiveNational);
-  return getAndDispatch(`assets/scripts/data/admin-areas.topojson`, requestMapData, receiveMapData);
+  return getAndDispatch(`assets/data/admin-areas.topojson`, requestMapData, receiveMapData);
 }
 
 // Fetcher function
