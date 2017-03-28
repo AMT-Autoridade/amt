@@ -36,7 +36,7 @@ var SectionLicencas = React.createClass({
     });
 
     let chartData = {
-      labels: dataList.map(o => o.name),
+      labels: dataList.map(o => o.display),
       datasets: [
         {
           data: dataList.map(o => o.data.licencas2016),
@@ -94,7 +94,7 @@ var SectionLicencas = React.createClass({
     let { licencas2016, max2016, licencasHab } = this.props;
 
     return (
-      <div id='section-licencas' className='section-wrapper'>
+      <div id='licencas' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
             <h3 className='section-category'>{this.props.adminName}</h3>
@@ -113,8 +113,8 @@ var SectionLicencas = React.createClass({
                   <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>{round(licencasHab, 1).toLocaleString()}</span>
-                  <span className='stat-description'>Licenças activas por 1 000 residentes.</span>
+                  <span className='stat-number'>ABC</span>
+                  <span className='stat-description'>Total de vagas existentes em agosto de 2016.</span>
                 </li>
               </ul>
             </div>

@@ -6,8 +6,8 @@ import { Router, Route, IndexRoute, hashHistory, applyRouterMiddleware } from 'r
 import { useScroll } from 'react-router-scroll';
 import { syncHistoryWithStore } from 'react-router-redux';
 
-import config from './config';
 import store from './utils/store';
+import { onEnterNut, onEnterConcelho } from './utils/admin-areas';
 
 // Views.
 import App from './views/app';
@@ -26,20 +26,6 @@ const scrollerMiddleware = useScroll((prevRouterProps, currRouterProps) => {
     decodeURIComponent(currRouterProps.location.pathname) !== decodeURIComponent(prevRouterProps.location.pathname);
 });
 
-// TEMP.
-// We need to use a meta file for the navigation.
-// Or check the value on component enter.
-var admin = require('./data/national.json');
-import _ from 'lodash';
-
-var onEnter = (nextState, replace) => {
-  let nuts = admin.results.map(o => _.kebabCase(o.name));
-  let nut = nextState.params.nut;
-  if (nuts.indexOf(nut) === -1) {
-    return replace('/404');
-  }
-};
-
 render((
   <Provider store={store}>
     <Router history={history} render={applyRouterMiddleware(scrollerMiddleware)}>
@@ -48,8 +34,8 @@ render((
         <Route path="glossario" component={Glossario}/>
         <Route path="sobre" component={Sobre}/>
         <Route path="dados" component={Dados}/>
-        <Route path='/nuts/:nut' component={Nuts} onEnter={onEnter} />
-        <Route path='/nuts/:nut/concelhos/:concelho' component={Concelhos} />
+        <Route path='/nuts/:nut' component={Nuts} onEnter={onEnterNut} />
+        <Route path='/nuts/:nut/concelhos/:concelho' component={Concelhos} onEnter={onEnterConcelho} />
         <IndexRoute component={Home} pageClass='page--homepage' />
         <Route path="*" component={UhOh}/>
       </Route>

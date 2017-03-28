@@ -49,8 +49,6 @@ function processData (nut) {
     return d;
   });
 
-  console.log('nut', nut);
-
   // Licenças and max per district.
   nut.concelhos = nut.concelhos.map(d => {
     d.data.licencas2006 = d.data['lic-geral'][0].value + d.data['lic-mob-reduzida'][0].value;

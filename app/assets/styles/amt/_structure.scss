@@ -4,6 +4,7 @@
   margin: 0 auto;
   overflow: hidden;
   clear: both;
+  padding-bottom: 4rem;
 }
 
 .container-wrapper {
@@ -20,13 +21,18 @@
 }
 
 .map-wrapper {
-  border: 1px dashed #aaa;
-  text-align: center;
-  padding: 15rem 0;
+  position: relative;
   @include column(12/12);
   @include media (large-up) {
     @include column(4/12);
-    height: 100vh;
+    min-height: 900px;
+  }
+
+  > div {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    top: 0;
   }
 }
 

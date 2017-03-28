@@ -152,10 +152,10 @@ var SectionMobilidade = React.createClass({
     let percentNewMobRed = percent(newMobReduzida, newLicencas);
 
     return (
-      <div id='section-mobilidade' className='section-wrapper'>
+      <div id='mobilidade' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3>{this.props.adminName}</h3>
+            <h3 className='section-category'>{this.props.adminName}</h3>
             <h1>Mobilidade Reduzida</h1>
             <p className='lead'>A legislação prevê a possibilidade de existência de contingentes específicos de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
           </header>

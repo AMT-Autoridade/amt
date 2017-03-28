@@ -15,29 +15,26 @@ var SectionDistribuicao = React.createClass({
   },
 
   renderTrendLineChart: function (data) {
-    let l = data.length - 1;
-
     let tooltipFn = makeTooltip(entryIndex => {
       let year = data[entryIndex];
       return (
          <ul className='x-small'>
-          <li><span className='tooltip-label'>Year:</span><span className='tooltip-number'>{year.value.toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{year.value.toLocaleString()}</span></li>
           <span className='triangle'></span>
         </ul>
       );
     });
-
-    let pointRadius = data.map((o, i) => i === 0 || i === l ? 2 : 0);
 
     let chartData = {
       labels: data.map(o => o.year),
       datasets: [{
         data: data.map(o => o.value),
         lineTension: 0,
-        pointRadius: pointRadius,
+        pointRadius: 2,
         pointBorderWidth: 0,
         pointBackgroundColor: '#2EB199',
         borderColor: '#2EB199',
+        backgroundColor: '#fff',
         borderWidth: 1
       }]
     };
@@ -107,10 +104,10 @@ var SectionDistribuicao = React.createClass({
 
   render: function () {
     return (
-      <div id='section-distribuicao'>
+      <div id='distribuicao'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3>{this.props.adminName}</h3>
+            <h3 className='section-category'>{this.props.adminName}</h3>
             <h1>Distribuição Geográfica</h1>
           </header>
           <div className='section-content'>
