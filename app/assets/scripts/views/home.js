@@ -7,10 +7,12 @@ import { fetchNational, fetchMapData } from '../actions';
 
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
+import SectionResidentes from '../components/sections/section-residentes';
 import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
 import SectionDistribuicao from '../components/sections/section-distribuicao';
 import SectionEvolucao from '../components/sections/section-evolucao';
+import SectionConclusoes from '../components/sections/section-conclusoes';
 
 import Map from '../components/map';
 
@@ -134,6 +136,15 @@ var Home = React.createClass({
 
         <div style={{overflow: 'hidden'}}>
           <div className='map-wrapper'>
+          </div>
+
+          <div className='content-wrapper'>
+            <SectionResidentes />
+          </div>
+        </div>
+
+        <div style={{overflow: 'hidden'}}>
+          <div className='map-wrapper'>
           {mapGeometries.fetched ? (
             <Map
               geometries={mapGeometries.data}
@@ -204,6 +215,15 @@ var Home = React.createClass({
               totalMunicipios={data.totalMunicipios}
               licencasTimeline={data.licencasTimeline}
             />
+          </div>
+        </div>
+
+        <div style={{overflow: 'hidden'}}>
+          <div className='map-wrapper'>
+          </div>
+
+          <div className='content-wrapper'>
+            <SectionConclusoes />
           </div>
         </div>
 

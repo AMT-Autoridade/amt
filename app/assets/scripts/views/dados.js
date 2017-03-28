@@ -11,12 +11,11 @@ var Dados = React.createClass({
 
   render: function () {
     return (
-      <div id='section-dados' className='container-wrapper section-wrapper'>
-        
-        <h1>Sobre os dados</h1>   
+      <div id='dados' className='container-wrapper section-wrapper'>
+
+        <h1>Sobre os dados</h1>
 
         <section id='dados'>
-             
           <div>
             <p className='lead'>O <a href="#">Observatório da Mobilidade</a> contém dados detalhados sobre o setor dos serviços de transporte em táxi em Portugal no período entre 2006 e 2016. Os dados foram recolhidos pela Autoridade da Mobilidade e dos Transportes junto das 308 câmaras municipais do país.</p>
             <p className='lead'>De forma a complementar os dados recolhidos e para fazer uma análise mais completa ao panorama actual, foram também utilizados dados sobre a população residente e sobre as dormidas nos estabelecimentos hoteleiros, disponibilizada pelo Instituto Nacional de Estatística através da sua base de dados pública (www.ine.pt).</p>

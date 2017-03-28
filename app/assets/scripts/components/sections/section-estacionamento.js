@@ -8,10 +8,10 @@ var SectionEstacionamento = React.createClass({
 
   render: function () {
     return (
-      <div id='section-estacionamento' className='section-wrapper'>
+      <div id='estacionamento' className='section-wrapper'>
         <section className='section-container'>
           <header className='section-header'>
-            <h3>Portugal</h3>
+            <h3 className='section-category'>Portugal</h3>
             <h1>Regime de Estacionamento</h1>
             <p className='lead'>As câmaras municipais estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Estas disposições são estabelecidas por regulamento municipal ou aquando da atribuição da licença municipal ao veículo.</p>
           </header>
@@ -25,7 +25,7 @@ var SectionEstacionamento = React.createClass({
               <p><strong>Graph goes here</strong> Número de municípios por (conjunto de) regimes de estacionamento</p>
              </div>
            </div>
-            
+
           </div>
           <footer className='section-footer'>
             <p><strong>Legenda:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>
