@@ -3,7 +3,7 @@ import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { fetchNational } from '../actions';
+import { fetchNational, fetchMapData } from '../actions';
 
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
@@ -14,17 +14,20 @@ import SectionEvolucao from '../components/sections/section-evolucao';
 
 import Map from '../components/map';
 
-var natTopo = require('../data/admin-areas.json');
-
 var Home = React.createClass({
   propTypes: {
     national: T.object,
-    _fetchNational: T.func
+    mapData: T.object,
+    _fetchNational: T.func,
+    _fetchMapData: T.func
   },
 
   componentDidMount: function () {
     if (!this.props.national.fetched) {
       this.props._fetchNational();
+    }
+    if (!this.props.mapData.fetched) {
+      this.props._fetchMapData();
     }
   },
 
@@ -42,6 +45,8 @@ var Home = React.createClass({
     if (error) {
       return <div>Error: {error}</div>;
     }
+
+    const mapGeometries = this.props.mapData;
 
     let licencasMunicipios = data.concelhos.map(m => {
       let licencas = _.last(m.data['lic-geral']).value;
@@ -108,9 +113,11 @@ var Home = React.createClass({
         <div id="page-content" className='container-wrapper'>
         <div style={{overflow: 'hidden'}}>
           <div className='map-wrapper'>
+          {mapGeometries.fetched ? (
             <Map
-              geometries={natTopo}
+              geometries={mapGeometries.data}
               data={licencasMunicipios} />
+          ) : null}
           </div>
 
           <div className='content-wrapper'>
@@ -127,9 +134,11 @@ var Home = React.createClass({
 
         <div style={{overflow: 'hidden'}}>
           <div className='map-wrapper'>
+          {mapGeometries.fetched ? (
             <Map
-              geometries={natTopo}
+              geometries={mapGeometries.data}
               data={mobRedMunicipios} />
+          ) : null}
           </div>
 
           <div className='content-wrapper'>
@@ -158,9 +167,11 @@ var Home = React.createClass({
 
         <div style={{overflow: 'hidden'}}>
           <div className='map-wrapper'>
+          {mapGeometries.fetched ? (
             <Map
-              geometries={natTopo}
+              geometries={mapGeometries.data}
               data={licencas1000Hab} />
+          ) : null}
           </div>
 
           <div className='content-wrapper'>
@@ -176,9 +187,11 @@ var Home = React.createClass({
 
         <div style={{overflow: 'hidden'}}>
           <div className='map-wrapper'>
+          {mapGeometries.fetched ? (
             <Map
-              geometries={natTopo}
+              geometries={mapGeometries.data}
               data={evolucaoMunicipios} />
+          ) : null}
           </div>
 
           <div className='content-wrapper'>
@@ -205,13 +218,15 @@ var Home = React.createClass({
 
 function selector (state) {
   return {
-    national: state.national
+    national: state.national,
+    mapData: state.mapData
   };
 }
 
 function dispatcher (dispatch) {
   return {
-    _fetchNational: (...args) => dispatch(fetchNational(...args))
+    _fetchNational: (...args) => dispatch(fetchNational(...args)),
+    _fetchMapData: (...args) => dispatch(fetchMapData(...args))
   };
 }
 
