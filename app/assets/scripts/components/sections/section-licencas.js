@@ -113,12 +113,8 @@ var SectionLicencas = React.createClass({
                   <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>{max2016.toLocaleString()}</span>
+                  <span className='stat-number'>ABC</span>
                   <span className='stat-description'>Total de vagas existentes em agosto de 2016.</span>
-                </li>
-                <li>
-                  <span className='stat-number'>{round(licencasHab, 1).toLocaleString()}</span>
-                  <span className='stat-description'>Licenças activas por 1 000 residentes.</span>
                 </li>
               </ul>
             </div>

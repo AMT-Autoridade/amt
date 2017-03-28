@@ -22,13 +22,9 @@
 
 .map-wrapper {
   position: relative;
-  border: 1px dashed #aaa;
-  // text-align: center;
-  // padding: 15rem 0;
   @include column(12/12);
   @include media (large-up) {
     @include column(4/12);
-    // height: 100vh;
     min-height: 900px;
   }
 
