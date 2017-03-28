@@ -22,6 +22,9 @@ export const REQUEST_NUT = 'REQUEST_NUT';
 export const RECEIVE_NUT = 'RECEIVE_NUT';
 export const INVALIDATE_NUT = 'INVALIDATE_NUT';
 
+export const REQUEST_MAP_DATA = 'REQUEST_MAP_DATA';
+export const RECEIVE_MAP_DATA = 'RECEIVE_MAP_DATA';
+
 // National
 
 export function invalidateNational () {
@@ -46,7 +49,7 @@ export function fetchNational () {
   // return getAndDispatch(`${config.api}/National`, requestNational, receiveNational);
 }
 
-// National
+// Nut
 
 export function invalidateNut () {
   return { type: INVALIDATE_NUT };
@@ -69,6 +72,21 @@ export function fetchNut (nut) {
       .then(nut => dispatch(receiveNut(nut)));
   };
   // return getAndDispatch(`${config.api}/National`, requestNational, receiveNational);
+}
+
+// Map Data
+
+export function requestMapData () {
+  return { type: REQUEST_MAP_DATA };
+}
+
+export function receiveMapData (data, error = null) {
+  return { type: RECEIVE_MAP_DATA, data: data, error, receivedAt: Date.now() };
+}
+
+export function fetchMapData () {
+  // return getAndDispatch(`${config.api}/National`, requestNational, receiveNational);
+  return getAndDispatch(`assets/scripts/data/admin-areas.topojson`, requestMapData, receiveMapData);
 }
 
 // Fetcher function
