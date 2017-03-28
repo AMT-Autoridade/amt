@@ -1,6 +1,6 @@
 'use strict';
 export function percent (value, total, decimals = 2) {
-  return round(value / total * 100);
+  return round(value / total * 100, decimals);
 }
 
 export function round (value, decimals = 2) {

@@ -50,6 +50,9 @@ function processData (nuts) {
     return d;
   });
 
+  // All concelhos.
+  data.concelhos = data.nuts.reduce((acc, nut) => acc.concat(nut.concelhos), []);
+
   // Total licenças 2006.
   data.licencas2006 = _.sumBy(nuts, 'data.licencas2006');
 

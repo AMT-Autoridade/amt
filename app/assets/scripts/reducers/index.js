@@ -4,10 +4,12 @@ import { routerReducer } from 'react-router-redux';
 
 import national from './national';
 import nut from './nut';
+import mapData from './map';
 
 export const reducers = {
   national,
-  nut
+  nut,
+  mapData
 };
 
 export default combineReducers(Object.assign({}, reducers, {
