@@ -19,16 +19,14 @@ var SectionResidentes = React.createClass({
           <div className='section-content'>
             <div className='section-stats'>
               <ul>
-  
+                <li></li>
               </ul>
             </div>
 
              <div className='graph'>
-              
               <p className='graph-description'>Evolução das licenças por 1000 residentes</p>
             </div>
             <div className='graph'>
-              
               <p className='graph-description'>Evolução das licenças por 1000 dormidas</p>
             </div>
 

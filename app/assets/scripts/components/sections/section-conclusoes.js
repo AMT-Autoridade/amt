@@ -35,11 +35,9 @@ var SectionConclusoes = React.createClass({
             </div>
 
             <div className='graph'>
-   
               <p className='graph-description'>Licenças por contingente (%)</p>
             </div>
             <div className='graph'>
-              
               <p className='graph-description'>Evolução do contingente</p>
             </div>
 

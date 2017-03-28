@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 var Concelho = React.createClass({
   propTypes: {
-    params: T.object,
+    params: T.object
   },
 
   componentDidMount: function () {
@@ -48,11 +48,9 @@ var Concelho = React.createClass({
                   </div>
 
                   <div className='graph'>
-         
                     <p className='graph-description'>Licenças por contingente (%)</p>
                   </div>
                   <div className='graph'>
-                    
                     <p className='graph-description'>Evolução do contingente</p>
                   </div>
 
@@ -62,7 +60,6 @@ var Concelho = React.createClass({
                 </footer>
               </section>
             </div>
-       
           </div>
 
         </div>
