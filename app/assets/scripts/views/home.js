@@ -172,7 +172,10 @@ var Home = React.createClass({
           </div>
 
           <div className='content-wrapper'>
-            <SectionEstacionamento data={data} />
+            <SectionEstacionamento
+              municipios={data.concelhos}
+              totalMunicipios={data.totalMunicipios}
+            />
           </div>
         </div>
 
