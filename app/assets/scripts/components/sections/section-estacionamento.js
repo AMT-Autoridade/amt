@@ -123,7 +123,9 @@ var SectionEstacionamento = React.createClass({
         return acc;
       }, {key: 'outros', types: ['Outros'], value: 0});
 
-    mainEstacionamento.push(rest);
+    if (rest.length) {
+      mainEstacionamento.push(rest);
+    }
 
     let tooltipFn = makeTooltip(entryIndex => {
       let estacionamento = mainEstacionamento[entryIndex];

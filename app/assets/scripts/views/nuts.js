@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { fetchNut } from '../actions';
 
-import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
 import SectionDistribuicaoNut from '../components/sections/section-distribuicao-nut';
@@ -54,7 +53,10 @@ var Nuts = React.createClass({
               max2016={data.data.max2016}
               licencasHab={data.data.licencasHab}
             />
-            <SectionEstacionamento data={data} />
+            <SectionEstacionamento
+              municipios={data.concelhos}
+              totalMunicipios={data.concelhos.length}
+            />
             <SectionDistribuicaoNut
               adminLevel='nut'
               parentSlug={this.props.params.nut}
