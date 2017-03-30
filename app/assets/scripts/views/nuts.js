@@ -54,6 +54,7 @@ var Nuts = React.createClass({
               licencasHab={data.data.licencasHab}
             />
             <SectionEstacionamento
+              adminName={data.name}
               municipios={data.concelhos}
               totalMunicipios={data.concelhos.length}
             />
