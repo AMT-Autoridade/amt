@@ -113,6 +113,10 @@ var Chart = function (options) {
     return topojson.feature(_geometries, island);
   };
 
+  // The offset values must be scaled according the the projection
+  // scale value.
+  const scalar = (v) => _projectionScaleValue * v / 6439.143067978895;
+
   /**
    * Returns the path for drawing the islands taking into account their
    * new projection.
@@ -124,9 +128,6 @@ var Chart = function (options) {
     const tw = _width / 2;
     // The vertical value for the translate is computed from the width.
     const th = 125 / 114 * _width;
-    // The offset values must be scaled according the the projection
-    // scale value.
-    const scalar = (v) => _projectionScaleValue * v / 6439.143067978895;
 
     const projection = d3.geoMercator()
       .scale(_projectionScaleValue)
@@ -150,7 +151,7 @@ var Chart = function (options) {
     // Return a function to handle each individual island.
     // Wrapped in a closure to include path variables.
     function drawFeature (data) {
-      let additionalHOffset = type === 'island' ? 385 : 0;
+      let additionalHOffset = type === 'island' ? 400 : 0;
       let path = getPathFn(data.center, [data.offset[0], data.offset[1] + additionalHOffset]);
 
       return function (sel) {
@@ -217,7 +218,7 @@ var Chart = function (options) {
             id: 42,
             center: [-25.4883, 37.7751],
             feature: getIsland([42]),
-            offset: [101, 55]
+            offset: [103, 53]
           },
           {
             id: 43,
@@ -257,19 +258,19 @@ var Chart = function (options) {
           }
         ];
 
-        // MAdeira and their coordinates to allow for reprojetion.
+        // Madeira and their coordinates to allow for reprojetion.
         let madeira = [
           {
             id: 31,
             center: [-16.7473, 32.6220],
             feature: getIsland([31]),
-            offset: [-101, 34]
+            offset: [-85, 50]
           },
           {
             id: 32,
             center: [-16.3435, 33.0754],
             feature: getIsland([32]),
-            offset: [-95, -3]
+            offset: [-80, 13]
           }
         ];
 
@@ -328,6 +329,36 @@ var Chart = function (options) {
           let bucket = _data.find(o => o.id === parseInt(d.properties.id));
           el.style('fill', bucket ? bucket.color : 'none');
         });
+      },
+
+      islandsBounds: function () {
+        let bounds = $svg.selectAll('.island-bound')
+          .data([
+            {
+              x: 130,
+              y: 785,
+              width: 210,
+              height: 110
+            },
+            {
+              x: 20,
+              y: 785,
+              width: 110,
+              height: 110
+            }
+          ]);
+
+        bounds.enter()
+          .append('rect')
+          .attr('class', 'island-bound')
+          .style('stroke-width', '1px')
+          .style('stroke', '#ddd')
+          .style('fill', 'none')
+          .merge(bounds)
+            .attr('x', d => scalar(d.x))
+            .attr('y', d => scalar(d.y))
+            .attr('width', d => scalar(d.width))
+            .attr('height', d => scalar(d.height));
       }
     };
 
@@ -347,6 +378,7 @@ var Chart = function (options) {
       // Redraw.
       layers.baseGeometries();
       layers.municipioColors();
+      layers.islandsBounds();
     };
 
     updateData = function () {
@@ -356,6 +388,7 @@ var Chart = function (options) {
 
       // Redraw.
       layers.municipioColors();
+      layers.islandsBounds();
     };
 
     // -----------------------------------------------------------------
