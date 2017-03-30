@@ -4,9 +4,17 @@
 
 .section-category {
 	font-size: 1.25rem;
+  line-height: 1.4;
 	text-transform: uppercase;
   font-weight: 400;
   color: tint($text-color, 50);
+}
+
+.section-nav {
+  position: fixed;
+  right: 10px;
+  top: 50%;
+  margin-top: -100px;
 }
 
 .section-stats ul{
