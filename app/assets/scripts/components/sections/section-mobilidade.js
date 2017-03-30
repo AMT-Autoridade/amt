@@ -89,13 +89,13 @@ var SectionMobilidade = React.createClass({
       {
         label: 'Geral',
         value: licencas2016Geral,
-        percent: percent(licencas2016Geral, licencas2016),
+        percent: percent(licencas2016Geral, licencas2016, 1),
         backgroundColor: '#41D6B9'
       },
       {
         label: 'CMR',
         value: licencasMobReduzida2016,
-        percent: percent(licencasMobReduzida2016, licencas2016),
+        percent: percent(licencasMobReduzida2016, licencas2016, 1),
         backgroundColor: '#227868'
       }
     ];
@@ -146,10 +146,10 @@ var SectionMobilidade = React.createClass({
       licencasMobReduzida2006
     } = this.props;
 
-    let percentMobRed = percent(totalMunicipiosMobReduzida, totalMunicipios);
+    let percentMobRed = percent(totalMunicipiosMobReduzida, totalMunicipios, 0);
     let newLicencas = licencas2016 - licencas2006;
     let newMobReduzida = licencasMobReduzida2016 - licencasMobReduzida2006;
-    let percentNewMobRed = percent(newMobReduzida, newLicencas);
+    let percentNewMobRed = percent(newMobReduzida, newLicencas, 0);
 
     return (
       <div id='mobilidade' className='section-wrapper'>
