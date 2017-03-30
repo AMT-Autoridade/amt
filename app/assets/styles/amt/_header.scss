@@ -1,25 +1,39 @@
 #page-header {
 	position: fixed;
-	bottom: 0;
+	top: 0;
 	left: 0;
 	right: 0;
 	background-color: #fff;
-	border-top: 1px solid tint($primary-color, 80);
+	box-shadow:  0 0 4px rgba(0,0,0,.2);;
 	overflow: hidden;
 	z-index: 1;
 
 	#page-logo {
 		float: left;
+		padding: 10px;
+		a {
+			display: block;
+			height: 31px;
+			width: 222px;
+			background: url('../graphics/layout/amt-logo.png') top left no-repeat;
+			background-size: 222px 31px;
+			float: left;
+			text-indent: 100%;
+			overflow: hidden;
+		}
 	}
 
-	.page-nav {
-		float: right;
-	}
-
-	ul {
+	.primary-nav {
 		@extend .inline-list;
-		float: left;
+		float: right;
 		text-transform: uppercase;
 		overflow: hidden;
+		a {
+			color: rgba(0,0,0,.5);
+			&:hover {
+				color: rgba(0,0,0,.8);
+				text-decoration: none;
+			}
+		}
 	}
 }

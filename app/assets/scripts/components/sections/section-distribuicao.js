@@ -81,9 +81,9 @@ var SectionDistribuicao = React.createClass({
 
     let licencas2016 = adminArea.data.licencas2016;
     let availableLicencas = adminArea.data.max2016 - licencas2016;
-    let percentNational = percent(adminArea.data.licencas2016, totNat2016);
+    let percentNational = percent(adminArea.data.licencas2016, totNat2016, 0);
     let pop = _.last(adminArea.data['pop-residente']).value;
-    let percentPop = percent(pop, this.props.populacaoNational, 1);
+    let percentPop = percent(pop, this.props.populacaoNational, 0);
 
     return (
       <li key={adminArea.id}>

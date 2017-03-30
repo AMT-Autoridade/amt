@@ -159,7 +159,7 @@ var SectionEvolucao = React.createClass({
       let entry = licencasChange[entryIndex];
       return (
         <ul className='small'>
-          <li><span className='tooltip-label'>{keyIndex[entry.key]}:</span><span className='tooltip-number'>{round(entry.percent).toLocaleString()}%</span></li>
+          <li><span className='tooltip-label'>{keyIndex[entry.key]}:</span><span className='tooltip-number'>{round(entry.percent, 1).toLocaleString()}%</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -214,11 +214,11 @@ var SectionEvolucao = React.createClass({
                   <span className='stat-description'>Aumento do número de licenças entre 2006 e 2016.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>{round(increaseLicencas, 2).toLocaleString()}%</span>
+                  <span className='stat-number'>{round(increaseLicencas, 0).toLocaleString()}%</span>
                   <span className='stat-description'>Crescimento dos táxis licenciados desde 2006.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios).toLocaleString()}%</span>
+                  <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios, 0).toLocaleString()}%</span>
                   <span className='stat-description'>Dos municípios não registaram alteração no número de licenças.</span>
                 </li>
               </ul>

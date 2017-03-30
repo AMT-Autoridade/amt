@@ -4,7 +4,6 @@ import { Bar as BarChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
-import { round } from '../../utils/utils';
 
 var SectionLicencas = React.createClass({
   propTypes: {
@@ -91,7 +90,7 @@ var SectionLicencas = React.createClass({
   },
 
   render: function () {
-    let { licencas2016, max2016, licencasHab } = this.props;
+    let { licencas2016, max2016 } = this.props;
 
     return (
       <div id='licencas' className='section-wrapper'>
@@ -113,7 +112,7 @@ var SectionLicencas = React.createClass({
                   <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
                 </li>
                 <li>
-                  <span className='stat-number'>ABC</span>
+                  <span className='stat-number'>{(max2016 - licencas2016).toLocaleString()}</span>
                   <span className='stat-description'>Total de vagas existentes em agosto de 2016.</span>
                 </li>
               </ul>
