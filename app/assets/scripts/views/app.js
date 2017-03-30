@@ -51,9 +51,8 @@ var App = React.createClass({
             <h1 id='page-logo'><a href='/'>Autoridade da Mobilidade e dos Transportes</a></h1>
             <ul className='primary-nav'>
               <li><Link to='/sobre'>Sobre</Link></li>
-              <li><Link to='/glossario'>Glossário</Link></li>
-              <li><Link to='/relatorio'>Relatório</Link></li>
               <li><Link to='/dados'>Dados</Link></li>
+              <li><Link to='/glossario'>Glossário</Link></li>
             </ul>
           </nav>
         </header>

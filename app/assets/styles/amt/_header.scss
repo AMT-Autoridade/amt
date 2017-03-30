@@ -28,5 +28,12 @@
 		float: right;
 		text-transform: uppercase;
 		overflow: hidden;
+		a {
+			color: rgba(0,0,0,.5);
+			&:hover {
+				color: rgba(0,0,0,.8);
+				text-decoration: none;
+			}
+		}
 	}
 }
