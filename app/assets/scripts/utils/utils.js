@@ -1,6 +1,10 @@
 'use strict';
 export function percent (value, total, decimals = 2) {
-  return round(value / total * 100, decimals);
+  let val = value / total * 100;
+  if (decimals === 0) {
+    decimals = val < 1 ? 1 : 0;
+  }
+  return round(val, decimals);
 }
 
 export function round (value, decimals = 2) {
