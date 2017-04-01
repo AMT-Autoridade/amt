@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { fetchNational, fetchMapData } from '../actions';
+import { percent } from '../utils/utils';
 
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
@@ -150,6 +151,27 @@ var Home = React.createClass({
       };
     });
 
+    let percentLicOverPop = data.concelhos.map(m => {
+      let lic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
+      let percentNational = percent(lic, this.props.national.data.licencas2016, 0);
+      let pop = _.last(m.data['pop-residente']).value;
+      let percentPop = percent(pop, this.props.national.data.populacao, 0);
+
+      let color = '#2D8374';
+      // More relative licenses than population.
+      if (percentNational > percentPop) {
+        color = '#7FECDA';
+      // More relative population than licenses.
+      } else if (percentNational < percentPop) {
+        color = '#0F2B26';
+      }
+
+      return {
+        id: m.id,
+        color: color
+      };
+    });
+
     return (
       <div>
         <SectionIntro />
@@ -238,7 +260,7 @@ var Home = React.createClass({
           {mapGeometries.fetched ? (
             <Map
               geometries={mapGeometries.data}
-              data={municipiosVagas} />
+              data={percentLicOverPop} />
           ) : null}
           </div>
 
@@ -277,6 +299,11 @@ var Home = React.createClass({
 
         <div style={{overflow: 'hidden'}}>
           <div className='map-wrapper'>
+          {mapGeometries.fetched ? (
+            <Map
+              geometries={mapGeometries.data}
+              data={municipiosVagas} />
+          ) : null}
           </div>
 
           <div className='content-wrapper'>
