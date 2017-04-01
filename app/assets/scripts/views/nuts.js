@@ -48,11 +48,11 @@ var Nuts = React.createClass({
     let chartResidentes = {
       labels: data.data.licencasTimeline.map(y => y.year),
       datasets: [
-        // {
-        //   data: this.props.national.data.data.licencasTimeline.map(o => o['lic1000']),
-        //   label: 'Nacional',
-        //   color: 'red'
-        // },
+        {
+          data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
+          label: 'Nacional',
+          color: 'red'
+        },
         {
           data: data.data.licencasTimeline.map(o => o['lic1000']),
           label: data.name,

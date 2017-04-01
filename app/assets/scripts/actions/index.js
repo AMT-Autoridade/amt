@@ -59,17 +59,16 @@ export function requestNut () {
   return { type: REQUEST_NUT };
 }
 
-export function receiveNut (data, error = null) {
-  return { type: RECEIVE_NUT, data: data, error, receivedAt: Date.now() };
+export function receiveNut (data, slug, error = null) {
+  return { type: RECEIVE_NUT, data: data, slug, error, receivedAt: Date.now() };
 }
 
-export function fetchNut (nut) {
+export function fetchNut (nutSlug) {
   // Fake data load.
   return (dispatch) => {
     dispatch(requestNut());
     fetchAndCacheData()
-      .then(national => national.results.find(o => o.slug === nut))
-      .then(nut => dispatch(receiveNut(nut)));
+      .then(national => dispatch(receiveNut(national, nutSlug)));
   };
   // return getAndDispatch(`${config.api}/National`, requestNational, receiveNational);
 }

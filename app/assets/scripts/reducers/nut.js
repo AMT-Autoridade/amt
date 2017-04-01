@@ -19,7 +19,8 @@ export default function reducer (state = initialState, action) {
       if (action.error) {
         state.error = action.error;
       } else {
-        state.data = processData(action.data);
+        let nut = action.data.results.find(o => o.slug === action.slug);
+        state.data = processData(nut);
       }
       break;
   }
