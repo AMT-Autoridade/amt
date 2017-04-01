@@ -8,7 +8,7 @@ var SectionIntro = React.createClass({
 
   render: function () {
     return (
-      <div id='intro' className='container-wrapper'>
+      <div id='intro-wrapper' className='container-wrapper'>
         <section id='intro' className='section-wrapper'>
           <h3 className='section-category'>Observatório dos Mercados da Mobilidade,<span className='block'> Preços e Estratégias Empresariais</span></h3>
           <h1>Táxis em Portugal 2006-2016</h1>

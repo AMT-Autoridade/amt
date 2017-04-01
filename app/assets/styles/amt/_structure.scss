@@ -49,7 +49,7 @@
 .two-columns {
   > li,
   > div {
-    @include column(6/12, $cycle: 2);
+    @include column(6/12);
   }
 } 
 
