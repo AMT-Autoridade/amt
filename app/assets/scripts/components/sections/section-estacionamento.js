@@ -18,7 +18,8 @@ var SectionEstacionamento = React.createClass({
     condicionado: 'Condicionado',
     escala: 'Escala',
     livre: 'Livre',
-    outros: 'Outros'
+    outros: 'Outros',
+    nd: 'Não Definido'
   },
 
   renderPercentEstacionamento: function () {
@@ -26,12 +27,13 @@ var SectionEstacionamento = React.createClass({
       fixo: {value: 0},
       condicionado: {value: 0},
       escala: {value: 0},
-      livre: {value: 0}
+      livre: {value: 0},
+      nd: {value: 0}
     };
 
     this.props.municipios.forEach(m => m.data.estacionamento.forEach(e => {
       e = _.trim(e);
-      if (!e) return;
+      if (!e) e = 'nd';
       data[e].value++;
     }));
 
@@ -89,7 +91,7 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={260}/>;
+    return <BarChart data={chartData} options={chartOptions} height={160}/>;
   },
 
   renderCountEstacionamento: function () {
@@ -97,8 +99,7 @@ var SectionEstacionamento = React.createClass({
 
     this.props.municipios.forEach(m => {
       let types = _(m.data.estacionamento)
-        .filter()
-        .map(_.trim)
+        .map(o => o === '' ? 'nd' : _.trim(o))
         .sort()
         .value();
 
@@ -124,7 +125,7 @@ var SectionEstacionamento = React.createClass({
         return acc;
       }, {key: 'outros', types: ['Outros'], value: 0});
 
-    if (rest.length) {
+    if (rest.value) {
       mainEstacionamento.push(rest);
     }
 
@@ -172,7 +173,7 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <PolarChart data={chartData} options={chartOptions} height={260}/>;
+    return <PolarChart data={chartData} options={chartOptions} height={160}/>;
   },
 
   render: function () {
