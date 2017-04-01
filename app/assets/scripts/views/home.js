@@ -68,11 +68,11 @@ var Home = React.createClass({
     });
 
     let mobRedMunicipios = data.concelhos.map(m => {
-      let modred = _.last(m.data['lic-mob-reduzida']).value > 0;
+      let mobred = _.last(m.data['lic-mob-reduzida']).value > 0;
 
       return {
         id: m.id,
-        color: modred ? '#2D8374' : '#eaeaea'
+        color: mobred ? '#2D8374' : '#eaeaea'
       };
     });
 
@@ -108,6 +108,48 @@ var Home = React.createClass({
       };
     });
 
+    let municipiosVagas = data.concelhos.map(m => {
+      let lic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
+      let max = _.last(m.data['max-lic-geral']).value + _.last(m.data['max-lic-mob-reduzida']).value;
+      let vagas = max - lic;
+
+      const getColor = (v) => {
+        if (v === 0) return '#eaeaea';
+        if (v <= 10) return '#7FECDA';
+        if (v <= 50) return '#2D8374';
+        return '#0F2B26';
+      };
+
+      return {
+        id: m.id,
+        color: getColor(vagas)
+      };
+    });
+
+    let tipoEstacionamentos = data.concelhos.map(m => {
+      let key = _(m.data.estacionamento)
+        .map(_.trim)
+        .sort()
+        .join('-');
+
+      const getColor = (v) => {
+        if (v === 'fixo') return '#7FECDA';
+        if (v === 'condicionado-fixo') return '#00DFC1';
+        if (v === 'condicionado') return '#2D8374';
+        if (v === 'fixo-livre') return '#1F574D';
+        if (v === 'condicionado-livre') return '#0F2B26';
+        if (v === 'livre') return '#ff0000';
+        // if (v === 'condicionado-fixo-livre') return '#00ff00';
+        // if (v === 'escala-fixo') return '#0000ff';
+        return '#eaeaea';
+      };
+
+      return {
+        id: m.id,
+        color: getColor(key)
+      };
+    });
+
     return (
       <div>
         <SectionIntro />
@@ -136,10 +178,18 @@ var Home = React.createClass({
 
         <div style={{overflow: 'hidden'}}>
           <div className='map-wrapper'>
+          {mapGeometries.fetched ? (
+            <Map
+              geometries={mapGeometries.data}
+              data={licencas1000Hab} />
+          ) : null}
           </div>
 
           <div className='content-wrapper'>
-            <SectionResidentes />
+            <SectionResidentes
+              licencasHab={data.licencasHab}
+              licencasTimeline={data.licencasTimeline}
+            />
           </div>
         </div>
 
@@ -168,7 +218,11 @@ var Home = React.createClass({
 
         <div style={{overflow: 'hidden'}}>
           <div className='map-wrapper'>
-
+          {mapGeometries.fetched ? (
+            <Map
+              geometries={mapGeometries.data}
+              data={tipoEstacionamentos} />
+          ) : null}
           </div>
 
           <div className='content-wrapper'>
@@ -184,7 +238,7 @@ var Home = React.createClass({
           {mapGeometries.fetched ? (
             <Map
               geometries={mapGeometries.data}
-              data={licencas1000Hab} />
+              data={municipiosVagas} />
           ) : null}
           </div>
 
