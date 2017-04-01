@@ -101,12 +101,12 @@ var SectionLicencas = React.createClass({
 
     return (
       <div>
-        <h6 className='map-title'>Licenças por Município</h6>
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={licencasMunicipios}
         />
+        <h6 className='map-title'>Licenças por Município</h6>
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: getColor(10)}}></span>0 - 10</li>
           <li><span style={{backgroundColor: getColor(30)}}></span>11 - 30</li>
@@ -122,11 +122,11 @@ var SectionLicencas = React.createClass({
     let { licencas2016, max2016 } = this.props;
 
     return (
-      <div className='content-wrapper'>
+      <div id='licencas' className='content-wrapper'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>
-        <div id='licencas' className='section-wrapper'>
+        <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>

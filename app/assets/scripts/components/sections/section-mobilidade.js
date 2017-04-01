@@ -81,7 +81,7 @@ var SectionMobilidade = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={240}/>;
+    return <BarChart data={chartData} options={chartOptions} height={280}/>;
   },
 
   renderLicencasChart: function () {
@@ -137,7 +137,7 @@ var SectionMobilidade = React.createClass({
       }
     };
 
-    return <PieChart data={chartData} options={chartOptions} height={240}/>;
+    return <PieChart data={chartData} options={chartOptions} height={280}/>;
   },
 
   renderMap: function () {
@@ -154,16 +154,18 @@ var SectionMobilidade = React.createClass({
 
     return (
       <div>
-        <h6 className='map-title'>Licenças por 1000 habitantes</h6>
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={mobRedMunicipios}
         />
-        <ul className='color-legend side-by-side'>
-          <li><span style={{backgroundColor: '#2D8374'}}></span>Com mobilidade reduzida</li>
-          <li><span style={{backgroundColor: '#eaeaea'}}></span>Sem mobilidade reduzida</li>
-       </ul>
+        <div className='map-legend'>
+          <h6 className='legend-title'>Municípios com Contingente de Mobilidade Reduzida:</h6>
+          <ul className='color-legend side-by-side'>
+            <li><span style={{backgroundColor: '#2D8374'}}></span>Com CMR</li>
+            <li><span style={{backgroundColor: '#eaeaea'}}></span>Sem CMRs</li>
+          </ul>
+        </div>
       </div>
     );
   },
@@ -184,11 +186,11 @@ var SectionMobilidade = React.createClass({
     let percentNewMobRed = percent(newMobReduzida, newLicencas, 0);
 
     return (
-      <div className='content-wrapper'>
+      <div id='mobilidade' className='content-wrapper'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>
-        <div id='mobilidade' className='section-wrapper'>
+        <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>
@@ -205,22 +207,22 @@ var SectionMobilidade = React.createClass({
                   </li>
                   <li>
                     <span className='stat-number'>{newMobReduzida.toLocaleString()}</span>
-                    <span className='stat-description'>Número de novas licenças emitidas em CMR.</span>
+                    <span className='stat-description'>Número de novas licenças <span className='block'>emitidas em CMR.</span></span>
                   </li>
                   <li>
                     <span className='stat-number'>{percentNewMobRed.toLocaleString()}%</span>
-                    <span className='stat-description'>Do aumento de licenças resulta do crescimento de licenças emitidas em CMR.</span>
+                    <span className='stat-description'>Do aumento de licenças resulta do crescimento de licenças do CMR.</span>
                   </li>
                 </ul>
               </div>
 
               <div className='graph'>
+                <h6 className='legend-title'>Licenças por contingente (%)</h6>
                 {this.renderLicencasChart()}
-                <p className='graph-description'>Licenças por contingente (%)</p>
               </div>
               <div className='graph'>
+                <h6 className='legend-title'>Evolução do contingente</h6>
                 {this.renderEvolutionChart()}
-                <p className='graph-description'>Evolução do contingente</p>
               </div>
 
             </div>

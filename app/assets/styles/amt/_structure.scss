@@ -18,10 +18,14 @@
 
 .content-wrapper {
   overflow: hidden;
+  min-height: 100vh;
+  padding-top: 80px;
 }
 
 .map-wrapper {
   position: relative;
+  margin-top: -20px;
+
   @include column(12/12);
   @include media (large-up) {
     @include column(4/12);
@@ -29,8 +33,9 @@
   }
 
   .map-svg {
-    width: 80%;
-    min-height: 730px;
+    width: 78%;
+    margin: 0 auto;
+    min-height: 700px;
   }
 }
 
@@ -60,6 +65,10 @@
   &.inline {
     @extend .inline-list;
   }
+}
+
+.legend-title {
+  margin: 10px 0;
 }
 
 .section-wrapper {
