@@ -64,21 +64,8 @@ var SectionLicencas = React.createClass({
         }],
         yAxes: [{
           stacked: true,
-          type: 'logarithmic',
           gridLines: {
             display: false
-          },
-          ticks: {
-            callback: (tick, index, ticks) => {
-              var remain = tick / (Math.pow(10, Math.floor(Math.log10(tick))));
-
-              if (tick === 0) {
-                return '0';
-              } else if (remain === 1 || remain === 2 || remain === 5 || index === 0 || index === ticks.length - 1) {
-                return tick.toLocaleString();
-              }
-              return '';
-            }
           }
         }]
       },
@@ -90,7 +77,7 @@ var SectionLicencas = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} />;
+    return <BarChart data={chartData} options={chartOptions} height={120}/>;
   },
 
   renderMap: function () {
