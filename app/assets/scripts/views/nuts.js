@@ -1,22 +1,33 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
-import { fetchNut } from '../actions';
+import { fetchNut, fetchMapData } from '../actions';
 
 import SectionLicencas from '../components/sections/section-licencas';
+import SectionResidentes from '../components/sections/section-residentes';
+import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
 import SectionDistribuicaoNut from '../components/sections/section-distribuicao-nut';
+import SectionEvolucao from '../components/sections/section-evolucao';
 
 var Nuts = React.createClass({
   propTypes: {
     params: T.object,
+    mapData: T.object,
     nut: T.object,
-    _fetchNut: T.func
+    national: T.object,
+    _fetchNut: T.func,
+    _fetchMapData: T.func
   },
 
   componentDidMount: function () {
     this.props._fetchNut(this.props.params.nut);
+
+    if (!this.props.mapData.fetched) {
+      this.props._fetchMapData();
+    }
   },
 
   render: function () {
@@ -34,39 +45,93 @@ var Nuts = React.createClass({
       return <div>Error: {error}</div>;
     }
 
+    let chartResidentes = {
+      labels: data.data.licencasTimeline.map(y => y.year),
+      datasets: [
+        // {
+        //   data: this.props.national.data.data.licencasTimeline.map(o => o['lic1000']),
+        //   label: 'Nacional',
+        //   color: 'red'
+        // },
+        {
+          data: data.data.licencasTimeline.map(o => o['lic1000']),
+          label: data.name,
+          color: 'green'
+        }
+      ]
+    };
+
     return (
       <div>
-
         <div id="page-content">
+          <SectionLicencas
+            adminLevel='nut'
+            adminName={data.name}
+            adminList={data.concelhos}
+            licencas2016={data.data.licencas2016}
+            max2016={data.data.max2016}
+            licencasHab={data.data.licencasHab}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+          />
 
-          <div className='map-wrapper'>
-            This is a map
-          </div>
+          <SectionResidentes
+            adminLevel='nut'
+            adminName={data.name}
+            licencasHab={data.data.licencasHab}
+            chartDatasets={chartResidentes}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+          />
 
-          <div className='content-wrapper'>
+          <SectionMobilidade
+            adminLevel='nut'
+            adminName={data.name}
+            totalMunicipiosMobReduzida={data.data.totalMunicipiosMobReduzida}
+            totalMunicipios={data.data.totalMunicipios}
+            licencas2016={data.data.licencas2016}
+            licencas2006={data.data.licencas2006}
+            licencasMobReduzida2016={data.data.licencasMobReduzida2016}
+            licencasMobReduzida2006={data.data.licencasMobReduzida2006}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+          />
 
-            <SectionLicencas
-              adminLevel='nut'
-              adminName={data.name}
-              adminList={data.concelhos}
-              licencas2016={data.data.licencas2016}
-              max2016={data.data.max2016}
-              licencasHab={data.data.licencasHab}
-            />
-            <SectionEstacionamento
-              adminName={data.name}
-              municipios={data.concelhos}
-              totalMunicipios={data.concelhos.length}
-            />
-            <SectionDistribuicaoNut
-              adminLevel='nut'
-              parentSlug={this.props.params.nut}
-              adminName={data.name}
-              adminList={data.concelhos}
-              />
-          </div>
+          <SectionEstacionamento
+            adminLevel='nut'
+            adminName={data.name}
+            municipios={data.concelhos}
+            totalMunicipios={data.data.totalMunicipios}
+            mapGeometries={this.props.mapData}
+          />
 
+          <SectionDistribuicaoNut
+            adminLevel='nut'
+            adminName={data.name}
+            adminList={data.concelhos}
+            parentSlug={this.props.params.nut}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+          />
+
+          <SectionEvolucao
+            adminLevel='nut'
+            adminName={data.name}
+            licencas2016={data.data.licencas2016}
+            licencas2006={data.data.licencas2006}
+            municipios={data.concelhos}
+            totalMunicipios={data.data.totalMunicipios}
+            licencasTimeline={data.data.licencasTimeline}
+            mapGeometries={this.props.mapData}
+          />
         </div>
+        <ul className='section-nav'>
+          <li><Link to={`/nuts/${this.props.params.nut}#licencas`}>Licenças</Link></li>
+          <li><Link to={`/nuts/${this.props.params.nut}#mobilidade`}>Mobilidade Reduzida</Link></li>
+          <li><Link to={`/nuts/${this.props.params.nut}#estacionamento`}>Estacionamento</Link></li>
+          <li><Link to={`/nuts/${this.props.params.nut}#distribuicao`}>Distribuição</Link></li>
+          <li><Link to={`/nuts/${this.props.params.nut}#evolucao`}>Evolução</Link></li>
+        </ul>
       </div>
     );
   }
@@ -77,13 +142,16 @@ var Nuts = React.createClass({
 
 function selector (state) {
   return {
-    nut: state.nut
+    national: state.national,
+    nut: state.nut,
+    mapData: state.mapData
   };
 }
 
 function dispatcher (dispatch) {
   return {
-    _fetchNut: (...args) => dispatch(fetchNut(...args))
+    _fetchNut: (...args) => dispatch(fetchNut(...args)),
+    _fetchMapData: (...args) => dispatch(fetchMapData(...args))
   };
 }
 

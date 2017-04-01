@@ -10,59 +10,41 @@ import Map from '../map';
 
 var SectionResidentes = React.createClass({
   propTypes: {
+    adminLevel: T.string,
+    adminName: T.string,
     licencasHab: T.number,
-    licencasTimeline: T.array,
+    chartDatasets: T.object,
     mapGeometries: T.object,
     municipios: T.array
   },
 
   renderLicencas100Hab: function () {
-    let nationalTimeline = this.props.licencasTimeline;
-    let l = nationalTimeline.length - 1;
+    let chartDatasets = this.props.chartDatasets;
+    let l = chartDatasets.labels.length - 1;
 
     let tooltipFn = makeTooltip(entryIndex => {
-      let year = nationalTimeline[entryIndex];
+      let year = chartDatasets.labels[entryIndex];
       return (
         <ul>
-          <li><span className='tooltip-title'>{year.year}:</span></li>
-          <li><span className='tooltip-label'>AM Lisboa:</span> <span className='tooltip-number'>{round(year['lic1000-lx'])}</span></li>
-          <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{round(year['lic1000'])}</span></li>
-          <li><span className='tooltip-label'>AM Porto:</span><span className='tooltip-number'>{round(year['lic1000-por'])}</span></li>
+          <li><span className='tooltip-title'>{year}:</span></li>
+          {chartDatasets.datasets.map(o => <li key={o.label}><span className='tooltip-label'>{o.label}:</span> <span className='tooltip-number'>{round(o.data[entryIndex])}</span></li>)}
           <span className='triangle'></span>
         </ul>
       );
     });
 
-    let labels = nationalTimeline.map((o, i) => i === 0 || i === l ? o.year : '');
+    let labels = chartDatasets.labels.map((o, i) => i === 0 || i === l ? o : '');
 
     let chartData = {
       labels: labels,
-      datasets: [
-        {
-          data: nationalTimeline.map(o => o['lic1000']),
-          backgroundColor: 'transparent',
-          borderColor: '#F6B600',
-          pointBorderWidth: 0,
-          pointBackgroundColor: '#F6B600',
-          pointRadius: 2
-        },
-        {
-          data: nationalTimeline.map(o => o['lic1000-lx']),
-          backgroundColor: 'transparent',
-          borderColor: '#F6B600',
-          pointBorderWidth: 0,
-          pointBackgroundColor: '#F6B600',
-          pointRadius: 2
-        },
-        {
-          data: nationalTimeline.map(o => o['lic1000-por']),
-          backgroundColor: 'transparent',
-          borderColor: '#F6B600',
-          pointBorderWidth: 0,
-          pointBackgroundColor: '#F6B600',
-          pointRadius: 2
-        }
-      ]
+      datasets: chartDatasets.datasets.map(o => ({
+        data: o.data,
+        backgroundColor: 'transparent',
+        borderColor: o.color,
+        pointBorderWidth: 0,
+        pointBackgroundColor: o.color,
+        pointRadius: 2
+      }))
     };
 
     let chartOptions = {
@@ -145,7 +127,7 @@ var SectionResidentes = React.createClass({
          <div id='residentes' className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
-              <h3 className='section-category'>PORTUGAL</h3>
+              <h3 className='section-category'>{this.props.adminName}</h3>
               <h1>Indicadores</h1>
               <p className='lead'>A ponderação de indicadores que associem o número de táxis a fatores com influência na sua procura é uma forma interessante de conhecer a realidade e a sua evolução, em diferentes regiões, permitindo analisar tendências, fatores que influenciam a procura e estimar o efeito de alterações regulatórias. Os fatores que podem influenciar a procura de táxis são imensos. Não é adequado efetuar considerações sobre o número “adequado” de táxis, tendo por base comparações simplistas e descontextualizadas entre regiões.</p>
             </header>

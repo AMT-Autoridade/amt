@@ -3,15 +3,25 @@ import React, { PropTypes as T } from 'react';
 import { Link } from 'react-router';
 import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
+import c from 'classnames';
 
 import makeTooltip from '../../utils/tooltip';
+
+import Map from '../map';
 
 var SectionDistribuicao = React.createClass({
   propTypes: {
     parentSlug: T.string,
     adminLevel: T.string,
     adminName: T.string,
-    adminList: T.array
+    adminList: T.array,
+    mapGeometries: T.object,
+    municipios: T.array
+  },
+
+  contingenteMatrix: {
+    'concelho': 'Concelho',
+    'infra concelho': 'Infra Concelho'
   },
 
   renderTrendLineChart: function (data) {
@@ -80,8 +90,15 @@ var SectionDistribuicao = React.createClass({
       <li key={adminArea.id}>
         <span className='table-region'><Link to={url} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
-        <span className='table-parking'>Estacionamento</span>
-        <span className='table-scope'>ambito</span>
+        <div className='table-parking'>
+          <ul>
+            <li className={c('est est-livre', {active: adminArea.data.estacionamento.indexOf('livre') !== -1})}>Livre</li>
+            <li className={c('est est-condicionado', {active: adminArea.data.estacionamento.indexOf('condicionado') !== -1})}>Condicionado</li>
+            <li className={c('est est-fixo', {active: adminArea.data.estacionamento.indexOf('fixo') !== -1})}>Fixo</li>
+            <li className={c('est est-escala', {active: adminArea.data.estacionamento.indexOf('escala') !== -1})}>Escala</li>
+          </ul>
+        </div>
+        <span className='table-scope'>{this.contingenteMatrix[adminArea.data.contingente]}</span>
       </li>
     );
   },
@@ -102,18 +119,62 @@ var SectionDistribuicao = React.createClass({
     );
   },
 
+  renderMap: function () {
+    if (!this.props.mapGeometries.fetched) return null;
+
+    const getColor = (v) => {
+      if (v === 0) return '#eaeaea';
+      if (v <= 10) return '#7FECDA';
+      if (v <= 50) return '#2D8374';
+      return '#0F2B26';
+    };
+
+    let municipiosVagas = this.props.municipios.map(m => {
+      let lic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
+      let max = _.last(m.data['max-lic-geral']).value + _.last(m.data['max-lic-mob-reduzida']).value;
+      let vagas = max - lic;
+
+      return {
+        id: m.id,
+        color: getColor(vagas)
+      };
+    });
+
+    return (
+      <div>
+        <h6 className='map-title'>Vagas por município</h6>
+        <Map
+          className='map-svg'
+          geometries={this.props.mapGeometries.data}
+          data={municipiosVagas}
+        />
+        <ul className='color-legend side-by-side'>
+          <li><span style={{backgroundColor: getColor(0)}}></span>Sem vagas</li>
+          <li><span style={{backgroundColor: getColor(10)}}></span>menos que 10</li>
+          <li><span style={{backgroundColor: getColor(50)}}></span>11 - 50</li>
+          <li><span style={{backgroundColor: getColor(51)}}></span>+50</li>
+       </ul>
+      </div>
+    );
+  },
+
   render: function () {
     return (
-      <div id='distribuicao'>
-        <section className='section-container'>
-          <header className='section-header'>
-            <h3 className='section-category'>{this.props.adminName}</h3>
-            <h1>Distribuição Geográfica</h1>
-          </header>
-          <div className='section-content'>
-            {this.renderTable()}
-          </div>
-        </section>
+      <div className='content-wrapper'>
+        <div className='map-wrapper'>
+          {this.renderMap()}
+        </div>
+        <div id='distribuicao' className='section-wrapper'>
+          <section className='section-container'>
+            <header className='section-header'>
+              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h1>Distribuição Geográfica</h1>
+            </header>
+            <div className='section-content'>
+              {this.renderTable()}
+            </div>
+          </section>
+        </div>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 import { fetchNational, fetchMapData } from '../actions';
 
@@ -45,12 +46,32 @@ var Home = React.createClass({
       return <div>Error: {error}</div>;
     }
 
+    let chartResidentes = {
+      labels: this.props.national.data.licencasTimeline.map(y => y.year),
+      datasets: [
+        {
+          data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
+          label: 'Nacional',
+          color: 'red'
+        },
+        {
+          data: this.props.national.data.licencasTimeline.map(o => o['lic1000-lx']),
+          label: 'AM Lisboa',
+          color: 'green'
+        },
+        {
+          data: this.props.national.data.licencasTimeline.map(o => o['lic1000-por']),
+          label: 'AM Porto',
+          color: 'blue'
+        }
+      ]
+    };
+
     return (
       <div>
         <SectionIntro />
 
         <div id="page-content" className='container-wrapper'>
-
           <SectionLicencas
             adminLevel='national'
             adminName='Portugal'
@@ -63,8 +84,10 @@ var Home = React.createClass({
           />
 
           <SectionResidentes
+            adminLevel='national'
+            adminName='Portugal'
             licencasHab={data.licencasHab}
-            licencasTimeline={data.licencasTimeline}
+            chartDatasets={chartResidentes}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
           />
@@ -83,6 +106,8 @@ var Home = React.createClass({
           />
 
           <SectionEstacionamento
+            adminLevel='national'
+            adminName='Portugal'
             municipios={data.concelhos}
             totalMunicipios={data.totalMunicipios}
             mapGeometries={this.props.mapData}
@@ -103,15 +128,24 @@ var Home = React.createClass({
             adminName='Portugal'
             licencas2016={data.licencas2016}
             licencas2006={data.licencas2006}
-            municipios={data.nuts.reduce((acc, nut) => acc.concat(nut.concelhos), [])}
+            municipios={data.concelhos}
             totalMunicipios={data.totalMunicipios}
             licencasTimeline={data.licencasTimeline}
             mapGeometries={this.props.mapData}
           />
 
           <SectionConclusoes />
-
         </div>
+
+        <ul className='section-nav'>
+          <li><Link to='/#intro'>Introdução</Link></li>
+          <li><Link to='/#licencas'>Licenças</Link></li>
+          <li><Link to='/#mobilidade'>Mobilidade Reduzida</Link></li>
+          <li><Link to='/#estacionamento'>Estacionamento</Link></li>
+          <li><Link to='/#distribuicao'>Distribuição</Link></li>
+          <li><Link to='/#evolucao'>Evolução</Link></li>
+          <li><Link to='/#conclusoes'>Conclusões</Link></li>
+        </ul>
       </div>
     );
   }

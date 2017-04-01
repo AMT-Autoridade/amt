@@ -58,15 +58,6 @@ var App = React.createClass({
         </header>
         <main className='page__body' role='main'>
           {this.props.children}
-          <ul className='section-nav'>
-            <li><Link to='/#intro'>Introdução</Link></li>
-            <li><Link to='/#licencas'>Licenças</Link></li>
-            <li><Link to='/#mobilidade'>Mobilidade Reduzida</Link></li>
-            <li><Link to='/#estacionamento'>Estacionamento</Link></li>
-            <li><Link to='/#distribuicao'>Distribuição</Link></li>
-            <li><Link to='/#evolucao'>Evolução</Link></li>
-            <li><Link to='/#conclusoes'>Conclusões</Link></li>
-          </ul>
         </main>
       </div>
     );
