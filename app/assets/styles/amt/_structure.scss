@@ -24,7 +24,7 @@
 
 .map-wrapper {
   position: relative;
-  margin-top: -20px;
+  margin-top: -30px;
 
   @include column(12/12);
   @include media (large-up) {
@@ -35,7 +35,7 @@
   .map-svg {
     width: 78%;
     margin: 0 auto;
-    min-height: 700px;
+    min-height: 720px;
   }
 }
 
