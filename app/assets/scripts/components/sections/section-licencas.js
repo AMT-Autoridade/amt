@@ -154,6 +154,12 @@ var SectionLicencas = React.createClass({
               {this.renderChart()}
 
             </div>
+            <footer className='section-footer'>
+              <ul className='color-legend inline'>
+                <li><span style={{backgroundColor: '#F6B600'}}></span>Licenças Ativas</li>
+                <li><span style={{backgroundColor: '#2EB199'}}></span>Vagas Disponíveis</li>
+              </ul>
+            </footer>
           </section>
         </div>
       </div>
