@@ -262,6 +262,11 @@ var Home = React.createClass({
               geometries={mapGeometries.data}
               data={percentLicOverPop} />
           ) : null}
+          {mapGeometries.fetched ? (
+            <Map
+              geometries={mapGeometries.data}
+              data={municipiosVagas} />
+          ) : null}
           </div>
 
           <div className='content-wrapper'>
@@ -299,11 +304,6 @@ var Home = React.createClass({
 
         <div style={{overflow: 'hidden'}}>
           <div className='map-wrapper'>
-          {mapGeometries.fetched ? (
-            <Map
-              geometries={mapGeometries.data}
-              data={municipiosVagas} />
-          ) : null}
           </div>
 
           <div className='content-wrapper'>
