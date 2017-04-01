@@ -195,24 +195,34 @@ var SectionEvolucao = React.createClass({
   renderMap: function () {
     if (!this.props.mapGeometries.fetched) return null;
 
-    let evolucaoMunicipios = this.props.municipios.map(m => {
-      let c = '#2D8374';
-      if (m.data.change > 0) {
-        c = '#0F2B26';
-      } else if (m.data.change < 0) {
-        c = '#7FECDA';
-      }
+    const getColor = (v) => {
+      if (v > 0) return '#0F2B26';
+      if (v < 0) return '#7FECDA';
+      return '#2D8374';
+    };
 
+    let evolucaoMunicipios = this.props.municipios.map(m => {
       return {
         id: m.id,
-        color: c
+        color: getColor(m.data.change)
       };
     });
 
-    return <Map
-      geometries={this.props.mapGeometries.data}
-      data={evolucaoMunicipios}
-    />;
+    return (
+      <div>
+        <h6 className='map-title'>Vagas por município</h6>
+        <Map
+          className='map-svg'
+          geometries={this.props.mapGeometries.data}
+          data={evolucaoMunicipios}
+        />
+        <ul className='color-legend side-by-side'>
+          <li><span style={{backgroundColor: getColor(-1)}}></span>Diminuiu</li>
+          <li><span style={{backgroundColor: getColor(1)}}></span>Aumentou</li>
+          <li><span style={{backgroundColor: getColor(0)}}></span>Manteve</li>
+       </ul>
+      </div>
+    );
   },
 
   render: function () {

@@ -182,23 +182,23 @@ var SectionEstacionamento = React.createClass({
   renderMap: function () {
     if (!this.props.mapGeometries.fetched) return null;
 
+    const getColor = (v) => {
+      if (v === 'fixo') return '#7FECDA';
+      if (v === 'condicionado-fixo') return '#00DFC1';
+      if (v === 'condicionado') return '#2D8374';
+      if (v === 'fixo-livre') return '#1F574D';
+      if (v === 'condicionado-livre') return '#0F2B26';
+      if (v === 'livre') return '#ff0000';
+      // if (v === 'condicionado-fixo-livre') return '#00ff00';
+      // if (v === 'escala-fixo') return '#0000ff';
+      return '#eaeaea';
+    };
+
     let tipoEstacionamentos = this.props.municipios.map(m => {
       let key = _(m.data.estacionamento)
         .map(_.trim)
         .sort()
         .join('-');
-
-      const getColor = (v) => {
-        if (v === 'fixo') return '#7FECDA';
-        if (v === 'condicionado-fixo') return '#00DFC1';
-        if (v === 'condicionado') return '#2D8374';
-        if (v === 'fixo-livre') return '#1F574D';
-        if (v === 'condicionado-livre') return '#0F2B26';
-        if (v === 'livre') return '#ff0000';
-        // if (v === 'condicionado-fixo-livre') return '#00ff00';
-        // if (v === 'escala-fixo') return '#0000ff';
-        return '#eaeaea';
-      };
 
       return {
         id: m.id,
@@ -206,10 +206,25 @@ var SectionEstacionamento = React.createClass({
       };
     });
 
-    return <Map
-      geometries={this.props.mapGeometries.data}
-      data={tipoEstacionamentos}
-    />;
+    return (
+      <div>
+        <h6 className='map-title'>Tipos principais de estacionamento</h6>
+        <Map
+          className='map-svg'
+          geometries={this.props.mapGeometries.data}
+          data={tipoEstacionamentos}
+        />
+        <ul className='color-legend side-by-side'>
+          <li><span style={{backgroundColor: getColor('fixo')}}></span>Fixo</li>
+          <li><span style={{backgroundColor: getColor('condicionado-fixo')}}></span>Condicionado & Fixo</li>
+          <li><span style={{backgroundColor: getColor('condicionado')}}></span>Condicionado</li>
+          <li><span style={{backgroundColor: getColor('fixo-livre')}}></span>Fixo & Livre</li>
+          <li><span style={{backgroundColor: getColor('condicionado-livre')}}></span>Condicionado & Livre</li>
+          <li><span style={{backgroundColor: getColor('livre')}}></span>Livre</li>
+          <li><span style={{backgroundColor: getColor('outros')}}></span>Outros</li>
+       </ul>
+      </div>
+    );
   },
 
   render: function () {

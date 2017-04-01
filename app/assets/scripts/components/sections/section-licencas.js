@@ -96,27 +96,39 @@ var SectionLicencas = React.createClass({
   renderMap: function () {
     if (!this.props.mapGeometries.fetched) return null;
 
+    const getColor = (v) => {
+      if (v <= 10) return '#7FECDA';
+      if (v <= 30) return '#00DFC1';
+      if (v <= 100) return '#2D8374';
+      if (v <= 1000) return '#1F574D';
+      return '#0F2B26';
+    };
+
     let licencasMunicipios = this.props.municipios.map(m => {
       let licencas = _.last(m.data['lic-geral']).value;
-
-      const getColor = (v) => {
-        if (v <= 10) return '#7FECDA';
-        if (v <= 30) return '#00DFC1';
-        if (v <= 100) return '#2D8374';
-        if (v <= 1000) return '#1F574D';
-        return '#0F2B26';
-      };
-
       return {
         id: m.id,
         color: getColor(licencas)
       };
     });
 
-    return <Map
-      geometries={this.props.mapGeometries.data}
-      data={licencasMunicipios}
-    />;
+    return (
+      <div>
+        <h6 className='map-title'>Licenças por Município</h6>
+        <Map
+          className='map-svg'
+          geometries={this.props.mapGeometries.data}
+          data={licencasMunicipios}
+        />
+        <ul className='color-legend side-by-side'>
+          <li><span style={{backgroundColor: getColor(10)}}></span>0 - 10</li>
+          <li><span style={{backgroundColor: getColor(30)}}></span>11 - 30</li>
+          <li><span style={{backgroundColor: getColor(100)}}></span>31 - 100</li>
+          <li><span style={{backgroundColor: getColor(1000)}}></span>101 - 1000</li>
+          <li><span style={{backgroundColor: getColor(10000)}}></span>+1000</li>
+       </ul>
+      </div>
+    );
   },
 
   render: function () {

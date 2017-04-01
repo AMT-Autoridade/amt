@@ -152,10 +152,20 @@ var SectionMobilidade = React.createClass({
       };
     });
 
-    return <Map
-      geometries={this.props.mapGeometries.data}
-      data={mobRedMunicipios}
-    />;
+    return (
+      <div>
+        <h6 className='map-title'>Licenças por 1000 habitantes</h6>
+        <Map
+          className='map-svg'
+          geometries={this.props.mapGeometries.data}
+          data={mobRedMunicipios}
+        />
+        <ul className='color-legend side-by-side'>
+          <li><span style={{backgroundColor: '#2D8374'}}></span>Com mobilidade reduzida</li>
+          <li><span style={{backgroundColor: '#eaeaea'}}></span>Sem mobilidade reduzida</li>
+       </ul>
+      </div>
+    );
   },
 
   render: function () {

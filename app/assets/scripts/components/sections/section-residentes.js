@@ -99,17 +99,17 @@ var SectionResidentes = React.createClass({
   renderMap: function () {
     if (!this.props.mapGeometries.fetched) return null;
 
+    const getColor = (v) => {
+      if (v <= 1) return '#7FECDA';
+      if (v <= 2) return '#00DFC1';
+      if (v <= 3) return '#2D8374';
+      if (v <= 4) return '#1F574D';
+      return '#0F2B26';
+    };
+
     let licencas1000Hab = this.props.municipios.map(m => {
       let totalLic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
       let lic1000 = totalLic / (_.last(m.data['pop-residente']).value / 1000);
-
-      const getColor = (v) => {
-        if (v <= 1) return '#7FECDA';
-        if (v <= 2) return '#00DFC1';
-        if (v <= 3) return '#2D8374';
-        if (v <= 4) return '#1F574D';
-        return '#0F2B26';
-      };
 
       return {
         id: m.id,
@@ -117,10 +117,23 @@ var SectionResidentes = React.createClass({
       };
     });
 
-    return <Map
-      geometries={this.props.mapGeometries.data}
-      data={licencas1000Hab}
-    />;
+    return (
+      <div>
+        <h6 className='map-title'>Licenças por 1000 habitantes</h6>
+        <Map
+          className='map-svg'
+          geometries={this.props.mapGeometries.data}
+          data={licencas1000Hab}
+        />
+        <ul className='color-legend side-by-side'>
+          <li><span style={{backgroundColor: getColor(1)}}></span>1</li>
+          <li><span style={{backgroundColor: getColor(2)}}></span>2</li>
+          <li><span style={{backgroundColor: getColor(3)}}></span>3</li>
+          <li><span style={{backgroundColor: getColor(4)}}></span>4</li>
+          <li><span style={{backgroundColor: getColor(5)}}></span>+4</li>
+       </ul>
+      </div>
+    );
   },
 
   render: function () {
