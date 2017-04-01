@@ -7,13 +7,17 @@ import _ from 'lodash';
 import makeTooltip from '../../utils/tooltip';
 import { percent } from '../../utils/utils';
 
+import Map from '../map';
+
 var SectionDistribuicao = React.createClass({
   propTypes: {
     adminLevel: T.string,
     adminName: T.string,
     adminList: T.array,
     licencas2016: T.number,
-    populacaoNational: T.number
+    populacaoNational: T.number,
+    mapGeometries: T.object,
+    municipios: T.array
   },
 
   renderTrendLineChart: function (data) {
@@ -113,19 +117,111 @@ var SectionDistribuicao = React.createClass({
     );
   },
 
+  renderMap: function () {
+    if (!this.props.mapGeometries.fetched) return null;
+
+    const getColor = (v) => {
+      if (v === 0) return '#eaeaea';
+      if (v <= 10) return '#7FECDA';
+      if (v <= 50) return '#2D8374';
+      return '#0F2B26';
+    };
+
+    let municipiosVagas = this.props.municipios.map(m => {
+      let lic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
+      let max = _.last(m.data['max-lic-geral']).value + _.last(m.data['max-lic-mob-reduzida']).value;
+      let vagas = max - lic;
+
+      return {
+        id: m.id,
+        color: getColor(vagas)
+      };
+    });
+
+    return (
+      <div>
+        <h6 className='map-title'>Vagas por município</h6>
+        <Map
+          className='map-svg'
+          geometries={this.props.mapGeometries.data}
+          data={municipiosVagas}
+        />
+        <ul className='color-legend side-by-side'>
+          <li><span style={{backgroundColor: getColor(0)}}></span>Sem vagas</li>
+          <li><span style={{backgroundColor: getColor(10)}}></span>menos que 10</li>
+          <li><span style={{backgroundColor: getColor(50)}}></span>11 - 50</li>
+          <li><span style={{backgroundColor: getColor(51)}}></span>+50</li>
+       </ul>
+      </div>
+    );
+  },
+
+  renderMap2: function () {
+    if (!this.props.mapGeometries.fetched) return null;
+
+    const getColor = (v) => {
+      if (v === 'more-pop') return '#0F2B26';
+      if (v === 'more-lic') return '#7FECDA';
+      return '#2D8374';
+    };
+
+    let percentLicOverPop = this.props.municipios.map(m => {
+      let lic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
+      let percentNational = percent(lic, this.props.licencas2016, 0);
+      let pop = _.last(m.data['pop-residente']).value;
+      let percentPop = percent(pop, this.props.populacaoNational, 0);
+
+      let color = getColor('equal');
+      // More relative licenses than population.
+      if (percentNational > percentPop) {
+        color = getColor('more-lic');
+      // More relative population than licenses.
+      } else if (percentNational < percentPop) {
+        color = getColor('more-pop');
+      }
+
+      return {
+        id: m.id,
+        color: color
+      };
+    });
+
+    return (
+      <div>
+        <h6 className='map-title'>Percentagem de população vs percentagem de licenças</h6>
+        <Map
+          className='map-svg'
+          geometries={this.props.mapGeometries.data}
+          data={percentLicOverPop}
+        />
+        <ul className='color-legend side-by-side'>
+          <li><span style={{backgroundColor: getColor('more-pop')}}></span>Mais % de população do que licenças</li>
+          <li><span style={{backgroundColor: getColor('more-lic')}}></span>Menos % de população do que licenças</li>
+          <li><span style={{backgroundColor: getColor('equal')}}></span>% de população e licenças igual</li>
+       </ul>
+      </div>
+    );
+  },
+
   render: function () {
     return (
-      <div id='distribuicao'>
-        <section className='section-container'>
-          <header className='section-header'>
-            <h3 className='section-category'>{this.props.adminName}</h3>
-            <h1>Distribuição Geográfica</h1>
-            <p className='lead'>Não obstante as licenças de táxi serem atribuídas a nível municipal apresenta-se a sua distribuição pelas regiões autónomas, pelos distritos e pelas áreas metropolitanas de Lisboa e do Porto.</p>
-          </header>
-          <div className='section-content'>
-            {this.renderTable()}
-          </div>
-        </section>
+      <div className='content-wrapper'>
+        <div className='map-wrapper'>
+          {this.renderMap()}
+          {this.renderMap2()}
+        </div>
+        <div id='distribuicao' className='section-wrapper'>
+          <section className='section-container'>
+            <header className='section-header'>
+              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h1>Distribuição Geográfica</h1>
+              <p className='lead'>Não obstante as licenças de táxi serem atribuídas a nível municipal apresenta-se a sua distribuição pelas regiões autónomas, pelos distritos e pelas áreas metropolitanas de Lisboa e do Porto.</p>
+            </header>
+            <div className='section-content'>
+              {this.renderTable()}
+            </div>
+          </section>
+        </div>
       </div>
     );
   }
