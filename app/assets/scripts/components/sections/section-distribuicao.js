@@ -7,13 +7,17 @@ import _ from 'lodash';
 import makeTooltip from '../../utils/tooltip';
 import { percent } from '../../utils/utils';
 
+import Map from '../map';
+
 var SectionDistribuicao = React.createClass({
   propTypes: {
     adminLevel: T.string,
     adminName: T.string,
     adminList: T.array,
     licencas2016: T.number,
-    populacaoNational: T.number
+    populacaoNational: T.number,
+    mapGeometries: T.object,
+    municipios: T.array
   },
 
   renderTrendLineChart: function (data) {
@@ -113,19 +117,82 @@ var SectionDistribuicao = React.createClass({
     );
   },
 
+  renderMap: function () {
+    if (!this.props.mapGeometries.fetched) return null;
+
+    let municipiosVagas = this.props.municipios.map(m => {
+      let lic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
+      let max = _.last(m.data['max-lic-geral']).value + _.last(m.data['max-lic-mob-reduzida']).value;
+      let vagas = max - lic;
+
+      const getColor = (v) => {
+        if (v === 0) return '#eaeaea';
+        if (v <= 10) return '#7FECDA';
+        if (v <= 50) return '#2D8374';
+        return '#0F2B26';
+      };
+
+      return {
+        id: m.id,
+        color: getColor(vagas)
+      };
+    });
+
+    return <Map
+      geometries={this.props.mapGeometries.data}
+      data={municipiosVagas}
+    />;
+  },
+
+  renderMap2: function () {
+    if (!this.props.mapGeometries.fetched) return null;
+
+    let percentLicOverPop = this.props.municipios.map(m => {
+      let lic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
+      let percentNational = percent(lic, this.props.licencas2016, 0);
+      let pop = _.last(m.data['pop-residente']).value;
+      let percentPop = percent(pop, this.props.populacaoNational, 0);
+
+      let color = '#2D8374';
+      // More relative licenses than population.
+      if (percentNational > percentPop) {
+        color = '#7FECDA';
+      // More relative population than licenses.
+      } else if (percentNational < percentPop) {
+        color = '#0F2B26';
+      }
+
+      return {
+        id: m.id,
+        color: color
+      };
+    });
+
+    return <Map
+      geometries={this.props.mapGeometries.data}
+      data={percentLicOverPop}
+    />;
+  },
+
   render: function () {
     return (
-      <div id='distribuicao'>
-        <section className='section-container'>
-          <header className='section-header'>
-            <h3 className='section-category'>{this.props.adminName}</h3>
-            <h1>Distribuição Geográfica</h1>
-            <p className='lead'>Não obstante as licenças de táxi serem atribuídas a nível municipal apresenta-se a sua distribuição pelas regiões autónomas, pelos distritos e pelas áreas metropolitanas de Lisboa e do Porto.</p>
-          </header>
-          <div className='section-content'>
-            {this.renderTable()}
-          </div>
-        </section>
+      <div className='content-wrapper'>
+        <div className='map-wrapper'>
+          {this.renderMap()}
+          {this.renderMap2()}
+        </div>
+        <div id='distribuicao' className='section-wrapper'>
+          <section className='section-container'>
+            <header className='section-header'>
+              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h1>Distribuição Geográfica</h1>
+              <p className='lead'>Não obstante as licenças de táxi serem atribuídas a nível municipal apresenta-se a sua distribuição pelas regiões autónomas, pelos distritos e pelas áreas metropolitanas de Lisboa e do Porto.</p>
+            </header>
+            <div className='section-content'>
+              {this.renderTable()}
+            </div>
+          </section>
+        </div>
       </div>
     );
   }

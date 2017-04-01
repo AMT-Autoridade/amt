@@ -5,6 +5,8 @@ import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
 
+import Map from '../map';
+
 var SectionLicencas = React.createClass({
   propTypes: {
     adminLevel: T.string,
@@ -12,7 +14,9 @@ var SectionLicencas = React.createClass({
     adminList: T.array,
     licencas2016: T.number,
     max2016: T.number,
-    licencasHab: T.number
+    licencasHab: T.number,
+    mapGeometries: T.object,
+    municipios: T.array
   },
 
   renderChart: function () {
@@ -89,39 +93,70 @@ var SectionLicencas = React.createClass({
     return <BarChart data={chartData} options={chartOptions} />;
   },
 
+  renderMap: function () {
+    if (!this.props.mapGeometries.fetched) return null;
+
+    let licencasMunicipios = this.props.municipios.map(m => {
+      let licencas = _.last(m.data['lic-geral']).value;
+
+      const getColor = (v) => {
+        if (v <= 10) return '#7FECDA';
+        if (v <= 30) return '#00DFC1';
+        if (v <= 100) return '#2D8374';
+        if (v <= 1000) return '#1F574D';
+        return '#0F2B26';
+      };
+
+      return {
+        id: m.id,
+        color: getColor(licencas)
+      };
+    });
+
+    return <Map
+      geometries={this.props.mapGeometries.data}
+      data={licencasMunicipios}
+    />;
+  },
+
   render: function () {
     let { licencas2016, max2016 } = this.props;
 
     return (
-      <div id='licencas' className='section-wrapper'>
-        <section className='section-container'>
-          <header className='section-header'>
-            <h3 className='section-category'>{this.props.adminName}</h3>
-            <h1>Licenças e Contingentes</h1>
-            <p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p>
-          </header>
-          <div className='section-content'>
-            <div className='section-stats'>
-              <ul>
-                <li>
-                  <span className='stat-number'>{licencas2016.toLocaleString()}</span>
-                  <span className='stat-description'>Total de táxis licenciados em agosto de 2016.</span>
-                </li>
-                <li>
-                  <span className='stat-number'>{max2016.toLocaleString()}</span>
-                  <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
-                </li>
-                <li>
-                  <span className='stat-number'>{(max2016 - licencas2016).toLocaleString()}</span>
-                  <span className='stat-description'>Total de vagas existentes em agosto de 2016.</span>
-                </li>
-              </ul>
+      <div className='content-wrapper'>
+        <div className='map-wrapper'>
+          {this.renderMap()}
+        </div>
+        <div id='licencas' className='section-wrapper'>
+          <section className='section-container'>
+            <header className='section-header'>
+              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h1>Licenças e Contingentes</h1>
+              <p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p>
+            </header>
+            <div className='section-content'>
+              <div className='section-stats'>
+                <ul>
+                  <li>
+                    <span className='stat-number'>{licencas2016.toLocaleString()}</span>
+                    <span className='stat-description'>Total de táxis licenciados em agosto de 2016.</span>
+                  </li>
+                  <li>
+                    <span className='stat-number'>{max2016.toLocaleString()}</span>
+                    <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
+                  </li>
+                  <li>
+                    <span className='stat-number'>{(max2016 - licencas2016).toLocaleString()}</span>
+                    <span className='stat-description'>Total de vagas existentes em agosto de 2016.</span>
+                  </li>
+                </ul>
+              </div>
+
+              {this.renderChart()}
+
             </div>
-
-            {this.renderChart()}
-
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
     );
   }
