@@ -7,10 +7,10 @@ import { fetchNational, fetchMapData } from '../actions';
 
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
-import SectionResidentes from '../components/sections/section-residentes';
+import SectionIndicadores from '../components/sections/section-indicadores';
 import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
-import SectionDistribuicao from '../components/sections/section-distribuicao';
+import SectionAmbito from '../components/sections/section-ambito';
 import SectionEvolucao from '../components/sections/section-evolucao';
 import SectionConclusoes from '../components/sections/section-conclusoes';
 
@@ -68,18 +68,18 @@ var Home = React.createClass({
       datasets: [
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
-          label: 'Nacional',
-          color: 'red'
+          label: 'Portugal',
+          color: '#1f8d8e'
         },
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-lx']),
-          label: 'AM Lisboa',
-          color: 'green'
+          label: 'Área Metropolitana de Lisboa',
+          color: '#00ced1'
         },
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-por']),
-          label: 'AM Porto',
-          color: 'blue'
+          label: 'Área Metropolitana de Porto',
+          color: '#256465'
         }
       ]
     };
@@ -96,17 +96,6 @@ var Home = React.createClass({
             licencas2016={data.licencas2016}
             max2016={data.max2016}
             licencasHab={data.licencasHab}
-            mapGeometries={this.props.mapData}
-            municipios={data.concelhos}
-            onMapClick={this.onMapClick}
-            popoverContent={this.popoverContent}
-          />
-
-          <SectionResidentes
-            adminLevel='national'
-            adminName='Portugal'
-            licencasHab={data.licencasHab}
-            chartDatasets={chartResidentes}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
@@ -138,7 +127,7 @@ var Home = React.createClass({
             popoverContent={this.popoverContent}
           />
 
-          <SectionDistribuicao
+          <SectionAmbito
             adminLevel='national'
             adminName='Portugal'
             adminList={data.nuts}
@@ -163,17 +152,29 @@ var Home = React.createClass({
             popoverContent={this.popoverContent}
           />
 
+          <SectionIndicadores
+            adminLevel='national'
+            adminName='Portugal'
+            licencasHab={data.licencasHab}
+            chartDatasets={chartResidentes}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+          />
+
           <SectionConclusoes />
         </div>
 
         <ul className='section-nav'>
-          <li><Link to='/#intro'>Introdução</Link></li>
-          <li><Link to='/#licencas'>Licenças</Link></li>
-          <li><Link to='/#mobilidade'>Mobilidade Reduzida</Link></li>
-          <li><Link to='/#estacionamento'>Estacionamento</Link></li>
-          <li><Link to='/#distribuicao'>Distribuição</Link></li>
-          <li><Link to='/#evolucao'>Evolução</Link></li>
-          <li><Link to='/#conclusoes'>Conclusões</Link></li>
+          <li className='nav-item'><Link to='/#intro'><span>Introdução</span></Link></li>
+          <li className='nav-item active'><Link to='/#licencas'><span>Licenças e Contingentes</span></Link></li>
+          <li className='nav-item'><Link to='/#mobilidade'><span>Mobilidade Reduzida</span></Link></li>
+          <li className='nav-item'><Link to='/#estacionamento'><span>Regime Estacionamento</span></Link></li>
+          <li className='nav-item'><Link to='/#distribuicao'><span>Âmbito Geográfico</span></Link></li>
+          <li className='nav-item'><Link to='/#evolucao'><span>Evolução 2006-2016</span></Link></li>
+          <li className='nav-item'><Link to='/#residentes'><span>Outros Indicadores</span></Link></li>
+          <li className='nav-item'><Link to='/#conclusoes'><span>Conclusões</span></Link></li>
         </ul>
       </div>
     );

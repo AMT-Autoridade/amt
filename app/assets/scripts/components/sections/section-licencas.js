@@ -46,11 +46,11 @@ var SectionLicencas = React.createClass({
       datasets: [
         {
           data: dataList.map(o => o.data.licencas2016),
-          backgroundColor: '#F6B600'
+          backgroundColor: '#FFCC45'
         },
         {
           data: dataList.map(o => o.data.max2016 - o.data.licencas2016),
-          backgroundColor: '#2EB199'
+          backgroundColor: '#FDB13C'
         }
       ]
     };
@@ -86,13 +86,48 @@ var SectionLicencas = React.createClass({
   renderMap: function () {
     if (!this.props.mapGeometries.fetched) return null;
 
+    // const getColor = (v) => {
+    //   if (v <= 10) return '#40e0d0';
+    //   if (v <= 30) return '#2daeae';
+    //   if (v <= 100) return '#4378a2';
+    //   if (v <= 1000) return '#354c6f';
+    //   return '#191970';
+    // };
+
+    //Táxis
     const getColor = (v) => {
-      if (v <= 10) return '#7FECDA';
-      if (v <= 30) return '#00DFC1';
-      if (v <= 100) return '#2D8374';
-      if (v <= 1000) return '#1F574D';
-      return '#0F2B26';
+      if (v <= 10) return '#00ced1';
+      if (v <= 30) return '#0eaeaf';
+      if (v <= 100) return '#1f8d8e';
+      if (v <= 1000) return '#256465';
+      return '#264242';
     };
+
+    // const getColor = (v) => {
+    //   if (v <= 10) return '#d0d1e6';
+    //   if (v <= 30) return '#a6bddb';
+    //   if (v <= 100) return '#74a9cf';
+    //   if (v <= 1000) return '#2b8cbe';
+    //   return '#045a8d';
+    // };
+
+    // const getColor = (v) => {
+    //   if (v <= 10) return '#02ADC8';
+    //   if (v <= 30) return '#0290DB';
+    //   if (v <= 100) return '#0272C1';
+    //   if (v <= 1000) return '#0250AF';
+    //   return '#312D98';
+    // };
+
+    //Azul
+    // const getColor = (v) => {
+    //   if (v <= 10) return '#1BBAD6';
+    //   if (v <= 30) return '#0F84BB';
+    //   if (v <= 100) return '#1F4A98';
+    //   if (v <= 1000) return '#171A6B';
+    //   return '#11134C';
+    // };
+
 
     let licencasMunicipios = this.props.municipios.map(m => {
       let licencas = _.last(m.data['lic-geral']).value;
@@ -104,7 +139,6 @@ var SectionLicencas = React.createClass({
 
     return (
       <div>
-        <h6 className='map-title'>Licenças por Município</h6>
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}
@@ -113,13 +147,17 @@ var SectionLicencas = React.createClass({
           onClick={this.props.onMapClick}
           popoverContent={this.props.popoverContent}
         />
-        <ul className='color-legend side-by-side'>
-          <li><span style={{backgroundColor: getColor(10)}}></span>0 - 10</li>
-          <li><span style={{backgroundColor: getColor(30)}}></span>11 - 30</li>
-          <li><span style={{backgroundColor: getColor(100)}}></span>31 - 100</li>
-          <li><span style={{backgroundColor: getColor(1000)}}></span>101 - 1000</li>
-          <li><span style={{backgroundColor: getColor(10000)}}></span>+1000</li>
-       </ul>
+        
+       <div className='map-legend'>
+          <h6 className='legend-title'>Licenças por Município:</h6>
+          <ul className='color-legend inline'>
+            <li><span style={{backgroundColor: getColor(10)}}></span> &lt; 10</li>
+            <li><span style={{backgroundColor: getColor(30)}}></span>11 a 30</li>
+            <li><span style={{backgroundColor: getColor(100)}}></span>31 a 100</li>
+            <li><span style={{backgroundColor: getColor(1000)}}></span>101 a 1000</li>
+            <li><span style={{backgroundColor: getColor(10000)}}></span> &gt; 1000 </li>
+          </ul>
+        </div>
       </div>
     );
   },
@@ -128,11 +166,11 @@ var SectionLicencas = React.createClass({
     let { licencas2016, max2016 } = this.props;
 
     return (
-      <div className='content-wrapper'>
+      <div id='licencas' className='content-wrapper'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>
-        <div id='licencas' className='section-wrapper'>
+        <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>
@@ -144,26 +182,27 @@ var SectionLicencas = React.createClass({
                 <ul>
                   <li>
                     <span className='stat-number'>{licencas2016.toLocaleString()}</span>
-                    <span className='stat-description'>Total de táxis licenciados em agosto de 2016.</span>
+                    <span className='stat-description'>Total de táxis licenciados <span className='block'>em agosto de 2016.</span></span>
                   </li>
                   <li>
                     <span className='stat-number'>{max2016.toLocaleString()}</span>
-                    <span className='stat-description'>Total dos contingentes em agosto de 2016.</span>
+                    <span className='stat-description'>Total dos contingentes <span className='block'>em agosto de 2016.</span></span>
                   </li>
                   <li>
                     <span className='stat-number'>{(max2016 - licencas2016).toLocaleString()}</span>
-                    <span className='stat-description'>Total de vagas existentes em agosto de 2016.</span>
+                    <span className='stat-description'>Total de vagas existentes <span className='block'>em agosto de 2016.</span></span>
                   </li>
                 </ul>
               </div>
 
+              <h6 className='legend-title'>Licenças e vagas por contingente</h6>
               {this.renderChart()}
 
             </div>
             <footer className='section-footer'>
               <ul className='color-legend inline'>
-                <li><span style={{backgroundColor: '#F6B600'}}></span>Licenças Ativas</li>
-                <li><span style={{backgroundColor: '#2EB199'}}></span>Vagas Disponíveis</li>
+                <li><span style={{backgroundColor: '#FFCC45'}}></span>Licenças Ativas</li>
+                <li><span style={{backgroundColor: '#FDB13C'}}></span>Vagas Disponíveis</li>
               </ul>
             </footer>
           </section>

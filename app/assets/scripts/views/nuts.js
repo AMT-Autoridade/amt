@@ -6,10 +6,10 @@ import { Link } from 'react-router';
 import { fetchNut, fetchMapData } from '../actions';
 
 import SectionLicencas from '../components/sections/section-licencas';
-import SectionResidentes from '../components/sections/section-residentes';
+import SectionIndicadores from '../components/sections/section-indicadores';
 import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
-import SectionDistribuicaoNut from '../components/sections/section-distribuicao-nut';
+import SectionAmbitoNut from '../components/sections/section-ambito-nut';
 import SectionEvolucao from '../components/sections/section-evolucao';
 
 var Nuts = React.createClass({
@@ -76,7 +76,7 @@ var Nuts = React.createClass({
             municipios={data.concelhos}
           />
 
-          <SectionResidentes
+          <SectionIndicadores
             adminLevel='nut'
             adminName={data.name}
             adminId={data.id}
@@ -109,7 +109,7 @@ var Nuts = React.createClass({
             mapGeometries={this.props.mapData}
           />
 
-          <SectionDistribuicaoNut
+          <SectionAmbitoNut
             adminLevel='nut'
             adminName={data.name}
             adminId={data.id}

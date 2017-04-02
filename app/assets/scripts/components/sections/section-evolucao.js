@@ -47,11 +47,11 @@ var SectionEvolucao = React.createClass({
       labels: labels,
       datasets: [{
         data: nationalTimeline.map(o => o['lic-geral'] + o['lic-mob-reduzida']),
-        backgroundColor: '#FFE7A2',
-        borderColor: '#F6B600',
+        backgroundColor: '#FFCC45',
+        borderColor: '#FB8F2C',
         pointBorderWidth: 0,
-        pointBackgroundColor: '#F6B600',
-        pointRadius: 2
+        pointBackgroundColor: '#FB8F2C',
+        pointRadius: 3
       }]
     };
 
@@ -83,7 +83,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={220}/>;
+    return <LineChart data={chartData} options={chartOptions} height={300}/>;
   },
 
   renderTopMunicipiosChart: function () {
@@ -108,7 +108,7 @@ var SectionEvolucao = React.createClass({
       datasets: [
         {
           data: topMunicipios.map(o => o.data.change),
-          backgroundColor: '#F6B600'
+          backgroundColor: '#FFCC45'
         }
       ]
     };
@@ -136,7 +136,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={260}/>;
+    return <BarChart data={chartData} options={chartOptions} height={370}/>;
   },
 
   renderChangeLicencasChart: function () {
@@ -176,7 +176,7 @@ var SectionEvolucao = React.createClass({
       datasets: [{
         data: licencasChange.map(o => o.value),
         borderWidth: 0,
-        backgroundColor: ['#FFC700', '#FDD259', '#FDDC7E']
+        backgroundColor: ['#FFCC45', '#FDB13A', '#FB8F2C']
       }]
     };
 
@@ -192,16 +192,16 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <DoughnutChart data={chartData} options={chartOptions} height={240}/>;
+    return <DoughnutChart data={chartData} options={chartOptions} height={280}/>;
   },
 
   renderMap: function () {
     if (!this.props.mapGeometries.fetched) return null;
 
     const getColor = (v) => {
-      if (v > 0) return '#0F2B26';
-      if (v < 0) return '#7FECDA';
-      return '#2D8374';
+      if (v > 0) return '#256465';
+      if (v < 0) return '#00ced1';
+      return '#1f8d8e';
     };
 
     let evolucaoMunicipios = this.props.municipios.map(m => {
@@ -213,7 +213,6 @@ var SectionEvolucao = React.createClass({
 
     return (
       <div>
-        <h6 className='map-title'>Vagas por município</h6>
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}
@@ -222,11 +221,16 @@ var SectionEvolucao = React.createClass({
           onClick={this.props.onMapClick}
           popoverContent={this.props.popoverContent}
         />
-        <ul className='color-legend side-by-side'>
-          <li><span style={{backgroundColor: getColor(-1)}}></span>Diminuiu</li>
-          <li><span style={{backgroundColor: getColor(1)}}></span>Aumentou</li>
-          <li><span style={{backgroundColor: getColor(0)}}></span>Manteve</li>
-       </ul>
+        
+       <div className='map-legend'>
+          <h6 className='legend-title'>Variação de Licenças por Município:</h6>
+          <ul className='color-legend inline'>
+            <li><span style={{backgroundColor: getColor(-1)}}></span>Diminuiu</li>
+            <li><span style={{backgroundColor: getColor(0)}}></span>Manteve</li>
+            <li><span style={{backgroundColor: getColor(1)}}></span>Aumentou</li>
+         </ul>
+        </div>
+
       </div>
     );
   },
@@ -249,7 +253,7 @@ var SectionEvolucao = React.createClass({
           <section className='section-container'>
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>
-              <h1>Evolução 2006 - 2016</h1>
+              <h1>Evolução 2006&#8212;2016</h1>
               <p className='lead'>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, e a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
             </header>
             <div className='section-content'>
@@ -257,11 +261,11 @@ var SectionEvolucao = React.createClass({
                 <ul>
                   <li>
                     <span className='stat-number'>{newLicencas.toLocaleString()}</span>
-                    <span className='stat-description'>Aumento do número de licenças entre 2006 e 2016.</span>
+                    <span className='stat-description'>Aumento do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                   </li>
                   <li>
                     <span className='stat-number'>{round(increaseLicencas, 0).toLocaleString()}%</span>
-                    <span className='stat-description'>Crescimento dos táxis licenciados desde 2006.</span>
+                    <span className='stat-description'>Crescimento dos táxis <span className='block'>licenciados desde 2006.</span></span>
                   </li>
                   <li>
                     <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios, 0).toLocaleString()}%</span>
@@ -272,16 +276,16 @@ var SectionEvolucao = React.createClass({
 
               <div className='graph-container'>
                 <div className='graph'>
+                  <h6 className='legend-title'>Evolução das licenças 2006 a 2016</h6>
                   {this.renderTimelineChart()}
-                  <p className='graph-description'>Evolução das licenças 2006 a 2016.</p>
                 </div>
                 <div className='graph'>
+                  <h6 className='legend-title'>Municipios com maior aumento</h6>
                   {this.renderTopMunicipiosChart()}
-                  <p className='graph-description'>Municipios com maior aumento.</p>
                 </div>
                 <div className='graph'>
+                  <h6 className='legend-title'>Alterações do número de licenças</h6>
                   {this.renderChangeLicencasChart()}
-                  <p className='graph-description'>Alterações do número de licenças.</p>
                 </div>
               </div>
 
