@@ -220,14 +220,13 @@ var SectionEstacionamento = React.createClass({
        <div className='map-legend'>
           <h6 className='legend-title'>Regimes de Estacionamento por Município</h6>
           <ul className='color-legend two-by-side'>
-          <li><span style={{backgroundColor: getColor('fixo')}}></span>Fixo</li>
-          <li><span style={{backgroundColor: getColor('condicionado-fixo')}}></span>Fixo e Condicionado</li>
-          <li><span style={{backgroundColor: getColor('condicionado')}}></span>Condicionado</li>
-          <li><span style={{backgroundColor: getColor('fixo-livre')}}></span>Fixo & Livre</li>
-          <li><span style={{backgroundColor: getColor('condicionado-livre')}}></span>Condicionado & Livre</li>
-          {/*<li><span style={{backgroundColor: getColor('livre')}}></span>Livre</li>*/}
-          <li><span style={{backgroundColor: getColor('outros')}}></span>Outros Regimes</li>
-       </ul>
+            <li><span style={{backgroundColor: getColor('fixo')}}></span>Fixo</li>
+            <li><span style={{backgroundColor: getColor('condicionado-fixo')}}></span>Fixo e Condicionado</li>
+            <li><span style={{backgroundColor: getColor('condicionado')}}></span>Condicionado</li>
+            <li><span style={{backgroundColor: getColor('fixo-livre')}}></span>Fixo & Livre</li>
+            <li><span style={{backgroundColor: getColor('condicionado-livre')}}></span>Condicionado & Livre</li>
+            <li><span style={{backgroundColor: getColor('outros')}}></span>Outros Regimes</li>
+          </ul>
         </div>
       </div>
     );
