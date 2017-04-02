@@ -12,9 +12,12 @@ var SectionEstacionamento = React.createClass({
   propTypes: {
     adminLevel: T.string,
     adminName: T.string,
+    adminId: T.oneOfType([T.string, T.number]),
     municipios: T.array,
     totalMunicipios: T.number,
-    mapGeometries: T.object
+    mapGeometries: T.object,
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   estLabels: {
@@ -216,6 +219,9 @@ var SectionEstacionamento = React.createClass({
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={tipoEstacionamentos}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
        <div className='map-legend'>
           <h6 className='legend-title'>Regimes de Estacionamento por Município</h6>

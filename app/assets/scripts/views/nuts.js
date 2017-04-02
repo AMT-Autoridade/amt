@@ -67,6 +67,7 @@ var Nuts = React.createClass({
           <SectionLicencas
             adminLevel='nut'
             adminName={data.name}
+            adminId={data.id}
             adminList={data.concelhos}
             licencas2016={data.data.licencas2016}
             max2016={data.data.max2016}
@@ -78,6 +79,7 @@ var Nuts = React.createClass({
           <SectionResidentes
             adminLevel='nut'
             adminName={data.name}
+            adminId={data.id}
             licencasHab={data.data.licencasHab}
             chartDatasets={chartResidentes}
             mapGeometries={this.props.mapData}
@@ -87,6 +89,7 @@ var Nuts = React.createClass({
           <SectionMobilidade
             adminLevel='nut'
             adminName={data.name}
+            adminId={data.id}
             totalMunicipiosMobReduzida={data.data.totalMunicipiosMobReduzida}
             totalMunicipios={data.data.totalMunicipios}
             licencas2016={data.data.licencas2016}
@@ -100,6 +103,7 @@ var Nuts = React.createClass({
           <SectionEstacionamento
             adminLevel='nut'
             adminName={data.name}
+            adminId={data.id}
             municipios={data.concelhos}
             totalMunicipios={data.data.totalMunicipios}
             mapGeometries={this.props.mapData}
@@ -108,6 +112,7 @@ var Nuts = React.createClass({
           <SectionDistribuicaoNut
             adminLevel='nut'
             adminName={data.name}
+            adminId={data.id}
             adminList={data.concelhos}
             parentSlug={this.props.params.nut}
             mapGeometries={this.props.mapData}
@@ -117,6 +122,7 @@ var Nuts = React.createClass({
           <SectionEvolucao
             adminLevel='nut'
             adminName={data.name}
+            adminId={data.id}
             licencas2016={data.data.licencas2016}
             licencas2006={data.data.licencas2006}
             municipios={data.concelhos}
@@ -124,6 +130,7 @@ var Nuts = React.createClass({
             licencasTimeline={data.data.licencasTimeline}
             mapGeometries={this.props.mapData}
           />
+
         </div>
         <ul className='section-nav'>
           <li><Link to={`/nuts/${this.props.params.nut}#licencas`}>Licenças</Link></li>

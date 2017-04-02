@@ -12,10 +12,13 @@ var SectionResidentes = React.createClass({
   propTypes: {
     adminLevel: T.string,
     adminName: T.string,
+    adminId: T.oneOfType([T.string, T.number]),
     licencasHab: T.number,
     chartDatasets: T.object,
     mapGeometries: T.object,
-    municipios: T.array
+    municipios: T.array,
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   renderLicencas100Hab: function () {
@@ -106,6 +109,9 @@ var SectionResidentes = React.createClass({
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={licencas1000Hab}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
         
        <div className='map-legend'>

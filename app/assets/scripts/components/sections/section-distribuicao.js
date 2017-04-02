@@ -13,11 +13,14 @@ var SectionDistribuicao = React.createClass({
   propTypes: {
     adminLevel: T.string,
     adminName: T.string,
+    adminId: T.oneOfType([T.string, T.number]),
     adminList: T.array,
     licencas2016: T.number,
     populacaoNational: T.number,
     mapGeometries: T.object,
-    municipios: T.array
+    municipios: T.array,
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   renderTrendLineChart: function (data) {
@@ -145,6 +148,9 @@ var SectionDistribuicao = React.createClass({
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={municipiosVagas}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
         <div className='map-legend'>
         <h6 className='legend-title'>Vagas por Município:</h6>
@@ -196,6 +202,9 @@ var SectionDistribuicao = React.createClass({
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={percentLicOverPop}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
         <div className='map-legend'>
           <h6 className='legend-title'>Percentagem de População vs Percentagem de Licenças:</h6>

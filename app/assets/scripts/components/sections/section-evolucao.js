@@ -12,13 +12,16 @@ var SectionEvolucao = React.createClass({
   propTypes: {
     adminLevel: T.string,
     adminName: T.string,
+    adminId: T.oneOfType([T.string, T.number]),
     licencas2016: T.number,
     licencas2006: T.number,
     totalMunicipios: T.number,
     municipios: T.array,
     licencasTimeline: T.array,
     data: T.object,
-    mapGeometries: T.object
+    mapGeometries: T.object,
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   renderTimelineChart: function () {
@@ -214,6 +217,9 @@ var SectionEvolucao = React.createClass({
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={evolucaoMunicipios}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
         
        <div className='map-legend'>

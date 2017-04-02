@@ -48,7 +48,7 @@ var App = React.createClass({
       <div className={c('page', pageClass)}>
         <header id='page-header'>
           <nav className='page-nav container-wrapper'>
-            <h1 id='page-logo'><a href='/'>Autoridade da Mobilidade e dos Transportes</a></h1>
+            <h1 id='page-logo'><Link to='/'>Autoridade da Mobilidade e dos Transportes</Link></h1>
             <ul className='primary-nav'>
               <li><Link to='/sobre'>Sobre</Link></li>
               <li><Link to='/dados'>Dados</Link></li>

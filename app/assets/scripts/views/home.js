@@ -1,7 +1,7 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 
 import { fetchNational, fetchMapData } from '../actions';
 
@@ -20,6 +20,23 @@ var Home = React.createClass({
     mapData: T.object,
     _fetchNational: T.func,
     _fetchMapData: T.func
+  },
+
+  onMapClick: function (id) {
+    // Find the right nut.
+    let slug = this.props.national.data.nuts.find(o => o.id === id).slug;
+    hashHistory.push(`/nuts/${slug}`);
+  },
+
+  popoverContent: function (id) {
+    // Find the right nut.
+    let name = this.props.national.data.nuts.find(o => o.id === id).name;
+    return (
+      <div>
+        <p className='map-tooltip'>{name}</p>
+        <span className='triangle'></span>
+      </div>
+    );
   },
 
   componentDidMount: function () {
@@ -81,6 +98,8 @@ var Home = React.createClass({
             licencasHab={data.licencasHab}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionMobilidade
@@ -94,6 +113,8 @@ var Home = React.createClass({
             licencasMobReduzida2006={data.licencasMobReduzida2006}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionEstacionamento
@@ -102,6 +123,8 @@ var Home = React.createClass({
             municipios={data.concelhos}
             totalMunicipios={data.totalMunicipios}
             mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionDistribuicao
@@ -112,6 +135,8 @@ var Home = React.createClass({
             populacaoNational={data.populacao}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionEvolucao
@@ -123,6 +148,8 @@ var Home = React.createClass({
             totalMunicipios={data.totalMunicipios}
             licencasTimeline={data.licencasTimeline}
             mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionResidentes
@@ -132,6 +159,8 @@ var Home = React.createClass({
             chartDatasets={chartResidentes}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionConclusoes />
