@@ -71,12 +71,6 @@ var Nuts = React.createClass({
           label: 'Portugal',
           color: '#1f8d8e',
           backgroundColor: '#1f8d8e7f'
-        },
-        {
-          data: data.data.dormidas.map(o => o.lic1000),
-          label: data.name,
-          color: '#00ced1',
-          backgroundColor: '#00ced17f'
         }
       ]
     };

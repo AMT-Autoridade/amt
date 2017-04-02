@@ -132,6 +132,8 @@ var SectionResidentes = React.createClass({
 
   render: function () {
     let dormidas = _.last(this.props.dormidas).lic1000;
+    dormidas = dormidas ? round(dormidas, 1) : 'N/A';
+
     return (
       <div id='residentes' className='content-wrapper'>
         <div className='map-wrapper'>
@@ -153,7 +155,7 @@ var SectionResidentes = React.createClass({
                     <span className='stat-description'>Licenças activas por 1000 residentes</span>
                   </li>
                   <li>
-                    <span className='stat-number'>{round(dormidas, 1)}</span>
+                    <span className='stat-number'>{dormidas}</span>
                     <span className='stat-description'>Licenças activas por 1000 dormidas</span>
                   </li>
                 </ul>
