@@ -7,10 +7,10 @@ import { fetchNational, fetchMapData } from '../actions';
 
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
-import SectionResidentes from '../components/sections/section-residentes';
+import SectionIndicadores from '../components/sections/section-indicadores';
 import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
-import SectionDistribuicao from '../components/sections/section-distribuicao';
+import SectionAmbito from '../components/sections/section-ambito';
 import SectionEvolucao from '../components/sections/section-evolucao';
 import SectionConclusoes from '../components/sections/section-conclusoes';
 
@@ -69,7 +69,7 @@ var Home = React.createClass({
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
           label: 'Portugal',
-          color: '#1f8d8e',
+          color: '#1f8d8e'
         },
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-lx']),
@@ -127,7 +127,7 @@ var Home = React.createClass({
             popoverContent={this.popoverContent}
           />
 
-          <SectionDistribuicao
+          <SectionAmbito
             adminLevel='national'
             adminName='Portugal'
             adminList={data.nuts}
@@ -152,7 +152,7 @@ var Home = React.createClass({
             popoverContent={this.popoverContent}
           />
 
-          <SectionResidentes
+          <SectionIndicadores
             adminLevel='national'
             adminName='Portugal'
             licencasHab={data.licencasHab}
