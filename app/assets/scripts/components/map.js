@@ -4,6 +4,8 @@ import * as d3 from 'd3';
 import * as topojson from 'topojson';
 import _ from 'lodash';
 
+import Popover from '../utils/popover';
+
 // Matrix with the concelhos that belong to each nut.
 const concelhosMatrix = [{"id":"PT16D","concelhos":[101,102,103,105,108,110,112,114,115,117,118]},{"id":"PT11A","concelhos":[104,107,109,113,116,119,1304,1306,1308,1310,1312,1313,1314,1315,1316,1317,1318]},{"id":"PT11C","concelhos":[106,305,1301,1302,1303,1305,1307,1309,1311,1804,1813]},{"id":"PT16E","concelhos":[111,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,1808]},{"id":"PT184","concelhos":[201,202,203,204,205,206,207,208,209,210,212,213,214]},{"id":"PT181","concelhos":[211,1501,1505,1509,1513]},{"id":"PT112","concelhos":[301,302,303,306,310,313]},{"id":"PT119","concelhos":[304,307,308,309,311,312,314,1705]},{"id":"PT11E","concelhos":[401,402,405,406,407,408,410,411,412]},{"id":"PT11D","concelhos":[403,404,409,914,1701,1704,1707,1708,1710,1711,1714,1801,1805,1807,1812,1815,1818,1819,1820]},{"id":"PT16J","concelhos":[501,503,504,902,903,904,905,906,907,908,909,910,911,912,913]},{"id":"PT16H","concelhos":[502,505,506,507,508,511]},{"id":"PT16I","concelhos":[509,510,1401,1402,1408,1410,1411,1413,1417,1418,1419,1420,1421]},{"id":"PT187","concelhos":[701,702,703,704,705,706,707,708,709,710,711,712,713,714]},{"id":"PT150","concelhos":[801,802,803,804,805,806,807,808,809,810,811,812,813,814,815,816]},{"id":"PT16G","concelhos":[901,1802,1803,1806,1809,1810,1811,1814,1816,1817,1821,1822,1823,1824]},{"id":"PT16B","concelhos":[1001,1005,1006,1011,1012,1014,1101,1102,1104,1108,1112,1113]},{"id":"PT16F","concelhos":[1002,1003,1004,1007,1008,1009,1010,1013,1015,1016]},{"id":"PT185","concelhos":[1103,1403,1404,1405,1406,1407,1409,1412,1414,1415,1416]},{"id":"PT170","concelhos":[1105,1106,1107,1109,1110,1111,1114,1115,1116,1502,1503,1504,1506,1507,1508,1510,1511,1512]},{"id":"PT186","concelhos":[1201,1202,1203,1204,1205,1206,1207,1208,1209,1210,1211,1212,1213,1214,1215]},{"id":"PT111","concelhos":[1601,1602,1603,1604,1605,1606,1607,1608,1609,1610]},{"id":"PT11B","concelhos":[1702,1703,1706,1709,1712,1713]}]; // eslint-disable-line
 
@@ -13,7 +15,8 @@ var Map = React.createClass({
     geometries: T.object,
     data: T.array,
     nut: T.string,
-    onClick: T.func
+    onClick: T.func,
+    popoverContent: T.func
   },
 
   chart: null,
@@ -35,6 +38,7 @@ var Map = React.createClass({
       .data(this.props.data)
       .nut(this.props.nut)
       .onClick(this.props.onClick)
+      .popoverContent(this.props.popoverContent)
     );
   },
 
@@ -56,6 +60,9 @@ var Map = React.createClass({
     }
     if (prevProps.onClick !== this.props.onClick) {
       this.chart.onClick(this.props.onClick);
+    }
+    if (prevProps.popoverContent !== this.props.popoverContent) {
+      this.chart.popoverContent(this.props.popoverContent);
     }
     this.chart.continueUpdate();
   },
@@ -93,7 +100,7 @@ var Chart = function (options) {
   var _nut;
 
   // Interactivity. Callback functions
-  var _onClick;
+  var _onClick, _popoverContent;
 
   // Containers
   var $el, $svg;
@@ -117,6 +124,8 @@ var Chart = function (options) {
   // Default scalar using the global projection scale value. Created when
   // computing the scale value.
   var scalar;
+
+  var chartPopover = new Popover();
 
   function _calcSize () {
     _width = parseInt($el.style('width'), 10) - margin.left - margin.right;
@@ -243,6 +252,15 @@ var Chart = function (options) {
     return d3.geoPath().projection(projection);
   };
 
+  const getNutId = (d) => {
+    if (d.properties.type === 'nut3') {
+      return d.properties.id;
+    } else if (d.properties.type === 'distrito') {
+      let id = parseInt(d.properties.id);
+      return id >= 40 ? 'PT200' : 'PT300';
+    }
+  };
+
   // Make charts reusable!
   // Helper function to draw a group of features. Originally used to draw the
   // different archipelagos, but extended to include the main land.
@@ -279,12 +297,27 @@ var Chart = function (options) {
           sel = sel
           .style('pointer-events', d => d.properties.type === aaLevel ? 'all' : 'none')
           .on('mouseover', function (d, i) {
+            if (_popoverContent) {
+              // Compute the position on the tooltip.
+              let _thisEl = d3.select(this).node();
+              let bbox = _thisEl.getBBox();
+              let matrix = _thisEl.getScreenCTM()
+                .translate(bbox.x + bbox.width / 2, bbox.y + 20);
+              var posX = window.pageXOffset + matrix.e;
+              var posY = window.pageYOffset + matrix.f;
+
+              chartPopover.setContent(_popoverContent(getNutId(d)))
+                .show(posX, posY);
+            }
+
             d3.select(this).style('cursor', 'pointer');
             let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
             el.transition()
               .style('fill-opacity', 0.20);
           })
           .on('mouseout', function (d, i) {
+            chartPopover.hide();
+
             d3.select(this).style('cursor', 'default');
             let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
             el.transition()
@@ -292,12 +325,8 @@ var Chart = function (options) {
           })
           .on('click', function (d, i) {
             if (!_onClick) return;
-            if (d.properties.type === 'nut3') {
-              _onClick(d.properties.id);
-            } else if (d.properties.type === 'distrito') {
-              let id = parseInt(d.properties.id);
-              _onClick(id >= 40 ? 'PT200' : 'PT300');
-            }
+            let id = getNutId(d);
+            if (id) _onClick(id);
           });
         }
 
@@ -620,6 +649,7 @@ var Chart = function (options) {
 
   chartFn.destroy = function () {
     // Cleanup.
+    chartPopover.hide();
   };
 
   // --------------------------------------------
@@ -688,6 +718,13 @@ var Chart = function (options) {
   chartFn.onClick = function (d) {
     if (!arguments.length) return _onClick;
     _onClick = d;
+    if (typeof updateData === 'function') updateData();
+    return chartFn;
+  };
+
+  chartFn.popoverContent = function (d) {
+    if (!arguments.length) return _popoverContent;
+    _popoverContent = d;
     if (typeof updateData === 'function') updateData();
     return chartFn;
   };

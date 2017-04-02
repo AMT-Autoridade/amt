@@ -29,6 +29,10 @@
 
   .map-svg {
     width: 80%;
+
+    svg {
+      display: block
+    }
   }
 }
 
