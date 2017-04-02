@@ -5,25 +5,25 @@ import config from '../config';
 
 var dataCache = null;
 function fetchAndCacheData () {
-  // return new Promise((resolve, reject) => {
-  //   if (dataCache) {
-  //     return resolve(_.cloneDeep(dataCache));
-  //   }
-  //   dataCache = require('../data/national.json');
-  //   setTimeout(() => resolve(_.cloneDeep(dataCache)), 300);
-  // });
-
   return new Promise((resolve, reject) => {
     if (dataCache) {
       return resolve(_.cloneDeep(dataCache));
     }
-
-    fetchJSON(`${config.api}/national.json`)
-      .then(national => {
-        dataCache = national;
-        resolve(dataCache);
-      }, err => reject(err));
+    dataCache = require('../data/national.json');
+    setTimeout(() => resolve(_.cloneDeep(dataCache)), 300);
   });
+
+  // return new Promise((resolve, reject) => {
+  //   if (dataCache) {
+  //     return resolve(_.cloneDeep(dataCache));
+  //   }
+
+  //   fetchJSON(`${config.api}/national.json`)
+  //     .then(national => {
+  //       dataCache = national;
+  //       resolve(dataCache);
+  //     }, err => reject(err));
+  // });
 }
 
 export const REQUEST_NATIONAL = 'REQUEST_NATIONAL';
