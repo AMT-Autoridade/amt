@@ -143,13 +143,13 @@ var SectionLicencas = React.createClass({
         />
         
        <div className='map-legend'>
-          <h6 className='legend-title'>Licenças por Município</h6>
-          <ul className='color-legend side-by-side'>
-            <li><span style={{backgroundColor: getColor(10)}}></span>0 a 10</li>
+          <h6 className='legend-title'>Licenças por Município:</h6>
+          <ul className='color-legend inline'>
+            <li><span style={{backgroundColor: getColor(10)}}></span> &lt; 10</li>
             <li><span style={{backgroundColor: getColor(30)}}></span>11 a 30</li>
             <li><span style={{backgroundColor: getColor(100)}}></span>31 a 100</li>
             <li><span style={{backgroundColor: getColor(1000)}}></span>101 a 1000</li>
-            <li><span style={{backgroundColor: getColor(10000)}}></span>> 1000 </li>
+            <li><span style={{backgroundColor: getColor(10000)}}></span> &gt; 1000 </li>
           </ul>
         </div>
       </div>

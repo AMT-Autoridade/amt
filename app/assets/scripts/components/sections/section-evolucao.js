@@ -210,7 +210,7 @@ var SectionEvolucao = React.createClass({
 
     return (
       <div>
-        <h6 className='map-title'>Vagas por município</h6>
+        <h6 className='map-title'>Variação de Licenças por Município</h6>
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}

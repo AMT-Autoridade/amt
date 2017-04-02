@@ -161,7 +161,7 @@ var SectionMobilidade = React.createClass({
         />
         <div className='map-legend'>
           <h6 className='legend-title'>Municípios com Contingente de Mobilidade Reduzida:</h6>
-          <ul className='color-legend side-by-side'>
+          <ul className='color-legend inline'>
             <li><span style={{backgroundColor: '#FFCC45'}}></span>Com CMR</li>
             <li><span style={{backgroundColor: '#f5f5f5'}}></span>Sem CMRs</li>
           </ul>

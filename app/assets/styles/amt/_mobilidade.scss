@@ -18,35 +18,4 @@
 			color: #0eaeaf;
 		}	
 	}
-
-/*	.section-content {
-		@include media (small-up) {
-			> div {
-				@include column(6/12);
-			}
-
-			.section-stats {
-				@include column(12/12);
-
-				li {
-					@include column(4/12);
-				}
-			}
-
-		}
-		
-		@include media (medium-up) {
-			> div,
-			.section-stats {
-				@include column(12/12);
-				li {
-					@include column(12/12);
-				}
-			}
-		}
-
-		
-
-	}*/
-
 }

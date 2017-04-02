@@ -23,7 +23,7 @@ var SectionEstacionamento = React.createClass({
     escala: 'Escala',
     livre: 'Livre',
     outros: 'Outros',
-    nd: 'Não Definido'
+    nd: 'Indefinido'
   },
 
   renderPercentEstacionamento: function () {
@@ -60,7 +60,7 @@ var SectionEstacionamento = React.createClass({
           <span className='triangle'></span>
         </ul>
       );
-    });
+    }); 
 
     let chartData = {
       labels: data.map(o => o.name),
@@ -95,7 +95,7 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={160}/>;
+    return <BarChart data={chartData} options={chartOptions} height={240}/>;
   },
 
   renderCountEstacionamento: function () {
@@ -177,23 +177,26 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <PolarChart data={chartData} options={chartOptions} height={160}/>;
+    return <PolarChart data={chartData} options={chartOptions} height={240}/>;
   },
 
   renderMap: function () {
     if (!this.props.mapGeometries.fetched) return null;
 
     const getColor = (v) => {
-      if (v === 'fixo') return '#7FECDA';
-      if (v === 'condicionado-fixo') return '#00DFC1';
-      if (v === 'condicionado') return '#2D8374';
-      if (v === 'fixo-livre') return '#1F574D';
-      if (v === 'condicionado-livre') return '#0F2B26';
-      if (v === 'livre') return '#ff0000';
+      if (v === 'fixo') return '#00ced1';
+      if (v === 'condicionado-fixo') return '#0eaeaf';
+      if (v === 'condicionado') return '#1f8d8e';
+      if (v === 'fixo-livre') return '#256465';
+      if (v === 'condicionado-livre') return '#264242';
+      //if (v === 'livre') return '#ff0000';
       // if (v === 'condicionado-fixo-livre') return '#00ff00';
       // if (v === 'escala-fixo') return '#0000ff';
-      return '#eaeaea';
+      return '#B0DEDE';
     };
+
+
+
 
     let tipoEstacionamentos = this.props.municipios.map(m => {
       let key = _(m.data.estacionamento)
@@ -209,21 +212,23 @@ var SectionEstacionamento = React.createClass({
 
     return (
       <div>
-        <h6 className='map-title'>Tipos principais de estacionamento</h6>
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={tipoEstacionamentos}
         />
-        <ul className='color-legend side-by-side'>
+       <div className='map-legend'>
+          <h6 className='legend-title'>Regimes de Estacionamento por Município</h6>
+          <ul className='color-legend two-by-side'>
           <li><span style={{backgroundColor: getColor('fixo')}}></span>Fixo</li>
-          <li><span style={{backgroundColor: getColor('condicionado-fixo')}}></span>Condicionado & Fixo</li>
+          <li><span style={{backgroundColor: getColor('condicionado-fixo')}}></span>Fixo e Condicionado</li>
           <li><span style={{backgroundColor: getColor('condicionado')}}></span>Condicionado</li>
           <li><span style={{backgroundColor: getColor('fixo-livre')}}></span>Fixo & Livre</li>
           <li><span style={{backgroundColor: getColor('condicionado-livre')}}></span>Condicionado & Livre</li>
-          <li><span style={{backgroundColor: getColor('livre')}}></span>Livre</li>
-          <li><span style={{backgroundColor: getColor('outros')}}></span>Outros</li>
+          {/*<li><span style={{backgroundColor: getColor('livre')}}></span>Livre</li>*/}
+          <li><span style={{backgroundColor: getColor('outros')}}></span>Outros Regimes</li>
        </ul>
+        </div>
       </div>
     );
   },
@@ -244,13 +249,13 @@ var SectionEstacionamento = React.createClass({
             <div className='section-content'>
              <div className='two-columns'>
                <div className='graph'>
+                <h6 className='legend-title'>Municípios por regime de estacionamento (%)</h6>
                 {this.renderPercentEstacionamento()}
-                <p className='graph-description'>Percentagem de municípios por regime de estacionamento</p>
                </div>
 
                <div className='graph'>
+                <h6 className='legend-title'>Municípios por regime(s) de estacionamento (Nº)</h6>
                 {this.renderCountEstacionamento()}
-                <p className='graph-description'>Número de municípios por (conjunto de) regimes de estacionamento</p>
                </div>
              </div>
 
