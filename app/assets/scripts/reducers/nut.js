@@ -87,6 +87,12 @@ function processData (nut) {
   // Number of municípios with lic-mob-reduzida.
   nut.data.totalMunicipiosMobReduzida = _.sumBy(nut.concelhos, d => _.last(d.data['lic-mob-reduzida']).value);
 
+  // Licenças per 1000 dormidas.
+  nut.data.dormidas = nut.data.dormidas.map(d => {
+    d.lic1000 = nut.data.licencas2016 / (d.value / 1000);
+    return d;
+  });
+
   // Compute the timeline at the national level.
   nut.data.licencasTimeline = _.range(2006, 2017).map((y, i) => {
     let d = {

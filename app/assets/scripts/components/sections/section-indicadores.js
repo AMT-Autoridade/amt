@@ -14,35 +14,36 @@ var SectionResidentes = React.createClass({
     adminName: T.string,
     adminId: T.oneOfType([T.string, T.number]),
     licencasHab: T.number,
-    chartDatasets: T.object,
+    dormidas: T.array,
+    chartLic1000Hab: T.object,
+    chartLic1000Dor: T.object,
     mapGeometries: T.object,
     municipios: T.array,
     onMapClick: T.func,
     popoverContent: T.func
   },
 
-  renderLicencas100Hab: function () {
-    let chartDatasets = this.props.chartDatasets;
-    let l = chartDatasets.labels.length - 1;
+  renderLicencas1000Chart: function (lic1000Data) {
+    let l = lic1000Data.labels.length - 1;
 
     let tooltipFn = makeTooltip(entryIndex => {
-      let year = chartDatasets.labels[entryIndex];
+      let year = lic1000Data.labels[entryIndex];
       return (
         <ul>
           <li><span className='tooltip-title'>{year}:</span></li>
-          {chartDatasets.datasets.map(o => <li key={o.label}><span className='tooltip-label'>{o.label}:</span> <span className='tooltip-number'>{round(o.data[entryIndex])}</span></li>)}
+          {lic1000Data.datasets.map(o => <li key={o.label}><span className='tooltip-label'>{o.label}:</span> <span className='tooltip-number'>{round(o.data[entryIndex])}</span></li>)}
           <span className='triangle'></span>
         </ul>
       );
     });
 
-    let labels = chartDatasets.labels.map((o, i) => i === 0 || i === l ? o : '');
+    let labels = lic1000Data.labels.map((o, i) => i === 0 || i === l ? o : '');
 
     let chartData = {
       labels: labels,
-      datasets: chartDatasets.datasets.map(o => ({
+      datasets: lic1000Data.datasets.map(o => ({
         data: o.data,
-        backgroundColor: 'transparent',
+        backgroundColor: o.backgroundColor,
         borderColor: o.color,
         pointBorderWidth: 0,
         pointBackgroundColor: o.color,
@@ -130,6 +131,7 @@ var SectionResidentes = React.createClass({
   },
 
   render: function () {
+    let dormidas = _.last(this.props.dormidas).lic1000;
     return (
       <div id='residentes' className='content-wrapper'>
         <div className='map-wrapper'>
@@ -151,7 +153,7 @@ var SectionResidentes = React.createClass({
                     <span className='stat-description'>Licenças activas por 1000 residentes</span>
                   </li>
                   <li>
-                    <span className='stat-number'>{round(this.props.licencasHab, 1)}</span>
+                    <span className='stat-number'>{round(dormidas, 1)}</span>
                     <span className='stat-description'>Licenças activas por 1000 dormidas</span>
                   </li>
                 </ul>
@@ -160,11 +162,11 @@ var SectionResidentes = React.createClass({
               <div className='two-columns'>
                 <div className='graph'>
                   <h6 className='legend-title'>Evolução das licenças por 1000 residentes</h6>
-                  {this.renderLicencas100Hab()}
+                  {this.renderLicencas1000Chart(this.props.chartLic1000Hab)}
                 </div>
                 <div className='graph'>
                   <h6 className='legend-title'>Evolução das licenças por 1000 dormidas</h6>
-                  {this.renderLicencas100Hab()}
+                  {this.renderLicencas1000Chart(this.props.chartLic1000Dor)}
                 </div>
               </div>
             </div>
