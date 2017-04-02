@@ -19,7 +19,8 @@ export default function reducer (state = initialState, action) {
       if (action.error) {
         state.error = action.error;
       } else {
-        state.data = processData(action.data);
+        let nut = action.data.results.find(o => o.slug === action.slug);
+        state.data = processData(nut);
       }
       break;
   }
@@ -28,26 +29,26 @@ export default function reducer (state = initialState, action) {
 
 function processData (nut) {
   // Sanitize.
-  nut.concelhos = nut.concelhos.map((d, i) => {
-    if (!d.data['lic-geral']) {
-      console.info(`Concelho: ${d.name} doesn't have data on "lic-geral"`);
-      d.data['lic-geral'] = _.range(2006, 2017).map(y => ({year: y, value: 1}));
-    }
-    if (!d.data['lic-mob-reduzida']) {
-      console.info(`Concelho: ${d.name} doesn't have data on "lic-mob-reduzida"`);
-      d.data['lic-mob-reduzida'] = _.range(2006, 2017).map(y => ({year: y, value: 1}));
-    }
-    if (!d.data['max-lic-geral']) {
-      console.info(`Concelho: ${d.name} doesn't have data on "max-lic-geral"`);
-      d.data['max-lic-geral'] = _.range(2006, 2017).map(y => ({year: y, value: 1}));
-    }
-    if (!d.data['max-lic-mob-reduzida']) {
-      console.info(`Concelho: ${d.name} doesn't have data on "max-lic-mob-reduzida"`);
-      d.data['max-lic-mob-reduzida'] = _.range(2006, 2017).map(y => ({year: y, value: 1}));
-    }
+  // nut.concelhos = nut.concelhos.map((d, i) => {
+  //   if (!d.data['lic-geral']) {
+  //     console.info(`Concelho: ${d.name} doesn't have data on "lic-geral"`);
+  //     d.data['lic-geral'] = _.range(2006, 2017).map(y => ({year: y, value: 1}));
+  //   }
+  //   if (!d.data['lic-mob-reduzida']) {
+  //     console.info(`Concelho: ${d.name} doesn't have data on "lic-mob-reduzida"`);
+  //     d.data['lic-mob-reduzida'] = _.range(2006, 2017).map(y => ({year: y, value: 1}));
+  //   }
+  //   if (!d.data['max-lic-geral']) {
+  //     console.info(`Concelho: ${d.name} doesn't have data on "max-lic-geral"`);
+  //     d.data['max-lic-geral'] = _.range(2006, 2017).map(y => ({year: y, value: 1}));
+  //   }
+  //   if (!d.data['max-lic-mob-reduzida']) {
+  //     console.info(`Concelho: ${d.name} doesn't have data on "max-lic-mob-reduzida"`);
+  //     d.data['max-lic-mob-reduzida'] = _.range(2006, 2017).map(y => ({year: y, value: 1}));
+  //   }
 
-    return d;
-  });
+  //   return d;
+  // });
 
   // Licenças and max per district.
   nut.concelhos = nut.concelhos.map(d => {
@@ -88,13 +89,24 @@ function processData (nut) {
 
   // Compute the timeline at the national level.
   nut.data.licencasTimeline = _.range(2006, 2017).map((y, i) => {
-    return {
+    let d = {
       year: y,
       'lic-geral': nut.data['lic-geral'][i].value,
       'lic-mob-reduzida': nut.data['lic-mob-reduzida'][i].value,
       'max-lic-geral': nut.data['max-lic-geral'][i].value,
       'max-lic-mob-reduzida': nut.data['max-lic-mob-reduzida'][i].value
     };
+    // Population is only available until 2015.
+    // when computing for years over 2015 use last available.
+    let idx = nut.data['pop-residente'].length - 1;
+    if (idx > i) {
+      idx = i;
+    }
+    d['pop-residente'] = nut.data['pop-residente'][idx].value;
+
+    d['lic1000'] = (d['lic-geral'] + d['lic-mob-reduzida']) / (d['pop-residente'] / 1000);
+
+    return d;
   });
 
   console.log('nut', nut);

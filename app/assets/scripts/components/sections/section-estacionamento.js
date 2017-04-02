@@ -6,11 +6,18 @@ import _ from 'lodash';
 import makeTooltip from '../../utils/tooltip';
 import { percent } from '../../utils/utils';
 
+import Map from '../map';
+
 var SectionEstacionamento = React.createClass({
   propTypes: {
+    adminLevel: T.string,
     adminName: T.string,
+    adminId: T.oneOfType([T.string, T.number]),
     municipios: T.array,
-    totalMunicipios: T.number
+    totalMunicipios: T.number,
+    mapGeometries: T.object,
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   estLabels: {
@@ -18,7 +25,8 @@ var SectionEstacionamento = React.createClass({
     condicionado: 'Condicionado',
     escala: 'Escala',
     livre: 'Livre',
-    outros: 'Outros'
+    outros: 'Outros',
+    nd: 'Indefinido'
   },
 
   renderPercentEstacionamento: function () {
@@ -26,12 +34,13 @@ var SectionEstacionamento = React.createClass({
       fixo: {value: 0},
       condicionado: {value: 0},
       escala: {value: 0},
-      livre: {value: 0}
+      livre: {value: 0},
+      nd: {value: 0}
     };
 
     this.props.municipios.forEach(m => m.data.estacionamento.forEach(e => {
       e = _.trim(e);
-      if (!e) return;
+      if (!e) e = 'nd';
       data[e].value++;
     }));
 
@@ -54,7 +63,7 @@ var SectionEstacionamento = React.createClass({
           <span className='triangle'></span>
         </ul>
       );
-    });
+    }); 
 
     let chartData = {
       labels: data.map(o => o.name),
@@ -89,7 +98,7 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={260}/>;
+    return <BarChart data={chartData} options={chartOptions} height={240}/>;
   },
 
   renderCountEstacionamento: function () {
@@ -97,8 +106,7 @@ var SectionEstacionamento = React.createClass({
 
     this.props.municipios.forEach(m => {
       let types = _(m.data.estacionamento)
-        .filter()
-        .map(_.trim)
+        .map(o => o === '' ? 'nd' : _.trim(o))
         .sort()
         .value();
 
@@ -124,7 +132,7 @@ var SectionEstacionamento = React.createClass({
         return acc;
       }, {key: 'outros', types: ['Outros'], value: 0});
 
-    if (rest.length) {
+    if (rest.value) {
       mainEstacionamento.push(rest);
     }
 
@@ -172,36 +180,96 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <PolarChart data={chartData} options={chartOptions} height={260}/>;
+    return <PolarChart data={chartData} options={chartOptions} height={240}/>;
+  },
+
+  renderMap: function () {
+    if (!this.props.mapGeometries.fetched) return null;
+
+    const getColor = (v) => {
+      if (v === 'fixo') return '#00ced1';
+      if (v === 'condicionado-fixo') return '#0eaeaf';
+      if (v === 'condicionado') return '#1f8d8e';
+      if (v === 'fixo-livre') return '#256465';
+      if (v === 'condicionado-livre') return '#264242';
+      //if (v === 'livre') return '#ff0000';
+      // if (v === 'condicionado-fixo-livre') return '#00ff00';
+      // if (v === 'escala-fixo') return '#0000ff';
+      return '#B0DEDE';
+    };
+
+
+
+
+    let tipoEstacionamentos = this.props.municipios.map(m => {
+      let key = _(m.data.estacionamento)
+        .map(_.trim)
+        .sort()
+        .join('-');
+
+      return {
+        id: m.id,
+        color: getColor(key)
+      };
+    });
+
+    return (
+      <div>
+        <Map
+          className='map-svg'
+          geometries={this.props.mapGeometries.data}
+          data={tipoEstacionamentos}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
+        />
+       <div className='map-legend'>
+          <h6 className='legend-title'>Regimes de Estacionamento por Município</h6>
+          <ul className='color-legend two-by-side'>
+            <li><span style={{backgroundColor: getColor('fixo')}}></span>Fixo</li>
+            <li><span style={{backgroundColor: getColor('condicionado-fixo')}}></span>Fixo e Condicionado</li>
+            <li><span style={{backgroundColor: getColor('condicionado')}}></span>Condicionado</li>
+            <li><span style={{backgroundColor: getColor('fixo-livre')}}></span>Fixo & Livre</li>
+            <li><span style={{backgroundColor: getColor('condicionado-livre')}}></span>Condicionado & Livre</li>
+            <li><span style={{backgroundColor: getColor('outros')}}></span>Outros Regimes</li>
+          </ul>
+        </div>
+      </div>
+    );
   },
 
   render: function () {
     return (
-      <div id='estacionamento' className='section-wrapper'>
-        <section className='section-container'>
-          <header className='section-header'>
-            <h3 className='section-category'>{this.props.adminName}</h3>
-            <h1>Regime de Estacionamento</h1>
-            <p className='lead'>As câmaras municipais estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Estas disposições são estabelecidas por regulamento municipal ou aquando da atribuição da licença municipal ao veículo.</p>
-          </header>
-          <div className='section-content'>
-           <div className='two-columns'>
-             <div className='graph'>
-              {this.renderPercentEstacionamento()}
-              <p className='graph-description'>Percentagem de municípios por regime de estacionamento</p>
+      <div id='estacionamento' className='content-wrapper'>
+        <div className='map-wrapper'>
+          {this.renderMap()}
+        </div>
+        <div className='section-wrapper'>
+          <section className='section-container'>
+            <header className='section-header'>
+              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h1>Regime de Estacionamento</h1>
+              <p className='lead'>As câmaras municipais estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Estas disposições são estabelecidas por regulamento municipal ou aquando da atribuição da licença municipal ao veículo.</p>
+            </header>
+            <div className='section-content'>
+             <div className='two-columns'>
+               <div className='graph'>
+                <h6 className='legend-title'>Municípios por regime de estacionamento (%)</h6>
+                {this.renderPercentEstacionamento()}
+               </div>
+
+               <div className='graph'>
+                <h6 className='legend-title'>Municípios por regime(s) de estacionamento (Nº)</h6>
+                {this.renderCountEstacionamento()}
+               </div>
              </div>
 
-             <div className='graph'>
-              {this.renderCountEstacionamento()}
-              <p className='graph-description'>Número de municípios por (conjunto de) regimes de estacionamento</p>
-             </div>
-           </div>
-
-          </div>
-          <footer className='section-footer'>
-            <p><strong>Legenda:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>
-          </footer>
-        </section>
+            </div>
+            <footer className='section-footer'>
+              <p><strong>Legenda:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>
+            </footer>
+          </section>
+        </div>
       </div>
     );
   }

@@ -6,16 +6,22 @@ import _ from 'lodash';
 import makeTooltip from '../../utils/tooltip';
 import { round, percent } from '../../utils/utils';
 
+import Map from '../map';
+
 var SectionEvolucao = React.createClass({
   propTypes: {
     adminLevel: T.string,
     adminName: T.string,
+    adminId: T.oneOfType([T.string, T.number]),
     licencas2016: T.number,
     licencas2006: T.number,
     totalMunicipios: T.number,
     municipios: T.array,
     licencasTimeline: T.array,
-    data: T.object
+    data: T.object,
+    mapGeometries: T.object,
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   renderTimelineChart: function () {
@@ -41,11 +47,11 @@ var SectionEvolucao = React.createClass({
       labels: labels,
       datasets: [{
         data: nationalTimeline.map(o => o['lic-geral'] + o['lic-mob-reduzida']),
-        backgroundColor: '#FFE7A2',
-        borderColor: '#F6B600',
+        backgroundColor: '#FFCC45',
+        borderColor: '#FB8F2C',
         pointBorderWidth: 0,
-        pointBackgroundColor: '#F6B600',
-        pointRadius: 2
+        pointBackgroundColor: '#FB8F2C',
+        pointRadius: 3
       }]
     };
 
@@ -77,7 +83,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={220}/>;
+    return <LineChart data={chartData} options={chartOptions} height={300}/>;
   },
 
   renderTopMunicipiosChart: function () {
@@ -102,7 +108,7 @@ var SectionEvolucao = React.createClass({
       datasets: [
         {
           data: topMunicipios.map(o => o.data.change),
-          backgroundColor: '#F6B600'
+          backgroundColor: '#FFCC45'
         }
       ]
     };
@@ -130,7 +136,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={260}/>;
+    return <BarChart data={chartData} options={chartOptions} height={370}/>;
   },
 
   renderChangeLicencasChart: function () {
@@ -170,7 +176,7 @@ var SectionEvolucao = React.createClass({
       datasets: [{
         data: licencasChange.map(o => o.value),
         borderWidth: 0,
-        backgroundColor: ['#FFC700', '#FDD259', '#FDDC7E']
+        backgroundColor: ['#FFCC45', '#FDB13A', '#FB8F2C']
       }]
     };
 
@@ -186,7 +192,47 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <DoughnutChart data={chartData} options={chartOptions} height={240}/>;
+    return <DoughnutChart data={chartData} options={chartOptions} height={280}/>;
+  },
+
+  renderMap: function () {
+    if (!this.props.mapGeometries.fetched) return null;
+
+    const getColor = (v) => {
+      if (v > 0) return '#256465';
+      if (v < 0) return '#00ced1';
+      return '#1f8d8e';
+    };
+
+    let evolucaoMunicipios = this.props.municipios.map(m => {
+      return {
+        id: m.id,
+        color: getColor(m.data.change)
+      };
+    });
+
+    return (
+      <div>
+        <Map
+          className='map-svg'
+          geometries={this.props.mapGeometries.data}
+          data={evolucaoMunicipios}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
+        />
+        
+       <div className='map-legend'>
+          <h6 className='legend-title'>Variação de Licenças por Município:</h6>
+          <ul className='color-legend inline'>
+            <li><span style={{backgroundColor: getColor(-1)}}></span>Diminuiu</li>
+            <li><span style={{backgroundColor: getColor(0)}}></span>Manteve</li>
+            <li><span style={{backgroundColor: getColor(1)}}></span>Aumentou</li>
+         </ul>
+        </div>
+
+      </div>
+    );
   },
 
   render: function () {
@@ -199,51 +245,56 @@ var SectionEvolucao = React.createClass({
     let totalMunicipiosNoChange = this.props.municipios.reduce((acc, c) => c.data.change === 0 ? acc + 1 : acc, 0);
 
     return (
-      <div id='evolucao' className='section-wrapper'>
-        <section className='section-container'>
-          <header className='section-header'>
-            <h3 className='section-category'>{this.props.adminName}</h3>
-            <h1>Evolução 2006 - 2016</h1>
-            <p className='lead'>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, e a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
-          </header>
-          <div className='section-content'>
-            <div className='section-stats'>
-              <ul>
-                <li>
-                  <span className='stat-number'>{newLicencas.toLocaleString()}</span>
-                  <span className='stat-description'>Aumento do número de licenças entre 2006 e 2016.</span>
-                </li>
-                <li>
-                  <span className='stat-number'>{round(increaseLicencas, 0).toLocaleString()}%</span>
-                  <span className='stat-description'>Crescimento dos táxis licenciados desde 2006.</span>
-                </li>
-                <li>
-                  <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios, 0).toLocaleString()}%</span>
-                  <span className='stat-description'>Dos municípios não registaram alteração no número de licenças.</span>
-                </li>
-              </ul>
-            </div>
+      <div id='evolucao' className='content-wrapper'>
+        <div className='map-wrapper'>
+          {this.renderMap()}
+        </div>
+        <div className='section-wrapper'>
+          <section className='section-container'>
+            <header className='section-header'>
+              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h1>Evolução 2006&#8212;2016</h1>
+              <p className='lead'>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, e a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
+            </header>
+            <div className='section-content'>
+              <div className='section-stats'>
+                <ul>
+                  <li>
+                    <span className='stat-number'>{newLicencas.toLocaleString()}</span>
+                    <span className='stat-description'>Aumento do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
+                  </li>
+                  <li>
+                    <span className='stat-number'>{round(increaseLicencas, 0).toLocaleString()}%</span>
+                    <span className='stat-description'>Crescimento dos táxis <span className='block'>licenciados desde 2006.</span></span>
+                  </li>
+                  <li>
+                    <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios, 0).toLocaleString()}%</span>
+                    <span className='stat-description'>Dos municípios não registaram alteração no número de licenças.</span>
+                  </li>
+                </ul>
+              </div>
 
-            <div className='graph-container'>
-              <div className='graph'>
-                {this.renderTimelineChart()}
-                <p className='graph-description'>Evolução das licenças 2006 a 2016.</p>
+              <div className='graph-container'>
+                <div className='graph'>
+                  <h6 className='legend-title'>Evolução das licenças 2006 a 2016</h6>
+                  {this.renderTimelineChart()}
+                </div>
+                <div className='graph'>
+                  <h6 className='legend-title'>Municipios com maior aumento</h6>
+                  {this.renderTopMunicipiosChart()}
+                </div>
+                <div className='graph'>
+                  <h6 className='legend-title'>Alterações do número de licenças</h6>
+                  {this.renderChangeLicencasChart()}
+                </div>
               </div>
-              <div className='graph'>
-                {this.renderTopMunicipiosChart()}
-                <p className='graph-description'>Municipios com maior aumento.</p>
-              </div>
-              <div className='graph'>
-                {this.renderChangeLicencasChart()}
-                <p className='graph-description'>Alterações do número de licenças.</p>
-              </div>
-            </div>
 
-          </div>
-          <footer className='section-footer'>
-            <p><strong>Notas:</strong> Para os concelhos em que não existia informação disponível para todos os anos existiu interpolação de valores. A percentagem de valores interpolados correspondeu a apenas 0,2% do total de valores considerados. <a href="#">Saber mais</a></p>
-          </footer>
-        </section>
+            </div>
+            <footer className='section-footer'>
+              <p><strong>Notas:</strong> Para os concelhos em que não existia informação disponível para todos os anos existiu interpolação de valores. A percentagem de valores interpolados correspondeu a apenas 0,2% do total de valores considerados. <a href="#">Saber mais</a></p>
+            </footer>
+          </section>
+        </div>
       </div>
     );
   }

@@ -11,21 +11,16 @@ var Dados = React.createClass({
 
   render: function () {
     return (
-      <div id='dados' className='container-wrapper section-wrapper'>
-
+      <div id='dados' className='container-wrapper'>
+        <section id='dados' className='content-wrapper'>
         <h1>Sobre os dados</h1>
-
-        <section id='dados'>
           <div>
-            <p className='lead'>O <a href="#">Observatório da Mobilidade</a> contém dados detalhados sobre o setor dos serviços de transporte em táxi em Portugal no período entre 2006 e 2016. Os dados foram recolhidos pela Autoridade da Mobilidade e dos Transportes junto das 308 câmaras municipais do país.</p>
-            <p className='lead'>De forma a complementar os dados recolhidos e para fazer uma análise mais completa ao panorama actual, foram também utilizados dados sobre a população residente e sobre as dormidas nos estabelecimentos hoteleiros, disponibilizada pelo Instituto Nacional de Estatística através da sua base de dados pública (www.ine.pt).</p>
-            <p className='lead'>A AMT agradece a colaboração e disponibilidade das câmaras municipais na disponibilização da informação.</p>
+            <p className='lead'>Este site contém dados sobre os serviços de transporte em táxi em Portugal, no período entre 2006 e 2016. Os dados foram recolhidos pela AMT junto das 308 câmaras municipais do país. De forma a complementar os dados recolhidos e concretizar uma análise mais detalhada, foram também utilizados dados sobre a população residente e sobre as dormidas em estabelecimentos hoteleiros, disponibilizados pelo <a href="http://www.ine.pt" title="Ir para INE" target="_blank">Instituto Nacional de Estatística</a> na sua base de dados pública.</p>
+            <p className='lead'>A AMT agradece a colaboração e disponibilidade das câmaras municipais na disponibilização da informação. Agradecem-se igualmente os contributos do Instituto da Mobilidade e dos Transportes, da Direção Regional da Economia e Transportes da Madeira e da Direção Regional dos Transportes dos Açores.</p>
           </div>
-
           <div>
             <h3>Tratamento de Dados</h3>
-              <p>Para os concelhos em que não existia informação disponível para todos os anos no período compreendido entre 2006 e 2016, os valores assumidos na análise da evolução do setor decorrem da aplicação da taxa de variação anual apurada para os restantes concelhos.</p>
-              <p>A percentagem de valores interpolados da forma descrita corresponde apenas a 0,2% dos dados analisados.</p>
+              <p>Existem dados relativos a 2016 para todos os concelhos. Para os concelhos em que não existia informação disponível para todo o período compreendido entre 2006 e 2016, os valores assumidos na análise da evolução do setor decorrem da aplicação das taxas de variação anual apuradas para os concelhos com informação.</p>
 
               <h3>Ferramentas Utilizadas</h3>
               <p>Falta este texto</p>

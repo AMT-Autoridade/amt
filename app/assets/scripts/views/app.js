@@ -48,7 +48,7 @@ var App = React.createClass({
       <div className={c('page', pageClass)}>
         <header id='page-header'>
           <nav className='page-nav container-wrapper'>
-            <h1 id='page-logo'><a href='/'>Autoridade da Mobilidade e dos Transportes</a></h1>
+            <h1 id='page-logo'><Link to='/'>Autoridade da Mobilidade e dos Transportes</Link></h1>
             <ul className='primary-nav'>
               <li><Link to='/sobre'>Sobre</Link></li>
               <li><Link to='/dados'>Dados</Link></li>
@@ -58,15 +58,6 @@ var App = React.createClass({
         </header>
         <main className='page__body' role='main'>
           {this.props.children}
-          <ul className='section-nav'>
-            <li><Link to='/#intro'>Introdução</Link></li>
-            <li><Link to='/#licencas'>Licenças</Link></li>
-            <li><Link to='/#mobilidade'>Mobilidade Reduzida</Link></li>
-            <li><Link to='/#estacionamento'>Estacionamento</Link></li>
-            <li><Link to='/#distribuicao'>Distribuição</Link></li>
-            <li><Link to='/#evolucao'>Evolução</Link></li>
-            <li><Link to='/#conclusoes'>Conclusões</Link></li>
-          </ul>
         </main>
       </div>
     );

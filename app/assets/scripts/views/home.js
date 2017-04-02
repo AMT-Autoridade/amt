@@ -1,20 +1,18 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import { Link, hashHistory } from 'react-router';
 
 import { fetchNational, fetchMapData } from '../actions';
 
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
-import SectionResidentes from '../components/sections/section-residentes';
+import SectionIndicadores from '../components/sections/section-indicadores';
 import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
-import SectionDistribuicao from '../components/sections/section-distribuicao';
+import SectionAmbito from '../components/sections/section-ambito';
 import SectionEvolucao from '../components/sections/section-evolucao';
 import SectionConclusoes from '../components/sections/section-conclusoes';
-
-import Map from '../components/map';
 
 var Home = React.createClass({
   propTypes: {
@@ -22,6 +20,23 @@ var Home = React.createClass({
     mapData: T.object,
     _fetchNational: T.func,
     _fetchMapData: T.func
+  },
+
+  onMapClick: function (id) {
+    // Find the right nut.
+    let slug = this.props.national.data.nuts.find(o => o.id === id).slug;
+    hashHistory.push(`/nuts/${slug}`);
+  },
+
+  popoverContent: function (id) {
+    // Find the right nut.
+    let name = this.props.national.data.nuts.find(o => o.id === id).name;
+    return (
+      <div>
+        <p className='map-tooltip'>{name}</p>
+        <span className='triangle'></span>
+      </div>
+    );
   },
 
   componentDidMount: function () {
@@ -48,189 +63,136 @@ var Home = React.createClass({
       return <div>Error: {error}</div>;
     }
 
-    const mapGeometries = this.props.mapData;
+    let chartLic1000Hab = {
+      labels: this.props.national.data.licencasTimeline.map(y => y.year),
+      datasets: [
+        {
+          data: this.props.national.data.licencasTimeline.map(o => o['lic1000-por']),
+          label: 'Área Metropolitana de Porto',
+          color: '#256465',
+          backgroundColor: '#2564657f'
+        },
+        {
+          data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
+          label: 'Portugal',
+          color: '#1f8d8e',
+          backgroundColor: '#1f8d8e7f'
+        },
+        {
+          data: this.props.national.data.licencasTimeline.map(o => o['lic1000-lx']),
+          label: 'Área Metropolitana de Lisboa',
+          color: '#00ced1',
+          backgroundColor: '#00ced17f'
+        }
+      ]
+    };
 
-    let licencasMunicipios = data.concelhos.map(m => {
-      let licencas = _.last(m.data['lic-geral']).value;
-
-      const getColor = (v) => {
-        if (v <= 10) return '#7FECDA';
-        if (v <= 30) return '#00DFC1';
-        if (v <= 100) return '#2D8374';
-        if (v <= 1000) return '#1F574D';
-        return '#0F2B26';
-      };
-
-      return {
-        id: m.id,
-        color: getColor(licencas)
-      };
-    });
-
-    let mobRedMunicipios = data.concelhos.map(m => {
-      let modred = _.last(m.data['lic-mob-reduzida']).value > 0;
-
-      return {
-        id: m.id,
-        color: modred ? '#2D8374' : '#eaeaea'
-      };
-    });
-
-    let evolucaoMunicipios = data.concelhos.map(m => {
-      let c = '#2D8374';
-      if (m.data.change > 0) {
-        c = '#0F2B26';
-      } else if (m.data.change < 0) {
-        c = '#7FECDA';
-      }
-
-      return {
-        id: m.id,
-        color: c
-      };
-    });
-
-    let licencas1000Hab = data.concelhos.map(m => {
-      let totalLic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
-      let lic1000 = totalLic / (_.last(m.data['pop-residente']).value / 1000);
-
-      const getColor = (v) => {
-        if (v <= 1) return '#7FECDA';
-        if (v <= 2) return '#00DFC1';
-        if (v <= 3) return '#2D8374';
-        if (v <= 4) return '#1F574D';
-        return '#0F2B26';
-      };
-
-      return {
-        id: m.id,
-        color: getColor(lic1000)
-      };
-    });
+    let chartLic1000Dor = {
+      labels: this.props.national.data.dormidas.map(y => y.year),
+      datasets: [
+        {
+          data: this.props.national.data.dormidas.map(o => o.lic1000),
+          label: 'Portugal',
+          color: '#1f8d8e',
+          backgroundColor: '#1f8d8e7f'
+        }
+      ]
+    };
 
     return (
       <div>
         <SectionIntro />
 
         <div id="page-content" className='container-wrapper'>
-        <div style={{overflow: 'hidden'}}>
-          <div className='map-wrapper'>
-          {mapGeometries.fetched ? (
-            <Map
-              geometries={mapGeometries.data}
-              data={licencasMunicipios} />
-          ) : null}
-          </div>
+          <SectionLicencas
+            adminLevel='national'
+            adminName='Portugal'
+            adminList={data.nuts}
+            licencas2016={data.licencas2016}
+            max2016={data.max2016}
+            licencasHab={data.licencasHab}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+          />
 
-          <div className='content-wrapper'>
-            <SectionLicencas
-              adminLevel='national'
-              adminName='Portugal'
-              adminList={data.nuts}
-              licencas2016={data.licencas2016}
-              max2016={data.max2016}
-              licencasHab={data.licencasHab}
-            />
-          </div>
+          <SectionMobilidade
+            adminLevel='national'
+            adminName='Portugal'
+            totalMunicipiosMobReduzida={data.totalMunicipiosMobReduzida}
+            totalMunicipios={data.totalMunicipios}
+            licencas2016={data.licencas2016}
+            licencas2006={data.licencas2006}
+            licencasMobReduzida2016={data.licencasMobReduzida2016}
+            licencasMobReduzida2006={data.licencasMobReduzida2006}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+          />
+
+          <SectionEstacionamento
+            adminLevel='national'
+            adminName='Portugal'
+            municipios={data.concelhos}
+            totalMunicipios={data.totalMunicipios}
+            mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+          />
+
+          <SectionAmbito
+            adminLevel='national'
+            adminName='Portugal'
+            adminList={data.nuts}
+            licencas2016={data.licencas2016}
+            populacaoNational={data.populacao}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+          />
+
+          <SectionEvolucao
+            adminLevel='national'
+            adminName='Portugal'
+            licencas2016={data.licencas2016}
+            licencas2006={data.licencas2006}
+            municipios={data.concelhos}
+            totalMunicipios={data.totalMunicipios}
+            licencasTimeline={data.licencasTimeline}
+            mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+          />
+
+          <SectionIndicadores
+            adminLevel='national'
+            adminName='Portugal'
+            licencasHab={data.licencasHab}
+            dormidas={data.dormidas}
+            chartLic1000Hab={chartLic1000Hab}
+            chartLic1000Dor={chartLic1000Dor}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+          />
+
+          <SectionConclusoes />
         </div>
 
-        <div style={{overflow: 'hidden'}}>
-          <div className='map-wrapper'>
-          </div>
-
-          <div className='content-wrapper'>
-            <SectionResidentes />
-          </div>
-        </div>
-
-        <div style={{overflow: 'hidden'}}>
-          <div className='map-wrapper'>
-          {mapGeometries.fetched ? (
-            <Map
-              geometries={mapGeometries.data}
-              data={mobRedMunicipios} />
-          ) : null}
-          </div>
-
-          <div className='content-wrapper'>
-            <SectionMobilidade
-              adminLevel='national'
-              adminName='Portugal'
-              totalMunicipiosMobReduzida={data.totalMunicipiosMobReduzida}
-              totalMunicipios={data.totalMunicipios}
-              licencas2016={data.licencas2016}
-              licencas2006={data.licencas2006}
-              licencasMobReduzida2016={data.licencasMobReduzida2016}
-              licencasMobReduzida2006={data.licencasMobReduzida2006}
-            />
-          </div>
-        </div>
-
-        <div style={{overflow: 'hidden'}}>
-          <div className='map-wrapper'>
-
-          </div>
-
-          <div className='content-wrapper'>
-            <SectionEstacionamento
-              municipios={data.concelhos}
-              totalMunicipios={data.totalMunicipios}
-            />
-          </div>
-        </div>
-
-        <div style={{overflow: 'hidden'}}>
-          <div className='map-wrapper'>
-          {mapGeometries.fetched ? (
-            <Map
-              geometries={mapGeometries.data}
-              data={licencas1000Hab} />
-          ) : null}
-          </div>
-
-          <div className='content-wrapper'>
-            <SectionDistribuicao
-              adminLevel='national'
-              adminName='Portugal'
-              adminList={data.nuts}
-              licencas2016={data.licencas2016}
-              populacaoNational={data.populacao}
-            />
-          </div>
-        </div>
-
-        <div style={{overflow: 'hidden'}}>
-          <div className='map-wrapper'>
-          {mapGeometries.fetched ? (
-            <Map
-              geometries={mapGeometries.data}
-              data={evolucaoMunicipios} />
-          ) : null}
-          </div>
-
-          <div className='content-wrapper'>
-            <SectionEvolucao
-              adminLevel='national'
-              adminName='Portugal'
-              licencas2016={data.licencas2016}
-              licencas2006={data.licencas2006}
-              municipios={data.nuts.reduce((acc, nut) => acc.concat(nut.concelhos), [])}
-              totalMunicipios={data.totalMunicipios}
-              licencasTimeline={data.licencasTimeline}
-            />
-          </div>
-        </div>
-
-        <div style={{overflow: 'hidden'}}>
-          <div className='map-wrapper'>
-          </div>
-
-          <div className='content-wrapper'>
-            <SectionConclusoes />
-          </div>
-        </div>
-
-        </div>
+        <ul className='section-nav'>
+          <li className='nav-item'><Link to='/#intro'><span>Introdução</span></Link></li>
+          <li className='nav-item active'><Link to='/#licencas'><span>Licenças e Contingentes</span></Link></li>
+          <li className='nav-item'><Link to='/#mobilidade'><span>Mobilidade Reduzida</span></Link></li>
+          <li className='nav-item'><Link to='/#estacionamento'><span>Regime Estacionamento</span></Link></li>
+          <li className='nav-item'><Link to='/#distribuicao'><span>Âmbito Geográfico</span></Link></li>
+          <li className='nav-item'><Link to='/#evolucao'><span>Evolução 2006-2016</span></Link></li>
+          <li className='nav-item'><Link to='/#indicadores'><span>Outros Indicadores</span></Link></li>
+          <li className='nav-item'><Link to='/#conclusoes'><span>Conclusões</span></Link></li>
+        </ul>
       </div>
     );
   }

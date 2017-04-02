@@ -1,4 +1,4 @@
-#intro {
+#intro-wrapper {
 	height: 100vh;
 
 	@include media (large-up) { 
@@ -51,6 +51,28 @@
 }
 
 
+#sobre {
+	.wrapper {
+		@include media (medium-up) { 		
+			-webkit-column-count: 2; /* Chrome, Safari, Opera */
+		    -moz-column-count: 2; /* Firefox */
+		    column-count: 2;
+
+		    -webkit-column-gap: 80px; /* Chrome, Safari, Opera */
+		    -moz-column-gap: 80px; /* Firefox */
+		    column-gap: 80px;
+		
+		 }
+
+		 div{
+			-webkit-column-break-inside: avoid;
+			page-break-inside: avoid;
+			break-inside: avoid;
+		}
+	}
+}
+
+
 #glossario {
 	> ul {
 		padding: 0;
@@ -75,13 +97,12 @@
 }
 
 
-#dados,
-#sobre {
+#dados {
 	overflow: hidden;
 
 	div {
 		@include media (large-up) {
-      		@include column(6/12, $cycle: 2);
+      		@include column(6/12);
     	}
 	}
 }

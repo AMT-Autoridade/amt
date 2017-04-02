@@ -1,4 +1,4 @@
-import { REQUEST_NATIONAL, RECEIVE_NATIONAL, INVALIDATE_NATIONAL } from '../actions';
+import { REQUEST_NATIONAL, RECEIVE_NATIONAL, INVALIDATE_NATIONAL, RECEIVE_NUT } from '../actions';
 import _ from 'lodash';
 
 const initialState = {
@@ -14,20 +14,22 @@ export default function reducer (state = initialState, action) {
       return Object.assign({}, state, initialState);
     case REQUEST_NATIONAL:
       return Object.assign({}, state, { error: null, fetching: true, fetched: false });
+    case RECEIVE_NUT:
     case RECEIVE_NATIONAL:
       state = Object.assign({}, state, { fetching: false, fetched: true });
       if (action.error) {
         state.error = action.error;
       } else {
-        state.data = processData(action.data.results);
+        state.data = processData(action.data);
       }
       break;
   }
   return state;
 }
 
-function processData (nuts) {
-  let data = {nuts};
+function processData (rawData) {
+  let nuts = rawData.results;
+  let data = {nuts, dormidas: rawData.dormidas};
 
   // Licenças and max per district.
   nuts = nuts.map(d => {
@@ -76,6 +78,12 @@ function processData (nuts) {
 
   data.totalMunicipios = _.sumBy(nuts, d => d.concelhos.length);
 
+  // Licenças per 1000 dormidas.
+  data.dormidas = data.dormidas.map(d => {
+    d.lic1000 = data.licencas2016 / (d.value / 1000);
+    return d;
+  });
+
   // Number of municípios with lic-mob-reduzida.
   data.totalMunicipiosMobReduzida = _.sumBy(nuts, d => d.concelhos.filter(o => {
     if (!o.data['lic-mob-reduzida']) {
@@ -85,15 +93,34 @@ function processData (nuts) {
     return _.last(o.data['lic-mob-reduzida']).value !== 0;
   }).length);
 
+  let nutAmLx = nuts.find(n => n.id === 'PT170');
+  let nutAmPor = nuts.find(n => n.id === 'PT11A');
+
   // Compute the timeline at the national level.
   data.licencasTimeline = _.range(2006, 2017).map((y, i) => {
-    return {
+    let d = {
       year: y,
       'lic-geral': _.sumBy(nuts, `data['lic-geral'][${i}].value`),
       'lic-mob-reduzida': _.sumBy(nuts, `data['lic-mob-reduzida'][${i}].value`),
       'max-lic-geral': _.sumBy(nuts, `data['max-lic-geral'][${i}].value`),
       'max-lic-mob-reduzida': _.sumBy(nuts, `data['max-lic-mob-reduzida'][${i}].value`)
     };
+    // Population is only available until 2015.
+    // when computing for years over 2015 use last available.
+    let idx = nuts[0].data['pop-residente'].length - 1;
+    if (idx > i) {
+      idx = i;
+    }
+    d['pop-residente'] = _.sumBy(nuts, `data['pop-residente'][${idx}].value`);
+
+    d['lic1000'] = (d['lic-geral'] + d['lic-mob-reduzida']) / (d['pop-residente'] / 1000);
+
+    // Lic 1000 for Lisboa
+    d['lic1000-lx'] = (nutAmLx.data['lic-geral'][i].value + nutAmLx.data['lic-mob-reduzida'][i].value) / (nutAmLx.data['pop-residente'][idx].value / 1000);
+    // Lic 1000 for Porto
+    d['lic1000-por'] = (nutAmPor.data['lic-geral'][i].value + nutAmPor.data['lic-mob-reduzida'][i].value) / (nutAmPor.data['pop-residente'][idx].value / 1000);
+
+    return d;
   });
 
   return data;

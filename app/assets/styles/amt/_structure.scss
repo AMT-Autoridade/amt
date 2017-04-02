@@ -16,29 +16,82 @@
   }
 }
 
-.section-wrapper {
-  overflow: hidden;
+.content-wrapper {
+  padding-top: 120px;
+  overflow: hidden; 
+  min-height: 100vh;
 }
 
 .map-wrapper {
   position: relative;
+  margin-top: -30px;
+
   @include column(12/12);
   @include media (large-up) {
     @include column(4/12);
-    min-height: 900px;
   }
 
-  > div {
-    width: 80%;
-    min-height: 900px;
+  .map-svg {
+    width: 78%;
+    margin: 0 auto;
+
+    svg {
+      display: block
+    }
   }
 }
 
-.content-wrapper {
+.color-legend {
+  list-style: none;
+  padding: 0;
+  font-size: .875rem;
+  line-height: 14px;
+  color: rgba(0,0,0,.7);
+  
+  span {
+    display: inline-block;
+    background: rgba(0,0,0,.3);
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    margin-top: 3px;
+  }
+
+  &.two-by-side {
+    column-count: 2;
+    column-gap: 20px;
+  }
+
+  &.three-by-side {
+    column-count: 3;
+    column-gap: 20px;
+
+  }
+
+  &.inline {
+    @extend .inline-list;
+    li {
+      padding: 0 8px;
+      &:first-of-type {
+        padding-left: 0;
+      }
+    }
+  }
+}
+
+.legend-title {
+  margin: 10px 0;
+}
+
+.section-wrapper {
   @include column(12/12);
   @include media (large-up) {
     @include column(8/12);
   }
+} 
+
+.stat-number {
+  color: #0eaeaf;
 }
 
 .stat-description {
@@ -49,10 +102,9 @@
 .two-columns {
   > li,
   > div {
-    @include column(6/12, $cycle: 2);
+    @include column(6/12);
   }
 } 
-
 .three-columns {
   @include media (large-up) {
     > li,
