@@ -51,18 +51,18 @@ var Home = React.createClass({
       datasets: [
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
-          label: 'Nacional',
-          color: 'red'
+          label: 'Portugal',
+          color: '#1f8d8e',
         },
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-lx']),
-          label: 'AM Lisboa',
-          color: 'green'
+          label: 'Área Metropolitana de Lisboa',
+          color: '#00ced1'
         },
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-por']),
-          label: 'AM Porto',
-          color: 'blue'
+          label: 'Área Metropolitana de Porto',
+          color: '#256465'
         }
       ]
     };
@@ -139,11 +139,12 @@ var Home = React.createClass({
 
         <ul className='section-nav'>
           <li><Link to='/#intro'>Introdução</Link></li>
-          <li><Link to='/#licencas'>Licenças</Link></li>
+          <li><Link to='/#licencas'>Licenças e Contingentes</Link></li>
           <li><Link to='/#mobilidade'>Mobilidade Reduzida</Link></li>
-          <li><Link to='/#estacionamento'>Estacionamento</Link></li>
-          <li><Link to='/#distribuicao'>Distribuição</Link></li>
-          <li><Link to='/#evolucao'>Evolução</Link></li>
+          <li><Link to='/#estacionamento'>Regime Estacionamento</Link></li>
+          <li><Link to='/#distribuicao'>Âmbito Geográfico</Link></li>
+          <li><Link to='/#evolucao'>Evolução 2006-2016</Link></li>
+          <li><Link to='/#residentes'>Outros Indicadores</Link></li>
           <li><Link to='/#conclusoes'>Conclusões</Link></li>
         </ul>
       </div>
