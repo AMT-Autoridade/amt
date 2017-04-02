@@ -13,10 +13,12 @@ var SectionDistribuicao = React.createClass({
   propTypes: {
     parentSlug: T.string,
     adminLevel: T.string,
+    adminId: T.oneOfType([T.string, T.number]),
     adminName: T.string,
     adminList: T.array,
     mapGeometries: T.object,
-    municipios: T.array
+    municipios: T.array,
+    onMapClick: T.func
   },
 
   contingenteMatrix: {
@@ -147,6 +149,8 @@ var SectionDistribuicao = React.createClass({
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={municipiosVagas}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
         />
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: getColor(0)}}></span>Sem vagas</li>

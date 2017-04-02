@@ -1,7 +1,7 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 
 import { fetchNational, fetchMapData } from '../actions';
 
@@ -20,6 +20,12 @@ var Home = React.createClass({
     mapData: T.object,
     _fetchNational: T.func,
     _fetchMapData: T.func
+  },
+
+  onMapClick: function (id) {
+    // Find the right nut.
+    let slug = this.props.national.data.nuts.find(o => o.id === id).slug;
+    hashHistory.push(`/nuts/${slug}`);
   },
 
   componentDidMount: function () {
@@ -81,6 +87,7 @@ var Home = React.createClass({
             licencasHab={data.licencasHab}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
           />
 
           <SectionResidentes
@@ -90,6 +97,7 @@ var Home = React.createClass({
             chartDatasets={chartResidentes}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
           />
 
           <SectionMobilidade
@@ -103,6 +111,7 @@ var Home = React.createClass({
             licencasMobReduzida2006={data.licencasMobReduzida2006}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
           />
 
           <SectionEstacionamento
@@ -111,6 +120,7 @@ var Home = React.createClass({
             municipios={data.concelhos}
             totalMunicipios={data.totalMunicipios}
             mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
           />
 
           <SectionDistribuicao
@@ -121,6 +131,7 @@ var Home = React.createClass({
             populacaoNational={data.populacao}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
           />
 
           <SectionEvolucao
@@ -132,6 +143,7 @@ var Home = React.createClass({
             totalMunicipios={data.totalMunicipios}
             licencasTimeline={data.licencasTimeline}
             mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
           />
 
           <SectionConclusoes />

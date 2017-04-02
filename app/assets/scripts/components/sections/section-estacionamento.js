@@ -12,9 +12,11 @@ var SectionEstacionamento = React.createClass({
   propTypes: {
     adminLevel: T.string,
     adminName: T.string,
+    adminId: T.oneOfType([T.string, T.number]),
     municipios: T.array,
     totalMunicipios: T.number,
-    mapGeometries: T.object
+    mapGeometries: T.object,
+    onMapClick: T.func
   },
 
   estLabels: {
@@ -214,6 +216,8 @@ var SectionEstacionamento = React.createClass({
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={tipoEstacionamentos}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
         />
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: getColor('fixo')}}></span>Fixo</li>

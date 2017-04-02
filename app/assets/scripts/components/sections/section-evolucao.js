@@ -12,13 +12,15 @@ var SectionEvolucao = React.createClass({
   propTypes: {
     adminLevel: T.string,
     adminName: T.string,
+    adminId: T.oneOfType([T.string, T.number]),
     licencas2016: T.number,
     licencas2006: T.number,
     totalMunicipios: T.number,
     municipios: T.array,
     licencasTimeline: T.array,
     data: T.object,
-    mapGeometries: T.object
+    mapGeometries: T.object,
+    onMapClick: T.func
   },
 
   renderTimelineChart: function () {
@@ -215,6 +217,8 @@ var SectionEvolucao = React.createClass({
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={evolucaoMunicipios}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
         />
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: getColor(-1)}}></span>Diminuiu</li>

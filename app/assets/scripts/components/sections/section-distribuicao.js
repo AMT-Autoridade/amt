@@ -13,11 +13,13 @@ var SectionDistribuicao = React.createClass({
   propTypes: {
     adminLevel: T.string,
     adminName: T.string,
+    adminId: T.oneOfType([T.string, T.number]),
     adminList: T.array,
     licencas2016: T.number,
     populacaoNational: T.number,
     mapGeometries: T.object,
-    municipios: T.array
+    municipios: T.array,
+    onMapClick: T.func
   },
 
   renderTrendLineChart: function (data) {
@@ -145,6 +147,8 @@ var SectionDistribuicao = React.createClass({
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={municipiosVagas}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
         />
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: getColor(0)}}></span>Sem vagas</li>
