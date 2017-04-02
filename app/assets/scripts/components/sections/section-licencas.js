@@ -83,13 +83,38 @@ var SectionLicencas = React.createClass({
   renderMap: function () {
     if (!this.props.mapGeometries.fetched) return null;
 
+    // const getColor = (v) => {
+    //   if (v <= 10) return '#00D7C0';
+    //   if (v <= 30) return '#00BFA9';
+    //   if (v <= 100) return '#15849F';
+    //   if (v <= 1000) return '#096D84';
+    //   return '#29499A';
+    // };
+
+    // const getColor = (v) => {
+    //   if (v <= 10) return '#d0d1e6';
+    //   if (v <= 30) return '#a6bddb';
+    //   if (v <= 100) return '#74a9cf';
+    //   if (v <= 1000) return '#2b8cbe';
+    //   return '#045a8d';
+    // };
+
+    // const getColor = (v) => {
+    //   if (v <= 10) return '#02ADC8';
+    //   if (v <= 30) return '#0290DB';
+    //   if (v <= 100) return '#0272C1';
+    //   if (v <= 1000) return '#0250AF';
+    //   return '#312D98';
+    // };
+
     const getColor = (v) => {
-      if (v <= 10) return '#7FECDA';
-      if (v <= 30) return '#00DFC1';
-      if (v <= 100) return '#2D8374';
-      if (v <= 1000) return '#1F574D';
-      return '#0F2B26';
+      if (v <= 10) return '#1BBAD6';
+      if (v <= 30) return '#0F84BB';
+      if (v <= 100) return '#1F4A98';
+      if (v <= 1000) return '#171A6B';
+      return '#11134C';
     };
+
 
     let licencasMunicipios = this.props.municipios.map(m => {
       let licencas = _.last(m.data['lic-geral']).value;
@@ -106,14 +131,17 @@ var SectionLicencas = React.createClass({
           geometries={this.props.mapGeometries.data}
           data={licencasMunicipios}
         />
-        <h6 className='map-title'>Licenças por Município</h6>
-        <ul className='color-legend side-by-side'>
-          <li><span style={{backgroundColor: getColor(10)}}></span>0 - 10</li>
-          <li><span style={{backgroundColor: getColor(30)}}></span>11 - 30</li>
-          <li><span style={{backgroundColor: getColor(100)}}></span>31 - 100</li>
-          <li><span style={{backgroundColor: getColor(1000)}}></span>101 - 1000</li>
-          <li><span style={{backgroundColor: getColor(10000)}}></span>+1000</li>
-       </ul>
+        
+       <div className='map-legend'>
+          <h6 className='legend-title'>Licenças por Município</h6>
+          <ul className='color-legend side-by-side'>
+            <li><span style={{backgroundColor: getColor(10)}}></span>0 a 10</li>
+            <li><span style={{backgroundColor: getColor(30)}}></span>11 a 30</li>
+            <li><span style={{backgroundColor: getColor(100)}}></span>31 a 100</li>
+            <li><span style={{backgroundColor: getColor(1000)}}></span>101 a 1000</li>
+            <li><span style={{backgroundColor: getColor(10000)}}></span>Mais de 1000</li>
+          </ul>
+        </div>
       </div>
     );
   },

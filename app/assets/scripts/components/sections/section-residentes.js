@@ -129,7 +129,7 @@ var SectionResidentes = React.createClass({
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>
               <h1>Indicadores</h1>
-              <p className='lead'>A ponderação de indicadores que associem o número de táxis a fatores com influência na sua procura é uma forma interessante de conhecer a realidade e a sua evolução, em diferentes regiões, permitindo analisar tendências, fatores que influenciam a procura e estimar o efeito de alterações regulatórias. Os fatores que podem influenciar a procura de táxis são imensos. Não é adequado efetuar considerações sobre o número “adequado” de táxis, tendo por base comparações simplistas e descontextualizadas entre regiões.</p>
+              <p className='lead'>Os indicadores que associam o número de táxis a fatores com influência na sua procura é uma forma interessante de analisar a realidade e a sua evolução. Não é adequado efetuar comparações simplistas e descontextualizadas entre regiões.</p>
             </header>
 
             <div className='section-content'>
@@ -146,7 +146,7 @@ var SectionResidentes = React.createClass({
                 </ul>
               </div>
 
-               <div className='graph'>
+              <div className='graph'>
                 {this.renderLicencas100Hab()}
                 <p className='graph-description'>Evolução das licenças por 1000 residentes</p>
               </div>
