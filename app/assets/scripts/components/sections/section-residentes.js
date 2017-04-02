@@ -113,7 +113,7 @@ var SectionResidentes = React.createClass({
           onClick={this.props.onMapClick}
           popoverContent={this.props.popoverContent}
         />
-        
+
        <div className='map-legend'>
           <h6 className='legend-title'>Licenças por 1000 habitantes:</h6>
           <ul className='color-legend inline'>
@@ -121,8 +121,8 @@ var SectionResidentes = React.createClass({
             <li><span style={{backgroundColor: getColor(2)}}></span>2</li>
             <li><span style={{backgroundColor: getColor(3)}}></span>3</li>
             <li><span style={{backgroundColor: getColor(4)}}></span>4</li>
-            <li><span style={{backgroundColor: getColor(5)}}></span>+4</li>
-            <li><span style={{backgroundColor: getColor(6)}}></span>+4</li>
+            <li><span style={{backgroundColor: getColor(5)}}></span>5</li>
+            <li><span style={{backgroundColor: getColor(6)}}></span>+6</li>
          </ul>
         </div>
       </div>
