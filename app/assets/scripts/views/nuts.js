@@ -45,18 +45,32 @@ var Nuts = React.createClass({
       return <div>Error: {error}</div>;
     }
 
-    let chartResidentes = {
+    let chartLic1000Hab = {
       labels: data.data.licencasTimeline.map(y => y.year),
       datasets: [
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
-          label: 'Nacional',
-          color: 'red'
+          label: 'Portugal',
+          color: '#1f8d8e',
+          backgroundColor: '#1f8d8e7f'
         },
         {
           data: data.data.licencasTimeline.map(o => o['lic1000']),
           label: data.name,
-          color: 'green'
+          color: '#00ced1',
+          backgroundColor: '#00ced17f'
+        }
+      ]
+    };
+
+    let chartLic1000Dor = {
+      labels: data.data.dormidas.map(y => y.year),
+      datasets: [
+        {
+          data: this.props.national.data.dormidas.map(o => o.lic1000),
+          label: 'Portugal',
+          color: '#1f8d8e',
+          backgroundColor: '#1f8d8e7f'
         }
       ]
     };
@@ -72,16 +86,6 @@ var Nuts = React.createClass({
             licencas2016={data.data.licencas2016}
             max2016={data.data.max2016}
             licencasHab={data.data.licencasHab}
-            mapGeometries={this.props.mapData}
-            municipios={data.concelhos}
-          />
-
-          <SectionIndicadores
-            adminLevel='nut'
-            adminName={data.name}
-            adminId={data.id}
-            licencasHab={data.data.licencasHab}
-            chartDatasets={chartResidentes}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
           />
@@ -115,6 +119,18 @@ var Nuts = React.createClass({
             adminId={data.id}
             adminList={data.concelhos}
             parentSlug={this.props.params.nut}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+          />
+
+          <SectionIndicadores
+            adminLevel='nut'
+            adminName={data.name}
+            adminId={data.id}
+            licencasHab={data.data.licencasHab}
+            dormidas={data.data.dormidas}
+            chartLic1000Hab={chartLic1000Hab}
+            chartLic1000Dor={chartLic1000Dor}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
           />

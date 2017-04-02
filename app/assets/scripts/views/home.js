@@ -63,23 +63,38 @@ var Home = React.createClass({
       return <div>Error: {error}</div>;
     }
 
-    let chartResidentes = {
+    let chartLic1000Hab = {
       labels: this.props.national.data.licencasTimeline.map(y => y.year),
       datasets: [
         {
+          data: this.props.national.data.licencasTimeline.map(o => o['lic1000-por']),
+          label: 'Área Metropolitana de Porto',
+          color: '#256465',
+          backgroundColor: '#2564657f'
+        },
+        {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
           label: 'Portugal',
-          color: '#1f8d8e'
+          color: '#1f8d8e',
+          backgroundColor: '#1f8d8e7f'
         },
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-lx']),
           label: 'Área Metropolitana de Lisboa',
-          color: '#00ced1'
-        },
+          color: '#00ced1',
+          backgroundColor: '#00ced17f'
+        }
+      ]
+    };
+
+    let chartLic1000Dor = {
+      labels: this.props.national.data.dormidas.map(y => y.year),
+      datasets: [
         {
-          data: this.props.national.data.licencasTimeline.map(o => o['lic1000-por']),
-          label: 'Área Metropolitana de Porto',
-          color: '#256465'
+          data: this.props.national.data.dormidas.map(o => o.lic1000),
+          label: 'Portugal',
+          color: '#1f8d8e',
+          backgroundColor: '#1f8d8e7f'
         }
       ]
     };
@@ -156,7 +171,9 @@ var Home = React.createClass({
             adminLevel='national'
             adminName='Portugal'
             licencasHab={data.licencasHab}
-            chartDatasets={chartResidentes}
+            dormidas={data.dormidas}
+            chartLic1000Hab={chartLic1000Hab}
+            chartLic1000Dor={chartLic1000Dor}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
