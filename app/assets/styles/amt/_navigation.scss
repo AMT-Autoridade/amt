@@ -1,0 +1,51 @@
+.section-nav {
+	
+	list-style: none;
+	padding: 0;
+	text-align: right;
+	margin-right: 16px;
+	overflow: hidden;
+	font-size: .875rem;
+	
+	.nav-item {
+		position: relative;
+		padding-right: 30px;
+		margin-bottom: 10px;
+
+		a {
+			display: block;
+			height: 20px;
+
+			span {
+				display: none;
+			}
+
+			&:hover span {
+				display: inline-block;
+				background: rgba(30, 40, 43, .9);
+				color: white;
+				padding: .25rem .5rem;
+				border-radius: 2px;
+			}
+		}
+
+		a:after {
+			position: absolute;
+			top: 2px;
+			right: 0;
+			width: 16px;
+			height: 16px;
+			display: inline-block;
+			background: #f2f2f2;
+			content: "";
+			border-radius: 50%;
+		}
+		
+		&.active {
+			a:after {
+				background: rgba(30, 40, 43, .9);
+			}
+
+		}
+	}
+}

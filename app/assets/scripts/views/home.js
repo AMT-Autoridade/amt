@@ -138,14 +138,14 @@ var Home = React.createClass({
         </div>
 
         <ul className='section-nav'>
-          <li><Link to='/#intro'>Introdução</Link></li>
-          <li><Link to='/#licencas'>Licenças e Contingentes</Link></li>
-          <li><Link to='/#mobilidade'>Mobilidade Reduzida</Link></li>
-          <li><Link to='/#estacionamento'>Regime Estacionamento</Link></li>
-          <li><Link to='/#distribuicao'>Âmbito Geográfico</Link></li>
-          <li><Link to='/#evolucao'>Evolução 2006-2016</Link></li>
-          <li><Link to='/#residentes'>Outros Indicadores</Link></li>
-          <li><Link to='/#conclusoes'>Conclusões</Link></li>
+          <li className='nav-item'><Link to='/#intro'><span>Introdução</span></Link></li>
+          <li className='nav-item active'><Link to='/#licencas'><span>Licenças e Contingentes</span></Link></li>
+          <li className='nav-item'><Link to='/#mobilidade'><span>Mobilidade Reduzida</span></Link></li>
+          <li className='nav-item'><Link to='/#estacionamento'><span>Regime Estacionamento</span></Link></li>
+          <li className='nav-item'><Link to='/#distribuicao'><span>Âmbito Geográfico</span></Link></li>
+          <li className='nav-item'><Link to='/#evolucao'><span>Evolução 2006-2016</span></Link></li>
+          <li className='nav-item'><Link to='/#residentes'><span>Outros Indicadores</span></Link></li>
+          <li className='nav-item'><Link to='/#conclusoes'><span>Conclusões</span></Link></li>
         </ul>
       </div>
     );
