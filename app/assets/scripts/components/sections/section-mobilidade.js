@@ -12,6 +12,7 @@ var SectionMobilidade = React.createClass({
   propTypes: {
     adminLevel: T.string,
     adminName: T.string,
+    adminId: T.oneOfType([T.string, T.number]),
     totalMunicipiosMobReduzida: T.number,
     totalMunicipios: T.number,
     licencas2016: T.number,
@@ -19,7 +20,9 @@ var SectionMobilidade = React.createClass({
     licencasMobReduzida2016: T.number,
     licencasMobReduzida2006: T.number,
     mapGeometries: T.object,
-    municipios: T.array
+    municipios: T.array,
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   renderEvolutionChart: function () {
@@ -159,6 +162,9 @@ var SectionMobilidade = React.createClass({
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={mobRedMunicipios}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: '#2D8374'}}></span>Com mobilidade reduzida</li>

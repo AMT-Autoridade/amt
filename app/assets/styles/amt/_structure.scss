@@ -25,12 +25,14 @@
   @include column(12/12);
   @include media (large-up) {
     @include column(4/12);
-    min-height: 730px;
   }
 
   .map-svg {
     width: 80%;
-    min-height: 730px;
+
+    svg {
+      display: block
+    }
   }
 }
 
