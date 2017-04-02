@@ -20,15 +20,16 @@ export default function reducer (state = initialState, action) {
       if (action.error) {
         state.error = action.error;
       } else {
-        state.data = processData(action.data.results);
+        state.data = processData(action.data);
       }
       break;
   }
   return state;
 }
 
-function processData (nuts) {
-  let data = {nuts};
+function processData (rawData) {
+  let nuts = rawData.results;
+  let data = {nuts, dormidas: rawData.dormidas};
 
   // Licenças and max per district.
   nuts = nuts.map(d => {
@@ -76,6 +77,12 @@ function processData (nuts) {
   data.licencasHab = data.licencas2016 / (data.populacao / 1000);
 
   data.totalMunicipios = _.sumBy(nuts, d => d.concelhos.length);
+
+  // Licenças per 1000 dormidas.
+  data.dormidas = data.dormidas.map(d => {
+    d.lic1000 = data.licencas2016 / (d.value / 1000);
+    return d;
+  });
 
   // Number of municípios with lic-mob-reduzida.
   data.totalMunicipiosMobReduzida = _.sumBy(nuts, d => d.concelhos.filter(o => {
