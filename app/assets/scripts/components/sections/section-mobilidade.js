@@ -21,7 +21,8 @@ var SectionMobilidade = React.createClass({
     licencasMobReduzida2006: T.number,
     mapGeometries: T.object,
     municipios: T.array,
-    onMapClick: T.func
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   renderEvolutionChart: function () {
@@ -163,6 +164,7 @@ var SectionMobilidade = React.createClass({
           data={mobRedMunicipios}
           nut={this.props.adminId}
           onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: '#2D8374'}}></span>Com mobilidade reduzida</li>

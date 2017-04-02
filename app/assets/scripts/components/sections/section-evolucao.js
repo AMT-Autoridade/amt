@@ -20,7 +20,8 @@ var SectionEvolucao = React.createClass({
     licencasTimeline: T.array,
     data: T.object,
     mapGeometries: T.object,
-    onMapClick: T.func
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   renderTimelineChart: function () {
@@ -219,6 +220,7 @@ var SectionEvolucao = React.createClass({
           data={evolucaoMunicipios}
           nut={this.props.adminId}
           onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: getColor(-1)}}></span>Diminuiu</li>

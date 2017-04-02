@@ -28,6 +28,17 @@ var Home = React.createClass({
     hashHistory.push(`/nuts/${slug}`);
   },
 
+  popoverContent: function (id) {
+    // Find the right nut.
+    let name = this.props.national.data.nuts.find(o => o.id === id).name;
+    return (
+      <div>
+        <p className='map-tooltip'>{name}</p>
+        <span className='triangle'></span>
+      </div>
+    );
+  },
+
   componentDidMount: function () {
     if (!this.props.national.fetched) {
       this.props._fetchNational();
@@ -88,6 +99,7 @@ var Home = React.createClass({
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionResidentes
@@ -98,6 +110,7 @@ var Home = React.createClass({
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionMobilidade
@@ -112,6 +125,7 @@ var Home = React.createClass({
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionEstacionamento
@@ -121,6 +135,7 @@ var Home = React.createClass({
             totalMunicipios={data.totalMunicipios}
             mapGeometries={this.props.mapData}
             onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionDistribuicao
@@ -132,6 +147,7 @@ var Home = React.createClass({
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionEvolucao
@@ -144,6 +160,7 @@ var Home = React.createClass({
             licencasTimeline={data.licencasTimeline}
             mapGeometries={this.props.mapData}
             onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionConclusoes />

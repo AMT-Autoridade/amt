@@ -18,7 +18,8 @@ var SectionLicencas = React.createClass({
     licencasHab: T.number,
     mapGeometries: T.object,
     municipios: T.array,
-    onMapClick: T.func
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   renderChart: function () {
@@ -110,6 +111,7 @@ var SectionLicencas = React.createClass({
           data={licencasMunicipios}
           nut={this.props.adminId}
           onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: getColor(10)}}></span>0 - 10</li>

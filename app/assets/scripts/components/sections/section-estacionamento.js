@@ -16,7 +16,8 @@ var SectionEstacionamento = React.createClass({
     municipios: T.array,
     totalMunicipios: T.number,
     mapGeometries: T.object,
-    onMapClick: T.func
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   estLabels: {
@@ -218,6 +219,7 @@ var SectionEstacionamento = React.createClass({
           data={tipoEstacionamentos}
           nut={this.props.adminId}
           onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: getColor('fixo')}}></span>Fixo</li>

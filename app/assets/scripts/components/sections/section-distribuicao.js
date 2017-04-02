@@ -19,7 +19,8 @@ var SectionDistribuicao = React.createClass({
     populacaoNational: T.number,
     mapGeometries: T.object,
     municipios: T.array,
-    onMapClick: T.func
+    onMapClick: T.func,
+    popoverContent: T.func
   },
 
   renderTrendLineChart: function (data) {
@@ -149,6 +150,7 @@ var SectionDistribuicao = React.createClass({
           data={municipiosVagas}
           nut={this.props.adminId}
           onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: getColor(0)}}></span>Sem vagas</li>
@@ -197,6 +199,9 @@ var SectionDistribuicao = React.createClass({
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={percentLicOverPop}
+          nut={this.props.adminId}
+          onClick={this.props.onMapClick}
+          popoverContent={this.props.popoverContent}
         />
         <ul className='color-legend side-by-side'>
           <li><span style={{backgroundColor: getColor('more-pop')}}></span>Mais % de população do que licenças</li>
