@@ -54,7 +54,7 @@ var SectionMobilidade = React.createClass({
       datasets: [
         {
           data: _.map(data, 'value'),
-          backgroundColor: '#2EB199'
+          backgroundColor: '#00ced1'
         }
       ]
     };
@@ -94,13 +94,13 @@ var SectionMobilidade = React.createClass({
         label: 'Geral',
         value: licencas2016Geral,
         percent: percent(licencas2016Geral, licencas2016, 1),
-        backgroundColor: '#41D6B9'
+        backgroundColor: '#00ced1'
       },
       {
         label: 'CMR',
         value: licencasMobReduzida2016,
         percent: percent(licencasMobReduzida2016, licencas2016, 1),
-        backgroundColor: '#227868'
+        backgroundColor: '#256465'
       }
     ];
 
@@ -148,7 +148,7 @@ var SectionMobilidade = React.createClass({
 
       return {
         id: m.id,
-        color: mobred ? '#2D8374' : '#eaeaea'
+        color: mobred ? '#FFCC45' : '#f5f5f5'
       };
     });
 
@@ -162,8 +162,8 @@ var SectionMobilidade = React.createClass({
         <div className='map-legend'>
           <h6 className='legend-title'>Municípios com Contingente de Mobilidade Reduzida:</h6>
           <ul className='color-legend side-by-side'>
-            <li><span style={{backgroundColor: '#2D8374'}}></span>Com CMR</li>
-            <li><span style={{backgroundColor: '#eaeaea'}}></span>Sem CMRs</li>
+            <li><span style={{backgroundColor: '#FFCC45'}}></span>Com CMR</li>
+            <li><span style={{backgroundColor: '#f5f5f5'}}></span>Sem CMRs</li>
           </ul>
         </div>
       </div>

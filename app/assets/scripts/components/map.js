@@ -158,21 +158,21 @@ var Chart = function (options) {
         return sel.attr('d', path)
           .attr('class', d => `aa--${d.properties.type}`)
           .style('stroke', d => d.properties.type === aaLevel ? '#fff' : '#fff')
-          .style('stroke-width', d => d.properties.type === aaLevel ? '1px' : '0.5px')
-          .style('fill', d => d.properties.type === aaLevel ? '#fff' : 'none')
-          .style('fill-opacity', d => d.properties.type === aaLevel ? 0.32 : 1)
+          .style('stroke-width', d => d.properties.type === aaLevel ? '1px' : '0.1px')
+          .style('fill', d => d.properties.type === aaLevel ? '#000' : 'none')
+          .style('fill-opacity', d => d.properties.type === aaLevel ? 0 : 1)
           .style('pointer-events', d => d.properties.type === aaLevel ? 'all' : 'none')
           .on('mouseover', function (d, i) {
             d3.select(this).style('cursor', 'pointer');
             let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
             el.transition()
-              .style('fill-opacity', 0);
+              .style('fill-opacity', 0.20);
           })
           .on('mouseout', function (d, i) {
             d3.select(this).style('cursor', 'default');
             let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
             el.transition()
-              .style('fill-opacity', 0.32);
+              .style('fill-opacity', 0);
           });
       };
     }

@@ -83,15 +83,6 @@ var Home = React.createClass({
             municipios={data.concelhos}
           />
 
-          <SectionResidentes
-            adminLevel='national'
-            adminName='Portugal'
-            licencasHab={data.licencasHab}
-            chartDatasets={chartResidentes}
-            mapGeometries={this.props.mapData}
-            municipios={data.concelhos}
-          />
-
           <SectionMobilidade
             adminLevel='national'
             adminName='Portugal'
@@ -132,6 +123,15 @@ var Home = React.createClass({
             totalMunicipios={data.totalMunicipios}
             licencasTimeline={data.licencasTimeline}
             mapGeometries={this.props.mapData}
+          />
+
+          <SectionResidentes
+            adminLevel='national'
+            adminName='Portugal'
+            licencasHab={data.licencasHab}
+            chartDatasets={chartResidentes}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
           />
 
           <SectionConclusoes />
