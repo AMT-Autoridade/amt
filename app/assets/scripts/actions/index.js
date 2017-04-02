@@ -5,12 +5,24 @@ import config from '../config';
 
 var dataCache = null;
 function fetchAndCacheData () {
+  // return new Promise((resolve, reject) => {
+  //   if (dataCache) {
+  //     return resolve(_.cloneDeep(dataCache));
+  //   }
+  //   dataCache = require('../data/national.json');
+  //   setTimeout(() => resolve(_.cloneDeep(dataCache)), 300);
+  // });
+
   return new Promise((resolve, reject) => {
     if (dataCache) {
       return resolve(_.cloneDeep(dataCache));
     }
-    dataCache = require('../data/national.json');
-    setTimeout(() => resolve(_.cloneDeep(dataCache)), 300);
+
+    fetchJSON(`${config.api}/national.json`)
+      .then(national => {
+        dataCache = national;
+        resolve(dataCache);
+      }, err => reject(err));
   });
 }
 
@@ -40,13 +52,12 @@ export function receiveNational (data, error = null) {
 }
 
 export function fetchNational () {
-  // Fake data load.
   return (dispatch) => {
     dispatch(requestNational());
     fetchAndCacheData()
-      .then(national => dispatch(receiveNational(national)));
+      .then(national => dispatch(receiveNational(national)),
+        err => dispatch(receiveNational(null, err)));
   };
-  // return getAndDispatch(`${config.api}/National`, requestNational, receiveNational);
 }
 
 // Nut
@@ -59,19 +70,18 @@ export function requestNut () {
   return { type: REQUEST_NUT };
 }
 
-export function receiveNut (data, error = null) {
-  return { type: RECEIVE_NUT, data: data, error, receivedAt: Date.now() };
+export function receiveNut (data, slug, error = null) {
+  return { type: RECEIVE_NUT, data: data, slug, error, receivedAt: Date.now() };
 }
 
-export function fetchNut (nut) {
+export function fetchNut (nutSlug) {
   // Fake data load.
   return (dispatch) => {
     dispatch(requestNut());
     fetchAndCacheData()
-      .then(national => national.results.find(o => o.slug === nut))
-      .then(nut => dispatch(receiveNut(nut)));
+      .then(national => dispatch(receiveNut(national, nutSlug)),
+        err => dispatch(receiveNut(null, null, err)));
   };
-  // return getAndDispatch(`${config.api}/National`, requestNational, receiveNational);
 }
 
 // Map Data
@@ -85,7 +95,6 @@ export function receiveMapData (data, error = null) {
 }
 
 export function fetchMapData () {
-  // return getAndDispatch(`${config.api}/National`, requestNational, receiveNational);
   return getAndDispatch(`assets/data/admin-areas.topojson`, requestMapData, receiveMapData);
 }
 

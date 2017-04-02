@@ -10,6 +10,7 @@ import Map from '../map';
 
 var SectionEstacionamento = React.createClass({
   propTypes: {
+    adminLevel: T.string,
     adminName: T.string,
     municipios: T.array,
     totalMunicipios: T.number,

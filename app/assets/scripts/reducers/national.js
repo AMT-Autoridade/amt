@@ -1,4 +1,4 @@
-import { REQUEST_NATIONAL, RECEIVE_NATIONAL, INVALIDATE_NATIONAL } from '../actions';
+import { REQUEST_NATIONAL, RECEIVE_NATIONAL, INVALIDATE_NATIONAL, RECEIVE_NUT } from '../actions';
 import _ from 'lodash';
 
 const initialState = {
@@ -14,6 +14,7 @@ export default function reducer (state = initialState, action) {
       return Object.assign({}, state, initialState);
     case REQUEST_NATIONAL:
       return Object.assign({}, state, { error: null, fetching: true, fetched: false });
+    case RECEIVE_NUT:
     case RECEIVE_NATIONAL:
       state = Object.assign({}, state, { fetching: false, fetched: true });
       if (action.error) {
