@@ -12,7 +12,7 @@ var Sobre = React.createClass({
   render: function () {
     return (
       <div id='sobre-wrapper' className='container-wrapper'>
-        <section id='sobre' className='section-wrapper'>
+        <section id='sobre' className='content-wrapper'>
           <h1>Sobre o Projeto</h1>
           <div className="wrapper">
             <div>
