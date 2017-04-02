@@ -235,11 +235,11 @@ var SectionEstacionamento = React.createClass({
 
   render: function () {
     return (
-      <div className='content-wrapper'>
+      <div id='estacionamento' className='content-wrapper'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>
-        <div id='estacionamento' className='section-wrapper'>
+        <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>

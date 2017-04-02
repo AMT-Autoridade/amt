@@ -37,11 +37,10 @@ var SectionDistribuicao = React.createClass({
         data: data.map(o => o.value),
         lineTension: 0,
         pointRadius: 2,
-        pointBorderWidth: 0,
-        pointBackgroundColor: '#2EB199',
-        borderColor: '#2EB199',
+        pointBackgroundColor: '#0eaeaf',
+        borderColor: '#256465',
         backgroundColor: '#fff',
-        borderWidth: 1
+        borderWidth: 2
       }]
     };
 
@@ -107,10 +106,10 @@ var SectionDistribuicao = React.createClass({
       <ul className='table-distribution'>
         <li className='table-header'>
           <span className='table-region'>Região</span>
-          <span className='table-graph'>Total de Licenças</span>
-          <span className='table-available'>Vagas Disponíveis</span>
-          <span className='table-national'>% do Total de Licenças</span>
-          <span className='table-residents'>% do Total de População</span>
+          <span className='table-graph'>Total de <span className='block'>Licenças</span></span>
+          <span className='table-available'>Vagas <span className='block'>Disponíveis</span></span>
+          <span className='table-national'>% do Total <span className='block'>de Licenças</span></span>
+          <span className='table-residents'>% do Total <span className='block'>de População</span></span>
         </li>
         {adminList.map(this.renderTableRow)}
       </ul>
@@ -121,10 +120,11 @@ var SectionDistribuicao = React.createClass({
     if (!this.props.mapGeometries.fetched) return null;
 
     const getColor = (v) => {
-      if (v === 0) return '#eaeaea';
-      if (v <= 10) return '#7FECDA';
-      if (v <= 50) return '#2D8374';
-      return '#0F2B26';
+      if (v === 0) return '#f5f5f5';
+      if (v <= 10) return '#FFCC45';
+      if (v <= 50) return '#FDB13A';
+      if (v <= 100) return '#FB8F2C';
+      return '#F8781F';
     };
 
     let municipiosVagas = this.props.municipios.map(m => {
@@ -140,18 +140,22 @@ var SectionDistribuicao = React.createClass({
 
     return (
       <div>
-        <h6 className='map-title'>Vagas por município</h6>
+        
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={municipiosVagas}
         />
-        <ul className='color-legend side-by-side'>
-          <li><span style={{backgroundColor: getColor(0)}}></span>Sem vagas</li>
-          <li><span style={{backgroundColor: getColor(10)}}></span>menos que 10</li>
-          <li><span style={{backgroundColor: getColor(50)}}></span>11 - 50</li>
-          <li><span style={{backgroundColor: getColor(51)}}></span>+50</li>
-       </ul>
+        <div className='map-legend'>
+        <h6 className='legend-title'>Vagas por Município:</h6>
+          <ul className='color-legend inline'>
+            <li><span style={{backgroundColor: getColor(10)}}></span>&lt; 10</li>
+            <li><span style={{backgroundColor: getColor(50)}}></span>11 a 50</li>
+            <li><span style={{backgroundColor: getColor(51)}}></span>50 a 100</li>
+            <li><span style={{backgroundColor: getColor(101)}}></span>&gt; 100</li>
+            <li><span style={{backgroundColor: getColor(0)}}></span>Sem vagas</li>
+          </ul>
+       </div>
       </div>
     );
   },
@@ -160,9 +164,9 @@ var SectionDistribuicao = React.createClass({
     if (!this.props.mapGeometries.fetched) return null;
 
     const getColor = (v) => {
-      if (v === 'more-pop') return '#0F2B26';
-      if (v === 'more-lic') return '#7FECDA';
-      return '#2D8374';
+      if (v === 'more-pop') return '#FB8F2C';
+      if (v === 'more-lic') return '#FDB13A';
+      return '#FFCC45';
     };
 
     let percentLicOverPop = this.props.municipios.map(m => {
@@ -188,33 +192,35 @@ var SectionDistribuicao = React.createClass({
 
     return (
       <div>
-        <h6 className='map-title'>Percentagem de população vs percentagem de licenças</h6>
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}
           data={percentLicOverPop}
         />
-        <ul className='color-legend side-by-side'>
-          <li><span style={{backgroundColor: getColor('more-pop')}}></span>Mais % de população do que licenças</li>
-          <li><span style={{backgroundColor: getColor('more-lic')}}></span>Menos % de população do que licenças</li>
-          <li><span style={{backgroundColor: getColor('equal')}}></span>% de população e licenças igual</li>
-       </ul>
+        <div className='map-legend'>
+          <h6 className='legend-title'>Percentagem de População vs Percentagem de Licenças:</h6>
+          <ul className='color-legend inline'>
+            <li><span style={{backgroundColor: getColor('more-pop')}}></span>&gt; População</li>
+            <li><span style={{backgroundColor: getColor('more-lic')}}></span>&gt; Licenças</li>
+            <li><span style={{backgroundColor: getColor('equal')}}></span>População = Licenças </li>
+          </ul>
+       </div>
       </div>
     );
   },
 
   render: function () {
     return (
-      <div className='content-wrapper'>
+      <div id='distribuicao' className='content-wrapper'>
         <div className='map-wrapper'>
           {this.renderMap()}
           {this.renderMap2()}
         </div>
-        <div id='distribuicao' className='section-wrapper'>
+        <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>
-              <h1>Distribuição Geográfica</h1>
+              <h1>Âmbito Geográfico</h1>
               <p className='lead'>Não obstante as licenças de táxi serem atribuídas a nível municipal apresenta-se a sua distribuição pelas regiões autónomas, pelos distritos e pelas áreas metropolitanas de Lisboa e do Porto.</p>
             </header>
             <div className='section-content'>
