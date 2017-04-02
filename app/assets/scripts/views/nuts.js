@@ -96,18 +96,6 @@ var Nuts = React.createClass({
             municipios={data.concelhos}
           />
 
-          <SectionIndicadores
-            adminLevel='nut'
-            adminName={data.name}
-            adminId={data.id}
-            licencasHab={data.data.licencasHab}
-            dormidas={data.data.dormidas}
-            chartLic1000Hab={chartLic1000Hab}
-            chartLic1000Dor={chartLic1000Dor}
-            mapGeometries={this.props.mapData}
-            municipios={data.concelhos}
-          />
-
           <SectionMobilidade
             adminLevel='nut'
             adminName={data.name}
@@ -137,6 +125,18 @@ var Nuts = React.createClass({
             adminId={data.id}
             adminList={data.concelhos}
             parentSlug={this.props.params.nut}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+          />
+
+          <SectionIndicadores
+            adminLevel='nut'
+            adminName={data.name}
+            adminId={data.id}
+            licencasHab={data.data.licencasHab}
+            dormidas={data.data.dormidas}
+            chartLic1000Hab={chartLic1000Hab}
+            chartLic1000Dor={chartLic1000Dor}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
           />
