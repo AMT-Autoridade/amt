@@ -245,11 +245,11 @@ var SectionEvolucao = React.createClass({
     let totalMunicipiosNoChange = this.props.municipios.reduce((acc, c) => c.data.change === 0 ? acc + 1 : acc, 0);
 
     return (
-      <div className='content-wrapper'>
+      <div id='evolucao' className='content-wrapper'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>
-        <div id='evolucao' className='section-wrapper'>
+        <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>

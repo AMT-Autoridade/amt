@@ -190,7 +190,7 @@ var Home = React.createClass({
           <li className='nav-item'><Link to='/#estacionamento'><span>Regime Estacionamento</span></Link></li>
           <li className='nav-item'><Link to='/#distribuicao'><span>Âmbito Geográfico</span></Link></li>
           <li className='nav-item'><Link to='/#evolucao'><span>Evolução 2006-2016</span></Link></li>
-          <li className='nav-item'><Link to='/#residentes'><span>Outros Indicadores</span></Link></li>
+          <li className='nav-item'><Link to='/#indicadores'><span>Outros Indicadores</span></Link></li>
           <li className='nav-item'><Link to='/#conclusoes'><span>Conclusões</span></Link></li>
         </ul>
       </div>

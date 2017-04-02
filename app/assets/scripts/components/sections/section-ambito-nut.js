@@ -93,11 +93,11 @@ var SectionDistribuicao = React.createClass({
         <span className='table-region'><Link to={url} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
         <div className='table-parking'>
-          <ul>
-            <li className={c('est est-livre', {active: adminArea.data.estacionamento.indexOf('livre') !== -1})}>Livre</li>
-            <li className={c('est est-condicionado', {active: adminArea.data.estacionamento.indexOf('condicionado') !== -1})}>Condicionado</li>
-            <li className={c('est est-fixo', {active: adminArea.data.estacionamento.indexOf('fixo') !== -1})}>Fixo</li>
-            <li className={c('est est-escala', {active: adminArea.data.estacionamento.indexOf('escala') !== -1})}>Escala</li>
+          <ul className='inline-list'>
+            <li className={c('est est-livre', {active: adminArea.data.estacionamento.indexOf('livre') !== -1})}>L</li>
+            <li className={c('est est-condicionado', {active: adminArea.data.estacionamento.indexOf('condicionado') !== -1})}>C</li>
+            <li className={c('est est-fixo', {active: adminArea.data.estacionamento.indexOf('fixo') !== -1})}>F</li>
+            <li className={c('est est-escala', {active: adminArea.data.estacionamento.indexOf('escala') !== -1})}>E</li>
           </ul>
         </div>
         <span className='table-scope'>{this.contingenteMatrix[adminArea.data.contingente]}</span>
@@ -125,10 +125,11 @@ var SectionDistribuicao = React.createClass({
     if (!this.props.mapGeometries.fetched) return null;
 
     const getColor = (v) => {
-      if (v === 0) return '#eaeaea';
-      if (v <= 10) return '#7FECDA';
-      if (v <= 50) return '#2D8374';
-      return '#0F2B26';
+      if (v === 0) return '#f5f5f5';
+      if (v <= 10) return '#FFCC45';
+      if (v <= 50) return '#FDB13A';
+      if (v <= 100) return '#FB8F2C';
+      return '#F8781F';
     };
 
     let municipiosVagas = this.props.municipios.map(m => {
@@ -152,23 +153,26 @@ var SectionDistribuicao = React.createClass({
           nut={this.props.adminId}
           onClick={this.props.onMapClick}
         />
-        <ul className='color-legend side-by-side'>
-          <li><span style={{backgroundColor: getColor(0)}}></span>Sem vagas</li>
-          <li><span style={{backgroundColor: getColor(10)}}></span>menos que 10</li>
-          <li><span style={{backgroundColor: getColor(50)}}></span>11 - 50</li>
-          <li><span style={{backgroundColor: getColor(51)}}></span>+50</li>
-       </ul>
+        <div className='map-legend'>
+          <ul className='color-legend inline'>
+            <li><span style={{backgroundColor: getColor(10)}}></span>&lt; 10</li>
+            <li><span style={{backgroundColor: getColor(50)}}></span>11 a 50</li>
+            <li><span style={{backgroundColor: getColor(51)}}></span>50 a 100</li>
+            <li><span style={{backgroundColor: getColor(101)}}></span>&gt; 100</li>
+            <li><span style={{backgroundColor: getColor(0)}}></span>Sem vagas</li>
+          </ul>
+        </div>
       </div>
     );
   },
 
   render: function () {
     return (
-      <div className='content-wrapper'>
+      <div id='distribuicao' className='content-wrapper'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>
-        <div id='distribuicao' className='section-wrapper'>
+        <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>

@@ -4,7 +4,7 @@
 		list-style: none;
 		padding: 0;
 
-		li {
+		> li {
 			border-bottom: 1px solid #ccc;
 			padding: 10px 0;
 			overflow: hidden;
@@ -27,6 +27,14 @@
 					@include media (medium-up) {  
 						width: 30%;
 					}
+				}
+
+				&.table-parking {
+					width: 35%;
+				}
+
+				&.table-scope {
+					width: 15%;
 				}
 
 				&.table-national,
@@ -64,6 +72,29 @@
 					font-size: .625rem;
 				}
 			}
+
+			.est {
+				padding: 0 .25rem;
+				display: inline-block;
+				background-color: rgba(0,0,0,.5);
+				color: #fff;
+				margin: 0 4px;
+				font-size: .875rem;
+				width: 20px;
+				height: 20px;
+				line-height: 20px;
+				opacity: .2;
+
+				&.est-livre.active { background-color: #FFCC45; }
+				&.est-condicionado.active { background-color: #FDB13A; }
+				&.est-fixo.active { background-color: #FB8F2C; }
+				&.est-escala.active { background-color: #F8781F; }
+
+				&.active {
+					opacity: 1;
+				}
+			}
+
 		}
 	}
 

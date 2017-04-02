@@ -135,7 +135,7 @@ var SectionResidentes = React.createClass({
     dormidas = dormidas ? round(dormidas, 1) : 'N/A';
 
     return (
-      <div id='residentes' className='content-wrapper'>
+      <div id='indicadores' className='content-wrapper'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>

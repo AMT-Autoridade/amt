@@ -11,11 +11,9 @@ var Dados = React.createClass({
 
   render: function () {
     return (
-      <div id='dados' className='container-wrapper section-wrapper'>
-
+      <div id='dados' className='container-wrapper'>
+        <section id='dados' className='content-wrapper'>
         <h1>Sobre os dados</h1>
-
-        <section id='dados'>
           <div>
             <p className='lead'>Este site contém dados sobre os serviços de transporte em táxi em Portugal, no período entre 2006 e 2016. Os dados foram recolhidos pela AMT junto das 308 câmaras municipais do país. De forma a complementar os dados recolhidos e concretizar uma análise mais detalhada, foram também utilizados dados sobre a população residente e sobre as dormidas em estabelecimentos hoteleiros, disponibilizados pelo <a href="http://www.ine.pt" title="Ir para INE" target="_blank">Instituto Nacional de Estatística</a> na sua base de dados pública.</p>
             <p className='lead'>A AMT agradece a colaboração e disponibilidade das câmaras municipais na disponibilização da informação. Agradecem-se igualmente os contributos do Instituto da Mobilidade e dos Transportes, da Direção Regional da Economia e Transportes da Madeira e da Direção Regional dos Transportes dos Açores.</p>

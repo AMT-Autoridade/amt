@@ -149,12 +149,14 @@ var Nuts = React.createClass({
 
         </div>
         <ul className='section-nav'>
-          <li><Link to={`/nuts/${this.props.params.nut}#licencas`}>Licenças</Link></li>
-          <li><Link to={`/nuts/${this.props.params.nut}#mobilidade`}>Mobilidade Reduzida</Link></li>
-          <li><Link to={`/nuts/${this.props.params.nut}#estacionamento`}>Estacionamento</Link></li>
-          <li><Link to={`/nuts/${this.props.params.nut}#distribuicao`}>Distribuição</Link></li>
-          <li><Link to={`/nuts/${this.props.params.nut}#evolucao`}>Evolução</Link></li>
+          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#licencas`}><span>Licenças e Contingentes</span></Link></li>
+          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#mobilidade`}><span>Mobilidade Reduzida</span></Link></li>
+          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#estacionamento`}><span>Regime Estacionamento</span></Link></li>
+          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#distribuicao`}><span>Âmbito Geográfico</span></Link></li>
+          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#indicadores`}><span>Outros Indicadores</span></Link></li>
+          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#evolucao`}><span>Evolução 2006-2016</span></Link></li>
         </ul>
+
       </div>
     );
   }
