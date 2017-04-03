@@ -166,7 +166,7 @@ var SectionLicencas = React.createClass({
     let { licencas2016, max2016 } = this.props;
 
     return (
-      <div id='licencas' className='content-wrapper'>
+      <div id='licencas' className='content-wrapper vertical-center'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>

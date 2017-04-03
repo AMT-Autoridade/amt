@@ -8,7 +8,7 @@ var SectionConclusoes = React.createClass({
 
   render: function () {
     return (
-       <div id='conclusoes' className='section-wrapper'>
+       <div id='conclusoes' className='content-wrapper vertical-center'>
         <section className='section-container'>
           <header className='section-header'>
             <h3 className='section-category'>PORTUGAL</h3>
