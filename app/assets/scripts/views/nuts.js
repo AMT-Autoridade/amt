@@ -80,13 +80,13 @@ var Nuts = React.createClass({
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
           label: 'Portugal',
           color: '#1f8d8e',
-          backgroundColor: '#1f8d8e7f'
+          backgroundColor: '#f5f5f5'
         },
         {
           data: data.data.licencasTimeline.map(o => o['lic1000']),
           label: data.name,
           color: '#00ced1',
-          backgroundColor: '#00ced17f'
+          backgroundColor: '#f5f5f5'
         }
       ]
     };
@@ -98,7 +98,7 @@ var Nuts = React.createClass({
           data: this.props.national.data.dormidas.map(o => o.lic1000),
           label: 'Portugal',
           color: '#1f8d8e',
-          backgroundColor: '#1f8d8e7f'
+          backgroundColor: '#f5f5f5'
         }
       ]
     };
