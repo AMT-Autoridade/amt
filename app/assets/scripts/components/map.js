@@ -601,9 +601,10 @@ var Chart = function (options) {
             .attr('r', _overlayAAr)
             .attr('cx', _overlayAAcx)
             .attr('cy', _overlayAAcy)
-            .style('stroke', 'black')
-            .style('stroke-width', '5px')
-            .style('fill', 'white');
+            .style('stroke', '#ccc')
+            .style('stroke-width', '1px')
+            .style('fill', 'white')
+            .style('fill-opacity', 0.8);
 
         // Fill in the name of the aa we're seeing.
         // Render element sent by the parent.
@@ -612,7 +613,7 @@ var Chart = function (options) {
           $aaOverlayInfo
             .style('display', '')
             // Position it on top of the circle.
-            .style('top', `${_overlayAAcy - _overlayAAr - infoHeight - 10}px`);
+            .style('top', `${_overlayAAcy - _overlayAAr - scalar(infoHeight + 10)}px`);
 
           $aaOverlayInfo.html(ReactDOMServer.renderToStaticMarkup(_overlayInfoContentFn()));
         } else {
