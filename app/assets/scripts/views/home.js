@@ -22,15 +22,15 @@ var Home = React.createClass({
     _fetchMapData: T.func
   },
 
-  onMapClick: function (id) {
+  onMapClick: function (data) {
     // Find the right nut.
-    let slug = this.props.national.data.nuts.find(o => o.id === id).slug;
+    let slug = this.props.national.data.nuts.find(o => o.id === data.id).slug;
     hashHistory.push(`/nuts/${slug}`);
   },
 
-  popoverContent: function (id) {
+  popoverContent: function (data) {
     // Find the right nut.
-    let name = this.props.national.data.nuts.find(o => o.id === id).name;
+    let name = this.props.national.data.nuts.find(o => o.id === data.id).name;
     return (
       <div>
         <p className='map-tooltip'>{name}</p>
@@ -70,19 +70,19 @@ var Home = React.createClass({
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-por']),
           label: 'Área Metropolitana de Porto',
           color: '#256465',
-          backgroundColor: '#2564657f'
+          backgroundColor: '#f5f5f5'
         },
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
           label: 'Portugal',
           color: '#1f8d8e',
-          backgroundColor: '#1f8d8e7f'
+          backgroundColor: '#f5f5f5'
         },
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-lx']),
           label: 'Área Metropolitana de Lisboa',
           color: '#00ced1',
-          backgroundColor: '#00ced17f'
+          backgroundColor: '#f5f5f5'
         }
       ]
     };
@@ -94,7 +94,7 @@ var Home = React.createClass({
           data: this.props.national.data.dormidas.map(o => o.lic1000),
           label: 'Portugal',
           color: '#1f8d8e',
-          backgroundColor: '#1f8d8e7f'
+          backgroundColor: '#f5f5f5'
         }
       ]
     };
