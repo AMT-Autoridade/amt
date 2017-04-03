@@ -168,7 +168,7 @@ var SectionDistribuicao = React.createClass({
 
   render: function () {
     return (
-      <div id='distribuicao' className='content-wrapper'>
+      <div id='distribuicao' className='content-wrapper vertical-center'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>

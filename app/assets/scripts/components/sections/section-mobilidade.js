@@ -192,7 +192,7 @@ var SectionMobilidade = React.createClass({
     let percentNewMobRed = percent(newMobReduzida, newLicencas, 0);
 
     return (
-      <div id='mobilidade' className='content-wrapper'>
+      <div id='mobilidade' className='content-wrapper vertical-center'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>

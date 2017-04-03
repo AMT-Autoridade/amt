@@ -17,10 +17,23 @@
 }
 
 .content-wrapper {
-  padding-top: 120px;
+  padding-top: 90px;
   overflow: hidden; 
   min-height: 100vh;
+
+  &.vertical-center {
+    display: flex;
+    // overflow-y: scroll;
+    align-items: center;
+    justify-content: center;
+    > div,
+    > section {
+      margin: auto;
+    }
+  }
 }
+
+
 
 .map-wrapper {
   position: relative;
