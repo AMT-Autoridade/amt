@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import * as d3 from 'd3';
 import * as topojson from 'topojson';
 import _ from 'lodash';
@@ -15,8 +16,10 @@ var Map = React.createClass({
     geometries: T.object,
     data: T.array,
     nut: T.string,
+    concelho: T.number,
     onClick: T.func,
-    popoverContent: T.func
+    popoverContent: T.func,
+    overlayInfoContent: T.func
   },
 
   chart: null,
@@ -39,6 +42,8 @@ var Map = React.createClass({
       .nut(this.props.nut)
       .onClick(this.props.onClick)
       .popoverContent(this.props.popoverContent)
+      .overlayInfoContent(this.props.overlayInfoContent)
+      .concelho(this.props.concelho)
     );
   },
 
@@ -63,6 +68,12 @@ var Map = React.createClass({
     }
     if (prevProps.popoverContent !== this.props.popoverContent) {
       this.chart.popoverContent(this.props.popoverContent);
+    }
+    if (prevProps.overlayInfoContent !== this.props.overlayInfoContent) {
+      this.chart.overlayInfoContent(this.props.overlayInfoContent);
+    }
+    if (prevProps.concelho !== this.props.concelho) {
+      this.chart.concelho(this.props.concelho);
     }
     this.chart.continueUpdate();
   },
@@ -96,14 +107,14 @@ var Chart = function (options) {
   // Pause. Ensure that all data is added before redrawing stuff.
   var _pauseUpdate = false;
 
-  // Selected nut, if any..
-  var _nut;
+  // Selected nut and concelho, if any..
+  var _nut, _concelho;
 
   // Interactivity. Callback functions
-  var _onClick, _popoverContent;
+  var _onClickFn, _popoverContentFn, _overlayInfoContentFn;
 
   // Containers
-  var $el, $svg;
+  var $el, $svg, $aaOverlayInfo;
   // Var declaration.
   var margin = {top: 0, right: 0, bottom: 0, left: 0};
   // width and height refer to the data canvas. To know the svg size the margins
@@ -115,6 +126,9 @@ var Chart = function (options) {
 
   // Size and position of the overlay circle.
   var _overlayAAr, _overlayAAcx, _overlayAAcy;
+
+  // Base color for the aa.
+  var DEFAULT_COLOR = '#eaeaea';
 
   // Geo scale.
   var _projectionScaleValue;
@@ -273,14 +287,24 @@ var Chart = function (options) {
   };
 
   const showTooltip = (d3El, data) => {
-    if (_popoverContent) {
+    if (_popoverContentFn) {
       let {posX, posY} = getElementPos(d3El);
-      chartPopover.setContent(_popoverContent(data)).show(posX, posY);
+      chartPopover.setContent(_popoverContentFn(data)).show(posX, posY);
     }
   };
 
   const hideTooltip = () => {
     chartPopover.hide();
+  };
+
+  const getConcelhoColor = (id) => {
+    if (_concelho) {
+      return _concelho === id ? 'red' : DEFAULT_COLOR;
+    } else {
+      // Get the color from the bucket.
+      let bucket = _data ? _data.find(o => o.id === id) : null;
+      return bucket ? bucket.color : DEFAULT_COLOR;
+    }
   };
 
   // Make charts reusable!
@@ -309,9 +333,9 @@ var Chart = function (options) {
             // Only concelhos have colors, everything else is black for overlay.
             if (d.properties.type !== 'concelho') return '#000';
             // When something is selected, base map is grey.
-            if (_nut) return '#eaeaea';
-            let bucket = _data.find(o => o.id === parseInt(d.properties.id));
-            return bucket ? bucket.color : '#eaeaea';
+            if (_nut) return DEFAULT_COLOR;
+            let bucket = _data ? _data.find(o => o.id === parseInt(d.properties.id)) : null;
+            return bucket ? bucket.color : DEFAULT_COLOR;
           })
           .style('fill-opacity', d => d.properties.type === aaLevel ? 0 : 1);
 
@@ -335,9 +359,9 @@ var Chart = function (options) {
               .style('fill-opacity', 0);
           })
           .on('click', function (d, i) {
-            if (!_onClick) return;
+            if (!_onClickFn) return;
             let id = getNutId(d);
-            if (id) _onClick({type: 'nut3', id});
+            if (id) _onClickFn({type: 'nut3', id});
           });
         }
 
@@ -404,35 +428,40 @@ var Chart = function (options) {
           .style('stroke-width', d => d.properties.type === aaLevel ? '1px' : '0.1px')
           .style('fill', d => {
             if (d.properties.type !== 'concelho') return 'none';
-            // Get the color from the bucket.
-            let bucket = _data.find(o => o.id === parseInt(d.properties.id));
-            return bucket ? bucket.color : '#eaeaea';
+            let id = parseInt(d.properties.id);
+
+            // Get the correct color form the concelho id.
+            return getConcelhoColor(id);
           })
           .style('pointer-events', d => d.properties.type === 'concelho' ? 'all' : 'none')
           .on('mouseover', function (d, i) {
-            showTooltip(d3.select(this), {type: 'concelho', id: parseInt(d.properties.id)});
+            let id = parseInt(d.properties.id);
+            showTooltip(d3.select(this), {type: 'concelho', id});
 
-            // Get the color from the bucket.
-            let color = _data.find(o => o.id === parseInt(d.properties.id)).color;
+            // Get the correct color form the concelho id.
+            let color = getConcelhoColor(id);
+
             d3.select(this)
               .style('cursor', 'pointer')
               .transition()
                 .style('fill', d3.color(color).darker(1));
           })
           .on('mouseout', function (d, i) {
+            let id = parseInt(d.properties.id);
             hideTooltip();
 
-            // Get the color from the bucket.
-            let color = _data.find(o => o.id === parseInt(d.properties.id)).color;
+            // Get the correct color form the concelho id.
+            let color = getConcelhoColor(id);
+
             d3.select(this)
               .style('cursor', 'default')
               .transition()
                 .style('fill', color);
           })
           .on('click', function (d, i) {
-            if (!_onClick) return;
+            if (!_onClickFn) return;
             let id = parseInt(d.properties.id);
-            if (id) _onClick({type: 'concelho', id});
+            if (id) _onClickFn({type: 'concelho', id});
           });
       };
     }
@@ -576,6 +605,20 @@ var Chart = function (options) {
             .style('stroke-width', '5px')
             .style('fill', 'white');
 
+        // Fill in the name of the aa we're seeing.
+        // Render element sent by the parent.
+        if (_nut && _overlayInfoContentFn) {
+          let infoHeight = parseInt($aaOverlayInfo.style('height'));
+          $aaOverlayInfo
+            .style('display', '')
+            // Position it on top of the circle.
+            .style('top', `${_overlayAAcy - _overlayAAr - infoHeight - 10}px`);
+
+          $aaOverlayInfo.html(ReactDOMServer.renderToStaticMarkup(_overlayInfoContentFn()));
+        } else {
+          $aaOverlayInfo.style('display', 'none');
+        }
+
         let geometryGroup = overlayAA.merge(overlayAA)
           .select('.overlay-aa-geometry');
 
@@ -641,7 +684,7 @@ var Chart = function (options) {
     };
 
     updateData = function () {
-      if (!_data || _pauseUpdate) {
+      if (_pauseUpdate) {
         return;
       }
 
@@ -655,6 +698,12 @@ var Chart = function (options) {
     $svg = $el.append('svg')
       .attr('class', 'chart')
       .style('display', 'block');
+
+    $aaOverlayInfo = $el.append('div')
+      .attr('class', 'aa-overlay-info')
+      .style('width', '100%')
+      .style('position', 'absolute')
+      .style('display', 'none');
 
     _calcSize();
     upateSize();
@@ -735,16 +784,30 @@ var Chart = function (options) {
     return chartFn;
   };
 
+  chartFn.concelho = function (d) {
+    if (!arguments.length) return _concelho;
+    _concelho = d;
+    if (typeof updateData === 'function') updateData();
+    return chartFn;
+  };
+
   chartFn.onClick = function (d) {
-    if (!arguments.length) return _onClick;
-    _onClick = d;
+    if (!arguments.length) return _onClickFn;
+    _onClickFn = d;
     if (typeof updateData === 'function') updateData();
     return chartFn;
   };
 
   chartFn.popoverContent = function (d) {
-    if (!arguments.length) return _popoverContent;
-    _popoverContent = d;
+    if (!arguments.length) return _popoverContentFn;
+    _popoverContentFn = d;
+    if (typeof updateData === 'function') updateData();
+    return chartFn;
+  };
+
+  chartFn.overlayInfoContent = function (d) {
+    if (!arguments.length) return _overlayInfoContentFn;
+    _overlayInfoContentFn = d;
     if (typeof updateData === 'function') updateData();
     return chartFn;
   };
