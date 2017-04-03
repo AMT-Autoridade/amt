@@ -179,9 +179,9 @@ var Home = React.createClass({
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
           />
-
-          <SectionConclusoes />
         </div>
+
+        <SectionConclusoes />
 
         <ul className='section-nav'>
           <li className='nav-item'><Link to='/#intro'><span>Introdução</span></Link></li>
