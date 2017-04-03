@@ -22,15 +22,15 @@ var Home = React.createClass({
     _fetchMapData: T.func
   },
 
-  onMapClick: function (id) {
+  onMapClick: function (data) {
     // Find the right nut.
-    let slug = this.props.national.data.nuts.find(o => o.id === id).slug;
+    let slug = this.props.national.data.nuts.find(o => o.id === data.id).slug;
     hashHistory.push(`/nuts/${slug}`);
   },
 
-  popoverContent: function (id) {
+  popoverContent: function (data) {
     // Find the right nut.
-    let name = this.props.national.data.nuts.find(o => o.id === id).name;
+    let name = this.props.national.data.nuts.find(o => o.id === data.id).name;
     return (
       <div>
         <p className='map-tooltip'>{name}</p>

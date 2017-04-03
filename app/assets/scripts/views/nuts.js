@@ -1,7 +1,7 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 
 import { fetchNut, fetchMapData } from '../actions';
 
@@ -20,6 +20,23 @@ var Nuts = React.createClass({
     national: T.object,
     _fetchNut: T.func,
     _fetchMapData: T.func
+  },
+
+  onMapClick: function (data) {
+    // Find the right nut.
+    let slug = this.props.nut.data.concelhos.find(o => o.id === data.id).slug;
+    hashHistory.push(`/nuts/${this.props.params.nut}/concelhos/${slug}`);
+  },
+
+  popoverContent: function (data) {
+    // Find the right concelho.
+    let name = this.props.nut.data.concelhos.find(o => o.id === data.id).name;
+    return (
+      <div>
+        <p className='map-tooltip'>{name}</p>
+        <span className='triangle'></span>
+      </div>
+    );
   },
 
   componentDidMount: function () {
@@ -88,6 +105,8 @@ var Nuts = React.createClass({
             licencasHab={data.data.licencasHab}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionMobilidade
@@ -102,6 +121,8 @@ var Nuts = React.createClass({
             licencasMobReduzida2006={data.data.licencasMobReduzida2006}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionEstacionamento
@@ -111,6 +132,8 @@ var Nuts = React.createClass({
             municipios={data.concelhos}
             totalMunicipios={data.data.totalMunicipios}
             mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionAmbitoNut
@@ -121,6 +144,8 @@ var Nuts = React.createClass({
             parentSlug={this.props.params.nut}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionIndicadores
@@ -133,6 +158,8 @@ var Nuts = React.createClass({
             chartLic1000Dor={chartLic1000Dor}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
           <SectionEvolucao
@@ -145,6 +172,8 @@ var Nuts = React.createClass({
             totalMunicipios={data.data.totalMunicipios}
             licencasTimeline={data.data.licencasTimeline}
             mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
           />
 
         </div>

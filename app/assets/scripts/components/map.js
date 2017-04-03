@@ -261,6 +261,28 @@ var Chart = function (options) {
     }
   };
 
+  const getElementPos = (d3El) => {
+    let _thisEl = d3El.node();
+    let bbox = _thisEl.getBBox();
+    let matrix = _thisEl.getScreenCTM()
+      .translate(bbox.x + bbox.width / 2, bbox.y + 20);
+    let posX = window.pageXOffset + matrix.e;
+    let posY = window.pageYOffset + matrix.f;
+
+    return {posX, posY};
+  };
+
+  const showTooltip = (d3El, data) => {
+    if (_popoverContent) {
+      let {posX, posY} = getElementPos(d3El);
+      chartPopover.setContent(_popoverContent(data)).show(posX, posY);
+    }
+  };
+
+  const hideTooltip = () => {
+    chartPopover.hide();
+  };
+
   // Make charts reusable!
   // Helper function to draw a group of features. Originally used to draw the
   // different archipelagos, but extended to include the main land.
@@ -297,18 +319,7 @@ var Chart = function (options) {
           sel = sel
           .style('pointer-events', d => d.properties.type === aaLevel ? 'all' : 'none')
           .on('mouseover', function (d, i) {
-            if (_popoverContent) {
-              // Compute the position on the tooltip.
-              let _thisEl = d3.select(this).node();
-              let bbox = _thisEl.getBBox();
-              let matrix = _thisEl.getScreenCTM()
-                .translate(bbox.x + bbox.width / 2, bbox.y + 20);
-              var posX = window.pageXOffset + matrix.e;
-              var posY = window.pageYOffset + matrix.f;
-
-              chartPopover.setContent(_popoverContent(getNutId(d)))
-                .show(posX, posY);
-            }
+            showTooltip(d3.select(this), {type: 'nut3', id: getNutId(d)});
 
             d3.select(this).style('cursor', 'pointer');
             let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
@@ -316,7 +327,7 @@ var Chart = function (options) {
               .style('fill-opacity', 0.20);
           })
           .on('mouseout', function (d, i) {
-            chartPopover.hide();
+            hideTooltip();
 
             d3.select(this).style('cursor', 'default');
             let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
@@ -326,7 +337,7 @@ var Chart = function (options) {
           .on('click', function (d, i) {
             if (!_onClick) return;
             let id = getNutId(d);
-            if (id) _onClick(id);
+            if (id) _onClick({type: 'nut3', id});
           });
         }
 
@@ -399,6 +410,8 @@ var Chart = function (options) {
           })
           .style('pointer-events', d => d.properties.type === 'concelho' ? 'all' : 'none')
           .on('mouseover', function (d, i) {
+            showTooltip(d3.select(this), {type: 'concelho', id: parseInt(d.properties.id)});
+
             // Get the color from the bucket.
             let color = _data.find(o => o.id === parseInt(d.properties.id)).color;
             d3.select(this)
@@ -407,12 +420,19 @@ var Chart = function (options) {
                 .style('fill', d3.color(color).darker(1));
           })
           .on('mouseout', function (d, i) {
+            hideTooltip();
+
             // Get the color from the bucket.
             let color = _data.find(o => o.id === parseInt(d.properties.id)).color;
             d3.select(this)
               .style('cursor', 'default')
               .transition()
                 .style('fill', color);
+          })
+          .on('click', function (d, i) {
+            if (!_onClick) return;
+            let id = parseInt(d.properties.id);
+            if (id) _onClick({type: 'concelho', id});
           });
       };
     }
@@ -649,7 +669,7 @@ var Chart = function (options) {
 
   chartFn.destroy = function () {
     // Cleanup.
-    chartPopover.hide();
+    hideTooltip();
   };
 
   // --------------------------------------------

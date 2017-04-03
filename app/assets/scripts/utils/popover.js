@@ -117,7 +117,7 @@ function popover () {
    */
   this.hide = function () {
     $popover.style = null;
-    $popover.classList.remove('chart-popover-animate');
+    $popover.classList.remove('chart-popover-animate', 'chart-popover-animate-op');
     _content = null;
     _prev_content = null;
     _x = null;
