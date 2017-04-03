@@ -18,7 +18,8 @@ var SectionDistribuicao = React.createClass({
     adminList: T.array,
     mapGeometries: T.object,
     municipios: T.array,
-    onMapClick: T.func
+    onMapClick: T.func,
+    overlayInfoContent: T.func
   },
 
   contingenteMatrix: {
@@ -152,7 +153,9 @@ var SectionDistribuicao = React.createClass({
           data={municipiosVagas}
           nut={this.props.adminId}
           onClick={this.props.onMapClick}
+          overlayInfoContent={this.props.overlayInfoContent}
         />
+
         <div className='map-legend'>
           <ul className='color-legend inline'>
             <li><span style={{backgroundColor: getColor(10)}}></span>&lt; 10</li>

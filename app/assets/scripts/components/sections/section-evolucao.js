@@ -21,7 +21,8 @@ var SectionEvolucao = React.createClass({
     data: T.object,
     mapGeometries: T.object,
     onMapClick: T.func,
-    popoverContent: T.func
+    popoverContent: T.func,
+    overlayInfoContent: T.func
   },
 
   renderTimelineChart: function () {
@@ -220,8 +221,9 @@ var SectionEvolucao = React.createClass({
           nut={this.props.adminId}
           onClick={this.props.onMapClick}
           popoverContent={this.props.popoverContent}
+          overlayInfoContent={this.props.overlayInfoContent}
         />
-        
+
        <div className='map-legend'>
           <h6 className='legend-title'>Variação de Licenças por Município:</h6>
           <ul className='color-legend inline'>

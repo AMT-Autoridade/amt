@@ -39,6 +39,17 @@ var Nuts = React.createClass({
     );
   },
 
+  overlayInfoContent: function () {
+    return (
+      <div className='map-aa-info'>
+        <ul className='map-aa-list inline-list'>
+          <li><a href='#/' title='Ir para vista Nacional'>{'<'}</a></li>
+          <li>{this.props.nut.data.name}</li>
+        </ul>
+      </div>
+    );
+  },
+
   componentDidMount: function () {
     this.props._fetchNut(this.props.params.nut);
 
@@ -107,6 +118,7 @@ var Nuts = React.createClass({
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
           <SectionMobilidade
@@ -123,6 +135,7 @@ var Nuts = React.createClass({
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
           <SectionEstacionamento
@@ -134,6 +147,7 @@ var Nuts = React.createClass({
             mapGeometries={this.props.mapData}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
           <SectionAmbitoNut
@@ -146,6 +160,7 @@ var Nuts = React.createClass({
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
           <SectionIndicadores
@@ -160,6 +175,7 @@ var Nuts = React.createClass({
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
           <SectionEvolucao
@@ -174,6 +190,7 @@ var Nuts = React.createClass({
             mapGeometries={this.props.mapData}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
         </div>

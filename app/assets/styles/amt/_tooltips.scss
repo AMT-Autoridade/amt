@@ -107,3 +107,17 @@
 .chart-popover-animate-op {
   transition: opacity 0.25s ease 0s;
 }
+
+
+// Admin area above the map.
+.map-aa-info {
+  text-align: center;
+
+  .map-aa-list {
+    display: inline-block;
+    background: rgba(30, 40, 43, .9);
+    color: white;
+    border-radius: 3px;
+    padding: 0.25rem 0.5rem;
+  }
+}

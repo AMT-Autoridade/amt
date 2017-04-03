@@ -20,7 +20,8 @@ var SectionResidentes = React.createClass({
     mapGeometries: T.object,
     municipios: T.array,
     onMapClick: T.func,
-    popoverContent: T.func
+    popoverContent: T.func,
+    overlayInfoContent: T.func
   },
 
   renderLicencas1000Chart: function (lic1000Data) {
@@ -113,6 +114,7 @@ var SectionResidentes = React.createClass({
           nut={this.props.adminId}
           onClick={this.props.onMapClick}
           popoverContent={this.props.popoverContent}
+          overlayInfoContent={this.props.overlayInfoContent}
         />
 
        <div className='map-legend'>
