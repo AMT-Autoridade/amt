@@ -1,7 +1,13 @@
 #intro-wrapper {
 	height: 100vh;
-	background-color: #f9f9f9;
+	background: #f9f9f9 url('../graphics/layout/amt-bg-16.svg') bottom center no-repeat;
+	background-size: 50%;
 
+	#intro {
+		@include media (large-up) {  
+			padding-top: 200px;
+		}
+	}
 
 	section {
 		@include media (large-up) { 
