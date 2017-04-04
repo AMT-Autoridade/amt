@@ -1,7 +1,9 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
+import c from 'classnames';
+import _ from 'lodash';
 
 import { fetchNut, fetchMapData } from '../actions';
 
@@ -14,12 +16,41 @@ import SectionEvolucao from '../components/sections/section-evolucao';
 
 var Nuts = React.createClass({
   propTypes: {
+    location: T.object,
     params: T.object,
     mapData: T.object,
     nut: T.object,
     national: T.object,
     _fetchNut: T.func,
     _fetchMapData: T.func
+  },
+
+  onMapClick: function (data) {
+    // Find the right nut.
+    let slug = this.props.nut.data.concelhos.find(o => o.id === data.id).slug;
+    hashHistory.push(`/nuts/${this.props.params.nut}/concelhos/${slug}`);
+  },
+
+  popoverContent: function (data) {
+    // Find the right concelho.
+    let name = this.props.nut.data.concelhos.find(o => o.id === data.id).name;
+    return (
+      <div>
+        <p className='map-tooltip'>{name}</p>
+        <span className='triangle'></span>
+      </div>
+    );
+  },
+
+  overlayInfoContent: function () {
+    return (
+      <div className='map-aa-info'>
+        <ul className='map-aa-list inline-list'>
+          <li><a href='#/' title='Ir para vista Nacional'>{'<'}</a></li>
+          <li>{this.props.nut.data.name}</li>
+        </ul>
+      </div>
+    );
   },
 
   componentDidMount: function () {
@@ -32,6 +63,7 @@ var Nuts = React.createClass({
 
   render: function () {
     let { fetched, fetching, error, data } = this.props.nut;
+    let hash = this.props.location.hash.replace('#', '');
 
     if (!fetched && !fetching) {
       return null;
@@ -47,20 +79,22 @@ var Nuts = React.createClass({
 
     let chartLic1000Hab = {
       labels: data.data.licencasTimeline.map(y => y.year),
-      datasets: [
+      // Sort the datasets to ensure they don't overlapp.
+      // In this case is ok because the data lines will never cross.
+      datasets: _.sortBy([
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
           label: 'Portugal',
           color: '#1f8d8e',
-          backgroundColor: '#1f8d8e7f'
+          backgroundColor: '#f5f5f5'
         },
         {
           data: data.data.licencasTimeline.map(o => o['lic1000']),
           label: data.name,
           color: '#00ced1',
-          backgroundColor: '#00ced17f'
+          backgroundColor: '#f5f5f5'
         }
-      ]
+      ], d => d.data[0])
     };
 
     let chartLic1000Dor = {
@@ -70,7 +104,7 @@ var Nuts = React.createClass({
           data: this.props.national.data.dormidas.map(o => o.lic1000),
           label: 'Portugal',
           color: '#1f8d8e',
-          backgroundColor: '#1f8d8e7f'
+          backgroundColor: '#f5f5f5'
         }
       ]
     };
@@ -88,6 +122,9 @@ var Nuts = React.createClass({
             licencasHab={data.data.licencasHab}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
           <SectionMobilidade
@@ -102,6 +139,9 @@ var Nuts = React.createClass({
             licencasMobReduzida2006={data.data.licencasMobReduzida2006}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
           <SectionEstacionamento
@@ -111,6 +151,9 @@ var Nuts = React.createClass({
             municipios={data.concelhos}
             totalMunicipios={data.data.totalMunicipios}
             mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
           <SectionAmbitoNut
@@ -121,6 +164,9 @@ var Nuts = React.createClass({
             parentSlug={this.props.params.nut}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
           <SectionIndicadores
@@ -133,6 +179,9 @@ var Nuts = React.createClass({
             chartLic1000Dor={chartLic1000Dor}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
           <SectionEvolucao
@@ -145,16 +194,19 @@ var Nuts = React.createClass({
             totalMunicipios={data.data.totalMunicipios}
             licencasTimeline={data.data.licencasTimeline}
             mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
           />
 
         </div>
         <ul className='section-nav'>
-          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#licencas`}><span>Licenças e Contingentes</span></Link></li>
-          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#mobilidade`}><span>Mobilidade Reduzida</span></Link></li>
-          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#estacionamento`}><span>Regime Estacionamento</span></Link></li>
-          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#distribuicao`}><span>Âmbito Geográfico</span></Link></li>
-          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#indicadores`}><span>Outros Indicadores</span></Link></li>
-          <li className='nav-item'><Link to={`/nuts/${this.props.params.nut}#evolucao`}><span>Evolução 2006-2016</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'licencas'})}><Link to={`/nuts/${this.props.params.nut}#licencas`}><span>Licenças e Contingentes</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'mobilidade'})}><Link to={`/nuts/${this.props.params.nut}#mobilidade`}><span>Mobilidade Reduzida</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'estacionamento'})}><Link to={`/nuts/${this.props.params.nut}#estacionamento`}><span>Regime Estacionamento</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'distribuicao'})}><Link to={`/nuts/${this.props.params.nut}#distribuicao`}><span>Âmbito Geográfico</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'indicadores'})}><Link to={`/nuts/${this.props.params.nut}#indicadores`}><span>Outros Indicadores</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'evolucao'})}><Link to={`/nuts/${this.props.params.nut}#evolucao`}><span>Evolução 2006-2016</span></Link></li>
         </ul>
 
       </div>

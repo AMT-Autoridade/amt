@@ -17,7 +17,8 @@ var SectionEstacionamento = React.createClass({
     totalMunicipios: T.number,
     mapGeometries: T.object,
     onMapClick: T.func,
-    popoverContent: T.func
+    popoverContent: T.func,
+    overlayInfoContent: T.func
   },
 
   estLabels: {
@@ -192,14 +193,11 @@ var SectionEstacionamento = React.createClass({
       if (v === 'condicionado') return '#1f8d8e';
       if (v === 'fixo-livre') return '#256465';
       if (v === 'condicionado-livre') return '#264242';
-      //if (v === 'livre') return '#ff0000';
+      // if (v === 'livre') return '#ff0000';
       // if (v === 'condicionado-fixo-livre') return '#00ff00';
       // if (v === 'escala-fixo') return '#0000ff';
       return '#B0DEDE';
     };
-
-
-
 
     let tipoEstacionamentos = this.props.municipios.map(m => {
       let key = _(m.data.estacionamento)
@@ -222,7 +220,9 @@ var SectionEstacionamento = React.createClass({
           nut={this.props.adminId}
           onClick={this.props.onMapClick}
           popoverContent={this.props.popoverContent}
+          overlayInfoContent={this.props.overlayInfoContent}
         />
+
        <div className='map-legend'>
           <h6 className='legend-title'>Regimes de Estacionamento por Município</h6>
           <ul className='color-legend two-by-side'>
@@ -240,7 +240,7 @@ var SectionEstacionamento = React.createClass({
 
   render: function () {
     return (
-      <div id='estacionamento' className='content-wrapper'>
+      <div id='estacionamento' className='content-wrapper vertical-center'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>

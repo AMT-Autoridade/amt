@@ -2,6 +2,7 @@
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { Link, hashHistory } from 'react-router';
+import c from 'classnames';
 
 import { fetchNational, fetchMapData } from '../actions';
 
@@ -16,21 +17,22 @@ import SectionConclusoes from '../components/sections/section-conclusoes';
 
 var Home = React.createClass({
   propTypes: {
+    location: T.object,
     national: T.object,
     mapData: T.object,
     _fetchNational: T.func,
     _fetchMapData: T.func
   },
 
-  onMapClick: function (id) {
+  onMapClick: function (data) {
     // Find the right nut.
-    let slug = this.props.national.data.nuts.find(o => o.id === id).slug;
+    let slug = this.props.national.data.nuts.find(o => o.id === data.id).slug;
     hashHistory.push(`/nuts/${slug}`);
   },
 
-  popoverContent: function (id) {
+  popoverContent: function (data) {
     // Find the right nut.
-    let name = this.props.national.data.nuts.find(o => o.id === id).name;
+    let name = this.props.national.data.nuts.find(o => o.id === data.id).name;
     return (
       <div>
         <p className='map-tooltip'>{name}</p>
@@ -50,6 +52,7 @@ var Home = React.createClass({
 
   render: function () {
     let { fetched, fetching, error, data } = this.props.national;
+    let hash = this.props.location.hash.replace('#', '');
 
     if (!fetched && !fetching) {
       return null;
@@ -70,19 +73,19 @@ var Home = React.createClass({
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-por']),
           label: 'Área Metropolitana de Porto',
           color: '#256465',
-          backgroundColor: '#2564657f'
+          backgroundColor: '#f5f5f5'
         },
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
           label: 'Portugal',
           color: '#1f8d8e',
-          backgroundColor: '#1f8d8e7f'
+          backgroundColor: '#f5f5f5'
         },
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-lx']),
           label: 'Área Metropolitana de Lisboa',
           color: '#00ced1',
-          backgroundColor: '#00ced17f'
+          backgroundColor: '#f5f5f5'
         }
       ]
     };
@@ -94,7 +97,7 @@ var Home = React.createClass({
           data: this.props.national.data.dormidas.map(o => o.lic1000),
           label: 'Portugal',
           color: '#1f8d8e',
-          backgroundColor: '#1f8d8e7f'
+          backgroundColor: '#f5f5f5'
         }
       ]
     };
@@ -179,19 +182,19 @@ var Home = React.createClass({
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
           />
-
-          <SectionConclusoes />
         </div>
 
+        <SectionConclusoes />
+
         <ul className='section-nav'>
-          <li className='nav-item'><Link to='/#intro'><span>Introdução</span></Link></li>
-          <li className='nav-item active'><Link to='/#licencas'><span>Licenças e Contingentes</span></Link></li>
-          <li className='nav-item'><Link to='/#mobilidade'><span>Mobilidade Reduzida</span></Link></li>
-          <li className='nav-item'><Link to='/#estacionamento'><span>Regime Estacionamento</span></Link></li>
-          <li className='nav-item'><Link to='/#distribuicao'><span>Âmbito Geográfico</span></Link></li>
-          <li className='nav-item'><Link to='/#evolucao'><span>Evolução 2006-2016</span></Link></li>
-          <li className='nav-item'><Link to='/#indicadores'><span>Outros Indicadores</span></Link></li>
-          <li className='nav-item'><Link to='/#conclusoes'><span>Conclusões</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'intro'})}><Link to='/#intro'><span>Introdução</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'licencas'})}><Link to='/#licencas'><span>Licenças e Contingentes</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'mobilidade'})}><Link to='/#mobilidade'><span>Mobilidade Reduzida</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'estacionamento'})}><Link to='/#estacionamento'><span>Regime Estacionamento</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'distribuicao'})}><Link to='/#distribuicao'><span>Âmbito Geográfico</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'evolucao'})}><Link to='/#evolucao'><span>Evolução 2006-2016</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'indicadores'})}><Link to='/#indicadores'><span>Outros Indicadores</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'conclusoes'})}><Link to='/#conclusoes'><span>Conclusões</span></Link></li>
         </ul>
       </div>
     );

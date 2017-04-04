@@ -17,10 +17,23 @@
 }
 
 .content-wrapper {
-  padding-top: 120px;
+  padding-top: 90px;
   overflow: hidden; 
   min-height: 100vh;
+
+  &.vertical-center {
+    display: flex;
+    // overflow-y: scroll;
+    align-items: center;
+    justify-content: center;
+    > div,
+    > section {
+      margin: auto;
+    }
+  }
 }
+
+
 
 .map-wrapper {
   position: relative;
@@ -34,6 +47,7 @@
   .map-svg {
     width: 78%;
     margin: 0 auto;
+    position: relative;
 
     svg {
       display: block
@@ -113,4 +127,10 @@
     }
   }
 } 
+
+
+hr {
+  border-top: 1px solid #ccc;
+  margin: 40px 0;
+}
 

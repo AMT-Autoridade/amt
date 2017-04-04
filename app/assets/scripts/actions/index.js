@@ -34,6 +34,10 @@ export const REQUEST_NUT = 'REQUEST_NUT';
 export const RECEIVE_NUT = 'RECEIVE_NUT';
 export const INVALIDATE_NUT = 'INVALIDATE_NUT';
 
+export const INVALIDATE_CONCELHO = 'INVALIDATE_CONCELHO';
+export const REQUEST_CONCELHO = 'REQUEST_CONCELHO';
+export const RECEIVE_CONCELHO = 'RECEIVE_CONCELHO';
+
 export const REQUEST_MAP_DATA = 'REQUEST_MAP_DATA';
 export const RECEIVE_MAP_DATA = 'RECEIVE_MAP_DATA';
 
@@ -70,17 +74,39 @@ export function requestNut () {
   return { type: REQUEST_NUT };
 }
 
-export function receiveNut (data, slug, error = null) {
-  return { type: RECEIVE_NUT, data: data, slug, error, receivedAt: Date.now() };
+export function receiveNut (data, nutSlug, error = null) {
+  return { type: RECEIVE_NUT, data: data, nutSlug, error, receivedAt: Date.now() };
 }
 
 export function fetchNut (nutSlug) {
-  // Fake data load.
   return (dispatch) => {
     dispatch(requestNut());
     fetchAndCacheData()
       .then(national => dispatch(receiveNut(national, nutSlug)),
         err => dispatch(receiveNut(null, null, err)));
+  };
+}
+
+// Nut
+
+export function invalidateConcelho () {
+  return { type: INVALIDATE_CONCELHO };
+}
+
+export function requestConcelho () {
+  return { type: REQUEST_CONCELHO };
+}
+
+export function receiveConcelho (data, nutSlug, concelhoSlug, error = null) {
+  return { type: RECEIVE_CONCELHO, data: data, nutSlug, concelhoSlug, error, receivedAt: Date.now() };
+}
+
+export function fetchConcelho (nutSlug, concelhoSlug) {
+  return (dispatch) => {
+    dispatch(requestNut());
+    fetchAndCacheData()
+      .then(national => dispatch(receiveConcelho(national, nutSlug, concelhoSlug)),
+        err => dispatch(receiveConcelho(null, null, null, err)));
   };
 }
 
@@ -94,25 +120,24 @@ export function receiveMapData (data, error = null) {
   return { type: RECEIVE_MAP_DATA, data: data, error, receivedAt: Date.now() };
 }
 
+var cacheMapData = null;
 export function fetchMapData () {
-  return getAndDispatch(`assets/data/admin-areas.topojson`, requestMapData, receiveMapData);
-}
-
-// Fetcher function
-
-function getAndDispatch (url, requestFn, receiveFn) {
-  return fetchDispatchFactory(url, null, requestFn, receiveFn);
-}
-
-function fetchDispatchFactory (url, options, requestFn, receiveFn) {
   return function (dispatch, getState) {
-    dispatch(requestFn());
+    dispatch(requestMapData());
 
-    fetchJSON(url, options)
-      .then(json => dispatch(receiveFn(json)), err => dispatch(receiveFn(null, err)));
+    if (cacheMapData) {
+      return dispatch(receiveMapData(cacheMapData));
+    }
+
+    fetchJSON(`assets/data/admin-areas.topojson`)
+      .then(json => {
+        cacheMapData = json;
+        return dispatch(receiveMapData(json));
+      }, err => dispatch(receiveMapData(null, err)));
   };
 }
 
+// Fetcher function
 export function fetchJSON (url, options) {
   return fetch(url, options)
     .then(response => {

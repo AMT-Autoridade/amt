@@ -1,0 +1,20 @@
+#conclusoes-wrapper {
+	height: 100vh;
+	background: #f9f9f9;
+
+	.download-wrapper {
+		background-color: #fff;
+		border: 4px solid #0eaeaf;
+		padding: 20px 40px;
+/*		max-width: 500px;
+		text-align: center;*/
+		> * {
+			
+			margin: 0 auto;
+		}
+		p {
+			margin-bottom: 5px;
+		}
+	}
+
+}

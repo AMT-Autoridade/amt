@@ -19,7 +19,8 @@ var SectionLicencas = React.createClass({
     mapGeometries: T.object,
     municipios: T.array,
     onMapClick: T.func,
-    popoverContent: T.func
+    popoverContent: T.func,
+    overlayInfoContent: T.func
   },
 
   renderChart: function () {
@@ -139,6 +140,7 @@ var SectionLicencas = React.createClass({
 
     return (
       <div>
+
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}
@@ -146,8 +148,9 @@ var SectionLicencas = React.createClass({
           nut={this.props.adminId}
           onClick={this.props.onMapClick}
           popoverContent={this.props.popoverContent}
+          overlayInfoContent={this.props.overlayInfoContent}
         />
-        
+
        <div className='map-legend'>
           <h6 className='legend-title'>Licenças por Município:</h6>
           <ul className='color-legend inline'>
@@ -166,7 +169,7 @@ var SectionLicencas = React.createClass({
     let { licencas2016, max2016 } = this.props;
 
     return (
-      <div id='licencas' className='content-wrapper'>
+      <div id='licencas' className='content-wrapper vertical-center'>
         <div className='map-wrapper'>
           {this.renderMap()}
         </div>
