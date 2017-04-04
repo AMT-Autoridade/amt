@@ -121,7 +121,7 @@ var Concelho = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={220}/>;
+    return <LineChart data={chartData} options={chartOptions} height={240}/>;
   },
 
   renderTimelineChart: function () {
@@ -147,10 +147,10 @@ var Concelho = React.createClass({
       labels: labels,
       datasets: [{
         data: nationalTimeline.map(o => o['lic-geral'] + o['lic-mob-reduzida']),
-        backgroundColor: '#FFCC45',
-        borderColor: '#FB8F2C',
+        backgroundColor: '#f5f5f5',
+        borderColor: '#1f8d8e',
         pointBorderWidth: 0,
-        pointBackgroundColor: '#FB8F2C',
+        pointBackgroundColor: '#1f8d8e',
         pointRadius: 3
       }]
     };
@@ -183,7 +183,7 @@ var Concelho = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={300}/>;
+    return <LineChart data={chartData} options={chartOptions} height={240}/>;
   },
 
   renderLic1000HabChart: function () {
@@ -283,7 +283,7 @@ var Concelho = React.createClass({
     return (
       <div id="page-content">
 
-         <div className='content-wrapper vertical-center'>
+         <div id='concelho' className='content-wrapper vertical-center'>
 
           <div className='map-wrapper'>
             {this.renderMap()}
@@ -294,7 +294,7 @@ var Concelho = React.createClass({
               <header className='section-header'>
                 <h3 className='section-category'><Link to='/' title='Ver Portugal'>Portugal</Link> - <Link to={`/nuts/${nut.slug}`} title={`Ver ${nut.name}`}>{nut.name}</Link></h3>
                 <h1>{concelho.name}</h1>
-                <p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p>
+                {/*<p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p> */}
               </header>
               <div className='section-content'>
                 <div className='section-stats'>
@@ -311,47 +311,9 @@ var Concelho = React.createClass({
                       <span className='stat-number'>{(max2016 - licencas2016).toLocaleString()}</span>
                       <span className='stat-description'>Total de vagas existentes <span className='block'>em agosto de 2016.</span></span>
                     </li>
-                  </ul>
-                </div>
-
-                <div className='graph-container'>
-                  <div className='graph'>
-                    <h6 className='legend-title'>Evolução das licenças 2006 a 2016</h6>
-                    {this.renderTimelineChart()}
-                  </div>
-                </div>
-
-                <div className='section-stats'>
-                  <ul className='two-columns'>
-                    <li>
-                      <span className='stat-number'>{licencas1000Hab}</span>
-                      <span className='stat-description'>Licenças activas por 1000 residentes</span>
-                    </li>
-                    <li>
-                      <span className='stat-number'>{dormidas}</span>
-                      <span className='stat-description'>Licenças activas por 1000 dormidas</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className='two-columns'>
-                  <div className='graph'>
-                    <h6 className='legend-title'>Evolução das licenças por 1000 residentes</h6>
-                    {this.renderLic1000HabChart()}
-                  </div>
-                  <div className='graph'>
-                    <h6 className='legend-title'>Evolução das licenças por 1000 dormidas</h6>
-                    {this.renderLic1000DormidasChart()}
-                  </div>
-                </div>
-
-                <p>Linha da section ambito</p>
-
-                <div className='section-stats'>
-                  <ul>
                     <li>
                       <span className='stat-number'>{/*newLicencas.toLocaleString()*/}10</span>
-                      <span className='stat-description'>Aumento do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
+                      <span className='stat-description'>Variação do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>{/*round(increaseLicencas, 0).toLocaleString()*/}1%</span>
@@ -359,10 +321,38 @@ var Concelho = React.createClass({
                     </li>
                     <li>
                       <span className='stat-number'>2</span>
-                      <span className='stat-description'>Licenças mobilidade reduzida</span>
+                      <span className='stat-description'>Licenças existentes no <span className='block'>contingente mob. reduzida.</span></span>
+                    </li>
+                    <li>
+                      <span className='stat-number'>{licencas1000Hab}</span>
+                      <span className='stat-description'>Licenças activas por <span className='block'>1000 residentes.</span></span>
+                    </li>
+                    <li>
+                      <span className='stat-number'>{dormidas}</span>
+                      <span className='stat-description'>Licenças activas por <span className='block'>1000 dormidas.</span></span>
                     </li>
                   </ul>
                 </div>
+
+                <hr/>
+
+                <div className='graph-container'>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Evolução das licenças activas <span className='block'>de 2006 a 2016</span></h6>
+                    {this.renderTimelineChart()}
+                  </div>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Evolução das licenças <span className='block'>por 1000 residentes</span></h6>
+                    {this.renderLic1000HabChart()}
+                  </div>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Evolução das licenças <span className='block'>por 1000 dormidas</span></h6>
+                    {this.renderLic1000DormidasChart()}
+                  </div>
+                </div>
+
+                <p>Linha da section ambito</p>
+
 
               </div>
             </section>
