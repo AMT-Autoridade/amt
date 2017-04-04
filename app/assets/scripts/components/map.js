@@ -299,7 +299,7 @@ var Chart = function (options) {
 
   const getConcelhoColor = (id) => {
     if (_concelho) {
-      return _concelho === id ? 'red' : DEFAULT_COLOR;
+      return _concelho === id ? '#f8781f' : DEFAULT_COLOR;
     } else {
       // Get the color from the bucket.
       let bucket = _data ? _data.find(o => o.id === id) : null;

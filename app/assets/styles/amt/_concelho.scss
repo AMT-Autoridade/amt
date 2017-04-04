@@ -1,0 +1,28 @@
+#concelho {
+	.section-content {
+		@include media (small-up) {
+			> div {
+				@include column(12/12);
+
+				.graph {
+					@include column(4/12);
+				}
+
+			}
+
+			.section-stats {
+				@include column(12/12);
+
+				li, div {
+					@include column(3/12);
+					&:nth-child(5n-1) {
+						clear: right;
+						margin-right: 0;
+					}	
+				}
+
+			}
+		}
+
+	}
+}

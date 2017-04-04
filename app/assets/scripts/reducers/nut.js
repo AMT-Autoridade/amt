@@ -1,4 +1,4 @@
-import { REQUEST_NUT, RECEIVE_NUT, INVALIDATE_NUT } from '../actions';
+import { REQUEST_NUT, RECEIVE_NUT, INVALIDATE_NUT, RECEIVE_CONCELHO } from '../actions';
 import _ from 'lodash';
 
 const initialState = {
@@ -15,11 +15,12 @@ export default function reducer (state = initialState, action) {
     case REQUEST_NUT:
       return Object.assign({}, state, { error: null, fetching: true, fetched: false });
     case RECEIVE_NUT:
+    case RECEIVE_CONCELHO:
       state = Object.assign({}, state, { fetching: false, fetched: true });
       if (action.error) {
         state.error = action.error;
       } else {
-        let nut = action.data.results.find(o => o.slug === action.slug);
+        let nut = action.data.results.find(o => o.slug === action.nutSlug);
         state.data = processData(nut);
       }
       break;
@@ -87,7 +88,7 @@ function processData (nut) {
   // Number of municípios with lic-mob-reduzida.
   nut.data.totalMunicipiosMobReduzida = _.sumBy(nut.concelhos, d => _.last(d.data['lic-mob-reduzida']).value);
 
-  // Compute the timeline at the national level.
+  // Compute the timeline at the nut level.
   nut.data.licencasTimeline = _.range(2006, 2017).map((y, i) => {
     let d = {
       year: y,

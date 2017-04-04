@@ -3,6 +3,7 @@ import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { Link, hashHistory } from 'react-router';
 import c from 'classnames';
+import _ from 'lodash';
 
 import { fetchNut, fetchMapData } from '../actions';
 
@@ -78,7 +79,9 @@ var Nuts = React.createClass({
 
     let chartLic1000Hab = {
       labels: data.data.licencasTimeline.map(y => y.year),
-      datasets: [
+      // Sort the datasets to ensure they don't overlapp.
+      // In this case is ok because the data lines will never cross.
+      datasets: _.sortBy([
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
           label: 'Portugal',
@@ -91,7 +94,7 @@ var Nuts = React.createClass({
           color: '#00ced1',
           backgroundColor: '#f5f5f5'
         }
-      ]
+      ], d => d.data[0])
     };
 
     let chartLic1000Dor = {
