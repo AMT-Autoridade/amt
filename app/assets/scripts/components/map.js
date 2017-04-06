@@ -128,7 +128,7 @@ var Chart = function (options) {
   var _overlayAAr, _overlayAAcx, _overlayAAcy;
 
   // Base color for the aa.
-  var DEFAULT_COLOR = '#eaeaea';
+  var DEFAULT_COLOR = '#f2f2f2';
 
   // Geo scale.
   var _projectionScaleValue;
