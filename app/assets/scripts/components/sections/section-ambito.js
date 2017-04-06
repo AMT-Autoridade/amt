@@ -197,7 +197,7 @@ var SectionDistribuicao = React.createClass({
     });
 
     return (
-      <div>
+      {/*<div>
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}
@@ -214,7 +214,7 @@ var SectionDistribuicao = React.createClass({
             <li><span style={{backgroundColor: getColor('equal')}}></span>População = Licenças </li>
           </ul>
        </div>
-      </div>
+      </div>*/}
     );
   },
 
