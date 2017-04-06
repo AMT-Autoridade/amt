@@ -48,7 +48,7 @@ var SectionEvolucao = React.createClass({
       labels: labels,
       datasets: [{
         data: nationalTimeline.map(o => o['lic-geral'] + o['lic-mob-reduzida']),
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#eaeaea',
         borderColor: '#FFCC45',
         pointBorderWidth: 0,
         pointBackgroundColor: '#FFCC45',
