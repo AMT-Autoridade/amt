@@ -7,7 +7,7 @@ var dataCache = null;
 function fetchAndCacheData () {
   return new Promise((resolve, reject) => {
     if (dataCache) {
-      return resolve(_.cloneDeep(dataCache));
+      return resolve(JSON.parse(JSON.stringify(dataCache)));
     }
     dataCache = require('../data/national.json');
     setTimeout(() => resolve(_.cloneDeep(dataCache)), 300);
@@ -15,7 +15,7 @@ function fetchAndCacheData () {
 
   // return new Promise((resolve, reject) => {
   //   if (dataCache) {
-  //     return resolve(_.cloneDeep(dataCache));
+  //     return resolve(JSON.parse(JSON.stringify(dataCache)));
   //   }
 
   //   fetchJSON(`${config.api}/national.json`)
@@ -34,9 +34,9 @@ export const REQUEST_NUT = 'REQUEST_NUT';
 export const RECEIVE_NUT = 'RECEIVE_NUT';
 export const INVALIDATE_NUT = 'INVALIDATE_NUT';
 
-export const INVALIDATE_CONCELHO = 'INVALIDATE_CONCELHO';
 export const REQUEST_CONCELHO = 'REQUEST_CONCELHO';
 export const RECEIVE_CONCELHO = 'RECEIVE_CONCELHO';
+export const INVALIDATE_CONCELHO = 'INVALIDATE_CONCELHO';
 
 export const REQUEST_MAP_DATA = 'REQUEST_MAP_DATA';
 export const RECEIVE_MAP_DATA = 'RECEIVE_MAP_DATA';
