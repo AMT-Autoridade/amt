@@ -1,12 +1,32 @@
 #intro-wrapper {
 	height: 100vh;
-	background: #f9f9f9 url('../graphics/layout/amt-bg-16.svg') bottom center no-repeat;
-	background-size: 50%;
+	background: #fff url('../graphics/layout/amt-bg-13.svg') bottom center repeat-x;
+	background-size: 75%;
 
 	#intro {
 		@include media (large-up) {  
-			padding-top: 200px;
+			padding-top: 100px;
 		}
+	}
+
+	#intro-logo {
+		display: block;
+		overflow: hidden;
+		a {
+			display: block;
+			margin: 0 auto;
+			height: 140px;
+			width: 410px;
+			background: url('../graphics/layout/intro-logo.png') top center no-repeat;
+			background-size: 410px 140px;
+			color: transparent;
+			text-indent: 100%;
+			overflow: hidden;
+		}
+	}
+
+	h1 {
+		margin-bottom: 10px;
 	}
 
 	section {
