@@ -123,7 +123,7 @@ var SectionDistribuicao = React.createClass({
     if (!this.props.mapGeometries.fetched) return null;
 
     const getColor = (v) => {
-      if (v === 0) return '#f5f5f5';
+      if (v === 0) return '#eaeaea';
       if (v <= 10) return '#FFCC45';
       if (v <= 50) return '#FDB13A';
       if (v <= 100) return '#FB8F2C';
@@ -223,7 +223,6 @@ var SectionDistribuicao = React.createClass({
       <div id='distribuicao' className='content-wrapper vertical-center'>
         <div className='map-wrapper'>
           {this.renderMap()}
-          {this.renderMap2()}
         </div>
         <div className='section-wrapper'>
           <section className='section-container'>
