@@ -1,7 +1,7 @@
 #intro-wrapper {
 	height: 100vh;
-	background: #fff url('../graphics/layout/amt-bg-16.svg') bottom center no-repeat;
-	background-size: 50%;
+	background: #fff url('../graphics/layout/amt-bg-13.svg') bottom center repeat-x;
+	background-size: 75%;
 
 	#intro {
 		@include media (large-up) {  

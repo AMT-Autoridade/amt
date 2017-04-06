@@ -13,7 +13,7 @@ var SectionIntro = React.createClass({
           <section >
             
             <h2 id='intro-logo'><a href="#">Autoridade da Mobilidade e dos Transportes</a></h2>
-            <h1>Táxis em Portugal 2006-2016</h1>
+            <h1>Táxis em Portugal 2006&ndash;2016</h1>
             <h3 className='section-category'>Observatório dos Mercados da Mobilidade,<span className='block'> Preços e Estratégias Empresariais</span></h3>
             
             {/*<p className='lead'>Num momento em que discute o enquadramento regulatório do transporte de passageiros em veículos ligeiros, considera-se prioritário reforçar e promover o conhecimento sobre o sector, nomeadamente sobre os serviços de transporte em táxi.</p>
