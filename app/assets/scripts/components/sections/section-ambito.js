@@ -197,7 +197,7 @@ var SectionDistribuicao = React.createClass({
     });
 
     return (
-      {/*<div>
+      <div>
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}
@@ -214,7 +214,7 @@ var SectionDistribuicao = React.createClass({
             <li><span style={{backgroundColor: getColor('equal')}}></span>População = Licenças </li>
           </ul>
        </div>
-      </div>*/}
+      </div>
     );
   },
 
@@ -223,7 +223,6 @@ var SectionDistribuicao = React.createClass({
       <div id='distribuicao' className='content-wrapper vertical-center'>
         <div className='map-wrapper'>
           {this.renderMap()}
-          {this.renderMap2()}
         </div>
         <div className='section-wrapper'>
           <section className='section-container'>

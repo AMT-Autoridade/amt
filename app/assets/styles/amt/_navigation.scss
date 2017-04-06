@@ -49,10 +49,10 @@
 			position: absolute;
 			top: 2px;
 			right: 0;
-			width: 16px;
-			height: 16px;
+			width: 10px;
+			height: 10px;
 			display: inline-block;
-			background: #f2f2f2;
+			background: rgba(0,0,0,.15);
 			content: "";
 			border-radius: 50%;
 		}
@@ -63,6 +63,7 @@
 				&:after {
 					border: 2px solid rgba(30, 40, 43, .9);
 					border: 2px solid #0eaeaf;
+					background-color: #0eaeaf;
 					padding: 2px;
 				}
 			}
