@@ -34,9 +34,15 @@
 	}
 
 	&.header-fixed {
+		opacity: 0;
+		transition: opacity 0.2s, top 0.4s;
 		position: fixed;
-		top: 0;
+		top: -60px;
 		left: 0;
 		right: 0;
+	}
+	&.header-active {
+		opacity: 1;
+		top: 0;
 	}
 }

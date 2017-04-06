@@ -8,9 +8,13 @@ const initialState = {
   }
 };
 
+// Cache processing.
+let processed = false;
+
 export default function reducer (state = initialState, action) {
   switch (action.type) {
     case INVALIDATE_NUT:
+      processed = false;
       return Object.assign({}, state, initialState);
     case REQUEST_NUT:
       return Object.assign({}, state, { error: null, fetching: true, fetched: false });
@@ -19,7 +23,8 @@ export default function reducer (state = initialState, action) {
       state = Object.assign({}, state, { fetching: false, fetched: true });
       if (action.error) {
         state.error = action.error;
-      } else {
+      } else if (processed !== action.nutSlug) {
+        processed = action.nutSlug;
         let nut = action.data.results.find(o => o.slug === action.nutSlug);
         state.data = processData(nut);
       }
@@ -29,6 +34,7 @@ export default function reducer (state = initialState, action) {
 }
 
 function processData (nut) {
+  console.log('processing nut');
   // Sanitize.
   // nut.concelhos = nut.concelhos.map((d, i) => {
   //   if (!d.data['lic-geral']) {

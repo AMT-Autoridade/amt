@@ -1,34 +1,73 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import _ from 'lodash';
 import c from 'classnames';
-import scrollToElement from 'scroll-to-element';
+import scrollIntoView from 'scroll-into-view';
 
 var App = React.createClass({
   propTypes: {
     routes: T.array,
+    params: T.object,
     location: T.object,
     children: T.object,
     national: T.object
   },
 
+  getInitialState: function () {
+    return {
+      showHeader: !this.props.params.nut
+    };
+  },
+
+  ignoreNextSectionChange: false,
+
+  isAutoScrolling: false,
+
   goToAnchor: function (hash) {
     if (!hash) return;
     let el = document.querySelector(hash);
     if (el) {
-      scrollToElement(el);
+      this.isAutoScrolling = true;
+      scrollIntoView(el, {time: 500}, () => {
+        this.isAutoScrolling = false;
+      });
+    }
+  },
+
+  onSroll: function (e) {
+    let introEl = document.getElementById('intro');
+    if (introEl) {
+      let introHeight = introEl.getBoundingClientRect().height;
+      if (window.pageYOffset >= introHeight - 80) {
+        !this.state.showHeader && this.setState({showHeader: true});
+      } else {
+        this.state.showHeader && this.setState({showHeader: false});
+      }
+    }
+  },
+
+  onSectionChange: function (sectionId, type) {
+    if (!this.isAutoScrolling) {
+      this.ignoreNextSectionChange = true;
+      let basepath = type === 'nut' ? `/nuts/${this.props.params.nut}` : '/';
+      hashHistory.push(`${basepath}#${sectionId}`);
     }
   },
 
   componentDidMount: function () {
     this.goToAnchor(this.props.location.hash);
+    this.onSroll = _.throttle(this.onSroll, 50);
+    document.addEventListener('scroll', this.onSroll);
   },
 
   componentWillReceiveProps: function (nextProps) {
     if (this.props.location.hash !== nextProps.location.hash) {
-      this.goToAnchor(nextProps.location.hash);
+      if (!this.ignoreNextSectionChange) {
+        this.goToAnchor(nextProps.location.hash);
+      }
+      this.ignoreNextSectionChange = false;
     }
   },
 
@@ -46,7 +85,7 @@ var App = React.createClass({
 
     return (
       <div className={c('page', pageClass)}>
-        <header id='page-header' className='header-fixed'>
+        <header id='page-header' className={c('header-fixed', {'header-active': this.state.showHeader})}>
           <nav className='page-nav container-wrapper'>
             <h1 id='page-logo'><Link to='/'>Autoridade da Mobilidade e dos Transportes</Link></h1>
             <ul className='primary-nav'>
@@ -57,7 +96,9 @@ var App = React.createClass({
           </nav>
         </header>
         <main className='page__body' role='main'>
-          {this.props.children}
+          {React.cloneElement(this.props.children, {
+            onSectionChange: this.onSectionChange
+          })}
         </main>
       </div>
     );

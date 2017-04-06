@@ -3,6 +3,7 @@ import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { Link, hashHistory } from 'react-router';
 import c from 'classnames';
+import _ from 'lodash';
 
 import { fetchNational, fetchMapData } from '../actions';
 
@@ -20,9 +21,21 @@ var Home = React.createClass({
     location: T.object,
     national: T.object,
     mapData: T.object,
+    onSectionChange: T.func,
     _fetchNational: T.func,
     _fetchMapData: T.func
   },
+
+  sections: [
+    {id: 'intro', active: false},
+    {id: 'licencas', active: false},
+    {id: 'mobilidade', active: false},
+    {id: 'estacionamento', active: false},
+    {id: 'distribuicao', active: false},
+    {id: 'evolucao', active: false},
+    {id: 'indicadores', active: false},
+    {id: 'conclusoes', active: false}
+  ],
 
   onMapClick: function (data) {
     // Find the right nut.
@@ -41,13 +54,35 @@ var Home = React.createClass({
     );
   },
 
+  onSroll: function (e) {
+    this.sections.forEach(sec => {
+      let sectionEl = document.getElementById(sec.id);
+      if (sectionEl) {
+        let elY = sectionEl.getBoundingClientRect().y;
+        sec.active = elY <= 10;
+      }
+    });
+
+    let active = _.findLast(this.sections, ['active', true]);
+    if (this.props.location.hash !== `#${active.id}`) {
+      this.props.onSectionChange(active.id, 'national');
+    }
+  },
+
   componentDidMount: function () {
+    this.onSroll = _.throttle(this.onSroll, 50);
+    document.addEventListener('scroll', this.onSroll);
+
     if (!this.props.national.fetched) {
       this.props._fetchNational();
     }
     if (!this.props.mapData.fetched) {
       this.props._fetchMapData();
     }
+  },
+
+  componentWillUnmount: function () {
+    document.removeEventListener('scroll', this.onSroll);
   },
 
   render: function () {

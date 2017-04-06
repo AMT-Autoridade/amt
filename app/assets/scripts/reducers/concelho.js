@@ -31,6 +31,7 @@ export default function reducer (state = initialState, action) {
 }
 
 function processData (concelho) {
+  console.log('processing concelho');
   // Total licenças 2016.
   concelho.data.licencas2016 = _.last(concelho.data['lic-geral']).value + _.last(concelho.data['lic-mob-reduzida']).value;
 

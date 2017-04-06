@@ -21,9 +21,19 @@ var Nuts = React.createClass({
     mapData: T.object,
     nut: T.object,
     national: T.object,
+    onSectionChange: T.func,
     _fetchNut: T.func,
     _fetchMapData: T.func
   },
+
+  sections: [
+    {id: 'licencas', active: false},
+    {id: 'mobilidade', active: false},
+    {id: 'estacionamento', active: false},
+    {id: 'distribuicao', active: false},
+    {id: 'indicadores', active: false},
+    {id: 'evolucao', active: false}
+  ],
 
   onMapClick: function (data) {
     // Find the right nut.
@@ -42,6 +52,21 @@ var Nuts = React.createClass({
     );
   },
 
+  onSroll: function (e) {
+    this.sections.forEach(sec => {
+      let sectionEl = document.getElementById(sec.id);
+      if (sectionEl) {
+        let elY = sectionEl.getBoundingClientRect().y;
+        sec.active = elY <= 10;
+      }
+    });
+
+    let active = _.findLast(this.sections, ['active', true]);
+    if (this.props.location.hash !== `#${active.id}`) {
+      this.props.onSectionChange(active.id, 'nut');
+    }
+  },
+
   overlayInfoContent: function () {
     return (
       <div className='map-aa-info'>
@@ -54,11 +79,18 @@ var Nuts = React.createClass({
   },
 
   componentDidMount: function () {
+    this.onSroll = _.throttle(this.onSroll, 50);
+    document.addEventListener('scroll', this.onSroll);
+
     this.props._fetchNut(this.props.params.nut);
 
     if (!this.props.mapData.fetched) {
       this.props._fetchMapData();
     }
+  },
+
+  componentWillUnmount: function () {
+    document.removeEventListener('scroll', this.onSroll);
   },
 
   render: function () {

@@ -8,9 +8,13 @@ const initialState = {
   }
 };
 
+// Cache processing.
+let processed = false;
+
 export default function reducer (state = initialState, action) {
   switch (action.type) {
     case INVALIDATE_NATIONAL:
+      processed = false;
       return Object.assign({}, state, initialState);
     case REQUEST_NATIONAL:
       return Object.assign({}, state, { error: null, fetching: true, fetched: false });
@@ -20,7 +24,8 @@ export default function reducer (state = initialState, action) {
       state = Object.assign({}, state, { fetching: false, fetched: true });
       if (action.error) {
         state.error = action.error;
-      } else {
+      } else if (!processed) {
+        processed = true;
         state.data = processData(action.data);
       }
       break;
@@ -29,6 +34,7 @@ export default function reducer (state = initialState, action) {
 }
 
 function processData (rawData) {
+  console.log('processing national');
   let nuts = rawData.results;
   let data = {nuts, dormidas: rawData.dormidas};
 

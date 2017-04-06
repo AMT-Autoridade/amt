@@ -22,21 +22,21 @@ var Map = React.createClass({
     overlayInfoContent: T.func
   },
 
-  chart: null,
+  ptMap: null,
 
   onWindowResize: function () {
-    this.chart.checkSize();
+    this.ptMap.checkSize();
   },
 
   componentDidMount: function () {
-    // console.log('LineChart componentDidMount');
+    // console.log('PtMap componentDidMount');
     // Debounce event.
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
     window.addEventListener('resize', this.onWindowResize);
-    this.chart = Chart();
+    this.ptMap = PtMap();
 
-    d3.select(this.refs.container).call(this.chart
+    d3.select(this.refs.container).call(this.ptMap
       .geometries(this.props.geometries)
       .data(this.props.data)
       .nut(this.props.nut)
@@ -49,33 +49,33 @@ var Map = React.createClass({
 
   componentWillUnmount: function () {
     window.removeEventListener('resize', this.onWindowResize);
-    this.chart.destroy();
+    this.ptMap.destroy();
   },
 
   componentDidUpdate: function (prevProps/* prevState */) {
-    this.chart.pauseUpdate();
+    this.ptMap.pauseUpdate();
     if (prevProps.geometries !== this.props.geometries) {
-      this.chart.geometries(this.props.geometries);
+      this.ptMap.geometries(this.props.geometries);
     }
     if (prevProps.data !== this.props.data) {
-      this.chart.data(this.props.data);
+      this.ptMap.data(this.props.data);
     }
     if (prevProps.nut !== this.props.nut) {
-      this.chart.nut(this.props.nut);
+      this.ptMap.nut(this.props.nut);
     }
     if (prevProps.onClick !== this.props.onClick) {
-      this.chart.onClick(this.props.onClick);
+      this.ptMap.onClick(this.props.onClick);
     }
     if (prevProps.popoverContent !== this.props.popoverContent) {
-      this.chart.popoverContent(this.props.popoverContent);
+      this.ptMap.popoverContent(this.props.popoverContent);
     }
     if (prevProps.overlayInfoContent !== this.props.overlayInfoContent) {
-      this.chart.overlayInfoContent(this.props.overlayInfoContent);
+      this.ptMap.overlayInfoContent(this.props.overlayInfoContent);
     }
     if (prevProps.concelho !== this.props.concelho) {
-      this.chart.concelho(this.props.concelho);
+      this.ptMap.concelho(this.props.concelho);
     }
-    this.chart.continueUpdate();
+    this.ptMap.continueUpdate();
   },
 
   render: function () {
@@ -87,7 +87,7 @@ var Map = React.createClass({
 
 module.exports = Map;
 
-var Chart = function (options) {
+var PtMap = function (options) {
   //
   // Note: Throughout the code there will be some weird numbers and ratios.
   // These values were computed by manually checking what the optimal values
@@ -97,12 +97,10 @@ var Chart = function (options) {
 
   // Data related variables for which we have getters and setters.
   var _data = null;
-  var _geometries = null;
+  var _topology = null;
 
-  // Islands.
-  var _islandsPortugal = null;
   // Continental Portugal.
-  var _portugal = null;
+  var _portugalFeature = null;
 
   // Pause. Ensure that all data is added before redrawing stuff.
   var _pauseUpdate = false;
@@ -162,15 +160,18 @@ var Chart = function (options) {
    * @return {Object}    Topojson
    */
   const getIsland = (ids) => {
-    var island = _.cloneDeep(_islandsPortugal);
-    island.geometries = island.geometries.filter(o => {
-      let id = id = o.properties.id;
-      if (id.length === 4) {
-        id = id.substring(0, 2);
-      }
-      return isIn(id, ids);
-    });
-    return topojson.feature(_geometries, island);
+    var topoIsland = {
+      type: 'GeometryCollection',
+      geometries: _topology.objects.all_areas.geometries.filter(o => {
+        let id = id = o.properties.id;
+        if (id.length === 4) {
+          id = id.substring(0, 2);
+        }
+        return isIn(id, ids);
+      })
+    };
+
+    return topojson.feature(_topology, topoIsland);
   };
 
   // Açores Feature and their coordinates to allow for reprojection.
@@ -324,7 +325,7 @@ var Chart = function (options) {
       let additionalHOffset = type === 'island' ? 400 : 0;
       let path = getPathFn(data.center, [data.offset[0], data.offset[1] + additionalHOffset]);
 
-      return function (sel) {
+      return function drawFeatureSel (sel) {
         sel = sel.attr('d', path)
           .attr('class', d => `aa--${d.properties.type}`)
           .style('stroke', '#fff')
@@ -370,7 +371,7 @@ var Chart = function (options) {
     }
 
     // Returns a function to draw the archipelago.
-    return function (selection) {
+    return function drawFeatureGroupSel (selection) {
       selection.enter().each(function (d, i) {
         let el = d3.select(this);
 
@@ -415,7 +416,7 @@ var Chart = function (options) {
         ];
 
         const projection = d3.geoMercator()
-          .fitExtent(bounds, topojson.feature(_geometries, _nut));
+          .fitExtent(bounds, topojson.feature(_topology, _nut));
 
         path = d3.geoPath().projection(projection);
         // END path calculation.
@@ -493,9 +494,9 @@ var Chart = function (options) {
   /**
    * Main chart function
    * @param  {element} selection  d3 selection
-   * @return {chartFn}
+   * @return {mapVizFn}
    */
-  function chartFn (selection) {
+  function mapVizFn (selection) {
     $el = selection;
 
     var layers = {
@@ -542,7 +543,7 @@ var Chart = function (options) {
             .data([{
               id: 1,
               center: [-8.2245, 39.3999],
-              feature: topojson.feature(_geometries, _portugal),
+              feature: _portugalFeature,
               offset: [-42, 0]
             }])
             .call(drawFeatureGroup({name: 'continente', type: 'main'}));
@@ -650,7 +651,7 @@ var Chart = function (options) {
             .data([{
               id: 99999,
               center: [-8.2245, 39.3999],
-              feature: topojson.feature(_geometries, _nut),
+              feature: topojson.feature(_topology, _nut),
               offset: [0, 0]
             }])
             .call(drawFeatureGroupOverlay({
@@ -672,7 +673,7 @@ var Chart = function (options) {
 
       // Compute the scale value by using fitSize on the country.
       _projectionScaleValue = d3.geoMercator()
-        .fitSize([_width, _height], topojson.feature(_geometries, _portugal))
+        .fitSize([_width, _height], _portugalFeature)
         .scale();
 
       // Default scalar using the global projection scale value.
@@ -711,55 +712,51 @@ var Chart = function (options) {
     updateData();
   }
 
-  chartFn.checkSize = function () {
+  mapVizFn.checkSize = function () {
     _calcSize();
     upateSize();
-    return chartFn;
+    return mapVizFn;
   };
 
-  chartFn.destroy = function () {
+  mapVizFn.destroy = function () {
     // Cleanup.
     hideTooltip();
   };
 
   // --------------------------------------------
   // Getters and setters.
-  chartFn.data = function (d) {
+  mapVizFn.data = function (d) {
     if (!arguments.length) return _data;
     _data = _.cloneDeep(d);
     if (typeof updateData === 'function') updateData();
-    return chartFn;
+    return mapVizFn;
   };
 
-  chartFn.geometries = function (d) {
-    if (!arguments.length) return _geometries;
-    _geometries = _.cloneDeep(d);
-    _islandsPortugal = _.cloneDeep(_geometries.objects.all_areas);
-    _islandsPortugal.geometries = _islandsPortugal.geometries.filter(o => {
-      if (o.properties.type === 'concelho') {
-        if (o.properties.id.length !== 4) {
-          return false;
+  mapVizFn.geometries = function (d) {
+    if (!arguments.length) return _topology;
+    // _topology = jsonClone(d);
+    // Probably there's no need to clone the topology.
+    _topology = d;
+
+    var topoPortugal = {
+      type: 'GeometryCollection',
+      geometries: _topology.objects.all_areas.geometries.filter(o => {
+        if (o.properties.type === 'concelho') {
+          let id = o.properties.id.substring(0, o.properties.id.length === 3 ? 1 : 2);
+          return id < 30;
         }
-        return parseInt(o.properties.id.substring(0, 2)) > 30;
-      }
-      return o.properties.type === 'distrito' && parseInt(o.properties.id) > 30;
-    });
+        if (o.properties.type === 'nut3') {
+          return ['PT200', 'PT300'].indexOf(o.properties.id) === -1;
+        }
+      })
+    };
 
-    _portugal = _.cloneDeep(_geometries.objects.all_areas);
-    _portugal.geometries = _portugal.geometries.filter(o => {
-      if (o.properties.type === 'concelho') {
-        let id = o.properties.id.substring(0, o.properties.id.length === 3 ? 1 : 2);
-        return id < 30;
-      }
-      if (o.properties.type === 'nut3') {
-        return ['PT200', 'PT300'].indexOf(o.properties.id) === -1;
-      }
-    });
+    _portugalFeature = topojson.feature(_topology, topoPortugal);
 
-    return chartFn;
+    return mapVizFn;
   };
 
-  chartFn.nut = function (d) {
+  mapVizFn.nut = function (d) {
     if (!arguments.length) return _nut;
 
     // Special handling of archipelagos
@@ -772,7 +769,7 @@ var Chart = function (options) {
     // to know which concelhos belong to the nut.
     } else if (d) {
       let nutConcelhos = concelhosMatrix.find(o => o.id === d);
-      _nut = _.cloneDeep(_geometries.objects.all_areas);
+      _nut = _.cloneDeep(_topology.objects.all_areas);
       _nut.geometries = _nut.geometries.filter(o => {
         if (o.properties.type === 'concelho') {
           return nutConcelhos.concelhos.indexOf(parseInt(o.properties.id)) !== -1;
@@ -782,47 +779,47 @@ var Chart = function (options) {
     }
 
     if (typeof updateData === 'function') updateData();
-    return chartFn;
+    return mapVizFn;
   };
 
-  chartFn.concelho = function (d) {
+  mapVizFn.concelho = function (d) {
     if (!arguments.length) return _concelho;
     _concelho = d;
     if (typeof updateData === 'function') updateData();
-    return chartFn;
+    return mapVizFn;
   };
 
-  chartFn.onClick = function (d) {
+  mapVizFn.onClick = function (d) {
     if (!arguments.length) return _onClickFn;
     _onClickFn = d;
     if (typeof updateData === 'function') updateData();
-    return chartFn;
+    return mapVizFn;
   };
 
-  chartFn.popoverContent = function (d) {
+  mapVizFn.popoverContent = function (d) {
     if (!arguments.length) return _popoverContentFn;
     _popoverContentFn = d;
     if (typeof updateData === 'function') updateData();
-    return chartFn;
+    return mapVizFn;
   };
 
-  chartFn.overlayInfoContent = function (d) {
+  mapVizFn.overlayInfoContent = function (d) {
     if (!arguments.length) return _overlayInfoContentFn;
     _overlayInfoContentFn = d;
     if (typeof updateData === 'function') updateData();
-    return chartFn;
+    return mapVizFn;
   };
 
-  chartFn.pauseUpdate = function () {
+  mapVizFn.pauseUpdate = function () {
     _pauseUpdate = true;
-    return chartFn;
+    return mapVizFn;
   };
 
-  chartFn.continueUpdate = function () {
+  mapVizFn.continueUpdate = function () {
     _pauseUpdate = false;
     if (typeof updateData === 'function') updateData();
-    return chartFn;
+    return mapVizFn;
   };
 
-  return chartFn;
+  return mapVizFn;
 };
