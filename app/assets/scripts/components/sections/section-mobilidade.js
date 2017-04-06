@@ -152,7 +152,7 @@ var SectionMobilidade = React.createClass({
 
       return {
         id: m.id,
-        color: mobred ? '#FFCC45' : '#f5f5f5'
+        color: mobred ? '#FFCC45' : '#f2f2f2'
       };
     });
 

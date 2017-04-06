@@ -146,7 +146,6 @@ var SectionDistribuicao = React.createClass({
 
     return (
       <div>
-        <h6 className='map-title'>Vagas por município</h6>
         <Map
           className='map-svg'
           geometries={this.props.mapGeometries.data}
@@ -157,6 +156,7 @@ var SectionDistribuicao = React.createClass({
         />
 
         <div className='map-legend'>
+          <h6 className='legend-title'>Vagas por município:</h6>
           <ul className='color-legend inline'>
             <li><span style={{backgroundColor: getColor(10)}}></span>&lt; 10</li>
             <li><span style={{backgroundColor: getColor(50)}}></span>11 a 50</li>
