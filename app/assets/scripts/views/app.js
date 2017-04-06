@@ -14,6 +14,12 @@ var App = React.createClass({
     national: T.object
   },
 
+  getInitialState: function () {
+    return {
+      showHeader: false
+    };
+  },
+
   goToAnchor: function (hash) {
     if (!hash) return;
     let el = document.querySelector(hash);
@@ -22,8 +28,19 @@ var App = React.createClass({
     }
   },
 
+  onSroll: function (e) {
+    let introHeight = document.getElementById('intro').getBoundingClientRect().height;
+    if (window.pageYOffset >= introHeight - 80) {
+      !this.state.showHeader && this.setState({showHeader: true});
+    } else {
+      this.state.showHeader && this.setState({showHeader: false});
+    }
+  },
+
   componentDidMount: function () {
     this.goToAnchor(this.props.location.hash);
+    this.onSroll = _.throttle(this.onSroll, 50);
+    document.addEventListener('scroll', this.onSroll);
   },
 
   componentWillReceiveProps: function (nextProps) {
@@ -46,7 +63,7 @@ var App = React.createClass({
 
     return (
       <div className={c('page', pageClass)}>
-        <header id='page-header' className='header-fixed'>
+        <header id='page-header' className={c('header-fixed', {'header-active': this.state.showHeader})}>
           <nav className='page-nav container-wrapper'>
             <h1 id='page-logo'><Link to='/'>Autoridade da Mobilidade e dos Transportes</Link></h1>
             <ul className='primary-nav'>
