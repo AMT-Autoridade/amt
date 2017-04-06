@@ -58,13 +58,13 @@ var Home = React.createClass({
     this.sections.forEach(sec => {
       let sectionEl = document.getElementById(sec.id);
       if (sectionEl) {
-        let elY = sectionEl.getBoundingClientRect().y;
+        let elY = sectionEl.getBoundingClientRect().top;
         sec.active = elY <= 10;
       }
     });
 
     let active = _.findLast(this.sections, ['active', true]);
-    if (this.props.location.hash !== `#${active.id}`) {
+    if (active && this.props.location.hash !== `#${active.id}`) {
       this.props.onSectionChange(active.id, 'national');
     }
   },
