@@ -17,7 +17,7 @@ var App = React.createClass({
 
   getInitialState: function () {
     return {
-      showHeader: !this.props.params.nut
+      showHeader: !!this.props.params.nut
     };
   },
 
@@ -60,6 +60,8 @@ var App = React.createClass({
     this.goToAnchor(this.props.location.hash);
     this.onSroll = _.throttle(this.onSroll, 50);
     document.addEventListener('scroll', this.onSroll);
+    // Call onScroll to show header if the page loads in a section.
+    this.onSroll();
   },
 
   componentWillReceiveProps: function (nextProps) {
