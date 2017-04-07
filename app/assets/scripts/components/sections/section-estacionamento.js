@@ -30,6 +30,29 @@ var SectionEstacionamento = React.createClass({
     nd: 'Indefinido'
   },
 
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    this.chartsRef.indexOf(ref) === -1 && this.chartsRef.push(ref);
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    window.removeEventListener('resize', this.onWindowResize);
+  },
+
   renderPercentEstacionamento: function () {
     let data = {
       fixo: {value: 0},
@@ -64,7 +87,7 @@ var SectionEstacionamento = React.createClass({
           <span className='triangle'></span>
         </ul>
       );
-    }); 
+    });
 
     let chartData = {
       labels: data.map(o => o.name),
@@ -77,6 +100,7 @@ var SectionEstacionamento = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -99,7 +123,7 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={240}/>;
+    return <BarChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef('chart-percent-est')}/>;
   },
 
   renderCountEstacionamento: function () {
@@ -161,6 +185,7 @@ var SectionEstacionamento = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -181,7 +206,7 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <PolarChart data={chartData} options={chartOptions} height={240}/>;
+    return <PolarChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef('chart-count-est')}/>;
   },
 
   renderMap: function () {

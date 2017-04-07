@@ -24,6 +24,29 @@ var SectionResidentes = React.createClass({
     overlayInfoContent: T.func
   },
 
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    this.chartsRef.indexOf(ref) === -1 && this.chartsRef.push(ref);
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    window.removeEventListener('resize', this.onWindowResize);
+  },
+
   renderLicencas1000Chart: function (lic1000Data) {
     let l = lic1000Data.labels.length - 1;
 
@@ -53,6 +76,7 @@ var SectionResidentes = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -80,7 +104,7 @@ var SectionResidentes = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={220}/>;
+    return <LineChart data={chartData} options={chartOptions} height={220} ref={this.addChartRef('chart-lic1000')}/>;
   },
 
   renderMap: function () {

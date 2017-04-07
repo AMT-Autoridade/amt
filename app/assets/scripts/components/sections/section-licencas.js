@@ -23,6 +23,29 @@ var SectionLicencas = React.createClass({
     overlayInfoContent: T.func
   },
 
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    this.chartsRef.indexOf(ref) === -1 && this.chartsRef.push(ref);
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    window.removeEventListener('resize', this.onWindowResize);
+  },
+
   renderChart: function () {
     let dataList = _(this.props.adminList)
       .sortBy('data.licencas2016')
@@ -57,6 +80,7 @@ var SectionLicencas = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -81,7 +105,7 @@ var SectionLicencas = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={120}/>;
+    return <BarChart data={chartData} options={chartOptions} height={120} ref={this.addChartRef('chart')} />;
   },
 
   renderMap: function () {

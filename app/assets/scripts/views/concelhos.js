@@ -22,6 +22,19 @@ var Concelho = React.createClass({
     _fetchMapData: T.func
   },
 
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    this.chartsRef.indexOf(ref) === -1 && this.chartsRef.push(ref);
+    return ref;
+  },
+
   onMapClick: function (data) {
     // Find the right nut.
     let slug = this.props.nut.data.concelhos.find(o => o.id === data.id).slug;
@@ -51,11 +64,18 @@ var Concelho = React.createClass({
   },
 
   componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
     this.props._fetchConcelho(this.props.params.nut, this.props.params.concelho);
 
     if (!this.props.mapData.fetched) {
       this.props._fetchMapData();
     }
+  },
+
+  componentWillUnmount: function () {
+    window.removeEventListener('resize', this.onWindowResize);
   },
 
   componentWillReceiveProps: function (nextProps) {
@@ -65,7 +85,7 @@ var Concelho = React.createClass({
     }
   },
 
-  renderLicencas1000Chart: function (lic1000Data) {
+  renderLicencas1000Chart: function (lic1000Data, id) {
     let l = lic1000Data.labels.length - 1;
 
     let tooltipFn = makeTooltip(entryIndex => {
@@ -121,7 +141,7 @@ var Concelho = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={240}/>;
+    return <LineChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef(`chart-${id}`)}/>;
   },
 
   renderTimelineChart: function () {
@@ -183,7 +203,7 @@ var Concelho = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={240}/>;
+    return <LineChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef(`chart-timeline`)}/>;
   },
 
   renderLic1000HabChart: function () {
@@ -210,7 +230,7 @@ var Concelho = React.createClass({
         }
       ], d => d.data[0])
     };
-    return this.renderLicencas1000Chart(chartLic1000Had);
+    return this.renderLicencas1000Chart(chartLic1000Had, '1000hab');
   },
 
   renderLic1000DormidasChart: function () {
@@ -236,7 +256,7 @@ var Concelho = React.createClass({
         }
       ], d => d.data[0])
     };
-    return this.renderLicencas1000Chart(chartLic1000Dormidas);
+    return this.renderLicencas1000Chart(chartLic1000Dormidas, '1000dor');
   },
 
   renderMap: function () {
