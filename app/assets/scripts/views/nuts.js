@@ -35,10 +35,10 @@ var Nuts = React.createClass({
     {id: 'evolucao', active: false}
   ],
 
-  onMapClick: function (data) {
+  onMapClick: function (section, data) {
     // Find the right nut.
     let slug = this.props.nut.data.concelhos.find(o => o.id === data.id).slug;
-    hashHistory.push(`/nuts/${this.props.params.nut}/concelhos/${slug}`);
+    hashHistory.push(`/nuts/${this.props.params.nut}/concelhos/${slug}#${section}`);
   },
 
   popoverContent: function (data) {
@@ -67,11 +67,11 @@ var Nuts = React.createClass({
     }
   },
 
-  overlayInfoContent: function () {
+  overlayInfoContent: function (section) {
     return (
       <div className='map-aa-info'>
         <ul className='map-aa-list inline-list'>
-          <li><a href='#/' title='Ir para vista Nacional'>{'<'}</a></li>
+          <li><a href={`#/#${section}`} title='Ir para vista Nacional'>{'<'}</a></li>
           <li>{this.props.nut.data.name}</li>
         </ul>
       </div>
