@@ -12,7 +12,8 @@ var App = React.createClass({
     params: T.object,
     location: T.object,
     children: T.object,
-    national: T.object
+    national: T.object,
+    nut: T.object
   },
 
   getInitialState: function () {
@@ -75,10 +76,13 @@ var App = React.createClass({
   },
 
   componentDidUpdate: function (prevProps) {
-    // Once national is loaded navigate.
-    // Use componentDidUpdate because we have to ensure that the elements
-    // were actually rendered.
-    if (!prevProps.national.fetched && this.props.national.fetched) {
+    // Several different things trigger a scroll to an anchor:
+    // - National data being loaded.
+    // - Nut data being loaded.
+    // - Path change.
+    if (!prevProps.national.fetched && this.props.national.fetched ||
+    !prevProps.nut.fetched && this.props.nut.fetched ||
+    prevProps.location.pathname !== this.props.location.pathname) {
       this.goToAnchor(this.props.location.hash);
     }
   },
@@ -113,7 +117,8 @@ var App = React.createClass({
 
 function selector (state) {
   return {
-    national: state.national
+    national: state.national,
+    nut: state.nut
   };
 }
 
