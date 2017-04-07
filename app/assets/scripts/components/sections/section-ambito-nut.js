@@ -19,6 +19,7 @@ var SectionDistribuicao = React.createClass({
     mapGeometries: T.object,
     municipios: T.array,
     onMapClick: T.func,
+    popoverContent: T.func,
     overlayInfoContent: T.func
   },
 
@@ -36,7 +37,9 @@ var SectionDistribuicao = React.createClass({
   },
 
   addChartRef: function (ref) {
-    this.chartsRef.indexOf(ref) === -1 && this.chartsRef.push(ref);
+    if (this.chartsRef.indexOf(ref) === -1) {
+      this.chartsRef = this.chartsRef.concat([ref]);
+    }
     return ref;
   },
 
@@ -47,6 +50,7 @@ var SectionDistribuicao = React.createClass({
   },
 
   componentWillUnmount: function () {
+    this.chartsRef = [];
     window.removeEventListener('resize', this.onWindowResize);
   },
 
@@ -176,6 +180,7 @@ var SectionDistribuicao = React.createClass({
           data={municipiosVagas}
           nut={this.props.adminId}
           onClick={this.props.onMapClick.bind(null, 'ambito')}
+          popoverContent={this.props.popoverContent}
           overlayInfoContent={this.props.overlayInfoContent.bind(null, 'ambito')}
         />
 

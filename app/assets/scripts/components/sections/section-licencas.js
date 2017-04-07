@@ -32,7 +32,9 @@ var SectionLicencas = React.createClass({
   },
 
   addChartRef: function (ref) {
-    this.chartsRef.indexOf(ref) === -1 && this.chartsRef.push(ref);
+    if (this.chartsRef.indexOf(ref) === -1) {
+      this.chartsRef = this.chartsRef.concat([ref]);
+    }
     return ref;
   },
 
@@ -43,6 +45,7 @@ var SectionLicencas = React.createClass({
   },
 
   componentWillUnmount: function () {
+    this.chartsRef = [];
     window.removeEventListener('resize', this.onWindowResize);
   },
 
