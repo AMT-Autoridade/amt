@@ -26,6 +26,29 @@ var SectionEvolucao = React.createClass({
     overlayInfoContent: T.func
   },
 
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    this.chartsRef.indexOf(ref) === -1 && this.chartsRef.push(ref);
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    window.removeEventListener('resize', this.onWindowResize);
+  },
+
   renderTimelineChart: function () {
     let nationalTimeline = this.props.licencasTimeline;
     let l = nationalTimeline.length - 1;
@@ -58,6 +81,7 @@ var SectionEvolucao = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -85,7 +109,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={300}/>;
+    return <LineChart data={chartData} options={chartOptions} height={300} ref={this.addChartRef('chart-timeline')}/>;
   },
 
   renderTopMunicipiosChart: function () {
@@ -116,6 +140,7 @@ var SectionEvolucao = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -138,7 +163,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={370}/>;
+    return <BarChart data={chartData} options={chartOptions} height={370} ref={this.addChartRef('chart-municipios')}/>;
   },
 
   renderChangeLicencasChart: function () {
@@ -183,6 +208,7 @@ var SectionEvolucao = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -194,7 +220,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <DoughnutChart data={chartData} options={chartOptions} height={280}/>;
+    return <DoughnutChart data={chartData} options={chartOptions} height={280} ref={this.addChartRef('chart-change')}/>;
   },
 
   renderMap: function () {

@@ -26,6 +26,29 @@ var SectionMobilidade = React.createClass({
     overlayInfoContent: T.func
   },
 
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    this.chartsRef.indexOf(ref) === -1 && this.chartsRef.push(ref);
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    window.removeEventListener('resize', this.onWindowResize);
+  },
+
   renderEvolutionChart: function () {
     let licencasMobReduzida2016 = this.props.licencasMobReduzida2016;
     let licencasMobReduzida2006 = this.props.licencasMobReduzida2006;
@@ -64,6 +87,7 @@ var SectionMobilidade = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -85,7 +109,7 @@ var SectionMobilidade = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={200}/>;
+    return <BarChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef('chart-evolution')}/>;
   },
 
   renderLicencasChart: function () {
@@ -130,6 +154,7 @@ var SectionMobilidade = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -141,7 +166,7 @@ var SectionMobilidade = React.createClass({
       }
     };
 
-    return <PieChart data={chartData} options={chartOptions} height={200}/>;
+    return <PieChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef('chart-lic')}/>;
   },
 
   renderMap: function () {
