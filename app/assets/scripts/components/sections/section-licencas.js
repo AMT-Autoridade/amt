@@ -135,9 +135,9 @@ var SectionLicencas = React.createClass({
           geometries={this.props.mapGeometries.data}
           data={licencasMunicipios}
           nut={this.props.adminId}
-          onClick={this.props.onMapClick}
+          onClick={this.props.onMapClick.bind(null, 'licencas')}
           popoverContent={this.props.popoverContent}
-          overlayInfoContent={this.props.overlayInfoContent}
+          overlayInfoContent={this.props.overlayInfoContent.bind(null, 'licencas')}
         />
 
        <div className='map-legend'>

@@ -65,7 +65,8 @@ var App = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
-    if (this.props.location.hash !== nextProps.location.hash) {
+    if (this.props.location.hash !== nextProps.location.hash ||
+    this.props.location.pathname !== nextProps.location.pathname) {
       if (!this.ignoreNextSectionChange) {
         this.goToAnchor(nextProps.location.hash);
       }

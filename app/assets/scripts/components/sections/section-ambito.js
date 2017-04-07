@@ -20,7 +20,8 @@ var SectionDistribuicao = React.createClass({
     mapGeometries: T.object,
     municipios: T.array,
     onMapClick: T.func,
-    popoverContent: T.func
+    popoverContent: T.func,
+    overlayInfoContent: T.func
   },
 
   chartsRef: [],
@@ -173,8 +174,9 @@ var SectionDistribuicao = React.createClass({
           geometries={this.props.mapGeometries.data}
           data={municipiosVagas}
           nut={this.props.adminId}
-          onClick={this.props.onMapClick}
+          onClick={this.props.onMapClick.bind(null, 'ambito')}
           popoverContent={this.props.popoverContent}
+          overlayInfoContent={this.props.overlayInfoContent.bind(null, 'ambito')}
         />
         <div className='map-legend'>
           <h6 className='legend-title'>Vagas por Município:</h6>
