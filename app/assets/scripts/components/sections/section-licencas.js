@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import { Link } from 'react-router';
 import { Bar as BarChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
@@ -172,7 +173,11 @@ var SectionLicencas = React.createClass({
         <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
-              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h3 className='section-category'>
+                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                {this.props.adminLevel === 'nut' ? ' - ' : null}
+                {this.props.adminName}
+              </h3>
               <h1>Licenças e Contingentes</h1>
               <p className="lead">A prestação de serviços de táxi implica a posse de uma licença por cada veículo utilizado. Os municípios atribuem estas licenças e definem o número máximo de veículos que pode ser licenciado no seu concelho – o contingente.</p>
             </header>

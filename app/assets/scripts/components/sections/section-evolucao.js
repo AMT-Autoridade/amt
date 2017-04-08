@@ -284,7 +284,11 @@ var SectionEvolucao = React.createClass({
         <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
-              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h3 className='section-category'>
+                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                {this.props.adminLevel === 'nut' ? ' - ' : null}
+                {this.props.adminName}
+              </h3>
               <h1>Evolução 2006&#8212;2016</h1>
               <p className='lead'>Para além de conhecer a realidade atual importa igualmente conhecer a evolução existente. Analisam-se os desenvolvimentos ocorridos de 2006 a 2016.</p>
             </header>

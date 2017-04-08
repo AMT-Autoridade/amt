@@ -256,7 +256,11 @@ var SectionDistribuicao = React.createClass({
         <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
-              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h3 className='section-category'>
+                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                {this.props.adminLevel === 'nut' ? ' - ' : null}
+                {this.props.adminName}
+              </h3>
               <h1>Detalhe Geográfico</h1>
               <p className='lead'>Não obstante as licenças municipais terem âmbito concelhio, apresenta-se a sua distribuição por região (NUTS III).</p>
             </header>
