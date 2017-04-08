@@ -92,7 +92,7 @@ function processData (nut) {
   nut.data.totalMunicipios = nut.concelhos.length;
 
   // Number of municípios with lic-mob-reduzida.
-  nut.data.totalMunicipiosMobReduzida = _.sumBy(nut.concelhos, d => _.last(d.data['lic-mob-reduzida']).value);
+  nut.data.totalMunicipiosMobReduzida = _.sumBy(nut.concelhos, d => _.last(d.data['lic-mob-reduzida']).value ? 1 : 0);
 
   // Compute the timeline at the nut level.
   nut.data.licencasTimeline = _.range(2006, 2017).map((y, i) => {
