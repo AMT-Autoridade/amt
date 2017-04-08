@@ -250,27 +250,29 @@ var SectionDistribuicao = React.createClass({
   render: function () {
     return (
       <div id='distribuicao' className='content-wrapper vertical-center'>
-        <div className='map-wrapper'>
-          {this.renderMap()}
-        </div>
-        <div className='section-wrapper'>
-          <section className='section-container'>
-            <header className='section-header'>
-              <h3 className='section-category'>
-                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
-                {this.props.adminLevel === 'nut' ? ' - ' : null}
-                {this.props.adminName}
-              </h3>
-              <h1>Detalhe Geográfico</h1>
-              <p className='lead'>Não obstante as licenças municipais terem âmbito concelhio, apresenta-se a sua distribuição por região (NUTS III).</p>
-            </header>
-            <div className='section-content'>
-              {this.renderTable()}
-            </div>
-            <footer className='section-footer'>
-              <p><strong>Notas:</strong> Acrónimo de “Nomenclatura das Unidades Territoriais para Fins Estatísticos”. Constitui um sistema hierárquico de divisão do território em regiões, dividindo-se em 3 níveis (NUTS I, NUTS II, NUTS III), definidos tendo por base critérios populacionais, administrativos e geográficos. Atualmente, os 308 municípios nacionais estão agrupados em 25 NUTS III.</p>
-            </footer>
-          </section>
+        <div className='center'>
+          <div className='map-wrapper'>
+            {this.renderMap()}
+          </div>
+          <div className='section-wrapper'>
+            <section className='section-container'>
+              <header className='section-header'>
+                <h3 className='section-category'>
+                  {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                  {this.props.adminLevel === 'nut' ? ' › ' : null}
+                  {this.props.adminName}
+                </h3>
+                <h1>Detalhe Geográfico</h1>
+                <p className='lead'>Não obstante as licenças municipais terem âmbito concelhio, apresenta-se a sua distribuição por região (NUTS III).</p>
+              </header>
+              <div className='section-content'>
+                {this.renderTable()}
+              </div>
+              <footer className='section-footer'>
+                <p><strong>Notas:</strong> Acrónimo de “Nomenclatura das Unidades Territoriais para Fins Estatísticos”. Constitui um sistema hierárquico de divisão do território em regiões, dividindo-se em 3 níveis (NUTS I, NUTS II, NUTS III), definidos tendo por base critérios populacionais, administrativos e geográficos. Atualmente, os 308 municípios nacionais estão agrupados em 25 NUTS III.</p>
+              </footer>
+            </section>
+          </div>
         </div>
       </div>
     );

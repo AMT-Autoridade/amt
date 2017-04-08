@@ -156,34 +156,6 @@ var Home = React.createClass({
             overlayInfoContent={() => { /* noop */ }}
           />
 
-          <SectionMobilidade
-            adminLevel='national'
-            adminName='Portugal'
-            totalMunicipiosMobReduzida={data.totalMunicipiosMobReduzida}
-            totalMunicipios={data.totalMunicipios}
-            licencas2016={data.licencas2016}
-            licencas2006={data.licencas2006}
-            licencasMobReduzida2016={data.licencasMobReduzida2016}
-            licencasMobReduzida2006={data.licencasMobReduzida2006}
-            licencasTimeline={data.licencasTimeline}
-            mapGeometries={this.props.mapData}
-            municipios={data.concelhos}
-            onMapClick={this.onMapClick}
-            popoverContent={this.popoverContent}
-            overlayInfoContent={() => { /* noop */ }}
-          />
-
-          <SectionEstacionamento
-            adminLevel='national'
-            adminName='Portugal'
-            municipios={data.concelhos}
-            totalMunicipios={data.totalMunicipios}
-            mapGeometries={this.props.mapData}
-            onMapClick={this.onMapClick}
-            popoverContent={this.popoverContent}
-            overlayInfoContent={() => { /* noop */ }}
-          />
-
           <SectionAmbito
             adminLevel='national'
             adminName='Portugal'
@@ -224,6 +196,35 @@ var Home = React.createClass({
             popoverContent={this.popoverContent}
             overlayInfoContent={() => { /* noop */ }}
           />
+
+          <SectionMobilidade
+            adminLevel='national'
+            adminName='Portugal'
+            totalMunicipiosMobReduzida={data.totalMunicipiosMobReduzida}
+            totalMunicipios={data.totalMunicipios}
+            licencas2016={data.licencas2016}
+            licencas2006={data.licencas2006}
+            licencasMobReduzida2016={data.licencasMobReduzida2016}
+            licencasMobReduzida2006={data.licencasMobReduzida2006}
+            licencasTimeline={data.licencasTimeline}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+            overlayInfoContent={() => { /* noop */ }}
+          />
+
+          <SectionEstacionamento
+            adminLevel='national'
+            adminName='Portugal'
+            municipios={data.concelhos}
+            totalMunicipios={data.totalMunicipios}
+            mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+            overlayInfoContent={() => { /* noop */ }}
+          />
+
         </div>
 
         <SectionConclusoes />
@@ -231,11 +232,11 @@ var Home = React.createClass({
         <ul className='section-nav'>
           <li className={c('nav-item', {active: hash === 'intro'})}><Link to='/#intro'><span>Introdução</span></Link></li>
           <li className={c('nav-item', {active: hash === 'licencas'})}><Link to='/#licencas'><span>Licenças e Contingentes</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'distribuicao'})}><Link to='/#distribuicao'><span>Detalhe Geográfico</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'evolucao'})}><Link to='/#evolucao'><span>Evolução 2006-2016</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'indicadores'})}><Link to='/#indicadores'><span>Indicadores</span></Link></li>
           <li className={c('nav-item', {active: hash === 'mobilidade'})}><Link to='/#mobilidade'><span>Mobilidade Reduzida</span></Link></li>
           <li className={c('nav-item', {active: hash === 'estacionamento'})}><Link to='/#estacionamento'><span>Regime Estacionamento</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'distribuicao'})}><Link to='/#distribuicao'><span>Âmbito Geográfico</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'evolucao'})}><Link to='/#evolucao'><span>Evolução 2006-2016</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'indicadores'})}><Link to='/#indicadores'><span>Outros Indicadores</span></Link></li>
           <li className={c('nav-item', {active: hash === 'conclusoes'})}><Link to='/#conclusoes'><span>Conclusões</span></Link></li>
         </ul>
       </div>

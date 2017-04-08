@@ -205,24 +205,26 @@ var SectionDistribuicao = React.createClass({
   render: function () {
     return (
       <div id='distribuicao' className='content-wrapper vertical-center'>
-        <div className='map-wrapper'>
-          {this.renderMap()}
-        </div>
-        <div className='section-wrapper'>
-          <section className='section-container'>
-            <header className='section-header'>
-              <h3 className='section-category'>
-                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
-                {this.props.adminLevel === 'nut' ? ' - ' : null}
-                {this.props.adminName}
-              </h3>
-              <h1>Detalhe Geográfico</h1>
-              <p className='lead'>Não obstante as licenças municipais terem âmbito concelhio, apresenta-se a sua distribuição por concelho.</p>
-            </header>
-            <div className='section-content'>
-              {this.renderTable()}
-            </div>
-          </section>
+        <div className='center'>
+          <div className='map-wrapper'>
+            {this.renderMap()}
+          </div>
+          <div className='section-wrapper'>
+            <section className='section-container'>
+              <header className='section-header'>
+                <h3 className='section-category'>
+                  {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                  {this.props.adminLevel === 'nut' ? ' › ' : null}
+                  {this.props.adminName}
+                </h3>
+                <h1>Detalhe Geográfico</h1>
+                <p className='lead'>Não obstante as licenças municipais terem âmbito concelhio, apresenta-se a sua distribuição por concelho.</p>
+              </header>
+              <div className='section-content'>
+                {this.renderTable()}
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     );

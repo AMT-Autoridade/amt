@@ -166,51 +166,53 @@ var SectionResidentes = React.createClass({
 
     return (
       <div id='indicadores' className='content-wrapper vertical-center'>
-        <div className='map-wrapper'>
-          {this.renderMap()}
-        </div>
-         <div className='section-wrapper'>
-          <section className='section-container'>
-            <header className='section-header'>
-              <h3 className='section-category'>
-                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
-                {this.props.adminLevel === 'nut' ? ' - ' : null}
-                {this.props.adminName}
-              </h3>
-              <h1>Indicadores</h1>
-              <p className='lead'>Os indicadores que associam o número de táxis a fatores com influência na sua procura é uma forma útil de analisar a realidade e a sua evolução.</p>
-            </header>
+        <div className='center'>
+          <div className='map-wrapper'>
+            {this.renderMap()}
+          </div>
+           <div className='section-wrapper'>
+            <section className='section-container'>
+              <header className='section-header'>
+                <h3 className='section-category'>
+                  {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                  {this.props.adminLevel === 'nut' ? ' › ' : null}
+                  {this.props.adminName}
+                </h3>
+                <h1>Indicadores</h1>
+                <p className='lead'>Os indicadores que associam o número de táxis a fatores com influência na sua procura é uma forma útil de analisar a realidade e a sua evolução.</p>
+              </header>
 
-            <div className='section-content'>
-              <div className='section-stats'>
-                <ul className='two-columns'>
-                  <li>
-                    <span className='stat-number'>{round(this.props.licencasHab, 1)}</span>
-                    <span className='stat-description'>Táxis licenciados por 1000 residentes.</span>
-                  </li>
-                  <li>
-                    <span className='stat-number'>{dormidas}</span>
-                    <span className='stat-description'>Táxis licenciados por 1000 dormidas.</span>
-                  </li>
-                </ul>
-              </div>
+              <div className='section-content'>
+                <div className='section-stats'>
+                  <ul className='two-columns'>
+                    <li>
+                      <span className='stat-number'>{round(this.props.licencasHab, 1)}</span>
+                      <span className='stat-description'>Táxis licenciados por 1000 residentes.</span>
+                    </li>
+                    <li>
+                      <span className='stat-number'>{dormidas}</span>
+                      <span className='stat-description'>Táxis licenciados por 1000 dormidas.</span>
+                    </li>
+                  </ul>
+                </div>
 
-              <div className='two-columns'>
-                <div className='graph'>
-                  <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 residentes:</h6>
-                  {this.renderLicencas1000Chart(this.props.chartLic1000Hab, 'hab')}
-                </div>
-                <div className='graph'>
-                  <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 dormidas:</h6>
-                  {this.renderLicencas1000Chart(this.props.chartLic1000Dor, 'dor')}
+                <div className='two-columns'>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 residentes:</h6>
+                    {this.renderLicencas1000Chart(this.props.chartLic1000Hab, 'hab')}
+                  </div>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 dormidas:</h6>
+                    {this.renderLicencas1000Chart(this.props.chartLic1000Dor, 'dor')}
+                  </div>
                 </div>
               </div>
-            </div>
-            <footer className='section-footer'>
-              <p><strong>Nota I:</strong> Os valores dos indicadores devem ser analisados caso a caso e comparados com particular precaução. A consideração de outros fatores com influência na procura poderá melhor enquadrar as diferenças existentes.</p>
-              <p><strong>Nota II:</strong> Dormidas nos estabelecimentos hoteleiros (estabelecimento cuja atividade principal consiste na prestação de serviços de alojamento e de outros serviços acessórios ou de apoio, mediante pagamento).</p>
-            </footer>
-          </section>
+              <footer className='section-footer'>
+                <p><strong>Nota I:</strong> Os valores dos indicadores devem ser analisados caso a caso e comparados com particular precaução. A consideração de outros fatores com influência na procura poderá melhor enquadrar as diferenças existentes.</p>
+                <p><strong>Nota II:</strong> Dormidas nos estabelecimentos hoteleiros (estabelecimento cuja atividade principal consiste na prestação de serviços de alojamento e de outros serviços acessórios ou de apoio, mediante pagamento).</p>
+              </footer>
+            </section>
+          </div>
         </div>
       </div>
     );
