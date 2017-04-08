@@ -165,6 +165,7 @@ var Home = React.createClass({
             licencas2006={data.licencas2006}
             licencasMobReduzida2016={data.licencasMobReduzida2016}
             licencasMobReduzida2006={data.licencasMobReduzida2006}
+            licencasTimeline={data.licencasTimeline}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
             onMapClick={this.onMapClick}

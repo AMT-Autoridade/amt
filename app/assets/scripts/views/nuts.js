@@ -169,6 +169,7 @@ var Nuts = React.createClass({
             licencas2006={data.data.licencas2006}
             licencasMobReduzida2016={data.data.licencasMobReduzida2016}
             licencasMobReduzida2006={data.data.licencasMobReduzida2006}
+            licencasTimeline={data.data.licencasTimeline}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
             onMapClick={this.onMapClick}

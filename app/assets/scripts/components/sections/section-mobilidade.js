@@ -1,7 +1,7 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { Link } from 'react-router';
-import { Pie as PieChart, Bar as BarChart } from 'react-chartjs-2';
+import { Pie as PieChart, Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
@@ -20,6 +20,7 @@ var SectionMobilidade = React.createClass({
     licencas2006: T.number,
     licencasMobReduzida2016: T.number,
     licencasMobReduzida2006: T.number,
+    licencasTimeline: T.array,
     mapGeometries: T.object,
     municipios: T.array,
     onMapClick: T.func,
@@ -51,69 +52,6 @@ var SectionMobilidade = React.createClass({
   componentWillUnmount: function () {
     this.chartsRef = [];
     window.removeEventListener('resize', this.onWindowResize);
-  },
-
-  renderEvolutionChart: function () {
-    let licencasMobReduzida2016 = this.props.licencasMobReduzida2016;
-    let licencasMobReduzida2006 = this.props.licencasMobReduzida2006;
-
-    let data = [
-      {
-        label: '2006',
-        display: 'Contingente Mobilidade Reduzida em 2006',
-        value: licencasMobReduzida2006
-      },
-      {
-        label: '2016',
-        display: 'Contingente Mobilidade Reduzida em 2016',
-        value: licencasMobReduzida2016
-      }
-    ];
-
-    let tooltipFn = makeTooltip(entryIndex => {
-      let datum = data[entryIndex];
-      return (
-        <ul className='x-small'>
-          <li><span className='tooltip-label'>{datum.label.toLocaleString()}:</span><span className='tooltip-number'>{datum.value.toLocaleString()}</span></li>
-          <span className='triangle'></span>
-        </ul>
-      );
-    });
-
-    let chartData = {
-      labels: _.map(data, 'label'),
-      datasets: [
-        {
-          data: _.map(data, 'value'),
-          backgroundColor: '#00ced1'
-        }
-      ]
-    };
-
-    let chartOptions = {
-      responsive: false,
-      legend: {
-        display: false
-      },
-      scales: {
-        xAxes: [{
-          gridLines: {
-            display: false
-          }
-        }],
-        yAxes: [{
-          display: false
-        }]
-      },
-      tooltips: {
-        enabled: false,
-        mode: 'index',
-        position: 'nearest',
-        custom: tooltipFn
-      }
-    };
-
-    return <BarChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef('chart-evolution')}/>;
   },
 
   renderLicencasChart: function () {
@@ -171,6 +109,71 @@ var SectionMobilidade = React.createClass({
     };
 
     return <PieChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef('chart-lic')}/>;
+  },
+
+  renderTimelineChart: function () {
+    let timeline = this.props.licencasTimeline;
+    let l = timeline.length - 1;
+
+    let tooltipFn = makeTooltip(entryIndex => {
+      let year = timeline[entryIndex];
+      return (
+        <ul>
+          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{year['lic-mob-reduzida'].toLocaleString()}</span></li>
+          <span className='triangle'></span>
+        </ul>
+      );
+    });
+
+    let labels = timeline.map((o, i) => i === 0 || i === l ? o.year : '');
+
+    let chartData = {
+      labels: labels,
+      datasets: [{
+        data: timeline.map(o => o['lic-mob-reduzida']),
+        backgroundColor: '#eaeaea',
+        borderColor: '#00CED1',
+        pointBorderWidth: 0,
+        pointBackgroundColor: '#00CED1',
+        pointRadius: 3
+      }]
+    };
+
+    let chartOptions = {
+      responsive: false,
+      layout: {
+        padding: {
+          top: 10
+        }
+      },
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            maxRotation: 0
+          }
+        }],
+        yAxes: [{
+          display: false,
+          ticks: {
+            min: 0
+          }
+        }]
+      },
+      tooltips: {
+        enabled: false,
+        mode: 'index',
+        position: 'nearest',
+        custom: tooltipFn
+      }
+    };
+
+    return <LineChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef('chart-timeline')}/>;
   },
 
   renderMap: function () {
@@ -265,7 +268,7 @@ var SectionMobilidade = React.createClass({
                 </div>
                 <div className='graph'>
                   <h6 className='legend-title'>Evolução do número de licenças em CMR:</h6>
-                  {this.renderEvolutionChart()}
+                  {this.renderTimelineChart()}
                 </div>
 
               </div>
