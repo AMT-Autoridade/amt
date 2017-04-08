@@ -19,6 +19,7 @@ var SectionDistribuicao = React.createClass({
     mapGeometries: T.object,
     municipios: T.array,
     onMapClick: T.func,
+    popoverContent: T.func,
     overlayInfoContent: T.func
   },
 
@@ -27,11 +28,37 @@ var SectionDistribuicao = React.createClass({
     'infra concelho': 'Infra Concelho'
   },
 
-  renderTrendLineChart: function (data) {
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    if (this.chartsRef.indexOf(ref) === -1) {
+      this.chartsRef = this.chartsRef.concat([ref]);
+    }
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    this.chartsRef = [];
+    window.removeEventListener('resize', this.onWindowResize);
+  },
+
+  renderTrendLineChart: function (data, id) {
     let tooltipFn = makeTooltip(entryIndex => {
       let year = data[entryIndex];
       return (
-         <ul className='x-small'>
+        <ul className='x-small'>
           <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{year.value.toLocaleString()}</span></li>
           <span className='triangle'></span>
         </ul>
@@ -53,10 +80,11 @@ var SectionDistribuicao = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       layout: {
         padding: {
           left: 5,
-          top: 2,
+          top: 3,
           right: 5
         }
       },
@@ -83,7 +111,7 @@ var SectionDistribuicao = React.createClass({
     };
 
     return (
-      <LineChart data={chartData} options={chartOptions} height={40} />
+      <LineChart data={chartData} options={chartOptions} height={40} ref={this.addChartRef(`chart-trend-${id}`)} />
     );
   },
 
@@ -92,7 +120,7 @@ var SectionDistribuicao = React.createClass({
     return (
       <li key={adminArea.id}>
         <span className='table-region'><Link to={url} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
-        <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
+        <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'], adminArea.id)}</div>
         <div className='table-parking'>
           <ul className='inline-list'>
             <li className={c('est est-livre', {active: adminArea.data.estacionamento.indexOf('livre') !== -1})}>L</li>
@@ -151,8 +179,9 @@ var SectionDistribuicao = React.createClass({
           geometries={this.props.mapGeometries.data}
           data={municipiosVagas}
           nut={this.props.adminId}
-          onClick={this.props.onMapClick}
-          overlayInfoContent={this.props.overlayInfoContent}
+          onClick={this.props.onMapClick.bind(null, 'distribuicao')}
+          popoverContent={this.props.popoverContent}
+          overlayInfoContent={this.props.overlayInfoContent.bind(null, 'distribuicao')}
         />
 
         <div className='map-legend'>
@@ -178,7 +207,11 @@ var SectionDistribuicao = React.createClass({
         <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
-              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h3 className='section-category'>
+                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                {this.props.adminLevel === 'nut' ? ' - ' : null}
+                {this.props.adminName}
+              </h3>
               <h1>Âmbito Geográfico</h1>
             </header>
             <div className='section-content'>

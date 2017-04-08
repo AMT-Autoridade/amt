@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import { Link } from 'react-router';
 import { Bar as BarChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
@@ -21,6 +22,32 @@ var SectionLicencas = React.createClass({
     onMapClick: T.func,
     popoverContent: T.func,
     overlayInfoContent: T.func
+  },
+
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    if (this.chartsRef.indexOf(ref) === -1) {
+      this.chartsRef = this.chartsRef.concat([ref]);
+    }
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    this.chartsRef = [];
+    window.removeEventListener('resize', this.onWindowResize);
   },
 
   renderChart: function () {
@@ -57,6 +84,7 @@ var SectionLicencas = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -64,6 +92,10 @@ var SectionLicencas = React.createClass({
         xAxes: [{
           gridLines: {
             display: false
+          },
+          ticks: {
+            fontSize: 10,
+            autoSkip: false
           }
         }],
         yAxes: [{
@@ -81,7 +113,7 @@ var SectionLicencas = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={120}/>;
+    return <BarChart data={chartData} options={chartOptions} height={120} ref={this.addChartRef('chart')} />;
   },
 
   renderMap: function () {
@@ -146,9 +178,9 @@ var SectionLicencas = React.createClass({
           geometries={this.props.mapGeometries.data}
           data={licencasMunicipios}
           nut={this.props.adminId}
-          onClick={this.props.onMapClick}
+          onClick={this.props.onMapClick.bind(null, 'licencas')}
           popoverContent={this.props.popoverContent}
-          overlayInfoContent={this.props.overlayInfoContent}
+          overlayInfoContent={this.props.overlayInfoContent.bind(null, 'licencas')}
         />
 
        <div className='map-legend'>
@@ -176,7 +208,11 @@ var SectionLicencas = React.createClass({
         <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
-              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h3 className='section-category'>
+                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                {this.props.adminLevel === 'nut' ? ' - ' : null}
+                {this.props.adminName}
+              </h3>
               <h1>Licenças e Contingentes</h1>
               <p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p>
             </header>

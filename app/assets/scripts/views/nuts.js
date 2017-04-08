@@ -35,10 +35,10 @@ var Nuts = React.createClass({
     {id: 'evolucao', active: false}
   ],
 
-  onMapClick: function (data) {
+  onMapClick: function (section, data) {
     // Find the right nut.
     let slug = this.props.nut.data.concelhos.find(o => o.id === data.id).slug;
-    hashHistory.push(`/nuts/${this.props.params.nut}/concelhos/${slug}`);
+    hashHistory.push(`/nuts/${this.props.params.nut}/concelhos/${slug}#${section}`);
   },
 
   popoverContent: function (data) {
@@ -56,7 +56,7 @@ var Nuts = React.createClass({
     this.sections.forEach(sec => {
       let sectionEl = document.getElementById(sec.id);
       if (sectionEl) {
-        let elY = sectionEl.getBoundingClientRect().y;
+        let elY = sectionEl.getBoundingClientRect().top;
         sec.active = elY <= 10;
       }
     });
@@ -67,11 +67,11 @@ var Nuts = React.createClass({
     }
   },
 
-  overlayInfoContent: function () {
+  overlayInfoContent: function (section) {
     return (
       <div className='map-aa-info'>
         <ul className='map-aa-list inline-list'>
-          <li><a href='#/' title='Ir para vista Nacional'>{'<'}</a></li>
+          <li><a href={`#/#${section}`} title='Ir para vista Nacional'>{'<'}</a></li>
           <li>{this.props.nut.data.name}</li>
         </ul>
       </div>
@@ -169,6 +169,7 @@ var Nuts = React.createClass({
             licencas2006={data.data.licencas2006}
             licencasMobReduzida2016={data.data.licencasMobReduzida2016}
             licencasMobReduzida2006={data.data.licencasMobReduzida2006}
+            licencasTimeline={data.data.licencasTimeline}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
             onMapClick={this.onMapClick}

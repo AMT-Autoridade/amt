@@ -37,10 +37,10 @@ var Home = React.createClass({
     {id: 'conclusoes', active: false}
   ],
 
-  onMapClick: function (data) {
+  onMapClick: function (section, data) {
     // Find the right nut.
     let slug = this.props.national.data.nuts.find(o => o.id === data.id).slug;
-    hashHistory.push(`/nuts/${slug}`);
+    hashHistory.push(`/nuts/${slug}#${section}`);
   },
 
   popoverContent: function (data) {
@@ -153,6 +153,7 @@ var Home = React.createClass({
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={() => { /* noop */ }}
           />
 
           <SectionMobilidade
@@ -164,10 +165,12 @@ var Home = React.createClass({
             licencas2006={data.licencas2006}
             licencasMobReduzida2016={data.licencasMobReduzida2016}
             licencasMobReduzida2006={data.licencasMobReduzida2006}
+            licencasTimeline={data.licencasTimeline}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={() => { /* noop */ }}
           />
 
           <SectionEstacionamento
@@ -178,6 +181,7 @@ var Home = React.createClass({
             mapGeometries={this.props.mapData}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={() => { /* noop */ }}
           />
 
           <SectionAmbito
@@ -190,6 +194,7 @@ var Home = React.createClass({
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={() => { /* noop */ }}
           />
 
           <SectionEvolucao
@@ -203,6 +208,7 @@ var Home = React.createClass({
             mapGeometries={this.props.mapData}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={() => { /* noop */ }}
           />
 
           <SectionIndicadores
@@ -216,6 +222,7 @@ var Home = React.createClass({
             municipios={data.concelhos}
             onMapClick={this.onMapClick}
             popoverContent={this.popoverContent}
+            overlayInfoContent={() => { /* noop */ }}
           />
         </div>
 

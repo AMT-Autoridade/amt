@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import { Link } from 'react-router';
 import { Bar as BarChart, Polar as PolarChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
@@ -28,6 +29,32 @@ var SectionEstacionamento = React.createClass({
     livre: 'Livre',
     outros: 'Outros',
     nd: 'Indefinido'
+  },
+
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    if (this.chartsRef.indexOf(ref) === -1) {
+      this.chartsRef = this.chartsRef.concat([ref]);
+    }
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    this.chartsRef = [];
+    window.removeEventListener('resize', this.onWindowResize);
   },
 
   renderPercentEstacionamento: function () {
@@ -64,7 +91,7 @@ var SectionEstacionamento = React.createClass({
           <span className='triangle'></span>
         </ul>
       );
-    }); 
+    });
 
     let chartData = {
       labels: data.map(o => o.name),
@@ -77,6 +104,7 @@ var SectionEstacionamento = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -99,7 +127,7 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={240}/>;
+    return <BarChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef('chart-percent-est')}/>;
   },
 
   renderCountEstacionamento: function () {
@@ -161,6 +189,7 @@ var SectionEstacionamento = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -181,7 +210,7 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <PolarChart data={chartData} options={chartOptions} height={240}/>;
+    return <PolarChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef('chart-count-est')}/>;
   },
 
   renderMap: function () {
@@ -218,9 +247,9 @@ var SectionEstacionamento = React.createClass({
           geometries={this.props.mapGeometries.data}
           data={tipoEstacionamentos}
           nut={this.props.adminId}
-          onClick={this.props.onMapClick}
+          onClick={this.props.onMapClick.bind(null, 'estacionamento')}
           popoverContent={this.props.popoverContent}
-          overlayInfoContent={this.props.overlayInfoContent}
+          overlayInfoContent={this.props.overlayInfoContent.bind(null, 'estacionamento')}
         />
 
        <div className='map-legend'>
@@ -247,7 +276,11 @@ var SectionEstacionamento = React.createClass({
         <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
-              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h3 className='section-category'>
+                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                {this.props.adminLevel === 'nut' ? ' - ' : null}
+                {this.props.adminName}
+              </h3>
               <h1>Regime de Estacionamento</h1>
               <p className='lead'>As câmaras municipais estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Estas disposições são estabelecidas por regulamento municipal ou aquando da atribuição da licença municipal ao veículo.</p>
             </header>

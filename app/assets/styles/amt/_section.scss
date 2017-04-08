@@ -29,8 +29,16 @@
 }
 
 .section-content {
-   clear: both;
-   overflow: hidden;
+  clear: both;
+  overflow: hidden;
+
+  .no-data {
+    margin: 0;
+    text-align: center;
+    border: 1px dashed #CCCCCC;
+    border-radius: 1rem;
+    padding: 6rem 4rem;
+  }
 }
 
 .section-footer {

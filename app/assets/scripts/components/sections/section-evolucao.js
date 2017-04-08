@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import { Link } from 'react-router';
 import { Line as LineChart, Bar as BarChart, Doughnut as DoughnutChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
@@ -23,6 +24,32 @@ var SectionEvolucao = React.createClass({
     onMapClick: T.func,
     popoverContent: T.func,
     overlayInfoContent: T.func
+  },
+
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    if (this.chartsRef.indexOf(ref) === -1) {
+      this.chartsRef = this.chartsRef.concat([ref]);
+    }
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    this.chartsRef = [];
+    window.removeEventListener('resize', this.onWindowResize);
   },
 
   renderTimelineChart: function () {
@@ -57,6 +84,7 @@ var SectionEvolucao = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -84,7 +112,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={300}/>;
+    return <LineChart data={chartData} options={chartOptions} height={300} ref={this.addChartRef('chart-timeline')}/>;
   },
 
   renderTopMunicipiosChart: function () {
@@ -92,6 +120,7 @@ var SectionEvolucao = React.createClass({
       .sortBy('data.change')
       .reverse()
       .take(5)
+      .filter(o => o.data.change > 0)
       .value();
 
     let tooltipFn = makeTooltip(entryIndex => {
@@ -115,6 +144,7 @@ var SectionEvolucao = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -123,6 +153,9 @@ var SectionEvolucao = React.createClass({
           categoryPercentage: 1,
           gridLines: {
             display: false
+          },
+          ticks: {
+            autoSkip: false
           }
         }],
         yAxes: [{
@@ -137,7 +170,10 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={370}/>;
+    // Different height depending on the number of datasets
+    let height = [300, 300, 370, 370, 370][topMunicipios.length - 1];
+
+    return <BarChart data={chartData} options={chartOptions} height={height} ref={this.addChartRef('chart-municipios')}/>;
   },
 
   renderChangeLicencasChart: function () {
@@ -182,6 +218,7 @@ var SectionEvolucao = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -193,7 +230,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <DoughnutChart data={chartData} options={chartOptions} height={280}/>;
+    return <DoughnutChart data={chartData} options={chartOptions} height={280} ref={this.addChartRef('chart-change')}/>;
   },
 
   renderMap: function () {
@@ -219,9 +256,9 @@ var SectionEvolucao = React.createClass({
           geometries={this.props.mapGeometries.data}
           data={evolucaoMunicipios}
           nut={this.props.adminId}
-          onClick={this.props.onMapClick}
+          onClick={this.props.onMapClick.bind(null, 'evolucao')}
           popoverContent={this.props.popoverContent}
-          overlayInfoContent={this.props.overlayInfoContent}
+          overlayInfoContent={this.props.overlayInfoContent.bind(null, 'evolucao')}
         />
 
        <div className='map-legend'>
@@ -254,7 +291,11 @@ var SectionEvolucao = React.createClass({
         <div className='section-wrapper'>
           <section className='section-container'>
             <header className='section-header'>
-              <h3 className='section-category'>{this.props.adminName}</h3>
+              <h3 className='section-category'>
+                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                {this.props.adminLevel === 'nut' ? ' - ' : null}
+                {this.props.adminName}
+              </h3>
               <h1>Evolução 2006&#8212;2016</h1>
               <p className='lead'>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, e a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
             </header>
@@ -262,12 +303,18 @@ var SectionEvolucao = React.createClass({
               <div className='section-stats'>
                 <ul>
                   <li>
-                    <span className='stat-number'>{newLicencas.toLocaleString()}</span>
-                    <span className='stat-description'>Aumento do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
+                    <span className='stat-number'>
+                      <span>{newLicencas < 0 ? '-' : '+'}</span>
+                      {Math.abs(newLicencas).toLocaleString()}
+                    </span>
+                    <span className='stat-description'>Variação do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                   </li>
                   <li>
-                    <span className='stat-number'>{round(increaseLicencas, 0).toLocaleString()}%</span>
-                    <span className='stat-description'>Crescimento dos táxis <span className='block'>licenciados desde 2006.</span></span>
+                    <span className='stat-number'>
+                      <span>{increaseLicencas < 0 ? '-' : '+'}</span>
+                      {round(Math.abs(increaseLicencas), 0).toLocaleString()}
+                    </span>
+                    <span className='stat-description'>Variação dos táxis <span className='block'>licenciados desde 2006.</span></span>
                   </li>
                   <li>
                     <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios, 0).toLocaleString()}%</span>
