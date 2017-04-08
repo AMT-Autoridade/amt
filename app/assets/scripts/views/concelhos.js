@@ -8,7 +8,7 @@ import { Line as LineChart } from 'react-chartjs-2';
 
 import { fetchConcelho, fetchMapData } from '../actions';
 import makeTooltip from '../utils/tooltip';
-import { round } from '../utils/utils';
+import { round, percent } from '../utils/utils';
 
 import Map from '../components/map';
 
@@ -325,6 +325,12 @@ var Concelho = React.createClass({
     let newLicencas = licencas2016 - licencas2006;
     let increaseLicencas = newLicencas / licencas2006 * 100;
 
+    let totNat2016 = this.props.national.data.licencas2016;
+
+    let percentNational = percent(licencas2016, totNat2016, 0);
+    let pop = _.last(concelho.data['pop-residente']).value;
+    let percentPop = percent(pop, this.props.national.data.populacao, 0);
+
     return (
       <div id="page-content">
 
@@ -404,10 +410,14 @@ var Concelho = React.createClass({
 
                 <ul className='table-distribution'>
                   <li className='table-header'>
-                    <span className='table-parking'>Estacionamento</span>
-                    <span className='table-scope'>Âmbito Geográfico</span>
+                    <span className='table-region'>REGIÃO <span className='block'>(Concelho)</span></span>
+                    <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
+                    <span className='table-scope'>Âmbito <span className='block'>Geográfico</span></span>
+                    <span className='table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
+                    <span className='table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
                   </li>
                   <li>
+                    <span className='table-region'>{concelho.name}</span>
                     <div className='table-parking'>
                       <ul className='inline-list'>
                         <li className={c('est est-livre', {active: estacionamento.indexOf('livre') !== -1})}>L</li>
@@ -417,6 +427,8 @@ var Concelho = React.createClass({
                       </ul>
                     </div>
                     <span className='table-scope'>{this.contingenteMatrix[contingente]}</span>
+                    <span className='table-national'>{percentNational.toLocaleString()}%</span>
+                    <span className='table-residents'>{percentPop.toLocaleString()}%</span>
                   </li>
                 </ul>
 

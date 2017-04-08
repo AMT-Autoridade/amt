@@ -141,7 +141,7 @@ var SectionDistribuicao = React.createClass({
       <ul className='table-distribution'>
         <li className='table-header'>
           <span className='table-region'>REGIÃO <span className='block'>(Concelho)</span></span>
-           <span className='table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
+          <span className='table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
           <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
           <span className='table-scope'>Âmbito <span className='block'>Geográfico</span></span>
         </li>
