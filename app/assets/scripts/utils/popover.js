@@ -116,7 +116,10 @@ function popover () {
    * Removes the popover from the DOM.
    */
   this.hide = function () {
-    $popover.style = null;
+    $popover.style.left = null;
+    $popover.style.top = null;
+    $popover.style.display = null;
+    $popover.style.opacity = null;
     $popover.classList.remove('chart-popover-animate', 'chart-popover-animate-op');
     _content = null;
     _prev_content = null;
