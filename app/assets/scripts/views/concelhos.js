@@ -3,11 +3,12 @@ import React, { PropTypes as T } from 'react';
 import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Line as LineChart, Bar as BarChart, Doughnut as DoughnutChart } from 'react-chartjs-2';
+import c from 'classnames';
+import { Line as LineChart } from 'react-chartjs-2';
 
 import { fetchConcelho, fetchMapData } from '../actions';
 import makeTooltip from '../utils/tooltip';
-import { round, percent } from '../utils/utils';
+import { round } from '../utils/utils';
 
 import Map from '../components/map';
 
@@ -20,6 +21,11 @@ var Concelho = React.createClass({
     mapData: T.object,
     _fetchConcelho: T.func,
     _fetchMapData: T.func
+  },
+
+  contingenteMatrix: {
+    'concelho': 'Concelho',
+    'infra concelho': 'Infra Concelho'
   },
 
   chartsRef: [],
@@ -291,14 +297,26 @@ var Concelho = React.createClass({
       return <div>Error: {error}</div>;
     }
 
-    console.log('concelho', concelho);
+    let {
+      licencas2016,
+      licencas2006,
+      max2016,
+      dormidas,
+      licencasTimeline,
+      estacionamento,
+      contingente
+    } = concelho.data;
 
-    let {licencas2016, max2016, dormidas, licencasTimeline} = concelho.data;
     dormidas = _.last(dormidas).lic1000;
     dormidas = dormidas ? round(dormidas, 1) : 'N/A';
 
     let licencas1000Hab = _.last(licencasTimeline).lic1000;
     licencas1000Hab = round(licencas1000Hab, 1);
+
+    let licMobRed = _.last(concelho.data['lic-mob-reduzida']).value;
+
+    let newLicencas = licencas2016 - licencas2006;
+    let increaseLicencas = newLicencas / licencas2006 * 100;
 
     return (
       <div id="page-content">
@@ -332,15 +350,21 @@ var Concelho = React.createClass({
                       <span className='stat-description'>Total de vagas existentes <span className='block'>em agosto de 2016.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{/*newLicencas.toLocaleString()*/}10</span>
+                      <span className='stat-number'>
+                        <span>{newLicencas < 0 ? '-' : '+'}</span>
+                        {Math.abs(newLicencas).toLocaleString()}
+                      </span>
                       <span className='stat-description'>Variação do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{/*round(increaseLicencas, 0).toLocaleString()*/}1%</span>
-                      <span className='stat-description'>Crescimento dos táxis <span className='block'>licenciados desde 2006.</span></span>
+                      <span className='stat-number'>
+                        <span>{increaseLicencas < 0 ? '-' : '+'}</span>
+                        {round(Math.abs(increaseLicencas), 0).toLocaleString()}
+                      </span>
+                      <span className='stat-description'>Variação dos táxis <span className='block'>licenciados desde 2006.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>2</span>
+                      <span className='stat-number'>{licMobRed}</span>
                       <span className='stat-description'>Licenças existentes no <span className='block'>contingente mob. reduzida.</span></span>
                     </li>
                     <li>
@@ -371,8 +395,23 @@ var Concelho = React.createClass({
                   </div>
                 </div>
 
-                <p>Linha da section ambito</p>
-
+                <ul className='table-distribution'>
+                  <li className='table-header'>
+                    <span className='table-parking'>Estacionamento</span>
+                    <span className='table-scope'>Âmbito Geográfico</span>
+                  </li>
+                  <li>
+                    <div className='table-parking'>
+                      <ul className='inline-list'>
+                        <li className={c('est est-livre', {active: estacionamento.indexOf('livre') !== -1})}>L</li>
+                        <li className={c('est est-condicionado', {active: estacionamento.indexOf('condicionado') !== -1})}>C</li>
+                        <li className={c('est est-fixo', {active: estacionamento.indexOf('fixo') !== -1})}>F</li>
+                        <li className={c('est est-escala', {active: estacionamento.indexOf('escala') !== -1})}>E</li>
+                      </ul>
+                    </div>
+                    <span className='table-scope'>{this.contingenteMatrix[contingente]}</span>
+                  </li>
+                </ul>
 
               </div>
             </section>
