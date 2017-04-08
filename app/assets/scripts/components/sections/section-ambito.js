@@ -79,7 +79,7 @@ var SectionDistribuicao = React.createClass({
       layout: {
         padding: {
           left: 5,
-          top: 2,
+          top: 3,
           right: 5
         }
       },

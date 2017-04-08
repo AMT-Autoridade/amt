@@ -51,7 +51,7 @@ var SectionResidentes = React.createClass({
     window.removeEventListener('resize', this.onWindowResize);
   },
 
-  renderLicencas1000Chart: function (lic1000Data) {
+  renderLicencas1000Chart: function (lic1000Data, id) {
     let l = lic1000Data.labels.length - 1;
 
     let tooltipFn = makeTooltip(entryIndex => {
@@ -108,7 +108,7 @@ var SectionResidentes = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={220} ref={this.addChartRef('chart-lic1000')}/>;
+    return <LineChart data={chartData} options={chartOptions} height={220} ref={this.addChartRef(`chart-lic1000${id}`)}/>;
   },
 
   renderMap: function () {
@@ -198,11 +198,11 @@ var SectionResidentes = React.createClass({
               <div className='two-columns'>
                 <div className='graph'>
                   <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 residentes:</h6>
-                  {this.renderLicencas1000Chart(this.props.chartLic1000Hab)}
+                  {this.renderLicencas1000Chart(this.props.chartLic1000Hab, 'hab')}
                 </div>
                 <div className='graph'>
                   <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 dormidas:</h6>
-                  {this.renderLicencas1000Chart(this.props.chartLic1000Dor)}
+                  {this.renderLicencas1000Chart(this.props.chartLic1000Dor, 'dor')}
                 </div>
               </div>
             </div>
