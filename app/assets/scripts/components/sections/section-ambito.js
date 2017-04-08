@@ -95,9 +95,9 @@ var SectionDistribuicao = React.createClass({
       <li key={adminArea.id}>
         <span className='table-region'><Link to={`/nuts/${_.kebabCase(adminArea.name)}`} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
-        <span className='table-available'>{availableLicencas.toLocaleString()}</span>
         <span className='table-national'>{percentNational.toLocaleString()}%</span>
         <span className='table-residents'>{percentPop.toLocaleString()}%</span>
+        <span className='table-available'>{availableLicencas.toLocaleString()}</span>
       </li>
     );
   },
@@ -108,11 +108,11 @@ var SectionDistribuicao = React.createClass({
     return (
       <ul className='table-distribution'>
         <li className='table-header'>
-          <span className='table-region'>Região</span>
-          <span className='table-graph'>Total de <span className='block'>Licenças</span></span>
-          <span className='table-available'>Vagas <span className='block'>Disponíveis</span></span>
-          <span className='table-national'>% do Total <span className='block'>de Licenças</span></span>
-          <span className='table-residents'>% do Total <span className='block'>de População</span></span>
+          <span className='table-region'>REGIÃO <span className='block'>(NUTS III)</span></span>
+          <span className='table-graph'>Evoluçãod do <span className='block'>Total de Licenças</span></span>
+          <span className='table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
+          <span className='table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
+          <span className='table-available'>Vagas Disponíveis <span className='block'>(Agosto 2016)</span></span>
         </li>
         {adminList.map(this.renderTableRow)}
       </ul>
@@ -228,12 +228,15 @@ var SectionDistribuicao = React.createClass({
           <section className='section-container'>
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>
-              <h1>Âmbito Geográfico</h1>
-              <p className='lead'>Não obstante as licenças de táxi serem atribuídas a nível municipal apresenta-se a sua distribuição pelas regiões autónomas, pelos distritos e pelas áreas metropolitanas de Lisboa e do Porto.</p>
+              <h1>Detalhe Geográfico</h1>
+              <p className='lead'>Não obstante as licenças municipais terem âmbito concelhio, apresenta-se a sua distribuição por região (NUTS III).</p>
             </header>
             <div className='section-content'>
               {this.renderTable()}
             </div>
+            <footer className='section-footer'>
+              <p><strong>Notas:</strong> Acrónimo de “Nomenclatura das Unidades Territoriais para Fins Estatísticos”. Constitui um sistema hierárquico de divisão do território em regiões, dividindo-se em 3 níveis (NUTS I, NUTS II, NUTS III), definidos tendo por base critérios populacionais, administrativos e geográficos. Atualmente, os 308 municípios nacionais estão agrupados em 25 NUTS III.</p>
+            </footer>
           </section>
         </div>
       </div>

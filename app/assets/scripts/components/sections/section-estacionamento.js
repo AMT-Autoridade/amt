@@ -254,12 +254,12 @@ var SectionEstacionamento = React.createClass({
             <div className='section-content'>
              <div className='two-columns'>
                <div className='graph'>
-                <h6 className='legend-title'>Municípios por regime de estacionamento (%)</h6>
+                <h6 className='legend-title'>Municípios por regime de estacionamento (%):</h6>
                 {this.renderPercentEstacionamento()}
                </div>
 
                <div className='graph'>
-                <h6 className='legend-title'>Municípios por regime(s) de estacionamento (Nº)</h6>
+                <h6 className='legend-title'>Municípios por regime(s) de estacionamento (Nº):</h6>
                 {this.renderCountEstacionamento()}
                </div>
              </div>
