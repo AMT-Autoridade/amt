@@ -4,6 +4,10 @@
 			> div {
 				@include column(12/12);
 
+				&.graph-container {
+					overflow: hidden;
+				}
+
 				.graph {
 					@include column(4/12);
 				}
