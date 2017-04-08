@@ -91,6 +91,10 @@ var SectionLicencas = React.createClass({
         xAxes: [{
           gridLines: {
             display: false
+          },
+          ticks: {
+            fontSize: 10,
+            autoSkip: false
           }
         }],
         yAxes: [{
