@@ -312,7 +312,7 @@ var SectionEvolucao = React.createClass({
                   <li>
                     <span className='stat-number'>
                       <span>{increaseLicencas < 0 ? '-' : '+'}</span>
-                      {round(Math.abs(increaseLicencas), 0).toLocaleString()}
+                      {round(Math.abs(increaseLicencas), 0).toLocaleString()}%
                     </span>
                     <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                   </li>

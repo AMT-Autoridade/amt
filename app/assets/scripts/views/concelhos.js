@@ -187,6 +187,11 @@ var Concelho = React.createClass({
       legend: {
         display: false
       },
+      layout: {
+        padding: {
+          top: 10
+        }
+      },
       scales: {
         xAxes: [{
           gridLines: {
@@ -222,21 +227,21 @@ var Concelho = React.createClass({
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
           label: 'Portugal',
           color: '#1f8d8e',
-          backgroundColor: '#f5f5f5'
+          backgroundColor: 'rgba(245, 245, 245, 0.2)'
         },
         {
           data: this.props.nut.data.data.licencasTimeline.map(o => o['lic1000']),
           label: this.props.nut.data.name,
           color: '#00ced1',
-          backgroundColor: '#f5f5f5'
+          backgroundColor: 'rgba(245, 245, 245, 0.2)'
         },
         {
           data: this.props.concelho.data.data.licencasTimeline.map(o => o['lic1000']),
           label: this.props.concelho.data.name,
           color: '#256465',
-          backgroundColor: '#f5f5f5'
+          backgroundColor: 'rgba(245, 245, 245, 0.2)'
         }
-      ], d => d.data[0])
+      ], d => d.data[d.data.length - 1])
     };
     return this.renderLicencas1000Chart(chartLic1000Had, '1000hab');
   },
@@ -361,7 +366,7 @@ var Concelho = React.createClass({
                     <li>
                       <span className='stat-number'>
                         <span>{increaseLicencas < 0 ? '-' : '+'}</span>
-                        {round(Math.abs(increaseLicencas), 0).toLocaleString()}
+                        {round(Math.abs(increaseLicencas), 0).toLocaleString()}%
                       </span>
                       <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                     </li>
