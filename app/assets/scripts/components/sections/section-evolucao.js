@@ -285,64 +285,66 @@ var SectionEvolucao = React.createClass({
 
     return (
       <div id='evolucao' className='content-wrapper vertical-center'>
-        <div className='map-wrapper'>
-          {this.renderMap()}
-        </div>
-        <div className='section-wrapper'>
-          <section className='section-container'>
-            <header className='section-header'>
-              <h3 className='section-category'>
-                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
-                {this.props.adminLevel === 'nut' ? ' - ' : null}
-                {this.props.adminName}
-              </h3>
-              <h1>Evolução 2006&#8212;2016</h1>
-              <p className='lead'>Para além de conhecer a realidade atual importa igualmente conhecer a evolução existente. Analisam-se os desenvolvimentos ocorridos de 2006 a 2016.</p>
-            </header>
-            <div className='section-content'>
-              <div className='section-stats'>
-                <ul>
-                  <li>
-                    <span className='stat-number'>
-                      <span>{newLicencas < 0 ? '-' : '+'}</span>
-                      {Math.abs(newLicencas).toLocaleString()}
-                    </span>
-                    <span className='stat-description'>Variação no número de <span className='block'>licenças entre 2006 e 2016.</span></span>
-                  </li>
-                  <li>
-                    <span className='stat-number'>
-                      <span>{increaseLicencas < 0 ? '-' : '+'}</span>
-                      {round(Math.abs(increaseLicencas), 0).toLocaleString()}%
-                    </span>
-                    <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
-                  </li>
-                  <li>
-                    <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios, 0).toLocaleString()}%</span>
-                    <span className='stat-description'>Dos municípios não registaram alteração nos táxis licenciados.</span>
-                  </li>
-                </ul>
-              </div>
+        <div className='center'>
+          <div className='map-wrapper'>
+            {this.renderMap()}
+          </div>
+          <div className='section-wrapper'>
+            <section className='section-container'>
+              <header className='section-header'>
+                <h3 className='section-category'>
+                  {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                  {this.props.adminLevel === 'nut' ? ' › ' : null}
+                  {this.props.adminName}
+                </h3>
+                <h1>Evolução 2006&#8212;2016</h1>
+                <p className='lead'>Para além de conhecer a realidade atual importa igualmente conhecer a evolução existente. Analisam-se os desenvolvimentos ocorridos de 2006 a 2016.</p>
+              </header>
+              <div className='section-content'>
+                <div className='section-stats'>
+                  <ul>
+                    <li>
+                      <span className='stat-number'>
+                        <span>{newLicencas < 0 ? '-' : '+'}</span>
+                        {Math.abs(newLicencas).toLocaleString()}
+                      </span>
+                      <span className='stat-description'>Variação no número de <span className='block'>licenças entre 2006 e 2016.</span></span>
+                    </li>
+                    <li>
+                      <span className='stat-number'>
+                        <span>{increaseLicencas < 0 ? '-' : '+'}</span>
+                        {round(Math.abs(increaseLicencas), 0).toLocaleString()}%
+                      </span>
+                      <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
+                    </li>
+                    <li>
+                      <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios, 0).toLocaleString()}%</span>
+                      <span className='stat-description'>Dos municípios não registaram alteração nos táxis licenciados.</span>
+                    </li>
+                  </ul>
+                </div>
 
-              <div className='graph-container'>
-                <div className='graph'>
-                  <h6 className='legend-title'>Evolução das licenças 2006 a 2016:</h6>
-                  {this.renderTimelineChart()}
+                <div className='graph-container'>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Evolução das licenças 2006 a 2016:</h6>
+                    {this.renderTimelineChart()}
+                  </div>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Municípios com maior aumento:</h6>
+                    {this.renderTopMunicipiosChart()}
+                  </div>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Alterações do número de licenças:</h6>
+                    {this.renderChangeLicencasChart()}
+                  </div>
                 </div>
-                <div className='graph'>
-                  <h6 className='legend-title'>Municípios com maior aumento:</h6>
-                  {this.renderTopMunicipiosChart()}
-                </div>
-                <div className='graph'>
-                  <h6 className='legend-title'>Alterações do número de licenças:</h6>
-                  {this.renderChangeLicencasChart()}
-                </div>
-              </div>
 
-            </div>
-            <footer className='section-footer'>
-              <p><strong>Nota:</strong> Existem dados relativos a 2016 para todos os concelhos. Para os poucos concelhos em que não está disponível informação para todos os anos foram usados valores imputados. <Link to='/dados'>Saber mais</Link></p>
-            </footer>
-          </section>
+              </div>
+              <footer className='section-footer'>
+                <p><strong>Nota:</strong> Existem dados relativos a 2016 para todos os concelhos. Para os poucos concelhos em que não está disponível informação para todos os anos foram usados valores imputados. <Link to='/dados'>Saber mais</Link></p>
+              </footer>
+            </section>
+          </div>
         </div>
       </div>
     );

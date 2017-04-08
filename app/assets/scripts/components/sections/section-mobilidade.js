@@ -228,60 +228,62 @@ var SectionMobilidade = React.createClass({
 
     return (
       <div id='mobilidade' className='content-wrapper vertical-center'>
-        <div className='map-wrapper'>
-          {this.renderMap()}
-        </div>
-        <div className='section-wrapper'>
-          <section className='section-container'>
-            <header className='section-header'>
-              <h3 className='section-category'>
-                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
-                {this.props.adminLevel === 'nut' ? ' - ' : null}
-                {this.props.adminName}
-              </h3>
-              <h1>Mobilidade Reduzida</h1>
-              <p className='lead'>A legislação prevê a possibilidade de criar contingentes de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
-            </header>
+        <div className='center'>
+          <div className='map-wrapper'>
+            {this.renderMap()}
+          </div>
+          <div className='section-wrapper'>
+            <section className='section-container'>
+              <header className='section-header'>
+                <h3 className='section-category'>
+                  {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                  {this.props.adminLevel === 'nut' ? ' › ' : null}
+                  {this.props.adminName}
+                </h3>
+                <h1>Mobilidade Reduzida</h1>
+                <p className='lead'>A legislação prevê a possibilidade de criar contingentes de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
+              </header>
 
-            {licencasMobReduzida2016 ? (
-              <div className='section-content'>
-                <div className='section-stats'>
-                  <ul>
-                    <li>
-                      <span className='stat-number'>{percentMobRed.toLocaleString()}%</span>
-                      <span className='stat-description'>Dos municípios ({totalMunicipiosMobReduzida}) possuem contingentes mobilidade reduzida.</span>
-                    </li>
-                    <li>
-                      <span className='stat-number'>{newMobReduzida.toLocaleString()}</span>
-                      <span className='stat-description'>Novas licenças emitidas <span className='block'>em CMR desde 2006.</span></span>
-                    </li>
-                    <li>
-                      <span className='stat-number'>{percentNewMobRed.toLocaleString()}%</span>
-                      <span className='stat-description'>Do aumento no total de licenças resulta do crescimento de licenças em CMR.</span>
-                    </li>
-                  </ul>
+              {licencasMobReduzida2016 ? (
+                <div className='section-content'>
+                  <div className='section-stats'>
+                    <ul>
+                      <li>
+                        <span className='stat-number'>{percentMobRed.toLocaleString()}%</span>
+                        <span className='stat-description'>Dos municípios ({totalMunicipiosMobReduzida}) possuem contingentes mobilidade reduzida.</span>
+                      </li>
+                      <li>
+                        <span className='stat-number'>{newMobReduzida.toLocaleString()}</span>
+                        <span className='stat-description'>Novas licenças emitidas <span className='block'>em CMR desde 2006.</span></span>
+                      </li>
+                      <li>
+                        <span className='stat-number'>{percentNewMobRed.toLocaleString()}%</span>
+                        <span className='stat-description'>Do aumento no total de licenças resulta do crescimento de licenças em CMR.</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className='graph'>
+                    <h6 className='legend-title'>Licenças por tipo de contingente (%):</h6>
+                    {this.renderLicencasChart()}
+                  </div>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Evolução do número de licenças em CMR:</h6>
+                    {this.renderTimelineChart()}
+                  </div>
+
                 </div>
-
-                <div className='graph'>
-                  <h6 className='legend-title'>Licenças por tipo de contingente (%):</h6>
-                  {this.renderLicencasChart()}
+              ) : (
+                <div className='section-content'>
+                  <p className='no-data'>Os municípios integrados na região {this.props.adminName} não definiram contingentes especiais para pessoas com mobilidade reduzida.</p>
                 </div>
-                <div className='graph'>
-                  <h6 className='legend-title'>Evolução do número de licenças em CMR:</h6>
-                  {this.renderTimelineChart()}
-                </div>
+              )}
 
-              </div>
-            ) : (
-              <div className='section-content'>
-                <p className='no-data'>Os municípios integrados na região {this.props.adminName} não definiram contingentes especiais para pessoas com mobilidade reduzida.</p>
-              </div>
-            )}
-
-            <footer className='section-footer'>
-              <p><strong>Nota:</strong> O número de táxis adaptados para o transporte de pessoas com mobilidade reduzida será superior ao apresentado. Estes veículos adaptados podem estar licenciados nos contingentes gerais. A AMT pretende aprofundar o conhecimento sobre esta matéria.</p>
-            </footer>
-          </section>
+              <footer className='section-footer'>
+                <p><strong>Nota:</strong> O número de táxis adaptados para o transporte de pessoas com mobilidade reduzida será superior ao apresentado. Estes veículos adaptados podem estar licenciados nos contingentes gerais. A AMT pretende aprofundar o conhecimento sobre esta matéria.</p>
+              </footer>
+            </section>
+          </div>
         </div>
       </div>
     );

@@ -28,11 +28,11 @@ var Nuts = React.createClass({
 
   sections: [
     {id: 'licencas', active: false},
-    {id: 'mobilidade', active: false},
-    {id: 'estacionamento', active: false},
     {id: 'distribuicao', active: false},
+    {id: 'evolucao', active: false},
     {id: 'indicadores', active: false},
-    {id: 'evolucao', active: false}
+    {id: 'mobilidade', active: false},
+    {id: 'estacionamento', active: false}
   ],
 
   onMapClick: function (section, data) {
@@ -159,6 +159,49 @@ var Nuts = React.createClass({
             overlayInfoContent={this.overlayInfoContent}
           />
 
+          <SectionAmbitoNut
+            adminLevel='nut'
+            adminName={data.name}
+            adminId={data.id}
+            adminList={data.concelhos}
+            parentSlug={this.props.params.nut}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
+          />
+
+          <SectionEvolucao
+            adminLevel='nut'
+            adminName={data.name}
+            adminId={data.id}
+            licencas2016={data.data.licencas2016}
+            licencas2006={data.data.licencas2006}
+            municipios={data.concelhos}
+            totalMunicipios={data.data.totalMunicipios}
+            licencasTimeline={data.data.licencasTimeline}
+            mapGeometries={this.props.mapData}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
+          />
+
+          <SectionIndicadores
+            adminLevel='nut'
+            adminName={data.name}
+            adminId={data.id}
+            licencasHab={data.data.licencasHab}
+            dormidas={data.data.dormidas}
+            chartLic1000Hab={chartLic1000Hab}
+            chartLic1000Dor={chartLic1000Dor}
+            mapGeometries={this.props.mapData}
+            municipios={data.concelhos}
+            onMapClick={this.onMapClick}
+            popoverContent={this.popoverContent}
+            overlayInfoContent={this.overlayInfoContent}
+          />
+
           <SectionMobilidade
             adminLevel='nut'
             adminName={data.name}
@@ -188,58 +231,14 @@ var Nuts = React.createClass({
             popoverContent={this.popoverContent}
             overlayInfoContent={this.overlayInfoContent}
           />
-
-          <SectionAmbitoNut
-            adminLevel='nut'
-            adminName={data.name}
-            adminId={data.id}
-            adminList={data.concelhos}
-            parentSlug={this.props.params.nut}
-            mapGeometries={this.props.mapData}
-            municipios={data.concelhos}
-            onMapClick={this.onMapClick}
-            popoverContent={this.popoverContent}
-            overlayInfoContent={this.overlayInfoContent}
-          />
-
-          <SectionIndicadores
-            adminLevel='nut'
-            adminName={data.name}
-            adminId={data.id}
-            licencasHab={data.data.licencasHab}
-            dormidas={data.data.dormidas}
-            chartLic1000Hab={chartLic1000Hab}
-            chartLic1000Dor={chartLic1000Dor}
-            mapGeometries={this.props.mapData}
-            municipios={data.concelhos}
-            onMapClick={this.onMapClick}
-            popoverContent={this.popoverContent}
-            overlayInfoContent={this.overlayInfoContent}
-          />
-
-          <SectionEvolucao
-            adminLevel='nut'
-            adminName={data.name}
-            adminId={data.id}
-            licencas2016={data.data.licencas2016}
-            licencas2006={data.data.licencas2006}
-            municipios={data.concelhos}
-            totalMunicipios={data.data.totalMunicipios}
-            licencasTimeline={data.data.licencasTimeline}
-            mapGeometries={this.props.mapData}
-            onMapClick={this.onMapClick}
-            popoverContent={this.popoverContent}
-            overlayInfoContent={this.overlayInfoContent}
-          />
-
         </div>
         <ul className='section-nav'>
           <li className={c('nav-item', {active: hash === 'licencas'})}><Link to={`/nuts/${this.props.params.nut}#licencas`}><span>Licenças e Contingentes</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'distribuicao'})}><Link to={`/nuts/${this.props.params.nut}#distribuicao`}><span>Detalhe Geográfico</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'evolucao'})}><Link to={`/nuts/${this.props.params.nut}#evolucao`}><span>Evolução 2006-2016</span></Link></li>
+          <li className={c('nav-item', {active: hash === 'indicadores'})}><Link to={`/nuts/${this.props.params.nut}#indicadores`}><span>Indicadores</span></Link></li>
           <li className={c('nav-item', {active: hash === 'mobilidade'})}><Link to={`/nuts/${this.props.params.nut}#mobilidade`}><span>Mobilidade Reduzida</span></Link></li>
           <li className={c('nav-item', {active: hash === 'estacionamento'})}><Link to={`/nuts/${this.props.params.nut}#estacionamento`}><span>Regime Estacionamento</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'distribuicao'})}><Link to={`/nuts/${this.props.params.nut}#distribuicao`}><span>Âmbito Geográfico</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'indicadores'})}><Link to={`/nuts/${this.props.params.nut}#indicadores`}><span>Outros Indicadores</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'evolucao'})}><Link to={`/nuts/${this.props.params.nut}#evolucao`}><span>Evolução 2006-2016</span></Link></li>
         </ul>
 
       </div>

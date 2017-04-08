@@ -270,35 +270,37 @@ var SectionEstacionamento = React.createClass({
   render: function () {
     return (
       <div id='estacionamento' className='content-wrapper vertical-center'>
-        <div className='map-wrapper'>
-          {this.renderMap()}
-        </div>
-        <div className='section-wrapper'>
-          <section className='section-container'>
-            <header className='section-header'>
-              <h3 className='section-category'>
-                {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
-                {this.props.adminLevel === 'nut' ? ' - ' : null}
-                {this.props.adminName}
-              </h3>
-              <h1>Regime de Estacionamento</h1>
-              <p className='lead'>Os municípios estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Estas disposições são definidas por regulamento municipal ou aquando da atribuição da licença ao veículo.</p>
-            </header>
-            <div className='section-content'>
-             <div className='two-columns'>
-               <div className='graph'>
-                <h6 className='legend-title'>Municípios por regime de estacionamento (%):</h6>
-                {this.renderPercentEstacionamento()}
+        <div className='center'>
+          <div className='map-wrapper'>
+            {this.renderMap()}
+          </div>
+          <div className='section-wrapper'>
+            <section className='section-container'>
+              <header className='section-header'>
+                <h3 className='section-category'>
+                  {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                  {this.props.adminLevel === 'nut' ? ' › ' : null}
+                  {this.props.adminName}
+                </h3>
+                <h1>Regime de Estacionamento</h1>
+                <p className='lead'>Os municípios estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Estas disposições são definidas por regulamento municipal ou aquando da atribuição da licença ao veículo.</p>
+              </header>
+              <div className='section-content'>
+               <div className='two-columns'>
+                 <div className='graph'>
+                  <h6 className='legend-title'>Municípios por regime de estacionamento (%):</h6>
+                  {this.renderPercentEstacionamento()}
+                 </div>
+
+                 <div className='graph'>
+                  <h6 className='legend-title'>Municípios por regime(s) de estacionamento (Nº):</h6>
+                  {this.renderCountEstacionamento()}
+                 </div>
                </div>
 
-               <div className='graph'>
-                <h6 className='legend-title'>Municípios por regime(s) de estacionamento (Nº):</h6>
-                {this.renderCountEstacionamento()}
-               </div>
-             </div>
-
-            </div>
-          </section>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     );
