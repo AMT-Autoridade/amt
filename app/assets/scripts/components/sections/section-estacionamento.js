@@ -116,7 +116,9 @@ var SectionEstacionamento = React.createClass({
           }
         }],
         yAxes: [{
-          display: false
+          gridLines: {
+            display: false
+          }
         }]
       },
       tooltips: {

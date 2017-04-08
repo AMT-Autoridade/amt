@@ -135,7 +135,9 @@ var Concelho = React.createClass({
           }
         }],
         yAxes: [{
-          display: false,
+          gridLines: {
+            display: false
+          },
           ticks: {
             min: 0
           }
@@ -202,7 +204,9 @@ var Concelho = React.createClass({
           }
         }],
         yAxes: [{
-          display: false,
+          gridLines: {
+            display: false
+          },
           ticks: {
             min: 0
           }

@@ -98,7 +98,9 @@ var SectionEvolucao = React.createClass({
           }
         }],
         yAxes: [{
-          display: false,
+          gridLines: {
+            display: false
+          },
           ticks: {
             min: 0
           }
@@ -159,7 +161,9 @@ var SectionEvolucao = React.createClass({
           }
         }],
         yAxes: [{
-          display: false
+          gridLines: {
+            display: false
+          }
         }]
       },
       tooltips: {
