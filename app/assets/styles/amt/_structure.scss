@@ -99,6 +99,12 @@
   font-weight: 600;
 }
 
+.section-content {
+  .legend-title {
+    text-align: left;
+  }
+}
+
 .section-wrapper {
   @include column(12/12);
   @include media (large-up) {

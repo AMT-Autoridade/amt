@@ -294,7 +294,7 @@ var SectionEvolucao = React.createClass({
 
             </div>
             <footer className='section-footer'>
-              <p><strong>Notas:</strong> Existem dados relativos a 2016 para todos os concelhos. Para os poucos concelhos em que não está disponível informação para todos os anos foram usados valores imputados. <Link to='/dados'>Saber mais</Link></p>
+              <p><strong>Nota:</strong> Existem dados relativos a 2016 para todos os concelhos. Para os poucos concelhos em que não está disponível informação para todos os anos foram usados valores imputados. <Link to='/dados'>Saber mais</Link></p>
             </footer>
           </section>
         </div>

@@ -226,7 +226,7 @@ var SectionMobilidade = React.createClass({
               </div>
 
               <div className='graph'>
-                <h6 className='legend-title'>PLicenças por tipo de contingente (%):</h6>
+                <h6 className='legend-title'>Licenças por tipo de contingente (%):</h6>
                 {this.renderLicencasChart()}
               </div>
               <div className='graph'>
@@ -236,7 +236,7 @@ var SectionMobilidade = React.createClass({
 
             </div>
             <footer className='section-footer'>
-              <p><strong>Notas:</strong> O número de táxis adaptados para o transporte de pessoas com mobilidade reduzida será superior ao apresentado. Estes veículos adaptados podem estar licenciados nos contingentes gerais. A AMT pretende aprofundar o conhecimento sobre esta matéria.</p>
+              <p><strong>Nota:</strong> O número de táxis adaptados para o transporte de pessoas com mobilidade reduzida será superior ao apresentado. Estes veículos adaptados podem estar licenciados nos contingentes gerais. A AMT pretende aprofundar o conhecimento sobre esta matéria.</p>
             </footer>
           </section>
         </div>
