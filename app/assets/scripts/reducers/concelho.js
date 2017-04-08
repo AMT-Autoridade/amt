@@ -32,11 +32,17 @@ export default function reducer (state = initialState, action) {
 
 function processData (concelho) {
   console.log('processing concelho');
+  // Total licenças 2006.
+  concelho.data.licencas2006 = concelho.data['lic-geral'][0].value + concelho.data['lic-mob-reduzida'][0].value;
+
   // Total licenças 2016.
   concelho.data.licencas2016 = _.last(concelho.data['lic-geral']).value + _.last(concelho.data['lic-mob-reduzida']).value;
 
   // Max licenças 2016
   concelho.data.max2016 = _.last(concelho.data['max-lic-geral']).value + _.last(concelho.data['max-lic-mob-reduzida']).value;
+
+  // Change in licenças
+  concelho.data.change = concelho.data.licencas2016 - concelho.data.licencas2006;
 
   // Licenças per 1000 dormidas.
   concelho.data.dormidas = concelho.data.dormidas.map(d => {

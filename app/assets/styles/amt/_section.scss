@@ -21,7 +21,7 @@
 
   li {
   	margin-bottom: 20px;
-  	span{
+  	> span{
   		max-width: 220px;
   		display: block;
   	}
@@ -29,8 +29,16 @@
 }
 
 .section-content {
-   clear: both;
-   overflow: hidden;
+  clear: both;
+  overflow: hidden;
+
+  .no-data {
+    margin: 0;
+    text-align: center;
+    border: 1px dashed #CCCCCC;
+    border-radius: .5rem;
+    padding: 6rem 4rem;
+  }
 }
 
 .section-footer {
@@ -39,10 +47,12 @@
   margin-top: 40px;
 
 	p {
-		/*font-size: .875rem;*/
-		color: tint($text-color, 25%);
+		font-size: .8125rem;
+		color: tint($text-color, 50%);
+    margin-bottom: 5px;
 		strong {
 			color: $text-color;
+      color: tint($text-color, 25%);
 		}
 	}
 }

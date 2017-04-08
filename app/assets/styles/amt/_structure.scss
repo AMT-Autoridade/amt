@@ -1,5 +1,6 @@
 #page-content {
   position: relative;
+  width: 80%;
   max-width: 1200px;
   margin: 0 auto;
   overflow: hidden;
@@ -23,11 +24,9 @@
 
   &.vertical-center {
     display: flex;
-    // overflow-y: scroll;
     align-items: center;
     justify-content: center;
-    > div,
-    > section {
+    .center {
       margin: auto;
     }
   }
@@ -94,7 +93,15 @@
 }
 
 .legend-title {
-  margin: 10px 0;
+  margin: 0 0 10px 0;
+  text-align:center;
+  font-weight: 600;
+}
+
+.section-content {
+  .legend-title {
+    text-align: left;
+  }
 }
 
 .section-wrapper {

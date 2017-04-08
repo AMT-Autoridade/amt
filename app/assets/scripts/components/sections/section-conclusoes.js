@@ -8,13 +8,13 @@ var SectionConclusoes = React.createClass({
 
   render: function () {
     return (
-      <div id='conclusoes-wrapper'> 
+      <div id='conclusoes-wrapper'>
         <div id='conclusoes' className='container-wrapper content-wrapper vertical-center'>
           <section className=''>
             <header className='section-header'>
-              <h3 className='section-category'>PORTUGAL</h3>
+              <h3 className='section-category'>Portugal</h3>
               <h1>Conclusões</h1>
-              <p className='lead'>A recolha efetuada pela AMT constitui um marco quanto ao conhecimento dos serviços de transporte em táxi em Portugal. É necessário continuar a aprofundar o conhecimento sobre o setor. A estrutura da oferta tem-se mantido estável, apesar de se identificarem alterações em fatores que podem influir na procura. Na sua maioria, os concelhos estabelecem contingentes com âmbito territorial infra concelhio e aplicam o regime de estacionamento fixo.</p>
+              <p className='lead'>A recolha efetuada pela AMT constitui um marco quanto ao conhecimento sobre os serviços de transporte em táxi em Portugal. É necessário continuar a aprofundar o conhecimento sobre o setor.</p>
             </header>
 
             <div className='section-content'>
@@ -22,7 +22,7 @@ var SectionConclusoes = React.createClass({
                 <ul className='section-stats three-columns'>
                   <li>
                     <h4>Licenças e Contingentes</h4>
-                    <p>Existe uma grande disparidade no sector, observando-se que 49% das licenças activas estão concentradas nas Áreas Metropolitanas de Lisboa e Porto.</p>
+                    <p>Existe uma grande disparidade no número de táxis por concelho. Os concelhos de Lisboa e do Porto possuem cerca de 31% dos táxis licenciados. Cerca de metade dos concelhos possuem 20 ou menos táxis licenciados.</p>
                   </li>
                   <li>
                     <h4>Mobilidade Reduzida</h4>
@@ -30,30 +30,27 @@ var SectionConclusoes = React.createClass({
                   </li>
                   <li>
                     <h4>Regimes de Estacionamento</h4>
-                    <p>Sendo comum que num mesmo município coexistam vários regimes de estacionamento, constata-se que o regime fixo é aplicado em mais de 70% dos casos.</p>
+                    <p>Sendo comum que num mesmo município coexistam vários regimes de estacionamento, constata-se que o regime fixo é aplicado em cerca de 80% dos municípios.</p>
                   </li>
                   <li>
-                    <h4>Âmbito Geográfico</h4>
-                    <p>Existem vagas nos contingentes em cerca de 46% dos concelhos e é comum haver diferenças entre o número total de táxis licenciados e a população residente de uma região.</p>
+                    <h4>Detalhe Geográfico</h4>
+                    <p>Existem vagas nos contingentes em cerca de 46% dos concelhos. É comum identificarem-se diferenças entre a % de táxis licenciados numa região e a % da população aí residente.</p>
                   </li>
                   <li>
                     <h4>Evolução 2006&#8212;2016</h4>
-                    <p>A estrutura da oferta tem-se mantido muito estável, sendo que o número de táxis licenciados e o número de lugares nos contingentes cresceu menos de 1% na última década.</p>
+                    <p>A estrutura da oferta tem-se mantido estável. O número de táxis licenciados e o número de lugares nos contingentes cresceu menos de 1% na última década.</p>
                   </li>
                   <li>
-                    <h4>Outros Indicadores</h4>
-                    <p>Apesar do pouco crescimento da última década, houve um aumento de 8% do número de táxis por mil residentes, e uma redução de 26% no número de táxis por mil dormidas em estabelecimentos hoteleiros. </p>
+                    <h4>Indicadores</h4>
+                    <p>Num cenário de estabilidade da oferta observam-se alterações relevantes em 2 fatores que podem influenciar a procura: a população residente e o turismo.</p>
                   </li>
                 </ul>
               </div>
-
-              <div className='download-wrapper'>
-                <h6>DOWNLOAD</h6>
-                <p>Este site foi desenvolvido pela AMT com base no:</p>
-                <a href="#">Relatório Estatístico de Serviços de Transporte em Táxi: <span className=''>A Realidade Atual e a Evolução da Última Década.</span></a>
-              </div>
-
             </div>
+            
+            <footer className='section-footer'>
+              <p>Este site foi desenvolvido pela AMT com base no <a href="#">Relatório Estatístico Sobre Serviços de Transporte em Táxi: <span className=''>A Realidade Atual e a Evolução da Última Década.</span></a></p>
+            </footer>
           </section>
         </div>
       </div>

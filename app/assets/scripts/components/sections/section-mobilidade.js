@@ -1,6 +1,7 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
-import { Pie as PieChart, Bar as BarChart } from 'react-chartjs-2';
+import { Link } from 'react-router';
+import { Pie as PieChart, Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
@@ -19,6 +20,7 @@ var SectionMobilidade = React.createClass({
     licencas2006: T.number,
     licencasMobReduzida2016: T.number,
     licencasMobReduzida2006: T.number,
+    licencasTimeline: T.array,
     mapGeometries: T.object,
     municipios: T.array,
     onMapClick: T.func,
@@ -26,66 +28,30 @@ var SectionMobilidade = React.createClass({
     overlayInfoContent: T.func
   },
 
-  renderEvolutionChart: function () {
-    let licencasMobReduzida2016 = this.props.licencasMobReduzida2016;
-    let licencasMobReduzida2006 = this.props.licencasMobReduzida2006;
+  chartsRef: [],
 
-    let data = [
-      {
-        label: '2006',
-        display: 'Contingente Mobilidade Reduzida em 2006',
-        value: licencasMobReduzida2006
-      },
-      {
-        label: '2016',
-        display: 'Contingente Mobilidade Reduzida em 2016',
-        value: licencasMobReduzida2016
-      }
-    ];
-
-    let tooltipFn = makeTooltip(entryIndex => {
-      let datum = data[entryIndex];
-      return (
-        <ul className='x-small'>
-          <li><span className='tooltip-label'>{datum.label.toLocaleString()}:</span><span className='tooltip-number'>{datum.value.toLocaleString()}</span></li>
-          <span className='triangle'></span>
-        </ul>
-      );
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
     });
+  },
 
-    let chartData = {
-      labels: _.map(data, 'label'),
-      datasets: [
-        {
-          data: _.map(data, 'value'),
-          backgroundColor: '#00ced1'
-        }
-      ]
-    };
+  addChartRef: function (ref) {
+    if (this.chartsRef.indexOf(ref) === -1) {
+      this.chartsRef = this.chartsRef.concat([ref]);
+    }
+    return ref;
+  },
 
-    let chartOptions = {
-      legend: {
-        display: false
-      },
-      scales: {
-        xAxes: [{
-          gridLines: {
-            display: false
-          }
-        }],
-        yAxes: [{
-          display: false
-        }]
-      },
-      tooltips: {
-        enabled: false,
-        mode: 'index',
-        position: 'nearest',
-        custom: tooltipFn
-      }
-    };
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
 
-    return <BarChart data={chartData} options={chartOptions} height={280}/>;
+  componentWillUnmount: function () {
+    this.chartsRef = [];
+    window.removeEventListener('resize', this.onWindowResize);
   },
 
   renderLicencasChart: function () {
@@ -130,6 +96,7 @@ var SectionMobilidade = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -141,7 +108,74 @@ var SectionMobilidade = React.createClass({
       }
     };
 
-    return <PieChart data={chartData} options={chartOptions} height={280}/>;
+    return <PieChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef('chart-lic')}/>;
+  },
+
+  renderTimelineChart: function () {
+    let timeline = this.props.licencasTimeline;
+    let l = timeline.length - 1;
+
+    let tooltipFn = makeTooltip(entryIndex => {
+      let year = timeline[entryIndex];
+      return (
+        <ul>
+          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{year['lic-mob-reduzida'].toLocaleString()}</span></li>
+          <span className='triangle'></span>
+        </ul>
+      );
+    });
+
+    let labels = timeline.map((o, i) => i === 0 || i === l ? o.year : '');
+
+    let chartData = {
+      labels: labels,
+      datasets: [{
+        data: timeline.map(o => o['lic-mob-reduzida']),
+        backgroundColor: '#eaeaea',
+        borderColor: '#00CED1',
+        pointBorderWidth: 0,
+        pointBackgroundColor: '#00CED1',
+        pointRadius: 3
+      }]
+    };
+
+    let chartOptions = {
+      responsive: false,
+      layout: {
+        padding: {
+          top: 10
+        }
+      },
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            maxRotation: 0
+          }
+        }],
+        yAxes: [{
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            min: 0
+          }
+        }]
+      },
+      tooltips: {
+        enabled: false,
+        mode: 'index',
+        position: 'nearest',
+        custom: tooltipFn
+      }
+    };
+
+    return <LineChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef('chart-timeline')}/>;
   },
 
   renderMap: function () {
@@ -163,16 +197,16 @@ var SectionMobilidade = React.createClass({
           geometries={this.props.mapGeometries.data}
           data={mobRedMunicipios}
           nut={this.props.adminId}
-          onClick={this.props.onMapClick}
+          onClick={this.props.onMapClick.bind(null, 'mobilidade')}
           popoverContent={this.props.popoverContent}
-          overlayInfoContent={this.props.overlayInfoContent}
+          overlayInfoContent={this.props.overlayInfoContent.bind(null, 'mobilidade')}
         />
 
         <div className='map-legend'>
-          <h6 className='legend-title'>Municípios com Contingente de Mobilidade Reduzida:</h6>
+          <h6 className='legend-title'>Municípios com CMR:</h6>
           <ul className='color-legend inline'>
             <li><span style={{backgroundColor: '#FFCC45'}}></span>Com CMR</li>
-            <li><span style={{backgroundColor: '#f5f5f5'}}></span>Sem CMRs</li>
+            <li><span style={{backgroundColor: '#f5f5f5'}}></span>Sem CMR</li>
           </ul>
         </div>
       </div>
@@ -196,49 +230,62 @@ var SectionMobilidade = React.createClass({
 
     return (
       <div id='mobilidade' className='content-wrapper vertical-center'>
-        <div className='map-wrapper'>
-          {this.renderMap()}
-        </div>
-        <div className='section-wrapper'>
-          <section className='section-container'>
-            <header className='section-header'>
-              <h3 className='section-category'>{this.props.adminName}</h3>
-              <h1>Mobilidade Reduzida</h1>
-              <p className='lead'>A legislação prevê a possibilidade de existência de contingentes específicos de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
-            </header>
+        <div className='center'>
+          <div className='map-wrapper'>
+            {this.renderMap()}
+          </div>
+          <div className='section-wrapper'>
+            <section className='section-container'>
+              <header className='section-header'>
+                <h3 className='section-category'>
+                  {this.props.adminLevel === 'nut' ? <Link to='/#mobilidade' title='Ver Portugal'>Portugal</Link> : null}
+                  {this.props.adminLevel === 'nut' ? ' › ' : null}
+                  {this.props.adminName}
+                </h3>
+                <h1>Mobilidade Reduzida</h1>
+                <p className='lead'>A legislação prevê a possibilidade de criar contingentes de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
+              </header>
 
-            <div className='section-content'>
-              <div className='section-stats'>
-                <ul>
-                  <li>
-                    <span className='stat-number'>{percentMobRed.toLocaleString()}%</span>
-                    <span className='stat-description'>Municípios ({totalMunicipiosMobReduzida}) com contingentes mobilidade reduzida.</span>
-                  </li>
-                  <li>
-                    <span className='stat-number'>{newMobReduzida.toLocaleString()}</span>
-                    <span className='stat-description'>Número de novas licenças <span className='block'>emitidas em CMR.</span></span>
-                  </li>
-                  <li>
-                    <span className='stat-number'>{percentNewMobRed.toLocaleString()}%</span>
-                    <span className='stat-description'>Do aumento de licenças resulta do crescimento de licenças do CMR.</span>
-                  </li>
-                </ul>
-              </div>
+              {licencasMobReduzida2016 ? (
+                <div className='section-content'>
+                  <div className='section-stats'>
+                    <ul>
+                      <li>
+                        <span className='stat-number'>{percentMobRed.toLocaleString()}%</span>
+                        <span className='stat-description'>Dos municípios ({totalMunicipiosMobReduzida}) possuem contingentes mobilidade reduzida.</span>
+                      </li>
+                      <li>
+                        <span className='stat-number'>{newMobReduzida.toLocaleString()}</span>
+                        <span className='stat-description'>Novas licenças emitidas <span className='block'>em CMR desde 2006.</span></span>
+                      </li>
+                      <li>
+                        <span className='stat-number'>{percentNewMobRed.toLocaleString()}%</span>
+                        <span className='stat-description'>Do aumento no total de licenças resulta do crescimento de licenças em CMR.</span>
+                      </li>
+                    </ul>
+                  </div>
 
-              <div className='graph'>
-                <h6 className='legend-title'>Licenças por contingente (%)</h6>
-                {this.renderLicencasChart()}
-              </div>
-              <div className='graph'>
-                <h6 className='legend-title'>Evolução do contingente</h6>
-                {this.renderEvolutionChart()}
-              </div>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Licenças por tipo de contingente (%):</h6>
+                    {this.renderLicencasChart()}
+                  </div>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Evolução do número de licenças em CMR:</h6>
+                    {this.renderTimelineChart()}
+                  </div>
 
-            </div>
-            <footer className='section-footer'>
-              <p><strong>Notas:</strong> O número de veículos habilitados ao transporte de pessoas com mobilidade reduzida será superior ao apresentado. Este tipo de veículos podem estar licenciados no âmbito dos contingentes gerais. A AMT pretende aprofundar o conhecimento sobre esta matéria.</p>
-            </footer>
-          </section>
+                </div>
+              ) : (
+                <div className='section-content'>
+                  <p className='no-data'>Os municípios integrados na região {this.props.adminName} não definiram contingentes especiais para pessoas com mobilidade reduzida.</p>
+                </div>
+              )}
+
+              <footer className='section-footer'>
+                <p><strong>Nota:</strong> O número de táxis adaptados para o transporte de pessoas com mobilidade reduzida será superior ao apresentado. Estes veículos adaptados podem estar licenciados nos contingentes gerais. A AMT pretende aprofundar o conhecimento sobre esta matéria.</p>
+              </footer>
+            </section>
+          </div>
         </div>
       </div>
     );

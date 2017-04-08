@@ -2,7 +2,7 @@
 	.section-content {
 		@include media (small-up) {
 			> div {
-				@include column(4/12);
+				@include column(6/12);
 			}
 
 			.section-stats {

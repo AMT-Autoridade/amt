@@ -57,6 +57,9 @@ function processData (nut) {
   //   return d;
   // });
 
+  // Sort concelhos.
+  nut.concelhos = _.sortBy(nut.concelhos, 'slug');
+
   // Licenças and max per district.
   nut.concelhos = nut.concelhos.map(d => {
     d.data.licencas2006 = d.data['lic-geral'][0].value + d.data['lic-mob-reduzida'][0].value;
@@ -92,7 +95,7 @@ function processData (nut) {
   nut.data.totalMunicipios = nut.concelhos.length;
 
   // Number of municípios with lic-mob-reduzida.
-  nut.data.totalMunicipiosMobReduzida = _.sumBy(nut.concelhos, d => _.last(d.data['lic-mob-reduzida']).value);
+  nut.data.totalMunicipiosMobReduzida = _.sumBy(nut.concelhos, d => _.last(d.data['lic-mob-reduzida']).value ? 1 : 0);
 
   // Compute the timeline at the nut level.
   nut.data.licencasTimeline = _.range(2006, 2017).map((y, i) => {
