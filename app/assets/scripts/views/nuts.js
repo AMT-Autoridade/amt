@@ -38,7 +38,7 @@ var Nuts = React.createClass({
   onMapClick: function (section, data) {
     // Find the right nut.
     let slug = this.props.nut.data.concelhos.find(o => o.id === data.id).slug;
-    hashHistory.push(`/nuts/${this.props.params.nut}/concelhos/${slug}`);
+    hashHistory.push(`/nuts/${this.props.params.nut}/concelhos/${slug}#${section}`);
   },
 
   popoverContent: function (data) {
