@@ -38,6 +38,9 @@ function processData (rawData) {
   let nuts = rawData.results;
   let data = {nuts, dormidas: rawData.dormidas};
 
+  // Sort nuts.
+  data.nuts = _.sortBy(nuts, 'slug');
+
   // Licenças and max per district.
   nuts = nuts.map(d => {
     d.data.licencas2006 = d.data['lic-geral'][0].value + d.data['lic-mob-reduzida'][0].value;

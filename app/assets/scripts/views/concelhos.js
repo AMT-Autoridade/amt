@@ -3,7 +3,8 @@ import React, { PropTypes as T } from 'react';
 import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Line as LineChart, Bar as BarChart, Doughnut as DoughnutChart } from 'react-chartjs-2';
+import c from 'classnames';
+import { Line as LineChart } from 'react-chartjs-2';
 
 import { fetchConcelho, fetchMapData } from '../actions';
 import makeTooltip from '../utils/tooltip';
@@ -13,6 +14,7 @@ import Map from '../components/map';
 
 var Concelho = React.createClass({
   propTypes: {
+    location: T.object,
     params: T.object,
     concelho: T.object,
     nut: T.object,
@@ -20,6 +22,24 @@ var Concelho = React.createClass({
     mapData: T.object,
     _fetchConcelho: T.func,
     _fetchMapData: T.func
+  },
+
+  contingenteMatrix: {
+    'concelho': 'Concelho',
+    'infra concelho': 'Infra Concelho'
+  },
+
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    this.chartsRef.indexOf(ref) === -1 && this.chartsRef.push(ref);
+    return ref;
   },
 
   onMapClick: function (data) {
@@ -40,10 +60,11 @@ var Concelho = React.createClass({
   },
 
   overlayInfoContent: function () {
+    let hash = this.props.location.hash || '';
     return (
       <div className='map-aa-info'>
         <ul className='map-aa-list inline-list'>
-          <li><a href={`#/nuts/${this.props.nut.data.slug}`} title={`Ir para ${this.props.nut.data.name}`}>{'<'}</a></li>
+          <li><a href={`#/nuts/${this.props.nut.data.slug}${hash}`} title={`Ir para ${this.props.nut.data.name}`}>{'<'}</a></li>
           <li>{this.props.concelho.data.name}</li>
         </ul>
       </div>
@@ -51,11 +72,18 @@ var Concelho = React.createClass({
   },
 
   componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
     this.props._fetchConcelho(this.props.params.nut, this.props.params.concelho);
 
     if (!this.props.mapData.fetched) {
       this.props._fetchMapData();
     }
+  },
+
+  componentWillUnmount: function () {
+    window.removeEventListener('resize', this.onWindowResize);
   },
 
   componentWillReceiveProps: function (nextProps) {
@@ -65,7 +93,7 @@ var Concelho = React.createClass({
     }
   },
 
-  renderLicencas1000Chart: function (lic1000Data) {
+  renderLicencas1000Chart: function (lic1000Data, id) {
     let l = lic1000Data.labels.length - 1;
 
     let tooltipFn = makeTooltip(entryIndex => {
@@ -107,7 +135,9 @@ var Concelho = React.createClass({
           }
         }],
         yAxes: [{
-          display: false,
+          gridLines: {
+            display: false
+          },
           ticks: {
             min: 0
           }
@@ -121,7 +151,7 @@ var Concelho = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={240}/>;
+    return <LineChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef(`chart-${id}`)}/>;
   },
 
   renderTimelineChart: function () {
@@ -159,6 +189,11 @@ var Concelho = React.createClass({
       legend: {
         display: false
       },
+      layout: {
+        padding: {
+          top: 10
+        }
+      },
       scales: {
         xAxes: [{
           gridLines: {
@@ -169,7 +204,9 @@ var Concelho = React.createClass({
           }
         }],
         yAxes: [{
-          display: false,
+          gridLines: {
+            display: false
+          },
           ticks: {
             min: 0
           }
@@ -183,7 +220,7 @@ var Concelho = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={240}/>;
+    return <LineChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef(`chart-timeline`)}/>;
   },
 
   renderLic1000HabChart: function () {
@@ -194,23 +231,23 @@ var Concelho = React.createClass({
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000']),
           label: 'Portugal',
           color: '#1f8d8e',
-          backgroundColor: '#f5f5f5'
+          backgroundColor: 'rgba(245, 245, 245, 0.2)'
         },
         {
           data: this.props.nut.data.data.licencasTimeline.map(o => o['lic1000']),
           label: this.props.nut.data.name,
           color: '#00ced1',
-          backgroundColor: '#f5f5f5'
+          backgroundColor: 'rgba(245, 245, 245, 0.2)'
         },
         {
           data: this.props.concelho.data.data.licencasTimeline.map(o => o['lic1000']),
           label: this.props.concelho.data.name,
           color: '#256465',
-          backgroundColor: '#f5f5f5'
+          backgroundColor: 'rgba(245, 245, 245, 0.2)'
         }
-      ], d => d.data[0])
+      ], d => d.data[d.data.length - 1])
     };
-    return this.renderLicencas1000Chart(chartLic1000Had);
+    return this.renderLicencas1000Chart(chartLic1000Had, '1000hab');
   },
 
   renderLic1000DormidasChart: function () {
@@ -236,7 +273,7 @@ var Concelho = React.createClass({
         }
       ], d => d.data[0])
     };
-    return this.renderLicencas1000Chart(chartLic1000Dormidas);
+    return this.renderLicencas1000Chart(chartLic1000Dormidas, '1000dor');
   },
 
   renderMap: function () {
@@ -271,14 +308,34 @@ var Concelho = React.createClass({
       return <div>Error: {error}</div>;
     }
 
-    console.log('concelho', concelho);
+    let hash = this.props.location.hash || '';
 
-    let {licencas2016, max2016, dormidas, licencasTimeline} = concelho.data;
+    let {
+      licencas2016,
+      licencas2006,
+      max2016,
+      dormidas,
+      licencasTimeline,
+      estacionamento,
+      contingente
+    } = concelho.data;
+
     dormidas = _.last(dormidas).lic1000;
     dormidas = dormidas ? round(dormidas, 1) : 'N/A';
 
     let licencas1000Hab = _.last(licencasTimeline).lic1000;
     licencas1000Hab = round(licencas1000Hab, 1);
+
+    let licMobRed = _.last(concelho.data['lic-mob-reduzida']).value;
+
+    let newLicencas = licencas2016 - licencas2006;
+    let increaseLicencas = newLicencas / licencas2006 * 100;
+
+    let totNat2016 = this.props.national.data.licencas2016;
+
+    let percentNational = percent(licencas2016, totNat2016, 0);
+    let pop = _.last(concelho.data['pop-residente']).value;
+    let percentPop = percent(pop, this.props.national.data.populacao, 0);
 
     return (
       <div id="page-content">
@@ -292,7 +349,7 @@ var Concelho = React.createClass({
           <div className='section-wrapper'>
             <section className='section-container'>
               <header className='section-header'>
-                <h3 className='section-category'><Link to='/' title='Ver Portugal'>Portugal</Link> - <Link to={`/nuts/${nut.slug}`} title={`Ver ${nut.name}`}>{nut.name}</Link></h3>
+                <h3 className='section-category'><Link to={`/${hash}`} title='Ver Portugal'>Portugal</Link> &rsaquo; <Link to={`/nuts/${nut.slug}${hash}`} title={`Ver ${nut.name}`}>{nut.name}</Link></h3>
                 <h1>{concelho.name}</h1>
                 {/*<p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p> */}
               </header>
@@ -312,16 +369,22 @@ var Concelho = React.createClass({
                       <span className='stat-description'>Total de vagas existentes <span className='block'>em agosto de 2016.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{/*newLicencas.toLocaleString()*/}10</span>
+                      <span className='stat-number'>{licMobRed}</span>
+                      <span className='stat-description'>Licenças existentes no <span className='block'>contingente mob. reduzida.</span></span>
+                    </li>
+                    <li>
+                      <span className='stat-number'>
+                        <span>{newLicencas < 0 ? '-' : '+'}</span>
+                        {Math.abs(newLicencas).toLocaleString()}
+                      </span>
                       <span className='stat-description'>Variação no número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{/*round(increaseLicencas, 0).toLocaleString()*/}1%</span>
+                      <span className='stat-number'>
+                        <span>{increaseLicencas < 0 ? '-' : '+'}</span>
+                        {round(Math.abs(increaseLicencas), 0).toLocaleString()}%
+                      </span>
                       <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
-                    </li>
-                    <li>
-                      <span className='stat-number'>2</span>
-                      <span className='stat-description'>Novas licenças emitidas <span className='block'>em CMR desde 2006.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>{licencas1000Hab}</span>
@@ -334,7 +397,29 @@ var Concelho = React.createClass({
                   </ul>
                 </div>
 
-                <hr/>
+                <ul className='table-distribution'>
+                  <li className='table-header'>
+                    <span className='table-scope'>Âmbito <span className='block'>Geográfico</span></span>
+                    <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
+                    <span className='table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
+                    <span className='table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
+                    <span className='table-pop'>População <span className='block'>Total</span></span>
+                  </li>
+                  <li>
+                    <span className='table-scope'>{this.contingenteMatrix[contingente]}</span>
+                    <div className='table-parking'>
+                      <ul className='inline-list'>
+                        <li className={c('est est-livre', {active: estacionamento.indexOf('livre') !== -1})}>L</li>
+                        <li className={c('est est-condicionado', {active: estacionamento.indexOf('condicionado') !== -1})}>C</li>
+                        <li className={c('est est-fixo', {active: estacionamento.indexOf('fixo') !== -1})}>F</li>
+                        <li className={c('est est-escala', {active: estacionamento.indexOf('escala') !== -1})}>E</li>
+                      </ul>
+                    </div>
+                    <span className='table-national'>{percentNational.toLocaleString()}%</span>
+                    <span className='table-residents'>{percentPop.toLocaleString()}%</span>
+                    <span className='table-pop'>{pop.toLocaleString()}</span>
+                  </li>
+                </ul>
 
                 <div className='graph-container'>
                   <div className='graph'>
@@ -350,9 +435,6 @@ var Concelho = React.createClass({
                     {this.renderLic1000DormidasChart()}
                   </div>
                 </div>
-
-                <p>Linha da section ambito</p>
-
 
               </div>
             </section>

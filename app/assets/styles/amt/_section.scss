@@ -21,7 +21,7 @@
 
   li {
   	margin-bottom: 20px;
-  	span{
+  	> span{
   		max-width: 220px;
   		display: block;
   	}
@@ -29,8 +29,16 @@
 }
 
 .section-content {
-   clear: both;
-   overflow: hidden;
+  clear: both;
+  overflow: hidden;
+
+  .no-data {
+    margin: 0;
+    text-align: center;
+    border: 1px dashed #CCCCCC;
+    border-radius: .5rem;
+    padding: 6rem 4rem;
+  }
 }
 
 .section-footer {

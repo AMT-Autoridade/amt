@@ -20,10 +20,37 @@ var SectionDistribuicao = React.createClass({
     mapGeometries: T.object,
     municipios: T.array,
     onMapClick: T.func,
-    popoverContent: T.func
+    popoverContent: T.func,
+    overlayInfoContent: T.func
   },
 
-  renderTrendLineChart: function (data) {
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    if (this.chartsRef.indexOf(ref) === -1) {
+      this.chartsRef = this.chartsRef.concat([ref]);
+    }
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    this.chartsRef = [];
+    window.removeEventListener('resize', this.onWindowResize);
+  },
+
+  renderTrendLineChart: function (data, id) {
     let tooltipFn = makeTooltip(entryIndex => {
       let year = data[entryIndex];
       return (
@@ -48,10 +75,11 @@ var SectionDistribuicao = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       layout: {
         padding: {
           left: 5,
-          top: 2,
+          top: 3,
           right: 5
         }
       },
@@ -78,7 +106,7 @@ var SectionDistribuicao = React.createClass({
     };
 
     return (
-      <LineChart data={chartData} options={chartOptions} height={40} />
+      <LineChart data={chartData} options={chartOptions} height={40} ref={this.addChartRef(`chart-trend-${id}`)}/>
     );
   },
 
@@ -94,7 +122,7 @@ var SectionDistribuicao = React.createClass({
     return (
       <li key={adminArea.id}>
         <span className='table-region'><Link to={`/nuts/${_.kebabCase(adminArea.name)}`} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
-        <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'])}</div>
+        <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'], adminArea.id)}</div>
         <span className='table-national'>{percentNational.toLocaleString()}%</span>
         <span className='table-residents'>{percentPop.toLocaleString()}%</span>
         <span className='table-available'>{availableLicencas.toLocaleString()}</span>
@@ -149,8 +177,9 @@ var SectionDistribuicao = React.createClass({
           geometries={this.props.mapGeometries.data}
           data={municipiosVagas}
           nut={this.props.adminId}
-          onClick={this.props.onMapClick}
+          onClick={this.props.onMapClick.bind(null, 'distribuicao')}
           popoverContent={this.props.popoverContent}
+          overlayInfoContent={this.props.overlayInfoContent.bind(null, 'distribuicao')}
         />
         <div className='map-legend'>
           <h6 className='legend-title'>Vagas por Município:</h6>
@@ -221,23 +250,29 @@ var SectionDistribuicao = React.createClass({
   render: function () {
     return (
       <div id='distribuicao' className='content-wrapper vertical-center'>
-        <div className='map-wrapper'>
-          {this.renderMap()}
-        </div>
-        <div className='section-wrapper'>
-          <section className='section-container'>
-            <header className='section-header'>
-              <h3 className='section-category'>{this.props.adminName}</h3>
-              <h1>Detalhe Geográfico</h1>
-              <p className='lead'>Não obstante as licenças municipais terem âmbito concelhio, apresenta-se a sua distribuição por região (NUTS III).</p>
-            </header>
-            <div className='section-content'>
-              {this.renderTable()}
-            </div>
-            <footer className='section-footer'>
-              <p><strong>Notas:</strong> Acrónimo de “Nomenclatura das Unidades Territoriais para Fins Estatísticos”. Constitui um sistema hierárquico de divisão do território em regiões, dividindo-se em 3 níveis (NUTS I, NUTS II, NUTS III), definidos tendo por base critérios populacionais, administrativos e geográficos. Atualmente, os 308 municípios nacionais estão agrupados em 25 NUTS III.</p>
-            </footer>
-          </section>
+        <div className='center'>
+          <div className='map-wrapper'>
+            {this.renderMap()}
+          </div>
+          <div className='section-wrapper'>
+            <section className='section-container'>
+              <header className='section-header'>
+                <h3 className='section-category'>
+                  {this.props.adminLevel === 'nut' ? <Link to='/#distribuicao' title='Ver Portugal'>Portugal</Link> : null}
+                  {this.props.adminLevel === 'nut' ? ' › ' : null}
+                  {this.props.adminName}
+                </h3>
+                <h1>Detalhe Geográfico</h1>
+                <p className='lead'>Não obstante as licenças municipais terem âmbito concelhio, apresenta-se a sua distribuição por região (NUTS III).</p>
+              </header>
+              <div className='section-content'>
+                {this.renderTable()}
+              </div>
+              <footer className='section-footer'>
+                <p><strong>Notas:</strong> Acrónimo de “Nomenclatura das Unidades Territoriais para Fins Estatísticos”. Constitui um sistema hierárquico de divisão do território em regiões, dividindo-se em 3 níveis (NUTS I, NUTS II, NUTS III), definidos tendo por base critérios populacionais, administrativos e geográficos. Atualmente, os 308 municípios nacionais estão agrupados em 25 NUTS III.</p>
+              </footer>
+            </section>
+          </div>
         </div>
       </div>
     );

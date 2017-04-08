@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import { Link } from 'react-router';
 import { Bar as BarChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
@@ -21,6 +22,32 @@ var SectionLicencas = React.createClass({
     onMapClick: T.func,
     popoverContent: T.func,
     overlayInfoContent: T.func
+  },
+
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    if (this.chartsRef.indexOf(ref) === -1) {
+      this.chartsRef = this.chartsRef.concat([ref]);
+    }
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    this.chartsRef = [];
+    window.removeEventListener('resize', this.onWindowResize);
   },
 
   renderChart: function () {
@@ -57,6 +84,7 @@ var SectionLicencas = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -64,6 +92,10 @@ var SectionLicencas = React.createClass({
         xAxes: [{
           gridLines: {
             display: false
+          },
+          ticks: {
+            fontSize: 10,
+            autoSkip: false
           }
         }],
         yAxes: [{
@@ -81,7 +113,7 @@ var SectionLicencas = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={120}/>;
+    return <BarChart data={chartData} options={chartOptions} height={120} ref={this.addChartRef('chart')} />;
   },
 
   renderMap: function () {
@@ -111,9 +143,9 @@ var SectionLicencas = React.createClass({
           geometries={this.props.mapGeometries.data}
           data={licencasMunicipios}
           nut={this.props.adminId}
-          onClick={this.props.onMapClick}
+          onClick={this.props.onMapClick.bind(null, 'licencas')}
           popoverContent={this.props.popoverContent}
-          overlayInfoContent={this.props.overlayInfoContent}
+          overlayInfoContent={this.props.overlayInfoContent.bind(null, 'licencas')}
         />
 
        <div className='map-legend'>
@@ -135,39 +167,45 @@ var SectionLicencas = React.createClass({
 
     return (
       <div id='licencas' className='content-wrapper vertical-center'>
-        <div className='map-wrapper'>
-          {this.renderMap()}
-        </div>
-        <div className='section-wrapper'>
-          <section className='section-container'>
-            <header className='section-header'>
-              <h3 className='section-category'>{this.props.adminName}</h3>
-              <h1>Licenças e Contingentes</h1>
-              <p className="lead">A prestação de serviços de táxi implica a posse de uma licença por cada veículo utilizado. Os municípios atribuem estas licenças e definem o número máximo de veículos que pode ser licenciado no seu concelho – o contingente.</p>
-            </header>
-            <div className='section-content'>
-              <div className='section-stats'>
-                <ul>
-                  <li>
-                    <span className='stat-number'>{licencas2016.toLocaleString()}</span>
-                    <span className='stat-description'>Total de táxis licenciados <span className='block'>em agosto de 2016.</span></span>
-                  </li>
-                  <li>
-                    <span className='stat-number'>{max2016.toLocaleString()}</span>
-                    <span className='stat-description'>Total dos contingentes <span className='block'>em agosto de 2016.</span></span>
-                  </li>
-                  <li>
-                    <span className='stat-number'>{(max2016 - licencas2016).toLocaleString()}</span>
-                    <span className='stat-description'>Total de vagas existentes <span className='block'>em agosto de 2016.</span></span>
-                  </li>
-                </ul>
+        <div className='center'>
+          <div className='map-wrapper'>
+            {this.renderMap()}
+          </div>
+          <div className='section-wrapper'>
+            <section className='section-container'>
+              <header className='section-header'>
+                <h3 className='section-category'>
+                  {this.props.adminLevel === 'nut' ? <Link to='/#licencas' title='Ver Portugal'>Portugal</Link> : null}
+                  {this.props.adminLevel === 'nut' ? ' › ' : null}
+                  {this.props.adminName}
+                </h3>
+                <h1>Licenças e Contingentes</h1>
+                <p className="lead">A prestação de serviços de táxi implica a posse de uma licença por cada veículo utilizado. Os municípios atribuem estas licenças e definem o número máximo de veículos que pode ser licenciado no seu concelho – o contingente.</p>
+              </header>
+              <div className='section-content'>
+                <div className='section-stats'>
+                  <ul>
+                    <li>
+                      <span className='stat-number'>{licencas2016.toLocaleString()}</span>
+                      <span className='stat-description'>Total de táxis licenciados <span className='block'>em agosto de 2016.</span></span>
+                    </li>
+                    <li>
+                      <span className='stat-number'>{max2016.toLocaleString()}</span>
+                      <span className='stat-description'>Total dos contingentes <span className='block'>em agosto de 2016.</span></span>
+                    </li>
+                    <li>
+                      <span className='stat-number'>{(max2016 - licencas2016).toLocaleString()}</span>
+                      <span className='stat-description'>Total de vagas existentes <span className='block'>em agosto de 2016.</span></span>
+                    </li>
+                  </ul>
+                </div>
+
+                <h6 className='legend-title'>Licenças e vagas nos contingentes:</h6>
+                {this.renderChart()}
+
               </div>
-
-              <h6 className='legend-title'>Licenças e vagas nos contingentes:</h6>
-              {this.renderChart()}
-
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
       </div>
     );

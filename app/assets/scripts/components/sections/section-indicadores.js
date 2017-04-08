@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import { Link } from 'react-router';
 import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
@@ -24,7 +25,33 @@ var SectionResidentes = React.createClass({
     overlayInfoContent: T.func
   },
 
-  renderLicencas1000Chart: function (lic1000Data) {
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    if (this.chartsRef.indexOf(ref) === -1) {
+      this.chartsRef = this.chartsRef.concat([ref]);
+    }
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    this.chartsRef = [];
+    window.removeEventListener('resize', this.onWindowResize);
+  },
+
+  renderLicencas1000Chart: function (lic1000Data, id) {
     let l = lic1000Data.labels.length - 1;
 
     let tooltipFn = makeTooltip(entryIndex => {
@@ -53,6 +80,7 @@ var SectionResidentes = React.createClass({
     };
 
     let chartOptions = {
+      responsive: false,
       legend: {
         display: false
       },
@@ -66,7 +94,9 @@ var SectionResidentes = React.createClass({
           }
         }],
         yAxes: [{
-          display: false,
+          gridLines: {
+            display: false
+          },
           ticks: {
             min: 0
           }
@@ -80,7 +110,7 @@ var SectionResidentes = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={220}/>;
+    return <LineChart data={chartData} options={chartOptions} height={220} ref={this.addChartRef(`chart-lic1000${id}`)}/>;
   },
 
   renderMap: function () {
@@ -112,9 +142,9 @@ var SectionResidentes = React.createClass({
           geometries={this.props.mapGeometries.data}
           data={licencas1000Hab}
           nut={this.props.adminId}
-          onClick={this.props.onMapClick}
+          onClick={this.props.onMapClick.bind(null, 'indicadores')}
           popoverContent={this.props.popoverContent}
-          overlayInfoContent={this.props.overlayInfoContent}
+          overlayInfoContent={this.props.overlayInfoContent.bind(null, 'indicadores')}
         />
 
        <div className='map-legend'>
@@ -138,47 +168,53 @@ var SectionResidentes = React.createClass({
 
     return (
       <div id='indicadores' className='content-wrapper vertical-center'>
-        <div className='map-wrapper'>
-          {this.renderMap()}
-        </div>
-         <div className='section-wrapper'>
-          <section className='section-container'>
-            <header className='section-header'>
-              <h3 className='section-category'>{this.props.adminName}</h3>
-              <h1>Indicadores</h1>
-              <p className='lead'>Os indicadores que associam o número de táxis a fatores com influência na sua procura é uma forma útil de analisar a realidade e a sua evolução.</p>
-            </header>
+        <div className='center'>
+          <div className='map-wrapper'>
+            {this.renderMap()}
+          </div>
+           <div className='section-wrapper'>
+            <section className='section-container'>
+              <header className='section-header'>
+                <h3 className='section-category'>
+                  {this.props.adminLevel === 'nut' ? <Link to='/#indicadores' title='Ver Portugal'>Portugal</Link> : null}
+                  {this.props.adminLevel === 'nut' ? ' › ' : null}
+                  {this.props.adminName}
+                </h3>
+                <h1>Indicadores</h1>
+                <p className='lead'>Os indicadores que associam o número de táxis a fatores com influência na sua procura é uma forma útil de analisar a realidade e a sua evolução.</p>
+              </header>
 
-            <div className='section-content'>
-              <div className='section-stats'>
-                <ul className='two-columns'>
-                  <li>
-                    <span className='stat-number'>{round(this.props.licencasHab, 1)}</span>
-                    <span className='stat-description'>Táxis licenciados por 1000 residentes.</span>
-                  </li>
-                  <li>
-                    <span className='stat-number'>{dormidas}</span>
-                    <span className='stat-description'>Táxis licenciados por 1000 dormidas.</span>
-                  </li>
-                </ul>
-              </div>
+              <div className='section-content'>
+                <div className='section-stats'>
+                  <ul className='two-columns'>
+                    <li>
+                      <span className='stat-number'>{round(this.props.licencasHab, 1)}</span>
+                      <span className='stat-description'>Táxis licenciados por 1000 residentes.</span>
+                    </li>
+                    <li>
+                      <span className='stat-number'>{dormidas}</span>
+                      <span className='stat-description'>Táxis licenciados por 1000 dormidas.</span>
+                    </li>
+                  </ul>
+                </div>
 
-              <div className='two-columns'>
-                <div className='graph'>
-                  <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 residentes:</h6>
-                  {this.renderLicencas1000Chart(this.props.chartLic1000Hab)}
-                </div>
-                <div className='graph'>
-                  <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 dormidas:</h6>
-                  {this.renderLicencas1000Chart(this.props.chartLic1000Dor)}
+                <div className='two-columns'>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 residentes:</h6>
+                    {this.renderLicencas1000Chart(this.props.chartLic1000Hab, 'hab')}
+                  </div>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 dormidas:</h6>
+                    {this.renderLicencas1000Chart(this.props.chartLic1000Dor, 'dor')}
+                  </div>
                 </div>
               </div>
-            </div>
-            <footer className='section-footer'>
-              <p><strong>Nota I:</strong> Os valores dos indicadores devem ser analisados caso a caso e comparados com particular precaução. A consideração de outros fatores com influência na procura poderá melhor enquadrar as diferenças existentes.</p>
-              <p><strong>Nota II:</strong> Dormidas nos estabelecimentos hoteleiros (estabelecimento cuja atividade principal consiste na prestação de serviços de alojamento e de outros serviços acessórios ou de apoio, mediante pagamento).</p>
-            </footer>
-          </section>
+              <footer className='section-footer'>
+                <p><strong>Nota I:</strong> Os valores dos indicadores devem ser analisados caso a caso e comparados com particular precaução. A consideração de outros fatores com influência na procura poderá melhor enquadrar as diferenças existentes.</p>
+                <p><strong>Nota II:</strong> Dormidas nos estabelecimentos hoteleiros (estabelecimento cuja atividade principal consiste na prestação de serviços de alojamento e de outros serviços acessórios ou de apoio, mediante pagamento).</p>
+              </footer>
+            </section>
+          </div>
         </div>
       </div>
     );

@@ -1,4 +1,7 @@
 'use strict';
+import 'babel-polyfill';
+import './utils/classlist-polyfill';
+
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -22,6 +25,10 @@ import UhOh from './views/uhoh';
 const history = syncHistoryWithStore(hashHistory, store);
 
 const scrollerMiddleware = useScroll((prevRouterProps, currRouterProps) => {
+  // When a hash is set do not scroll to the top.
+  // This messes with section navigation.
+  if (currRouterProps.location.hash) return false;
+
   return prevRouterProps &&
     decodeURIComponent(currRouterProps.location.pathname) !== decodeURIComponent(prevRouterProps.location.pathname);
 });
