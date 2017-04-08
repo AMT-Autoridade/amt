@@ -176,7 +176,7 @@ var SectionResidentes = React.createClass({
             <section className='section-container'>
               <header className='section-header'>
                 <h3 className='section-category'>
-                  {this.props.adminLevel === 'nut' ? <Link to='/' title='Ver Portugal'>Portugal</Link> : null}
+                  {this.props.adminLevel === 'nut' ? <Link to='/#indicadores' title='Ver Portugal'>Portugal</Link> : null}
                   {this.props.adminLevel === 'nut' ? ' › ' : null}
                   {this.props.adminName}
                 </h3>
