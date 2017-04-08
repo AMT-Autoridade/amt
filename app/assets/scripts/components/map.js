@@ -328,9 +328,9 @@ var PtMap = function (options) {
       return function drawFeatureSel (sel) {
         sel = sel.attr('d', path)
           .attr('class', d => `aa--${d.properties.type}`)
-          .style('stroke', '#fff')
-          .style('stroke-width', d => d.properties.type === aaLevel ? '1px' : '0.1px')
-          .style('fill', d => {
+          .attr('stroke', '#fff')
+          .attr('stroke-width', d => d.properties.type === aaLevel ? '1px' : '0.1px')
+          .attr('fill', d => {
             // Only concelhos have colors, everything else is black for overlay.
             if (d.properties.type !== 'concelho') return '#000';
             // When something is selected, base map is grey.
@@ -338,7 +338,7 @@ var PtMap = function (options) {
             let bucket = _data ? _data.find(o => o.id === parseInt(d.properties.id)) : null;
             return bucket ? bucket.color : DEFAULT_COLOR;
           })
-          .style('fill-opacity', d => d.properties.type === aaLevel ? 0 : 1);
+          .attr('fill-opacity', d => d.properties.type === aaLevel ? 0 : 1);
 
         if (!_nut) {
           sel = sel
@@ -349,7 +349,7 @@ var PtMap = function (options) {
             d3.select(this).style('cursor', 'pointer');
             let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
             el.transition()
-              .style('fill-opacity', 0.20);
+              .attr('fill-opacity', 0.20);
           })
           .on('mouseout', function (d, i) {
             hideTooltip();
@@ -357,7 +357,7 @@ var PtMap = function (options) {
             d3.select(this).style('cursor', 'default');
             let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
             el.transition()
-              .style('fill-opacity', 0);
+              .attr('fill-opacity', 0);
           })
           .on('click', function (d, i) {
             if (!_onClickFn) return;
@@ -425,9 +425,9 @@ var PtMap = function (options) {
       return function (sel) {
         return sel.attr('d', path)
           .attr('class', d => `aa--${d.properties.type}`)
-          .style('stroke', d => d.properties.type === 'distrito' ? 'none' : '#fff')
-          .style('stroke-width', d => d.properties.type === aaLevel ? '1px' : '0.1px')
-          .style('fill', d => {
+          .attr('stroke', d => d.properties.type === 'distrito' ? 'none' : '#fff')
+          .attr('stroke-width', d => d.properties.type === aaLevel ? '1px' : '0.1px')
+          .attr('fill', d => {
             if (d.properties.type !== 'concelho') return 'none';
             let id = parseInt(d.properties.id);
 
@@ -445,7 +445,7 @@ var PtMap = function (options) {
             d3.select(this)
               .style('cursor', 'pointer')
               .transition()
-                .style('fill', d3.color(color).darker(1));
+                .attr('fill', d3.color(color).darker(1));
           })
           .on('mouseout', function (d, i) {
             let id = parseInt(d.properties.id);
@@ -457,7 +457,7 @@ var PtMap = function (options) {
             d3.select(this)
               .style('cursor', 'default')
               .transition()
-                .style('fill', color);
+                .attr('fill', color);
           })
           .on('click', function (d, i) {
             if (!_onClickFn) return;
@@ -569,9 +569,9 @@ var PtMap = function (options) {
         bounds.enter()
           .append('rect')
           .attr('class', 'island-bound')
-          .style('stroke-width', '1px')
-          .style('stroke', '#ddd')
-          .style('fill', 'none')
+          .attr('stroke-width', '1px')
+          .attr('stroke', '#ddd')
+          .attr('fill', 'none')
           .merge(bounds)
             .attr('x', d => scalar(d.x))
             .attr('y', d => scalar(d.y))
@@ -602,10 +602,10 @@ var PtMap = function (options) {
             .attr('r', _overlayAAr)
             .attr('cx', _overlayAAcx)
             .attr('cy', _overlayAAcy)
-            .style('stroke', '#ccc')
-            .style('stroke-width', '1px')
-            .style('fill', 'white')
-            .style('fill-opacity', 0.8);
+            .attr('stroke', '#ccc')
+            .attr('stroke-width', '1px')
+            .attr('fill', 'white')
+            .attr('fill-opacity', 0.8);
 
         // Fill in the name of the aa we're seeing.
         // Render element sent by the parent.
