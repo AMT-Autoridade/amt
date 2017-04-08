@@ -109,7 +109,7 @@ var SectionDistribuicao = React.createClass({
       <ul className='table-distribution'>
         <li className='table-header'>
           <span className='table-region'>REGIÃO <span className='block'>(NUTS III)</span></span>
-          <span className='table-graph'>Evoluçãod do <span className='block'>Total de Licenças</span></span>
+          <span className='table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
           <span className='table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
           <span className='table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
           <span className='table-available'>Vagas Disponíveis <span className='block'>(Agosto 2016)</span></span>
