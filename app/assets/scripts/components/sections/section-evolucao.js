@@ -120,6 +120,7 @@ var SectionEvolucao = React.createClass({
       .sortBy('data.change')
       .reverse()
       .take(5)
+      .filter(o => o.data.change > 0)
       .value();
 
     let tooltipFn = makeTooltip(entryIndex => {
@@ -152,6 +153,9 @@ var SectionEvolucao = React.createClass({
           categoryPercentage: 1,
           gridLines: {
             display: false
+          },
+          ticks: {
+            autoSkip: false
           }
         }],
         yAxes: [{
@@ -166,7 +170,10 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={370} ref={this.addChartRef('chart-municipios')}/>;
+    // Different height depending on the number of datasets
+    let height = [300, 300, 370, 370, 370][topMunicipios.length - 1];
+
+    return <BarChart data={chartData} options={chartOptions} height={height} ref={this.addChartRef('chart-municipios')}/>;
   },
 
   renderChangeLicencasChart: function () {
@@ -296,11 +303,17 @@ var SectionEvolucao = React.createClass({
               <div className='section-stats'>
                 <ul>
                   <li>
-                    <span className='stat-number'>{newLicencas.toLocaleString()}</span>
+                    <span className='stat-number'>
+                      <span>{newLicencas < 0 ? '-' : '+'}</span>
+                      {Math.abs(newLicencas).toLocaleString()}
+                    </span>
                     <span className='stat-description'>Variação no número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                   </li>
                   <li>
-                    <span className='stat-number'>{round(increaseLicencas, 0).toLocaleString()}%</span>
+                    <span className='stat-number'>
+                      <span>{increaseLicencas < 0 ? '-' : '+'}</span>
+                      {round(Math.abs(increaseLicencas), 0).toLocaleString()}
+                    </span>
                     <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                   </li>
                   <li>
