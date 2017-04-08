@@ -14,6 +14,7 @@ import Map from '../components/map';
 
 var Concelho = React.createClass({
   propTypes: {
+    location: T.object,
     params: T.object,
     concelho: T.object,
     nut: T.object,
@@ -59,10 +60,11 @@ var Concelho = React.createClass({
   },
 
   overlayInfoContent: function () {
+    let hash = this.props.location.hash || '';
     return (
       <div className='map-aa-info'>
         <ul className='map-aa-list inline-list'>
-          <li><a href={`#/nuts/${this.props.nut.data.slug}`} title={`Ir para ${this.props.nut.data.name}`}>{'<'}</a></li>
+          <li><a href={`#/nuts/${this.props.nut.data.slug}${hash}`} title={`Ir para ${this.props.nut.data.name}`}>{'<'}</a></li>
           <li>{this.props.concelho.data.name}</li>
         </ul>
       </div>
