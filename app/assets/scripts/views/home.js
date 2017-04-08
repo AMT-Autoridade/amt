@@ -29,11 +29,11 @@ var Home = React.createClass({
   sections: [
     {id: 'intro', active: false},
     {id: 'licencas', active: false},
-    {id: 'mobilidade', active: false},
-    {id: 'estacionamento', active: false},
     {id: 'distribuicao', active: false},
     {id: 'evolucao', active: false},
     {id: 'indicadores', active: false},
+    {id: 'mobilidade', active: false},
+    {id: 'estacionamento', active: false},
     {id: 'conclusoes', active: false}
   ],
 

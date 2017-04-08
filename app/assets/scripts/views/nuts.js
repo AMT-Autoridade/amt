@@ -28,11 +28,11 @@ var Nuts = React.createClass({
 
   sections: [
     {id: 'licencas', active: false},
-    {id: 'mobilidade', active: false},
-    {id: 'estacionamento', active: false},
     {id: 'distribuicao', active: false},
+    {id: 'evolucao', active: false},
     {id: 'indicadores', active: false},
-    {id: 'evolucao', active: false}
+    {id: 'mobilidade', active: false},
+    {id: 'estacionamento', active: false}
   ],
 
   onMapClick: function (section, data) {
