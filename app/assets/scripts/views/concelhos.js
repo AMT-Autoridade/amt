@@ -363,6 +363,10 @@ var Concelho = React.createClass({
                       <span className='stat-description'>Total de vagas existentes <span className='block'>em agosto de 2016.</span></span>
                     </li>
                     <li>
+                      <span className='stat-number'>{licMobRed}</span>
+                      <span className='stat-description'>Licenças existentes no <span className='block'>contingente mob. reduzida.</span></span>
+                    </li>
+                    <li>
                       <span className='stat-number'>
                         <span>{newLicencas < 0 ? '-' : '+'}</span>
                         {Math.abs(newLicencas).toLocaleString()}
@@ -377,10 +381,6 @@ var Concelho = React.createClass({
                       <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{licMobRed}</span>
-                      <span className='stat-description'>Licenças existentes no <span className='block'>contingente mob. reduzida.</span></span>
-                    </li>
-                    <li>
                       <span className='stat-number'>{licencas1000Hab}</span>
                       <span className='stat-description'>Táxis licenciados por 1000 residentes.</span>
                     </li>
@@ -391,7 +391,29 @@ var Concelho = React.createClass({
                   </ul>
                 </div>
 
-                <hr/>
+                <ul className='table-distribution'>
+                  <li className='table-header'>
+                    <span className='table-scope'>Âmbito <span className='block'>Geográfico</span></span>
+                    <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
+                    <span className='table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
+                    <span className='table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
+                    <span className='table-pop'>População <span className='block'>Total</span></span>
+                  </li>
+                  <li>
+                    <span className='table-scope'>{this.contingenteMatrix[contingente]}</span>
+                    <div className='table-parking'>
+                      <ul className='inline-list'>
+                        <li className={c('est est-livre', {active: estacionamento.indexOf('livre') !== -1})}>L</li>
+                        <li className={c('est est-condicionado', {active: estacionamento.indexOf('condicionado') !== -1})}>C</li>
+                        <li className={c('est est-fixo', {active: estacionamento.indexOf('fixo') !== -1})}>F</li>
+                        <li className={c('est est-escala', {active: estacionamento.indexOf('escala') !== -1})}>E</li>
+                      </ul>
+                    </div>
+                    <span className='table-national'>{percentNational.toLocaleString()}%</span>
+                    <span className='table-residents'>{percentPop.toLocaleString()}%</span>
+                    <span className='table-pop'>{pop.toLocaleString()}</span>
+                  </li>
+                </ul>
 
                 <div className='graph-container'>
                   <div className='graph'>
@@ -407,30 +429,6 @@ var Concelho = React.createClass({
                     {this.renderLic1000DormidasChart()}
                   </div>
                 </div>
-
-                <ul className='table-distribution'>
-                  <li className='table-header'>
-                    <span className='table-region'>REGIÃO <span className='block'>(Concelho)</span></span>
-                    <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
-                    <span className='table-scope'>Âmbito <span className='block'>Geográfico</span></span>
-                    <span className='table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
-                    <span className='table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
-                  </li>
-                  <li>
-                    <span className='table-region'>{concelho.name}</span>
-                    <div className='table-parking'>
-                      <ul className='inline-list'>
-                        <li className={c('est est-livre', {active: estacionamento.indexOf('livre') !== -1})}>L</li>
-                        <li className={c('est est-condicionado', {active: estacionamento.indexOf('condicionado') !== -1})}>C</li>
-                        <li className={c('est est-fixo', {active: estacionamento.indexOf('fixo') !== -1})}>F</li>
-                        <li className={c('est est-escala', {active: estacionamento.indexOf('escala') !== -1})}>E</li>
-                      </ul>
-                    </div>
-                    <span className='table-scope'>{this.contingenteMatrix[contingente]}</span>
-                    <span className='table-national'>{percentNational.toLocaleString()}%</span>
-                    <span className='table-residents'>{percentPop.toLocaleString()}%</span>
-                  </li>
-                </ul>
 
               </div>
             </section>

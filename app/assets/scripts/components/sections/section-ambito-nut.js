@@ -117,10 +117,13 @@ var SectionDistribuicao = React.createClass({
 
   renderTableRow: function (adminArea) {
     let url = `/nuts/${this.props.parentSlug}/concelhos/${_.kebabCase(adminArea.name)}`;
+    let pop = _.last(adminArea.data['pop-residente']).value;
+
     return (
       <li key={adminArea.id}>
         <span className='table-region'><Link to={url} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'], adminArea.id)}</div>
+        <span className='table-scope'>{this.contingenteMatrix[adminArea.data.contingente]}</span>
         <div className='table-parking'>
           <ul className='inline-list'>
             <li className={c('est est-livre', {active: adminArea.data.estacionamento.indexOf('livre') !== -1})}>L</li>
@@ -129,7 +132,7 @@ var SectionDistribuicao = React.createClass({
             <li className={c('est est-escala', {active: adminArea.data.estacionamento.indexOf('escala') !== -1})}>E</li>
           </ul>
         </div>
-        <span className='table-scope'>{this.contingenteMatrix[adminArea.data.contingente]}</span>
+        <span className='table-pop'>{pop.toLocaleString()}</span>
       </li>
     );
   },
@@ -142,8 +145,9 @@ var SectionDistribuicao = React.createClass({
         <li className='table-header'>
           <span className='table-region'>REGIÃO <span className='block'>(Concelho)</span></span>
           <span className='table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
-          <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
           <span className='table-scope'>Âmbito <span className='block'>Geográfico</span></span>
+          <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
+          <span className='table-pop'>População <span className='block'>Total</span></span>
         </li>
         {adminList.map(this.renderTableRow)}
       </ul>

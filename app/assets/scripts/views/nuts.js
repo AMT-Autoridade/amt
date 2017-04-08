@@ -142,7 +142,7 @@ var Nuts = React.createClass({
     };
 
     return (
-      <div>
+      <div id="page-nut">
         <div id="page-content">
           <SectionLicencas
             adminLevel='nut'
