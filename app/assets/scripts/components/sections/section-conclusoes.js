@@ -8,11 +8,11 @@ var SectionConclusoes = React.createClass({
 
   render: function () {
     return (
-      <div id='conclusoes-wrapper'> 
+      <div id='conclusoes-wrapper'>
         <div id='conclusoes' className='container-wrapper content-wrapper vertical-center'>
           <section className=''>
             <header className='section-header'>
-              <h3 className='section-category'>PORTUGAL</h3>
+              <h3 className='section-category'>Portugal</h3>
               <h1>Conclusões</h1>
               <p className='lead'>A recolha efetuada pela AMT constitui um marco quanto ao conhecimento dos serviços de transporte em táxi em Portugal. É necessário continuar a aprofundar o conhecimento sobre o setor. A estrutura da oferta tem-se mantido estável, apesar de se identificarem alterações em fatores que podem influir na procura. Na sua maioria, os concelhos estabelecem contingentes com âmbito territorial infra concelhio e aplicam o regime de estacionamento fixo.</p>
             </header>
