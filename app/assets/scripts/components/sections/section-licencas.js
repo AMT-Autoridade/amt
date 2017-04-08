@@ -87,15 +87,6 @@ var SectionLicencas = React.createClass({
   renderMap: function () {
     if (!this.props.mapGeometries.fetched) return null;
 
-    // const getColor = (v) => {
-    //   if (v <= 10) return '#40e0d0';
-    //   if (v <= 30) return '#2daeae';
-    //   if (v <= 100) return '#4378a2';
-    //   if (v <= 1000) return '#354c6f';
-    //   return '#191970';
-    // };
-
-    //Táxis
     const getColor = (v) => {
       if (v <= 10) return '#00ced1';
       if (v <= 30) return '#0eaeaf';
@@ -103,32 +94,6 @@ var SectionLicencas = React.createClass({
       if (v <= 1000) return '#256465';
       return '#264242';
     };
-
-    // const getColor = (v) => {
-    //   if (v <= 10) return '#d0d1e6';
-    //   if (v <= 30) return '#a6bddb';
-    //   if (v <= 100) return '#74a9cf';
-    //   if (v <= 1000) return '#2b8cbe';
-    //   return '#045a8d';
-    // };
-
-    // const getColor = (v) => {
-    //   if (v <= 10) return '#02ADC8';
-    //   if (v <= 30) return '#0290DB';
-    //   if (v <= 100) return '#0272C1';
-    //   if (v <= 1000) return '#0250AF';
-    //   return '#312D98';
-    // };
-
-    //Azul
-    // const getColor = (v) => {
-    //   if (v <= 10) return '#1BBAD6';
-    //   if (v <= 30) return '#0F84BB';
-    //   if (v <= 100) return '#1F4A98';
-    //   if (v <= 1000) return '#171A6B';
-    //   return '#11134C';
-    // };
-
 
     let licencasMunicipios = this.props.municipios.map(m => {
       let licencas = _.last(m.data['lic-geral']).value;
@@ -178,7 +143,7 @@ var SectionLicencas = React.createClass({
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>
               <h1>Licenças e Contingentes</h1>
-              <p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p>
+              <p className="lead">A prestação de serviços de táxi implica a posse de uma licença por cada veículo utilizado. Os municípios atribuem estas licenças e definem o número máximo de veículos que pode ser licenciado no seu concelho – o contingente.</p>
             </header>
             <div className='section-content'>
               <div className='section-stats'>
@@ -198,16 +163,10 @@ var SectionLicencas = React.createClass({
                 </ul>
               </div>
 
-              <h6 className='legend-title'>Licenças e vagas por contingente</h6>
+              <h6 className='legend-title'>Licenças e vagas nos contingentes:</h6>
               {this.renderChart()}
 
             </div>
-            <footer className='section-footer'>
-              <ul className='color-legend inline'>
-                <li><span style={{backgroundColor: '#FFCC45'}}></span>Licenças Ativas</li>
-                <li><span style={{backgroundColor: '#FDB13C'}}></span>Vagas Disponíveis</li>
-              </ul>
-            </footer>
           </section>
         </div>
       </div>

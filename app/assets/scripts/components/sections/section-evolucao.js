@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import { Link } from 'react-router';
 import { Line as LineChart, Bar as BarChart, Doughnut as DoughnutChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
@@ -256,44 +257,44 @@ var SectionEvolucao = React.createClass({
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>
               <h1>Evolução 2006&#8212;2016</h1>
-              <p className='lead'>O número total de táxis manteve-se estável, sendo o maior aumento sentido em Lisboa, e a maior diminuição nas regiões autónomas da Madeira e Açores.</p>
+              <p className='lead'>Para além de conhecer a realidade atual importa igualmente conhecer a evolução existente. Analisam-se os desenvolvimentos ocorridos de 2006 a 2016.</p>
             </header>
             <div className='section-content'>
               <div className='section-stats'>
                 <ul>
                   <li>
                     <span className='stat-number'>{newLicencas.toLocaleString()}</span>
-                    <span className='stat-description'>Aumento do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
+                    <span className='stat-description'>Variação no número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                   </li>
                   <li>
                     <span className='stat-number'>{round(increaseLicencas, 0).toLocaleString()}%</span>
-                    <span className='stat-description'>Crescimento dos táxis <span className='block'>licenciados desde 2006.</span></span>
+                    <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                   </li>
                   <li>
                     <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios, 0).toLocaleString()}%</span>
-                    <span className='stat-description'>Dos municípios não registaram alteração no número de licenças.</span>
+                    <span className='stat-description'>Dos municípios não registaram alteração nos táxis licenciados.</span>
                   </li>
                 </ul>
               </div>
 
               <div className='graph-container'>
                 <div className='graph'>
-                  <h6 className='legend-title'>Evolução das licenças 2006 a 2016</h6>
+                  <h6 className='legend-title'>Evolução das licenças 2006 a 2016:</h6>
                   {this.renderTimelineChart()}
                 </div>
                 <div className='graph'>
-                  <h6 className='legend-title'>Municipios com maior aumento</h6>
+                  <h6 className='legend-title'>Municípios com maior aumento:</h6>
                   {this.renderTopMunicipiosChart()}
                 </div>
                 <div className='graph'>
-                  <h6 className='legend-title'>Alterações do número de licenças</h6>
+                  <h6 className='legend-title'>Alterações do número de licenças:</h6>
                   {this.renderChangeLicencasChart()}
                 </div>
               </div>
 
             </div>
             <footer className='section-footer'>
-              <p><strong>Notas:</strong> Para os concelhos em que não existia informação disponível para todos os anos existiu interpolação de valores. A percentagem de valores interpolados correspondeu a apenas 0,2% do total de valores considerados. <a href="#">Saber mais</a></p>
+              <p><strong>Nota:</strong> Existem dados relativos a 2016 para todos os concelhos. Para os poucos concelhos em que não está disponível informação para todos os anos foram usados valores imputados. <Link to='/dados'>Saber mais</Link></p>
             </footer>
           </section>
         </div>

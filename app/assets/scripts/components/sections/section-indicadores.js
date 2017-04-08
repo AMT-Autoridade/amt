@@ -118,7 +118,7 @@ var SectionResidentes = React.createClass({
         />
 
        <div className='map-legend'>
-          <h6 className='legend-title'>Licenças por 1000 habitantes:</h6>
+          <h6 className='legend-title'>Táxis licenciados por 1000 residentes:</h6>
           <ul className='color-legend inline'>
             <li><span style={{backgroundColor: getColor(1)}}></span>1</li>
             <li><span style={{backgroundColor: getColor(2)}}></span>2</li>
@@ -145,8 +145,8 @@ var SectionResidentes = React.createClass({
           <section className='section-container'>
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>
-              <h1>Outros Indicadores</h1>
-              <p className='lead'>Os indicadores que associam o número de táxis a fatores com influência na sua procura é uma forma interessante de analisar a realidade e a sua evolução. Não é adequado efetuar comparações simplistas e descontextualizadas entre regiões.</p>
+              <h1>Indicadores</h1>
+              <p className='lead'>Os indicadores que associam o número de táxis a fatores com influência na sua procura é uma forma útil de analisar a realidade e a sua evolução.</p>
             </header>
 
             <div className='section-content'>
@@ -154,33 +154,29 @@ var SectionResidentes = React.createClass({
                 <ul className='two-columns'>
                   <li>
                     <span className='stat-number'>{round(this.props.licencasHab, 1)}</span>
-                    <span className='stat-description'>Licenças activas por 1000 residentes</span>
+                    <span className='stat-description'>Táxis licenciados por 1000 residentes.</span>
                   </li>
                   <li>
                     <span className='stat-number'>{dormidas}</span>
-                    <span className='stat-description'>Licenças activas por 1000 dormidas</span>
+                    <span className='stat-description'>Táxis licenciados por 1000 dormidas.</span>
                   </li>
                 </ul>
               </div>
 
               <div className='two-columns'>
                 <div className='graph'>
-                  <h6 className='legend-title'>Evolução das licenças por 1000 residentes</h6>
+                  <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 residentes:</h6>
                   {this.renderLicencas1000Chart(this.props.chartLic1000Hab)}
                 </div>
                 <div className='graph'>
-                  <h6 className='legend-title'>Evolução das licenças por 1000 dormidas</h6>
+                  <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 dormidas:</h6>
                   {this.renderLicencas1000Chart(this.props.chartLic1000Dor)}
                 </div>
               </div>
             </div>
             <footer className='section-footer'>
-              <ul className='color-legend inline'>
-                <li><strong>Legenda:</strong></li>
-                <li><span style={{backgroundColor: '#00ced1'}}></span> Área Metropolitana de Lisboa</li>
-                <li><span style={{backgroundColor: '#1f8d8e'}}></span> Portugal</li>
-                <li><span style={{backgroundColor: '#256465'}}></span> Área Metropolitana do Porto</li>
-              </ul>
+              <p><strong>Nota I:</strong> Os valores dos indicadores devem ser analisados caso a caso e comparados com particular precaução. A consideração de outros fatores com influência na procura poderá melhor enquadrar as diferenças existentes.</p>
+              <p><strong>Nota II:</strong> Dormidas nos estabelecimentos hoteleiros (estabelecimento cuja atividade principal consiste na prestação de serviços de alojamento e de outros serviços acessórios ou de apoio, mediante pagamento).</p>
             </footer>
           </section>
         </div>

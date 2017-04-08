@@ -112,10 +112,10 @@ var SectionDistribuicao = React.createClass({
     return (
       <ul className='table-distribution'>
         <li className='table-header'>
-          <span className='table-region'>Concelho</span>
-          <span className='table-graph'>Total de Licenças</span>
-          <span className='table-parking'>Estacionamento</span>
-          <span className='table-scope'>Âmbito Geográfico</span>
+          <span className='table-region'>REGIÃO <span className='block'>(Concelho)</span></span>
+           <span className='table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
+          <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
+          <span className='table-scope'>Âmbito <span className='block'>Geográfico</span></span>
         </li>
         {adminList.map(this.renderTableRow)}
       </ul>
@@ -179,7 +179,8 @@ var SectionDistribuicao = React.createClass({
           <section className='section-container'>
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>
-              <h1>Âmbito Geográfico</h1>
+              <h1>Detalhe Geográfico</h1>
+              <p className='lead'>Não obstante as licenças municipais terem âmbito concelhio, apresenta-se a sua distribuição por concelho.</p>
             </header>
             <div className='section-content'>
               {this.renderTable()}

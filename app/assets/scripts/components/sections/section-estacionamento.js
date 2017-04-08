@@ -224,13 +224,13 @@ var SectionEstacionamento = React.createClass({
         />
 
        <div className='map-legend'>
-          <h6 className='legend-title'>Regimes de Estacionamento por Município</h6>
+          <h6 className='legend-title'>Regime(s) de estacionamento por município:</h6>
           <ul className='color-legend two-by-side'>
             <li><span style={{backgroundColor: getColor('fixo')}}></span>Fixo</li>
             <li><span style={{backgroundColor: getColor('condicionado-fixo')}}></span>Fixo e Condicionado</li>
             <li><span style={{backgroundColor: getColor('condicionado')}}></span>Condicionado</li>
-            <li><span style={{backgroundColor: getColor('fixo-livre')}}></span>Fixo & Livre</li>
-            <li><span style={{backgroundColor: getColor('condicionado-livre')}}></span>Condicionado & Livre</li>
+            <li><span style={{backgroundColor: getColor('fixo-livre')}}></span>Fixo e Livre</li>
+            <li><span style={{backgroundColor: getColor('condicionado-livre')}}></span>Condicionado e Livre</li>
             <li><span style={{backgroundColor: getColor('outros')}}></span>Outros Regimes</li>
           </ul>
         </div>
@@ -249,25 +249,22 @@ var SectionEstacionamento = React.createClass({
             <header className='section-header'>
               <h3 className='section-category'>{this.props.adminName}</h3>
               <h1>Regime de Estacionamento</h1>
-              <p className='lead'>As câmaras municipais estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Estas disposições são estabelecidas por regulamento municipal ou aquando da atribuição da licença municipal ao veículo.</p>
+              <p className='lead'>Os municípios estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Estas disposições são definidas por regulamento municipal ou aquando da atribuição da licença ao veículo.</p>
             </header>
             <div className='section-content'>
              <div className='two-columns'>
                <div className='graph'>
-                <h6 className='legend-title'>Municípios por regime de estacionamento (%)</h6>
+                <h6 className='legend-title'>Municípios por regime de estacionamento (%):</h6>
                 {this.renderPercentEstacionamento()}
                </div>
 
                <div className='graph'>
-                <h6 className='legend-title'>Municípios por regime(s) de estacionamento (Nº)</h6>
+                <h6 className='legend-title'>Municípios por regime(s) de estacionamento (Nº):</h6>
                 {this.renderCountEstacionamento()}
                </div>
              </div>
 
             </div>
-            <footer className='section-footer'>
-              <p><strong>Legenda:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum eros rhoncus metus ultricies</p>
-            </footer>
           </section>
         </div>
       </div>

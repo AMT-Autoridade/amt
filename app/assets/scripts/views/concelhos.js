@@ -313,23 +313,23 @@ var Concelho = React.createClass({
                     </li>
                     <li>
                       <span className='stat-number'>{/*newLicencas.toLocaleString()*/}10</span>
-                      <span className='stat-description'>Variação do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
+                      <span className='stat-description'>Variação no número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>{/*round(increaseLicencas, 0).toLocaleString()*/}1%</span>
-                      <span className='stat-description'>Crescimento dos táxis <span className='block'>licenciados desde 2006.</span></span>
+                      <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>2</span>
-                      <span className='stat-description'>Licenças existentes no <span className='block'>contingente mob. reduzida.</span></span>
+                      <span className='stat-description'>Novas licenças emitidas <span className='block'>em CMR desde 2006.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>{licencas1000Hab}</span>
-                      <span className='stat-description'>Licenças activas por <span className='block'>1000 residentes.</span></span>
+                      <span className='stat-description'>Táxis licenciados por 1000 residentes.</span>
                     </li>
                     <li>
                       <span className='stat-number'>{dormidas}</span>
-                      <span className='stat-description'>Licenças activas por <span className='block'>1000 dormidas.</span></span>
+                      <span className='stat-description'>Táxis licenciados por 1000 dormidas.</span>
                     </li>
                   </ul>
                 </div>

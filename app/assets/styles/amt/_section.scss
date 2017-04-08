@@ -39,10 +39,12 @@
   margin-top: 40px;
 
 	p {
-		/*font-size: .875rem;*/
-		color: tint($text-color, 25%);
+		font-size: .8125rem;
+		color: tint($text-color, 50%);
+    margin-bottom: 5px;
 		strong {
 			color: $text-color;
+      color: tint($text-color, 25%);
 		}
 	}
 }
