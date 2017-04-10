@@ -81,7 +81,7 @@ function processData (rawData) {
   data.max2016 = _.sumBy(nuts, 'data.max2016');
 
   // Pouplação
-  data.populacao = _.sumBy(nuts, distrito => _.last(distrito.data['pop-residente']).value);
+  data.populacao = _.sumBy(nuts, d => _.last(d.data['pop-residente']).value);
 
   // Licenças per 1000 habitants.
   data.licencasHab = data.licencas2016 / (data.populacao / 1000);
@@ -107,6 +107,12 @@ function processData (rawData) {
   let nutAmPor = nuts.find(n => n.id === 'PT11A');
 
   // Compute the timeline at the national level.
+  // To calculate the variation chart we use the 2006 data as basis.
+  let varBaseline = {
+    dormidas: data.dormidas[0].value,
+    populacao: _.sumBy(nuts, d => d.data['pop-residente'][0].value),
+    licencas: data.licencas2006
+  };
   data.licencasTimeline = _.range(2006, 2017).map((y, i) => {
     let d = {
       year: y,
@@ -129,6 +135,11 @@ function processData (rawData) {
     d['lic1000-lx'] = (nutAmLx.data['lic-geral'][i].value + nutAmLx.data['lic-mob-reduzida'][i].value) / (nutAmLx.data['pop-residente'][idx].value / 1000);
     // Lic 1000 for Porto
     d['lic1000-por'] = (nutAmPor.data['lic-geral'][i].value + nutAmPor.data['lic-mob-reduzida'][i].value) / (nutAmPor.data['pop-residente'][idx].value / 1000);
+
+    // Variation data. (newVal - oldVal) / oldVal
+    d['var-lic-all'] = ((d['lic-geral'] + d['lic-mob-reduzida']) - varBaseline.licencas) / varBaseline.licencas * 100;
+    d['var-populacao'] = (d['pop-residente'] - varBaseline.populacao) / varBaseline.populacao * 100;
+    d['var-dormidas'] = (data.dormidas[idx].value - varBaseline.dormidas) / varBaseline.dormidas * 100;
 
     return d;
   });

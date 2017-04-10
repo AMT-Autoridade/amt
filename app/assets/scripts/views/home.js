@@ -227,7 +227,9 @@ var Home = React.createClass({
 
         </div>
 
-        <SectionConclusoes />
+        <SectionConclusoes
+          licencasTimeline={data.licencasTimeline}
+        />
 
         <ul className='section-nav'>
           <li className={c('nav-item', {active: hash === 'intro'})}><Link to='/#intro'><span>Introdução</span></Link></li>

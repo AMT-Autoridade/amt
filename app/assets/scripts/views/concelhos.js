@@ -64,8 +64,7 @@ var Concelho = React.createClass({
     return (
       <div className='map-aa-info'>
         <ul className='map-aa-list inline-list'>
-          <li><a href={`#/nuts/${this.props.nut.data.slug}${hash}`} title={`Ir para ${this.props.nut.data.name}`}>{'<'}</a></li>
-          <li>{this.props.concelho.data.name}</li>
+          <li><a className='map-back-link' href={`#/nuts/${this.props.nut.data.slug}${hash}`} title={`Ir para ${this.props.nut.data.name}`}><span className='i-arrow-left2'></span>{this.props.concelho.data.name}</a></li>
         </ul>
       </div>
     );

@@ -8,7 +8,7 @@ import _ from 'lodash';
 import Popover from '../utils/popover';
 
 // Matrix with the concelhos that belong to each nut.
-const concelhosMatrix = [{"id":"PT16D","concelhos":[101,102,103,105,108,110,112,114,115,117,118]},{"id":"PT11A","concelhos":[104,107,109,113,116,119,1304,1306,1308,1310,1312,1313,1314,1315,1316,1317,1318]},{"id":"PT11C","concelhos":[106,305,1301,1302,1303,1305,1307,1309,1311,1804,1813]},{"id":"PT16E","concelhos":[111,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,1808]},{"id":"PT184","concelhos":[201,202,203,204,205,206,207,208,209,210,212,213,214]},{"id":"PT181","concelhos":[211,1501,1505,1509,1513]},{"id":"PT112","concelhos":[301,302,303,306,310,313]},{"id":"PT119","concelhos":[304,307,308,309,311,312,314,1705]},{"id":"PT11E","concelhos":[401,402,405,406,407,408,410,411,412]},{"id":"PT11D","concelhos":[403,404,409,914,1701,1704,1707,1708,1710,1711,1714,1801,1805,1807,1812,1815,1818,1819,1820]},{"id":"PT16J","concelhos":[501,503,504,902,903,904,905,906,907,908,909,910,911,912,913]},{"id":"PT16H","concelhos":[502,505,506,507,508,511]},{"id":"PT16I","concelhos":[509,510,1401,1402,1408,1410,1411,1413,1417,1418,1419,1420,1421]},{"id":"PT187","concelhos":[701,702,703,704,705,706,707,708,709,710,711,712,713,714]},{"id":"PT150","concelhos":[801,802,803,804,805,806,807,808,809,810,811,812,813,814,815,816]},{"id":"PT16G","concelhos":[901,1802,1803,1806,1809,1810,1811,1814,1816,1817,1821,1822,1823,1824]},{"id":"PT16B","concelhos":[1001,1005,1006,1011,1012,1014,1101,1102,1104,1108,1112,1113]},{"id":"PT16F","concelhos":[1002,1003,1004,1007,1008,1009,1010,1013,1015,1016]},{"id":"PT185","concelhos":[1103,1403,1404,1405,1406,1407,1409,1412,1414,1415,1416]},{"id":"PT170","concelhos":[1105,1106,1107,1109,1110,1111,1114,1115,1116,1502,1503,1504,1506,1507,1508,1510,1511,1512]},{"id":"PT186","concelhos":[1201,1202,1203,1204,1205,1206,1207,1208,1209,1210,1211,1212,1213,1214,1215]},{"id":"PT111","concelhos":[1601,1602,1603,1604,1605,1606,1607,1608,1609,1610]},{"id":"PT11B","concelhos":[1702,1703,1706,1709,1712,1713]}]; // eslint-disable-line
+const concelhosMatrix = [{"id":"PT16D","concelhos":[101,102,103,105,108,110,112,114,115,117,118]},{"id":"PT11A","concelhos":[104,107,109,113,116,119,1304,1306,1308,1310,1312,1313,1314,1315,1316,1317,1318]},{"id":"PT11C","concelhos":[106,305,1301,1302,1303,1305,1307,1309,1311,1804,1813]},{"id":"PT16E","concelhos":[111,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,1808]},{"id":"PT184","concelhos":[201,202,203,204,205,206,207,208,209,210,212,213,214]},{"id":"PT181","concelhos":[211,1501,1505,1509,1513]},{"id":"PT112","concelhos":[301,302,303,306,310,313]},{"id":"PT119","concelhos":[304,307,308,309,311,312,314,1705]},{"id":"PT11E","concelhos":[401,402,405,406,407,408,410,411,412]},{"id":"PT11D","concelhos":[403,404,409,914,1701,1704,1707,1708,1710,1711,1714,1801,1805,1807,1812,1815,1818,1819,1820]},{"id":"PT16J","concelhos":[501,503,504,902,903,904,905,906,907,908,909,910,911,912,913]},{"id":"PT16H","concelhos":[502,505,506,507,508,511]},{"id":"PT16I","concelhos":[509,510,1401,1402,1408,1410,1411,1413,1417,1418,1419,1420,1421]},{"id":"PT187","concelhos":[701,702,703,704,705,706,707,708,709,710,711,712,713,714]},{"id":"PT150","concelhos":[801,802,803,804,805,806,807,808,809,810,811,812,813,814,815,816]},{"id":"PT16G","concelhos":[901,1802,1803,1806,1809,1810,1811,1814,1816,1817,1821,1822,1823,1824]},{"id":"PT16B","concelhos":[1001,1005,1006,1011,1012,1014,1101,1102,1104,1108,1112,1113]},{"id":"PT16F","concelhos":[1002,1003,1004,1007,1008,1009,1010,1013,1015,1016]},{"id":"PT185","concelhos":[1103,1403,1404,1405,1406,1407,1409,1412,1414,1415,1416]},{"id":"PT170","concelhos":[1105,1106,1107,1109,1110,1111,1114,1115,1116,1502,1503,1504,1506,1507,1508,1510,1511,1512]},{"id":"PT186","concelhos":[1201,1202,1203,1204,1205,1206,1207,1208,1209,1210,1211,1212,1213,1214,1215]},{"id":"PT111","concelhos":[1601,1602,1603,1604,1605,1606,1607,1608,1609,1610]},{"id":"PT11B","concelhos":[1702,1703,1706,1709,1712,1713]},{"id":"PT200","concelhos":[4101,4201,4202,4203,4204,4205,4206,4301,4302,4401,4501,4502,4601,4602,4603,4701,4801,4802,4901]},{"id":"PT300","concelhos":[3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3201]}]; // eslint-disable-line
 
 var Map = React.createClass({
   propTypes: {
@@ -280,7 +280,7 @@ var PtMap = function (options) {
     let _thisEl = d3El.node();
     let bbox = _thisEl.getBBox();
     let matrix = _thisEl.getScreenCTM()
-      .translate(bbox.x + bbox.width / 2, bbox.y + 20);
+      .translate(bbox.x + bbox.width / 2, bbox.y);
     let posX = window.pageXOffset + matrix.e;
     let posY = window.pageYOffset + matrix.f;
 
@@ -308,6 +308,11 @@ var PtMap = function (options) {
     }
   };
 
+  const concelhoInNut = (nutId, concelhoId) => {
+    let nut = concelhosMatrix.find(c => c.id === nutId);
+    return nut.concelhos.indexOf(parseInt(concelhoId)) !== -1;
+  };
+
   // Make charts reusable!
   // Helper function to draw a group of features. Originally used to draw the
   // different archipelagos, but extended to include the main land.
@@ -318,7 +323,6 @@ var PtMap = function (options) {
   // }
   function drawFeatureGroup (opts) {
     let {name, type} = opts;
-    let aaLevel = type === 'island' ? 'distrito' : 'nut3';
     // Return a function to handle each individual island.
     // Wrapped in a closure to include path variables.
     function drawFeature (data) {
@@ -326,47 +330,175 @@ var PtMap = function (options) {
       let path = getPathFn(data.center, [data.offset[0], data.offset[1] + additionalHOffset]);
 
       return function drawFeatureSel (sel) {
-        sel = sel.attr('d', path)
+        let selConcelho = sel.filter(d => d.properties.type === 'concelho');
+        let selNuts = sel.filter(d => d.properties.type === 'nut3');
+        let selDistrito = sel.filter(d => d.properties.type === 'distrito');
+
+        // Concelhos.
+        selConcelho
+          .attr('d', path)
           .attr('class', d => `aa--${d.properties.type}`)
           .attr('stroke', '#fff')
-          .attr('stroke-width', d => d.properties.type === aaLevel ? '1px' : '0.1px')
+          .attr('stroke-width', '0.1px')
           .attr('fill', d => {
-            // Only concelhos have colors, everything else is black for overlay.
-            if (d.properties.type !== 'concelho') return '#000';
-            // When something is selected, base map is grey.
-            if (_nut) return DEFAULT_COLOR;
+            if (_concelho) return DEFAULT_COLOR;
             let bucket = _data ? _data.find(o => o.id === parseInt(d.properties.id)) : null;
-            return bucket ? bucket.color : DEFAULT_COLOR;
+            let color = bucket ? bucket.color : DEFAULT_COLOR;
+            return color;
           })
-          .attr('fill-opacity', d => d.properties.type === aaLevel ? 0 : 1);
-
-        if (!_nut) {
-          sel = sel
-          .style('pointer-events', d => d.properties.type === aaLevel ? 'all' : 'none')
+          .attr('fill-opacity', 1)
+          .style('pointer-events', d => {
+            if (_concelho) return 'none';
+            if (_nut) {
+              return concelhoInNut(_nut, d.properties.id) ? 'all' : 'none';
+            }
+            return 'none';
+          })
           .on('mouseover', function (d, i) {
-            showTooltip(d3.select(this), {type: 'nut3', id: getNutId(d)});
-
             d3.select(this).style('cursor', 'pointer');
-            let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
-            el.transition()
-              .attr('fill-opacity', 0.20);
+
+            let id = parseInt(d.properties.id);
+            showTooltip(d3.select(this), {type: 'concelho', id: id});
+            // Get the correct color form the concelho id.
+            let color = getConcelhoColor(id);
+
+            d3.select(this).transition()
+              .attr('fill', d3.color(color).darker(1));
           })
           .on('mouseout', function (d, i) {
             hideTooltip();
-
             d3.select(this).style('cursor', 'default');
-            let el = type === 'island' ? $svg.selectAll(`.${name} .aa--distrito`) : d3.select(this);
-            el.transition()
-              .attr('fill-opacity', 0);
+            // Get the correct color form the concelho id.
+            let color = getConcelhoColor(parseInt(d.properties.id));
+
+            d3.select(this).transition()
+              .attr('fill', color);
+          })
+          .on('click', function (d, i) {
+            if (!_onClickFn) return;
+            let id = parseInt(d.properties.id);
+            if (id) _onClickFn({type: 'concelho', id});
+          });
+
+        // Nuts.
+        selNuts
+          .attr('d', path)
+          .attr('class', d => `aa--${d.properties.type} aa--${d.properties.id}`)
+          .attr('stroke', '#fff')
+          .attr('stroke-width', '1px')
+          .attr('fill', d => {
+            // if (_nut) {
+            //   return '#fff';
+            // }
+            return '#000';
+          })
+          .attr('fill-opacity', d => {
+            if (_concelho) return 0;
+            if (_nut) {
+              // return getNutId(d) === _nut ? 0 : 0.80;
+              return getNutId(d) === _nut ? 0 : 0;
+            }
+            return 0;
+          })
+          .style('pointer-events', d => {
+            if (_concelho) return 'none';
+            if (_nut) {
+              return getNutId(d) === _nut ? 'none' : 'all';
+            }
+            return 'all';
+          })
+          .on('mouseover', function (d, i) {
+            d3.select(this).style('cursor', 'pointer');
+
+            showTooltip(d3.select(this), {type: 'nut3', id: getNutId(d)});
+            d3.select(this).transition()
+              .attr('fill-opacity', d => {
+                // When there's a nut selected the background is white
+                // so on over we want to get rid of it.
+                // When no nut is selected, the background is black and
+                // transparent so we want to darken it.
+                // return _nut ? 0 : 0.20;
+                return _nut ? 0.20 : 0.20;
+              });
+          })
+          .on('mouseout', function (d, i) {
+            d3.select(this).style('cursor', 'default');
+            hideTooltip();
+            d3.select(this).transition()
+              .attr('fill-opacity', d => {
+                // When there's a nut selected the background is white
+                // so on "out" we want it to be a bit visible.
+                // When no nut is selected, the background is black so we
+                // want to get rid of it.
+                // return _nut ? 0.80 : 0;
+                return _nut ? 0 : 0;
+              });
           })
           .on('click', function (d, i) {
             if (!_onClickFn) return;
             let id = getNutId(d);
             if (id) _onClickFn({type: 'nut3', id});
           });
-        }
 
-        return sel;
+        // Distritos.
+        selDistrito
+          .attr('d', path)
+          .attr('class', d => `aa--${d.properties.type}`)
+          .attr('stroke', '#fff')
+          .attr('stroke-width', '1px')
+          .attr('fill', d => {
+            // if (_nut) {
+            //   return '#fff';
+            // }
+            return '#000';
+          })
+          .attr('fill-opacity', d => {
+            if (_concelho) return 0;
+            if (_nut) {
+              // return getNutId(d) === _nut ? 0 : 0.80;
+              return getNutId(d) === _nut ? 0 : 0;
+            }
+            return 0;
+          })
+          .style('pointer-events', d => {
+            if (_concelho) return 'none';
+            if (_nut) {
+              return getNutId(d) === _nut ? 'none' : 'all';
+            }
+            return 'all';
+          })
+          .on('mouseover', function (d, i) {
+            d3.select(this).style('cursor', 'pointer');
+
+            showTooltip(d3.select(this), {type: 'nut3', id: getNutId(d)});
+            $svg.selectAll(`.${name} .aa--distrito`).transition()
+              .attr('fill-opacity', d => {
+                // When there's a nut selected the background is white
+                // so on over we want to get rid of it.
+                // When no nut is selected, the background is black and
+                // transparent so we want to darken it.
+                // return _nut ? 0 : 0.20;
+                return _nut ? 0.20 : 0.20;
+              });
+          })
+          .on('mouseout', function (d, i) {
+            d3.select(this).style('cursor', 'default');
+            hideTooltip();
+            $svg.selectAll(`.${name} .aa--distrito`).transition()
+              .attr('fill-opacity', d => {
+                // When there's a nut selected the background is white
+                // so on "out" we want it to be a bit visible.
+                // When no nut is selected, the background is black so we
+                // want to get rid of it.
+                // return _nut ? 0.80 : 0;
+                return _nut ? 0 : 0;
+              });
+          })
+          .on('click', function (d, i) {
+            if (!_onClickFn) return;
+            let id = getNutId(d);
+            if (id) _onClickFn({type: 'nut3', id});
+          });
       };
     }
 
@@ -416,7 +548,7 @@ var PtMap = function (options) {
         ];
 
         const projection = d3.geoMercator()
-          .fitExtent(bounds, topojson.feature(_topology, _nut));
+          .fitExtent(bounds, opts.nutTopo);
 
         path = d3.geoPath().projection(projection);
         // END path calculation.
@@ -580,7 +712,29 @@ var PtMap = function (options) {
       },
 
       aaOverlay: function () {
-        if (!_nut) return;
+        // Show special overlayInfo for when a nut is selected.
+        if (_nut && !_concelho) {
+          if (_overlayInfoContentFn) {
+            let infoHeight = parseInt($aaOverlayInfo.style('height'));
+
+            let pos;
+            if (_nut === 'PT200' || _nut === 'PT300') {
+              pos = scalar(760);
+            } else {
+              pos = d3.select(`.aa--${_nut}`).node().getBBox().y;
+            }
+            // Position it on top of the nut.
+            $aaOverlayInfo
+              .style('display', '')
+              .style('top', `${pos - scalar(infoHeight + 10)}px`);
+
+            $aaOverlayInfo.html(ReactDOMServer.renderToStaticMarkup(_overlayInfoContentFn()));
+          } else {
+            $aaOverlayInfo.style('display', 'none');
+          }
+        }
+
+        if (!_concelho) return;
 
         let overlayAA = $svg.selectAll('.overlay-aa')
           .data([[1]]);
@@ -611,9 +765,10 @@ var PtMap = function (options) {
         // Render element sent by the parent.
         if (_nut && _overlayInfoContentFn) {
           let infoHeight = parseInt($aaOverlayInfo.style('height'));
+
+          // Position it on top of the circle.
           $aaOverlayInfo
             .style('display', '')
-            // Position it on top of the circle.
             .style('top', `${_overlayAAcy - _overlayAAr - scalar(infoHeight + 10)}px`);
 
           $aaOverlayInfo.html(ReactDOMServer.renderToStaticMarkup(_overlayInfoContentFn()));
@@ -646,17 +801,26 @@ var PtMap = function (options) {
               groupScale: _projectionScaleValue * 3
             }));
         } else {
+          let nutTopo = _.cloneDeep(_topology.objects.all_areas);
+          nutTopo.geometries = nutTopo.geometries.filter(o => {
+            if (o.properties.type === 'concelho') {
+              return concelhoInNut(_nut, parseInt(o.properties.id));
+            }
+            return o.properties.id === _nut;
+          });
+
           geometryGroup
             .selectAll('g.feature')
             .data([{
               id: 99999,
               center: [-8.2245, 39.3999],
-              feature: topojson.feature(_topology, _nut),
+              feature: topojson.feature(_topology, nutTopo),
               offset: [0, 0]
             }])
             .call(drawFeatureGroupOverlay({
               name: 'overlay-aa-geometry',
-              type: 'main'
+              type: 'main',
+              nutTopo: topojson.feature(_topology, nutTopo)
             }));
         }
       }
@@ -762,21 +926,21 @@ var PtMap = function (options) {
     // Special handling of archipelagos
     // For açores and madeira store the id. Islands need to be moved
     // individually and we can't rely on nuts.
-    if (d === 'PT200' || d === 'PT300') {
-      _nut = d;
+    // if (d === 'PT200' || d === 'PT300') {
+    _nut = d;
 
     // For everything else get the nut and concelhos using the id matrix
     // to know which concelhos belong to the nut.
-    } else if (d) {
-      let nutConcelhos = concelhosMatrix.find(o => o.id === d);
-      _nut = _.cloneDeep(_topology.objects.all_areas);
-      _nut.geometries = _nut.geometries.filter(o => {
-        if (o.properties.type === 'concelho') {
-          return nutConcelhos.concelhos.indexOf(parseInt(o.properties.id)) !== -1;
-        }
-        return o.properties.id === d;
-      });
-    }
+    // } else if (d) {
+    //   let nutConcelhos = concelhosMatrix.find(o => o.id === d);
+    //   _nut = _.cloneDeep(_topology.objects.all_areas);
+    //   _nut.geometries = _nut.geometries.filter(o => {
+    //     if (o.properties.type === 'concelho') {
+    //       return nutConcelhos.concelhos.indexOf(parseInt(o.properties.id)) !== -1;
+    //     }
+    //     return o.properties.id === d;
+    //   });
+    // }
 
     if (typeof updateData === 'function') updateData();
     return mapVizFn;
