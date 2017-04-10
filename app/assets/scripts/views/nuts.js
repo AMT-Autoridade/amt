@@ -71,8 +71,7 @@ var Nuts = React.createClass({
     return (
       <div className='map-aa-info'>
         <ul className='map-aa-list inline-list'>
-          <li><a href={`#/#${section}`} title='Ir para vista Nacional'>{'<'}</a></li>
-          <li>{this.props.nut.data.name}</li>
+          <li><a className='map-back-link' href={`#/#${section}`} title='Ir para vista Nacional'><span className='i-arrow-left2'></span>{this.props.nut.data.name}</a></li>
         </ul>
       </div>
     );
