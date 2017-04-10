@@ -83,6 +83,7 @@
 
   &.inline {
     @extend .inline-list;
+    text-align: center;
     li {
       padding: 0 8px;
       &:first-of-type {
