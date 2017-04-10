@@ -36,14 +36,26 @@ var Nuts = React.createClass({
   ],
 
   onMapClick: function (section, data) {
-    // Find the right nut.
-    let slug = this.props.nut.data.concelhos.find(o => o.id === data.id).slug;
-    hashHistory.push(`/nuts/${this.props.params.nut}/concelhos/${slug}#${section}`);
+    if (data.type === 'nut3') {
+      // Find the right nut.
+      let slug = this.props.national.data.nuts.find(o => o.id === data.id).slug;
+      hashHistory.push(`/nuts/${slug}#${section}`);
+    } else {
+      // Find the right concelho.
+      let slug = this.props.nut.data.concelhos.find(o => o.id === data.id).slug;
+      hashHistory.push(`/nuts/${this.props.params.nut}/concelhos/${slug}#${section}`);
+    }
   },
 
   popoverContent: function (data) {
-    // Find the right concelho.
-    let name = this.props.nut.data.concelhos.find(o => o.id === data.id).name;
+    let name;
+    if (data.type === 'nut3') {
+      name = this.props.national.data.nuts.find(o => o.id === data.id).name;
+    } else {
+      // Find the right concelho.
+      name = this.props.nut.data.concelhos.find(o => o.id === data.id).name;
+    }
+
     return (
       <div>
         <p className='map-tooltip'>{name}</p>
@@ -90,6 +102,12 @@ var Nuts = React.createClass({
 
   componentWillUnmount: function () {
     document.removeEventListener('scroll', this.onSroll);
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    if (this.props.params.nut !== nextProps.params.nut) {
+      return this.props._fetchNut(nextProps.params.nut);
+    }
   },
 
   render: function () {
