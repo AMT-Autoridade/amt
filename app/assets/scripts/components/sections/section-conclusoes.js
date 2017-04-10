@@ -1,9 +1,124 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
+import { Line as LineChart } from 'react-chartjs-2';
+import _ from 'lodash';
+
+import makeTooltip from '../../utils/tooltip';
+import { round } from '../../utils/utils';
 
 var SectionConclusoes = React.createClass({
   propTypes: {
-    data: T.object
+    licencasTimeline: T.array
+  },
+
+  chartsRef: [],
+
+  onWindowResize: function () {
+    this.chartsRef.map(ref => {
+      this.refs[ref].chart_instance.resize();
+    });
+  },
+
+  addChartRef: function (ref) {
+    if (this.chartsRef.indexOf(ref) === -1) {
+      this.chartsRef = this.chartsRef.concat([ref]);
+    }
+    return ref;
+  },
+
+  componentDidMount: function () {
+    this.onWindowResize = _.debounce(this.onWindowResize, 200);
+    window.addEventListener('resize', this.onWindowResize);
+    this.onWindowResize();
+  },
+
+  componentWillUnmount: function () {
+    this.chartsRef = [];
+    window.removeEventListener('resize', this.onWindowResize);
+  },
+
+  renderTimeline: function () {
+    let data = this.props.licencasTimeline.filter(y => y.year !== 2006);
+    let licencasTimeline = {
+      labels: data.map(y => y.year),
+      datasets: [
+        {
+          data: data.map(o => o['var-lic-all']),
+          label: 'Licenças',
+          color: '#256465',
+          backgroundColor: 'transparent'
+        },
+        {
+          data: data.map(o => o['var-populacao']),
+          label: 'Residentes',
+          color: '#1f8d8e',
+          backgroundColor: 'transparent'
+        },
+        {
+          data: data.map(o => o['var-dormidas']),
+          label: 'Dormidas',
+          color: '#00ced1',
+          backgroundColor: 'transparent'
+        }
+      ]
+    };
+
+    let l = licencasTimeline.labels.length - 1;
+
+    let tooltipFn = makeTooltip(entryIndex => {
+      let year = licencasTimeline.labels[entryIndex];
+      return (
+        <ul>
+          <li><span className='tooltip-title'>{year}:</span></li>
+          {licencasTimeline.datasets.map(o => <li key={o.label}><span className='tooltip-label'>{o.label}:</span> <span className='tooltip-number'>{round(o.data[entryIndex], 0)}%</span></li>)}
+          <span className='triangle'></span>
+        </ul>
+      );
+    });
+
+    let labels = licencasTimeline.labels.map((o, i) => i === 0 || i === l ? o : '');
+
+    let chartData = {
+      labels: labels,
+      datasets: licencasTimeline.datasets.map(o => ({
+        data: o.data,
+        backgroundColor: o.backgroundColor,
+        borderColor: o.color,
+        pointBorderWidth: 0,
+        pointBackgroundColor: o.color,
+        pointRadius: 2
+      }))
+    };
+
+    let chartOptions = {
+      responsive: false,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            maxRotation: 0
+          }
+        }],
+        yAxes: [{
+          gridLines: {
+            display: false
+          }
+        }]
+      },
+      tooltips: {
+        enabled: false,
+        mode: 'index',
+        position: 'nearest',
+        custom: tooltipFn
+      }
+    };
+
+    return <LineChart data={chartData} options={chartOptions} height={220} ref={this.addChartRef(`chart-timeline`)}/>;
   },
 
   render: function () {
@@ -19,6 +134,7 @@ var SectionConclusoes = React.createClass({
 
             <div className='section-content'>
               <div className='section-stats'>
+              {this.renderTimeline()}
                 <ul className='section-stats three-columns'>
                   <li>
                     <h4>Licenças e Contingentes</h4>
@@ -47,7 +163,7 @@ var SectionConclusoes = React.createClass({
                 </ul>
               </div>
             </div>
-            
+
             <footer className='section-footer'>
               <p>Este site foi desenvolvido pela AMT com base no <a href="#">Relatório Estatístico Sobre Serviços de Transporte em Táxi: <span className=''>A Realidade Atual e a Evolução da Última Década.</span></a></p>
             </footer>
