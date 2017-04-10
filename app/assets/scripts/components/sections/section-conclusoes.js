@@ -45,19 +45,19 @@ var SectionConclusoes = React.createClass({
         {
           data: data.map(o => o['var-lic-all']),
           label: 'Licenças',
-          color: '#256465',
+          color: '#00ced1',
           backgroundColor: 'transparent'
         },
         {
           data: data.map(o => o['var-populacao']),
           label: 'Residentes',
-          color: '#1f8d8e',
+          color: '#FFCC45',
           backgroundColor: 'transparent'
         },
         {
           data: data.map(o => o['var-dormidas']),
           label: 'Dormidas',
-          color: '#00ced1',
+          color: '#F8781F',
           backgroundColor: 'transparent'
         }
       ]
@@ -118,14 +118,14 @@ var SectionConclusoes = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={220} ref={this.addChartRef(`chart-timeline`)}/>;
+    return <LineChart data={chartData} options={chartOptions} height={80} ref={this.addChartRef(`chart-timeline`)}/>;
   },
 
   render: function () {
     return (
-      <div id='conclusoes-wrapper'>
+      <div id='conclusoes-wrapper' className='content-wrapper vertical-center'>
         <div id='conclusoes' className='container-wrapper content-wrapper vertical-center'>
-          <section className=''>
+          <section className='section-wrapper'>
             <header className='section-header'>
               <h3 className='section-category'>Portugal</h3>
               <h1>Conclusões</h1>
@@ -133,20 +133,15 @@ var SectionConclusoes = React.createClass({
             </header>
 
             <div className='section-content'>
+              <div className='graph'>
+                <h6 className='legend-title'>Taxa de variação acumulada (contingentes, residentes e dormidas):</h6>
+                {this.renderTimeline()}
+              </div>
               <div className='section-stats'>
-              {this.renderTimeline()}
-                <ul className='section-stats three-columns'>
+                <ul className='two-columns'>
                   <li>
                     <h4>Licenças e Contingentes</h4>
                     <p>Existe uma grande disparidade no número de táxis por concelho. Os concelhos de Lisboa e do Porto possuem cerca de 31% dos táxis licenciados. Cerca de metade dos concelhos possuem 20 ou menos táxis licenciados.</p>
-                  </li>
-                  <li>
-                    <h4>Mobilidade Reduzida</h4>
-                    <p>Apesar da sua expressão marginal, observa-se um aumento significativo no número de licenças e no número de lugares previstos nestes contingentes.</p>
-                  </li>
-                  <li>
-                    <h4>Regimes de Estacionamento</h4>
-                    <p>Sendo comum que num mesmo município coexistam vários regimes de estacionamento, constata-se que o regime fixo é aplicado em cerca de 80% dos municípios.</p>
                   </li>
                   <li>
                     <h4>Detalhe Geográfico</h4>
@@ -160,8 +155,17 @@ var SectionConclusoes = React.createClass({
                     <h4>Indicadores</h4>
                     <p>Num cenário de estabilidade da oferta observam-se alterações relevantes em 2 fatores que podem influenciar a procura: a população residente e o turismo.</p>
                   </li>
+                  <li>
+                    <h4>Mobilidade Reduzida</h4>
+                    <p>Apesar da sua expressão marginal, observa-se um aumento significativo no número de licenças e no número de lugares previstos nestes contingentes.</p>
+                  </li>
+                  <li>
+                    <h4>Regimes de Estacionamento</h4>
+                    <p>Sendo comum que num mesmo município coexistam vários regimes de estacionamento, constata-se que o regime fixo é aplicado em cerca de 80% dos municípios.</p>
+                  </li>         
                 </ul>
               </div>
+              
             </div>
 
             <footer className='section-footer'>

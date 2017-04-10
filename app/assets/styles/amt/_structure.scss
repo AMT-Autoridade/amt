@@ -123,7 +123,7 @@
 .two-columns {
   > li,
   > div {
-    @include column(6/12);
+    @include column(6/12, $cycle: 2);
   }
 } 
 .three-columns {
