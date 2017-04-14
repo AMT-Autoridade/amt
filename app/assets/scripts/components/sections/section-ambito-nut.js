@@ -124,7 +124,7 @@ var SectionDistribuicao = React.createClass({
       <li key={adminArea.id}>
         <span className='table-region'><Link to={url} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'], adminArea.id)}</div>
-        <span className='table-scope'>{this.contingenteMatrix[adminArea.data.contingente]}</span>
+        <span className='table-scope'>{adminArea.data.contingente ? this.contingenteMatrix[adminArea.data.contingente] : 'Não Definido'}</span>
         <div className='table-parking'>
           <ul className='inline-list'>
             <li className={c('est est-livre', {active: adminArea.data.estacionamento.indexOf('livre') !== -1})}>L</li>
