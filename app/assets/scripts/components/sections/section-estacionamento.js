@@ -285,7 +285,7 @@ var SectionEstacionamento = React.createClass({
                   {this.props.adminName}
                 </h3>
                 <h1>Regime de Estacionamento</h1>
-                <p className='lead'>Os municípios estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Estas disposições são definidas por regulamento municipal ou aquando da atribuição da licença ao veículo.</p>
+                <p className='lead'>Os municípios estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Em regra, estas disposições são definidas por regulamento municipal ou aquando da atribuição da licença ao veículo.</p>
               </header>
               <div className='section-content'>
                <div className='two-columns'>
