@@ -181,7 +181,7 @@ var SectionResidentes = React.createClass({
                   {this.props.adminName}
                 </h3>
                 <h1>Indicadores</h1>
-                <p className='lead'>Os indicadores que associam o número de táxis a fatores com influência na sua procura é uma forma útil de analisar a realidade e a sua evolução.</p>
+                <p className='lead'>Os indicadores que associam o número de táxis a fatores com influência na sua procura são uma forma útil de analisar a realidade e a sua evolução.</p>
               </header>
 
               <div className='section-content'>

@@ -369,7 +369,7 @@ var Concelho = React.createClass({
                     </li>
                     <li>
                       <span className='stat-number'>{licMobRed}</span>
-                      <span className='stat-description'>Licenças existentes no <span className='block'>contingente mob. reduzida.</span></span>
+                      <span className='stat-description'>Licenças existentes no <span className='block'>CMR em Agosto de 2016.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>
@@ -383,7 +383,7 @@ var Concelho = React.createClass({
                         <span>{increaseLicencas < 0 ? '-' : '+'}</span>
                         {formatPT(round(Math.abs(increaseLicencas), 0))}%
                       </span>
-                      <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
+                      <span className='stat-description'>Variação percentual do número de licenças<span className='block'> entre 2006 e 2016.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>{licencas1000Hab}</span>
@@ -398,11 +398,11 @@ var Concelho = React.createClass({
 
                 <ul className='table-distribution'>
                   <li className='table-header'>
-                    <span className='table-scope'>Âmbito <span className='block'>Geográfico</span></span>
+                    <span className='table-scope'>Âmbito Geográfico<span className='block'>do Contingente</span></span>
                     <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
                     <span className='table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
                     <span className='table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
-                    <span className='table-pop'>População <span className='block'>Total</span></span>
+                    <span className='table-pop'>População <span className='block'>Residente (2015)</span></span>
                   </li>
                   <li>
                     <span className='table-scope'>{contingente ? this.contingenteMatrix[contingente] : 'Não Definido'}</span>
@@ -422,15 +422,15 @@ var Concelho = React.createClass({
 
                 <div className='graph-container'>
                   <div className='graph'>
-                    <h6 className='legend-title'>Evolução das licenças activas <span className='block'>de 2006 a 2016</span></h6>
+                    <h6 className='legend-title'>Evolução dos táxis licenciados <span className='block'>de 2006 a 2016</span></h6>
                     {this.renderTimelineChart()}
                   </div>
                   <div className='graph'>
-                    <h6 className='legend-title'>Evolução das licenças <span className='block'>por 1000 residentes</span></h6>
+                    <h6 className='legend-title'>Evolução dos táxis licenciados <span className='block'>por 1000 residentes</span></h6>
                     {this.renderLic1000HabChart()}
                   </div>
                   <div className='graph'>
-                    <h6 className='legend-title'>Evolução das licenças <span className='block'>por 1000 dormidas</span></h6>
+                    <h6 className='legend-title'>Evolução dos táxis licenciados <span className='block'>por 1000 dormidas</span></h6>
                     {this.renderLic1000DormidasChart()}
                   </div>
                 </div>
