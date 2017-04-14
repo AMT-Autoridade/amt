@@ -44,9 +44,12 @@
   }
 
   .map-svg {
-    width: 78%;
+    width: 180px;
     margin: 0 auto;
     position: relative;
+    @include media (large-up) {
+      width: 78%;
+    }
 
     svg {
       display: block
