@@ -8,7 +8,7 @@ import { Line as LineChart } from 'react-chartjs-2';
 
 import { fetchConcelho, fetchMapData } from '../actions';
 import makeTooltip from '../utils/tooltip';
-import { round, percent } from '../utils/utils';
+import { round, percent, formatPT } from '../utils/utils';
 
 import Map from '../components/map';
 
@@ -162,9 +162,9 @@ var Concelho = React.createClass({
       return (
         <ul>
           <li><span className='tooltip-title'>Contingentes:</span></li>
-          <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{year['lic-geral'].toLocaleString()}</span></li>
-          <li><span className='tooltip-label'>Mob. Reduzida:</span> <span className='tooltip-number'>{year['lic-mob-reduzida'].toLocaleString()}</span></li>
-          <li><span className='tooltip-label'>Total Contingentes:</span><span className='tooltip-number'>{(year['lic-geral'] + year['lic-mob-reduzida']).toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{formatPT(year['lic-geral'])}</span></li>
+          <li><span className='tooltip-label'>Mob. Reduzida:</span> <span className='tooltip-number'>{formatPT(year['lic-mob-reduzida'])}</span></li>
+          <li><span className='tooltip-label'>Total Contingentes:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -356,15 +356,15 @@ var Concelho = React.createClass({
                 <div className='section-stats'>
                   <ul>
                     <li>
-                      <span className='stat-number'>{licencas2016.toLocaleString()}</span>
+                      <span className='stat-number'>{formatPT(licencas2016)}</span>
                       <span className='stat-description'>Total de táxis licenciados <span className='block'>em agosto de 2016.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{max2016.toLocaleString()}</span>
+                      <span className='stat-number'>{formatPT(max2016)}</span>
                       <span className='stat-description'>Total dos contingentes <span className='block'>em agosto de 2016.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{(max2016 - licencas2016).toLocaleString()}</span>
+                      <span className='stat-number'>{formatPT(max2016 - licencas2016)}</span>
                       <span className='stat-description'>Total de vagas existentes <span className='block'>em agosto de 2016.</span></span>
                     </li>
                     <li>
@@ -374,14 +374,14 @@ var Concelho = React.createClass({
                     <li>
                       <span className='stat-number'>
                         <span>{newLicencas < 0 ? '-' : '+'}</span>
-                        {Math.abs(newLicencas).toLocaleString()}
+                        {formatPT(Math.abs(newLicencas))}
                       </span>
                       <span className='stat-description'>Variação no número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>
                         <span>{increaseLicencas < 0 ? '-' : '+'}</span>
-                        {round(Math.abs(increaseLicencas), 0).toLocaleString()}%
+                        {formatPT(round(Math.abs(increaseLicencas), 0))}%
                       </span>
                       <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                     </li>
@@ -414,9 +414,9 @@ var Concelho = React.createClass({
                         <li className={c('est est-escala', {active: estacionamento.indexOf('escala') !== -1})}>E</li>
                       </ul>
                     </div>
-                    <span className='table-national'>{percentNational.toLocaleString()}%</span>
-                    <span className='table-residents'>{percentPop.toLocaleString()}%</span>
-                    <span className='table-pop'>{pop.toLocaleString()}</span>
+                    <span className='table-national'>{formatPT(percentNational)}%</span>
+                    <span className='table-residents'>{formatPT(percentPop)}%</span>
+                    <span className='table-pop'>{formatPT(pop)}</span>
                   </li>
                 </ul>
 
