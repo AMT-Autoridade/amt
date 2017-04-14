@@ -197,7 +197,7 @@ var SectionResidentes = React.createClass({
                   </ul>
                 </div>
 
-                <div className='two-columns'>
+                <div className='graph-container'>
                   <div className='graph'>
                     <h6 className='legend-title'>Evolução dos táxis licenciados por 1 000 residentes:</h6>
                     {this.renderLicencas1000Chart(this.props.chartLic1000Hab, 'hab')}

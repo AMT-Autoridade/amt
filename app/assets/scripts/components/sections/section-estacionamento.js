@@ -285,7 +285,7 @@ var SectionEstacionamento = React.createClass({
                 <p className='lead'>Os municípios estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Em regra, estas disposições são definidas por regulamento municipal ou aquando da atribuição da licença ao veículo.</p>
               </header>
               <div className='section-content'>
-               <div className='two-columns'>
+               <div className='graph-container'>
                  <div className='graph'>
                   <h6 className='legend-title'>Municípios por regime de estacionamento (%):</h6>
                   {this.renderPercentEstacionamento()}
