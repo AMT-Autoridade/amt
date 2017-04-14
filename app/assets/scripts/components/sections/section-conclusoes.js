@@ -134,7 +134,7 @@ var SectionConclusoes = React.createClass({
 
             <div className='section-content'>
               <div className='graph'>
-                <h6 className='legend-title'>Taxa de variação acumulada (contingentes, residentes e dormidas):</h6>
+                <h6 className='legend-title'>Taxa de variação acumulada (táxis licenciados, residentes e dormidas):</h6>
                 {this.renderTimeline()}
               </div>
               <div className='section-stats'>
