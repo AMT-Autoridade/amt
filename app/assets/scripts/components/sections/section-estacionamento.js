@@ -198,7 +198,8 @@ var SectionEstacionamento = React.createClass({
       },
       scale: {
         ticks: {
-          display: false
+          display: false,
+          min: 0
         },
         gridLines: {
           lineWidth: 0.5
