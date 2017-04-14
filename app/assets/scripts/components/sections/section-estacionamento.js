@@ -1,7 +1,7 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { Link } from 'react-router';
-import { Bar as BarChart, Radar as RadarChart } from 'react-chartjs-2';
+import { Bar as BarChart, Polar as PolarChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
@@ -182,11 +182,10 @@ var SectionEstacionamento = React.createClass({
       datasets: [
         {
           data: mainEstacionamento.map(o => o.value),
-          backgroundColor: 'rgba(246, 182, 0, 0.6)',
-          borderColor: '#FFCC45',
-          pointBorderWidth: 0,
-          pointBackgroundColor: '#FFCC45',
-          pointRadius: 3
+          backgroundColor: [
+            '#FFB712', '#FFC700', '#FDD259', '#FDDC7E', '#FFE49D'
+          ],
+          borderColor: 'transparent'
         }
       ]
     };
@@ -196,10 +195,10 @@ var SectionEstacionamento = React.createClass({
       legend: {
         display: false
       },
+      startAngle: -1.25 * Math.PI,
       scale: {
         ticks: {
-          display: false,
-          min: 0
+          display: false
         },
         gridLines: {
           lineWidth: 0.5
@@ -213,7 +212,7 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <RadarChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef('chart-count-est')}/>;
+    return <PolarChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef('chart-count-est')}/>;
   },
 
   renderMap: function () {
