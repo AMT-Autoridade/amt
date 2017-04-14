@@ -59,7 +59,7 @@ var SectionResidentes = React.createClass({
       return (
         <ul>
           <li><span className='tooltip-title'>{year}:</span></li>
-          {lic1000Data.datasets.map(o => <li key={o.label}><span className='tooltip-label'>{o.label}:</span> <span className='tooltip-number'>{formatPT(round(o.data[entryIndex]))}</span></li>)}
+          {lic1000Data.datasets.map(o => <li key={o.label}><span style={{backgroundColor: o.color}} className='tooltip-marker'></span><span className='tooltip-label'>{o.label}:</span> <span className='tooltip-number'>{formatPT(round(o.data[entryIndex]))}</span></li>)}
           <span className='triangle'></span>
         </ul>
       );

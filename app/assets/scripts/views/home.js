@@ -106,7 +106,7 @@ var Home = React.createClass({
       datasets: [
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-por']),
-          label: 'Área Metropolitana de Porto',
+          label: 'AM de Porto',
           color: '#256465',
           backgroundColor: '#f5f5f5'
         },
@@ -118,7 +118,7 @@ var Home = React.createClass({
         },
         {
           data: this.props.national.data.licencasTimeline.map(o => o['lic1000-lx']),
-          label: 'Área Metropolitana de Lisboa',
+          label: 'AM de Lisboa',
           color: '#00ced1',
           backgroundColor: '#f5f5f5'
         }
