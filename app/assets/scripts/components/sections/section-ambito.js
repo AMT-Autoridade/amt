@@ -5,7 +5,7 @@ import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
-import { percent } from '../../utils/utils';
+import { percent, formatPT } from '../../utils/utils';
 
 import Map from '../map';
 
@@ -55,7 +55,7 @@ var SectionDistribuicao = React.createClass({
       let year = data[entryIndex];
       return (
         <ul className='x-small'>
-          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{year.value.toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{formatPT(year.value)}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -123,9 +123,9 @@ var SectionDistribuicao = React.createClass({
       <li key={adminArea.id}>
         <span className='table-region'><Link to={`/nuts/${_.kebabCase(adminArea.name)}`} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'], adminArea.id)}</div>
-        <span className='table-national'>{percentNational.toLocaleString()}%</span>
-        <span className='table-residents'>{percentPop.toLocaleString()}%</span>
-        <span className='table-available'>{availableLicencas.toLocaleString()}</span>
+        <span className='table-national'>{formatPT(percentNational)}%</span>
+        <span className='table-residents'>{formatPT(percentPop)}%</span>
+        <span className='table-available'>{formatPT(availableLicencas)}</span>
       </li>
     );
   },

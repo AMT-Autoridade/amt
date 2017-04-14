@@ -178,7 +178,7 @@ var SectionEstacionamento = React.createClass({
     });
 
     let chartData = {
-      labels: mainEstacionamento.map(o => o.name),
+      labels: mainEstacionamento.map(o => o.types.join(' & ')),
       datasets: [
         {
           data: mainEstacionamento.map(o => o.value),

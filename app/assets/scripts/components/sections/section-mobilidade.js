@@ -5,7 +5,7 @@ import { Pie as PieChart, Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
-import { percent } from '../../utils/utils';
+import { percent, formatPT } from '../../utils/utils';
 
 import Map from '../map';
 
@@ -78,7 +78,7 @@ var SectionMobilidade = React.createClass({
       let datum = data[entryIndex];
       return (
         <ul className='small'>
-          <li><span className='tooltip-label'>{datum.label.toLocaleString()}:</span><span className='tooltip-number'>{datum.percent.toLocaleString()}%</span></li>
+          <li><span className='tooltip-label'>{formatPT(datum.label)}:</span><span className='tooltip-number'>{formatPT(datum.percent)}%</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -119,7 +119,7 @@ var SectionMobilidade = React.createClass({
       let year = timeline[entryIndex];
       return (
         <ul>
-          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{year['lic-mob-reduzida'].toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{formatPT(year['lic-mob-reduzida'])}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -251,15 +251,15 @@ var SectionMobilidade = React.createClass({
                   <div className='section-stats'>
                     <ul>
                       <li>
-                        <span className='stat-number'>{percentMobRed.toLocaleString()}%</span>
+                        <span className='stat-number'>{formatPT(percentMobRed)}%</span>
                         <span className='stat-description'>Dos municípios ({totalMunicipiosMobReduzida}) possuem contingentes mobilidade reduzida (CMR).</span>
                       </li>
                       <li>
-                        <span className='stat-number'>{newMobReduzida.toLocaleString()}</span>
+                        <span className='stat-number'>{formatPT(newMobReduzida)}</span>
                         <span className='stat-description'>Novas licenças emitidas <span className='block'>em CMR desde 2006.</span></span>
                       </li>
                       <li>
-                        <span className='stat-number'>{percentNewMobRed.toLocaleString()}%</span>
+                        <span className='stat-number'>{formatPT(percentNewMobRed)}%</span>
                         <span className='stat-description'>Do aumento no total de licenças resulta do crescimento de licenças em CMR.</span>
                       </li>
                     </ul>

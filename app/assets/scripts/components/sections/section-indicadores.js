@@ -5,7 +5,7 @@ import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
-import { round } from '../../utils/utils';
+import { round, formatPT } from '../../utils/utils';
 
 import Map from '../map';
 
@@ -59,7 +59,7 @@ var SectionResidentes = React.createClass({
       return (
         <ul>
           <li><span className='tooltip-title'>{year}:</span></li>
-          {lic1000Data.datasets.map(o => <li key={o.label}><span className='tooltip-label'>{o.label}:</span> <span className='tooltip-number'>{round(o.data[entryIndex])}</span></li>)}
+          {lic1000Data.datasets.map(o => <li key={o.label}><span style={{backgroundColor: o.color}} className='tooltip-marker'></span><span className='tooltip-label'>{o.label}:</span> <span className='tooltip-number'>{formatPT(round(o.data[entryIndex]))}</span></li>)}
           <span className='triangle'></span>
         </ul>
       );
@@ -188,30 +188,36 @@ var SectionResidentes = React.createClass({
                 <div className='section-stats'>
                   <ul className='two-columns'>
                     <li>
-                      <span className='stat-number'>{round(this.props.licencasHab, 1)}</span>
-                      <span className='stat-description'>Táxis licenciados por 1000 residentes.</span>
+                      <span className='stat-number'>{formatPT(round(this.props.licencasHab, 1))}</span>
+                      <span className='stat-description'>Táxis licenciados por 1 000 residentes.</span>
                     </li>
-                    <li>
-                      <span className='stat-number'>{dormidas}</span>
-                      <span className='stat-description'>Táxis licenciados por 1000 dormidas.</span>
-                    </li>
+                    {this.props.adminLevel === 'national' ? (
+                      <li>
+                        <span className='stat-number'>{formatPT(dormidas)}</span>
+                        <span className='stat-description'>Táxis licenciados por 1 000 dormidas.</span>
+                      </li>
+                    ) : null }
                   </ul>
                 </div>
 
                 <div className='two-columns'>
                   <div className='graph'>
-                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 residentes:</h6>
+                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1 000 residentes:</h6>
                     {this.renderLicencas1000Chart(this.props.chartLic1000Hab, 'hab')}
                   </div>
-                  <div className='graph'>
-                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 dormidas:</h6>
-                    {this.renderLicencas1000Chart(this.props.chartLic1000Dor, 'dor')}
-                  </div>
+                  {this.props.adminLevel === 'national' ? (
+                    <div className='graph'>
+                      <h6 className='legend-title'>Evolução dos táxis licenciados por 1 000 dormidas:</h6>
+                      {this.renderLicencas1000Chart(this.props.chartLic1000Dor, 'dor')}
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <footer className='section-footer'>
                 <p><strong>Nota I:</strong> Os valores dos indicadores devem ser analisados caso a caso e comparados com particular precaução. A consideração de outros fatores com influência na procura poderá melhor enquadrar as diferenças existentes.</p>
-                <p><strong>Nota II:</strong> Dormidas nos estabelecimentos hoteleiros (estabelecimento cuja atividade principal consiste na prestação de serviços de alojamento e de outros serviços acessórios ou de apoio, mediante pagamento).</p>
+                {this.props.adminLevel === 'national' ? (
+                  <p><strong>Nota II:</strong> Dormidas nos estabelecimentos hoteleiros (estabelecimento cuja atividade principal consiste na prestação de serviços de alojamento e de outros serviços acessórios ou de apoio, mediante pagamento).</p>
+                ) : null }
               </footer>
             </section>
           </div>

@@ -6,6 +6,7 @@ import _ from 'lodash';
 import c from 'classnames';
 
 import makeTooltip from '../../utils/tooltip';
+import { formatPT } from '../../utils/utils';
 
 import Map from '../map';
 
@@ -59,7 +60,7 @@ var SectionDistribuicao = React.createClass({
       let year = data[entryIndex];
       return (
         <ul className='x-small'>
-          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{year.value.toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{formatPT(year.value)}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -123,7 +124,7 @@ var SectionDistribuicao = React.createClass({
       <li key={adminArea.id}>
         <span className='table-region'><Link to={url} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'], adminArea.id)}</div>
-        <span className='table-scope'>{this.contingenteMatrix[adminArea.data.contingente]}</span>
+        <span className='table-scope'>{adminArea.data.contingente ? this.contingenteMatrix[adminArea.data.contingente] : 'Não Definido'}</span>
         <div className='table-parking'>
           <ul className='inline-list'>
             <li className={c('est est-livre', {active: adminArea.data.estacionamento.indexOf('livre') !== -1})}>L</li>
@@ -132,7 +133,7 @@ var SectionDistribuicao = React.createClass({
             <li className={c('est est-escala', {active: adminArea.data.estacionamento.indexOf('escala') !== -1})}>E</li>
           </ul>
         </div>
-        <span className='table-pop'>{pop.toLocaleString()}</span>
+        <span className='table-pop'>{formatPT(pop)}</span>
       </li>
     );
   },
