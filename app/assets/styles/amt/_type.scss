@@ -62,5 +62,7 @@ a, a:visited {
 }
 
 .block {
-	display: block;
+	@include media (medium-up) {
+		display: block;
+	}
 }

@@ -159,7 +159,10 @@
 
 .section-content {
   .legend-title {
-    text-align: left;
+    text-align: center;
+    @include media (small-up) {
+      text-align: left;
+    }
   }
 }
 
