@@ -23,12 +23,12 @@ var Glossario = React.createClass({
             </li>
             <li>
               <h4>Licenças Municipais</h4>
-              <p>A prestação de serviços de transporte em táxi implica que o prestador detenha um alvará emitido pelo Instituto da Mobilidade e dos Transportes (IMT) e uma licença municipal para cada veículo que utiliza. As licenças podem ser obtidas através de concurso público lançado pelas câmaras municipais ou pela sua aquisição no mercado secundário (a quem já as detenha).
+              <p>A prestação de serviços de transporte em táxi implica que o prestador detenha um alvará emitido pelo Instituto da Mobilidade e dos Transportes (IMT) e uma licença municipal para cada veículo que utiliza. As licenças podem ser obtidas através de concurso público lançado pelos municípios ou pela sua aquisição no mercado secundário (a quem já as detenha).
 </p>
             </li>
             <li>
               <h4>Contingentes Municipais</h4>
-              <p>A atribuição de licenças encontra-se limitada pelos contingentes de âmbito municipal, que correspondem ao número máximo de licenças que pode ser concedido num concelho. Este contingente é fixado pelas câmaras municipais, com uma periodicidade não inferior a 2 anos.</p>
+              <p>A atribuição de licenças encontra-se limitada pelos contingentes de âmbito municipal, que correspondem ao número máximo de licenças que pode ser concedido num concelho. Este contingente é fixado pelos municípios, com uma periodicidade não inferior a 2 anos.</p>
             </li>
             <li>
               <h4>Contingentes especiais para pessoas com mobilidade reduzida</h4>
@@ -36,7 +36,7 @@ var Glossario = React.createClass({
             </li>
             <li>
               <h4>Âmbito geográfico dos contingentes</h4>
-              <p>Os contingentes municipais podem ser estabelecidos por freguesia, para um conjunto de freguesias ou para as freguesias que constituem a sede do concelho. A AMT analisa se o âmbito geográfico geográfico definido pelas câmaras municipais corresponde ao concelho ou se tem dimensão infra concelhia</p>
+              <p>Os contingentes municipais podem ser estabelecidos por freguesia, para um conjunto de freguesias ou para as freguesias que constituem a sede do concelho. A AMT analisa se o âmbito geográfico geográfico definido pelos municípios corresponde ao concelho ou se tem dimensão infra concelhia</p>
             </li>
             <li>
               <h4>Regimes de Estacionamento</h4>

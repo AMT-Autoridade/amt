@@ -243,7 +243,7 @@ var SectionMobilidade = React.createClass({
                   {this.props.adminName}
                 </h3>
                 <h1>Mobilidade Reduzida</h1>
-                <p className='lead'>A legislação prevê a possibilidade de criar contingentes de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
+                <p className='lead'>A legislação prevê a possibilidade de criar contingentes de táxis para o transporte de pessoas com mobilidade reduzida sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
               </header>
 
               {licencasMobReduzida2016 ? (
@@ -252,7 +252,7 @@ var SectionMobilidade = React.createClass({
                     <ul>
                       <li>
                         <span className='stat-number'>{percentMobRed.toLocaleString()}%</span>
-                        <span className='stat-description'>Dos municípios ({totalMunicipiosMobReduzida}) possuem contingentes mobilidade reduzida.</span>
+                        <span className='stat-description'>Dos municípios ({totalMunicipiosMobReduzida}) possuem contingentes mobilidade reduzida (CMR).</span>
                       </li>
                       <li>
                         <span className='stat-number'>{newMobReduzida.toLocaleString()}</span>
