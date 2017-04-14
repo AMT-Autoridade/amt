@@ -405,7 +405,7 @@ var Concelho = React.createClass({
                     <span className='table-pop'>População <span className='block'>Total</span></span>
                   </li>
                   <li>
-                    <span className='table-scope'>{this.contingenteMatrix[contingente]}</span>
+                    <span className='table-scope'>{contingente ? this.contingenteMatrix[contingente] : 'Indefinido'}</span>
                     <div className='table-parking'>
                       <ul className='inline-list'>
                         <li className={c('est est-livre', {active: estacionamento.indexOf('livre') !== -1})}>L</li>
