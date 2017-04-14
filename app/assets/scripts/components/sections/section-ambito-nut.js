@@ -1,6 +1,7 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { Link } from 'react-router';
+import { StickyContainer, Sticky } from 'react-sticky';
 import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 import c from 'classnames';
@@ -142,16 +143,20 @@ var SectionDistribuicao = React.createClass({
     let adminList = this.props.adminList;
 
     return (
-      <ul className='table-distribution'>
-        <li className='table-header'>
-          <span className='table-region'>REGIÃO <span className='block'>(Concelho)</span></span>
-          <span className='table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
-          <span className='table-scope'>Âmbito Geográfico <span className='block'>do Contingente</span></span>
-          <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
-          <span className='table-pop'>População <span className='block'>Residente (2015)</span></span>
-        </li>
-        {adminList.map(this.renderTableRow)}
-      </ul>
+      <StickyContainer>
+        <ul className='table-distribution'>
+          <li className='table-header'>
+            <Sticky>
+              <span className='table-region'>REGIÃO <span className='block'>(Concelho)</span></span>
+              <span className='table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
+              <span className='table-scope'>Âmbito Geográfico <span className='block'>do Contingente</span></span>
+              <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
+              <span className='table-pop'>População <span className='block'>Residente (2015)</span></span>
+            </Sticky>
+          </li>
+          {adminList.map(this.renderTableRow)}
+        </ul>
+      </StickyContainer>
     );
   },
 
