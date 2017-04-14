@@ -70,7 +70,15 @@ var SectionConclusoes = React.createClass({
       return (
         <ul>
           <li><span className='tooltip-title'>{year}:</span></li>
-          {licencasTimeline.datasets.map(o => <li key={o.label}><span className='tooltip-label'>{o.label}:</span> <span className='tooltip-number'>{formatPT(round(o.data[entryIndex], 0))}%</span></li>)}
+          {licencasTimeline.datasets.map(o => {
+            let val = o.data[entryIndex] ? formatPT(round(o.data[entryIndex], 0)) + '%' : 'N/D';
+            return (
+              <li key={o.label}>
+                <span style={{backgroundColor: o.color}} className='tooltip-marker'></span>
+                <span className='tooltip-label'>{o.label}:</span> <span className='tooltip-number'>{val}</span>
+              </li>
+            );
+          })}
           <span className='triangle'></span>
         </ul>
       );
