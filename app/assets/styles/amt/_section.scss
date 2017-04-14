@@ -1,3 +1,13 @@
+.section-wrapper {
+  @include column(12/12);
+  @include media (large-up) {
+    @include column(8/12);
+  }
+  float: right !important;
+  margin-right: 0;
+} 
+
+
 .section-category {
 	font-size: 1.25rem;
   line-height: 1.4;

@@ -169,9 +169,6 @@ var SectionLicencas = React.createClass({
     return (
       <div id='licencas' className='content-wrapper vertical-center'>
         <div className='center'>
-          <div className='map-wrapper'>
-            {this.renderMap()}
-          </div>
           <div className='section-wrapper'>
             <section className='section-container'>
               <header className='section-header'>
@@ -206,6 +203,9 @@ var SectionLicencas = React.createClass({
 
               </div>
             </section>
+          </div>
+          <div className='map-wrapper'>
+            {this.renderMap()}
           </div>
         </div>
       </div>

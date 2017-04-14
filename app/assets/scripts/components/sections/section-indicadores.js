@@ -169,9 +169,6 @@ var SectionResidentes = React.createClass({
     return (
       <div id='indicadores' className='content-wrapper vertical-center'>
         <div className='center'>
-          <div className='map-wrapper'>
-            {this.renderMap()}
-          </div>
            <div className='section-wrapper'>
             <section className='section-container'>
               <header className='section-header'>
@@ -220,6 +217,9 @@ var SectionResidentes = React.createClass({
                 ) : null }
               </footer>
             </section>
+          </div>
+          <div className='map-wrapper'>
+            {this.renderMap()}
           </div>
         </div>
       </div>
