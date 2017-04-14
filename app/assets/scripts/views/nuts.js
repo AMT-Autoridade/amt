@@ -146,18 +146,6 @@ var Nuts = React.createClass({
       ], d => d.data[0])
     };
 
-    let chartLic1000Dor = {
-      labels: data.data.dormidas.map(y => y.year),
-      datasets: [
-        {
-          data: this.props.national.data.dormidas.map(o => o.lic1000),
-          label: 'Portugal',
-          color: '#1f8d8e',
-          backgroundColor: '#f5f5f5'
-        }
-      ]
-    };
-
     return (
       <div id="page-nut">
         <div id="page-content">
@@ -211,7 +199,6 @@ var Nuts = React.createClass({
             licencasHab={data.data.licencasHab}
             dormidas={data.data.dormidas}
             chartLic1000Hab={chartLic1000Hab}
-            chartLic1000Dor={chartLic1000Dor}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
             onMapClick={this.onMapClick}

@@ -191,10 +191,12 @@ var SectionResidentes = React.createClass({
                       <span className='stat-number'>{formatPT(round(this.props.licencasHab, 1))}</span>
                       <span className='stat-description'>Táxis licenciados por 1 000 residentes.</span>
                     </li>
-                    <li>
-                      <span className='stat-number'>{formatPT(dormidas)}</span>
-                      <span className='stat-description'>Táxis licenciados por 1 000 dormidas.</span>
-                    </li>
+                    {this.props.adminLevel === 'national' ? (
+                      <li>
+                        <span className='stat-number'>{formatPT(dormidas)}</span>
+                        <span className='stat-description'>Táxis licenciados por 1 000 dormidas.</span>
+                      </li>
+                    ) : null }
                   </ul>
                 </div>
 
@@ -203,15 +205,19 @@ var SectionResidentes = React.createClass({
                     <h6 className='legend-title'>Evolução dos táxis licenciados por 1 000 residentes:</h6>
                     {this.renderLicencas1000Chart(this.props.chartLic1000Hab, 'hab')}
                   </div>
-                  <div className='graph'>
-                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1 000 dormidas:</h6>
-                    {this.renderLicencas1000Chart(this.props.chartLic1000Dor, 'dor')}
-                  </div>
+                  {this.props.adminLevel === 'national' ? (
+                    <div className='graph'>
+                      <h6 className='legend-title'>Evolução dos táxis licenciados por 1 000 dormidas:</h6>
+                      {this.renderLicencas1000Chart(this.props.chartLic1000Dor, 'dor')}
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <footer className='section-footer'>
                 <p><strong>Nota I:</strong> Os valores dos indicadores devem ser analisados caso a caso e comparados com particular precaução. A consideração de outros fatores com influência na procura poderá melhor enquadrar as diferenças existentes.</p>
-                <p><strong>Nota II:</strong> Dormidas nos estabelecimentos hoteleiros (estabelecimento cuja atividade principal consiste na prestação de serviços de alojamento e de outros serviços acessórios ou de apoio, mediante pagamento).</p>
+                {this.props.adminLevel === 'national' ? (
+                  <p><strong>Nota II:</strong> Dormidas nos estabelecimentos hoteleiros (estabelecimento cuja atividade principal consiste na prestação de serviços de alojamento e de outros serviços acessórios ou de apoio, mediante pagamento).</p>
+                ) : null }
               </footer>
             </section>
           </div>
