@@ -5,7 +5,7 @@
 	Maps + Graphs: Daniel Silva
 	Twitter: @danielfdsilva
 
-	Data Structure: Olav Veerman
+	Data Structure: Olaf Veerman
 	Twitter: @oBirdman 
 
 	Illustrations: Tânia Pires
