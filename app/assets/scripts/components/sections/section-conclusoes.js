@@ -146,7 +146,7 @@ var SectionConclusoes = React.createClass({
                 {this.renderTimeline()}
               </div>
               <div className='section-stats'>
-                <ul className='two-columns'>
+                <ul>
                   <li>
                     <h4>Licenças e Contingentes</h4>
                     <p>Existe uma grande disparidade no número de táxis por concelho. Os concelhos de Lisboa e do Porto possuem cerca de 31% dos táxis licenciados. Cerca de metade dos concelhos possuem 20 ou menos táxis licenciados.</p>

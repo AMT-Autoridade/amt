@@ -251,9 +251,6 @@ var SectionDistribuicao = React.createClass({
     return (
       <div id='distribuicao' className='content-wrapper vertical-center'>
         <div className='center'>
-          <div className='map-wrapper'>
-            {this.renderMap()}
-          </div>
           <div className='section-wrapper'>
             <section className='section-container'>
               <header className='section-header'>
@@ -272,6 +269,9 @@ var SectionDistribuicao = React.createClass({
                 <p><strong>Notas:</strong> Acrónimo de “Nomenclatura das Unidades Territoriais para Fins Estatísticos”. Constitui um sistema hierárquico de divisão do território em regiões, dividindo-se em 3 níveis (NUTS I, NUTS II, NUTS III), definidos tendo por base critérios populacionais, administrativos e geográficos. Atualmente, os 308 municípios nacionais estão agrupados em 25 NUTS III.</p>
               </footer>
             </section>
+          </div>
+          <div className='map-wrapper'>
+            {this.renderMap()}
           </div>
         </div>
       </div>

@@ -1,3 +1,19 @@
+.section-wrapper {
+  @include column(12/12);
+  float: right !important;
+  margin-right: 0;
+  text-align: center;
+  margin-top: 60px;
+  @include media (small-up) {
+    text-align: left;
+  }
+    @include media (large-up) {
+      @include column(8/12);
+      margin-top: 0;
+  }
+} 
+
+
 .section-category {
 	font-size: 1.25rem;
   line-height: 1.4;
@@ -22,7 +38,7 @@
   li {
   	margin-bottom: 20px;
   	> span{
-  		max-width: 220px;
+  		/*max-width: 220px;*/
   		display: block;
   	}
   }
@@ -44,7 +60,7 @@
 .section-footer {
 	border-top: 1px solid #ccc;
 	padding-top: 20px;
-  margin-top: 40px;
+ /* margin-top: 40px;*/
 
 	p {
 		font-size: .8125rem;

@@ -110,7 +110,7 @@ var SectionResidentes = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={220} ref={this.addChartRef(`chart-lic1000${id}`)}/>;
+    return <LineChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef(`chart-lic1000${id}`)}/>;
   },
 
   renderMap: function () {
@@ -169,9 +169,6 @@ var SectionResidentes = React.createClass({
     return (
       <div id='indicadores' className='content-wrapper vertical-center'>
         <div className='center'>
-          <div className='map-wrapper'>
-            {this.renderMap()}
-          </div>
            <div className='section-wrapper'>
             <section className='section-container'>
               <header className='section-header'>
@@ -200,7 +197,7 @@ var SectionResidentes = React.createClass({
                   </ul>
                 </div>
 
-                <div className='two-columns'>
+                <div className='graph-container'>
                   <div className='graph'>
                     <h6 className='legend-title'>Evolução dos táxis licenciados por 1 000 residentes:</h6>
                     {this.renderLicencas1000Chart(this.props.chartLic1000Hab, 'hab')}
@@ -220,6 +217,9 @@ var SectionResidentes = React.createClass({
                 ) : null }
               </footer>
             </section>
+          </div>
+          <div className='map-wrapper'>
+            {this.renderMap()}
           </div>
         </div>
       </div>
