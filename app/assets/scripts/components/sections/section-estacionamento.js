@@ -178,7 +178,7 @@ var SectionEstacionamento = React.createClass({
     });
 
     let chartData = {
-      labels: mainEstacionamento.map(o => o.name),
+      labels: mainEstacionamento.map(o => o.types.join(' & ')),
       datasets: [
         {
           data: mainEstacionamento.map(o => o.value),
@@ -273,9 +273,6 @@ var SectionEstacionamento = React.createClass({
     return (
       <div id='estacionamento' className='content-wrapper vertical-center'>
         <div className='center'>
-          <div className='map-wrapper'>
-            {this.renderMap()}
-          </div>
           <div className='section-wrapper'>
             <section className='section-container'>
               <header className='section-header'>
@@ -285,10 +282,10 @@ var SectionEstacionamento = React.createClass({
                   {this.props.adminName}
                 </h3>
                 <h1>Regime de Estacionamento</h1>
-                <p className='lead'>Os municípios estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Estas disposições são definidas por regulamento municipal ou aquando da atribuição da licença ao veículo.</p>
+                <p className='lead'>Os municípios estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Em regra, estas disposições são definidas por regulamento municipal ou aquando da atribuição da licença ao veículo.</p>
               </header>
               <div className='section-content'>
-               <div className='two-columns'>
+               <div className='graph-container'>
                  <div className='graph'>
                   <h6 className='legend-title'>Municípios por regime de estacionamento (%):</h6>
                   {this.renderPercentEstacionamento()}
@@ -302,6 +299,9 @@ var SectionEstacionamento = React.createClass({
 
               </div>
             </section>
+          </div>
+          <div className='map-wrapper'>
+            {this.renderMap()}
           </div>
         </div>
       </div>

@@ -1,11 +1,15 @@
 #page-content {
   position: relative;
-  width: 80%;
+  width: 90%;
+  min-width: 280px;
   max-width: 1200px;
   margin: 0 auto;
   overflow: hidden;
   clear: both;
   padding-bottom: 4rem;
+  @include media (medium-up) {
+    width: 80%;
+  }
 }
 
 .container-wrapper {
@@ -18,16 +22,19 @@
 }
 
 .content-wrapper {
-  padding-top: 90px;
-  overflow: hidden; 
-  min-height: 100vh;
+  padding-top: 60px;
+  @include media (large-up) { 
+    padding-top: 90px;
+    overflow: hidden; 
+    min-height: 100vh;
 
-  &.vertical-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .center {
-      margin: auto;
+    &.vertical-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .center {
+        margin: auto;
+      }
     }
   }
 }
@@ -36,17 +43,25 @@
 
 .map-wrapper {
   position: relative;
-  margin-top: -30px;
+  margin: 30px 0;
 
   @include column(12/12);
   @include media (large-up) {
     @include column(4/12);
   }
 
+  @include media (large-up) {  
+    margin-top: -30px;
+    margin-bottom: 0;
+  }
+
   .map-svg {
-    width: 78%;
-    margin: 0 auto;
+    width: 180px;
     position: relative;
+    margin: 0 auto;
+    @include media (large-up) {
+      width: 78%; 
+    }
 
     svg {
       display: block
@@ -144,16 +159,13 @@
 
 .section-content {
   .legend-title {
-    text-align: left;
+    text-align: center;
+    @include media (small-up) {
+      text-align: left;
+    }
   }
 }
 
-.section-wrapper {
-  @include column(12/12);
-  @include media (large-up) {
-    @include column(8/12);
-  }
-} 
 
 .stat-number {
   color: #0eaeaf;

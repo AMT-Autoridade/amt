@@ -138,8 +138,11 @@ function processData (rawData) {
 
     // Variation data. (newVal - oldVal) / oldVal
     d['var-lic-all'] = ((d['lic-geral'] + d['lic-mob-reduzida']) - varBaseline.licencas) / varBaseline.licencas * 100;
-    d['var-populacao'] = (d['pop-residente'] - varBaseline.populacao) / varBaseline.populacao * 100;
-    d['var-dormidas'] = (data.dormidas[idx].value - varBaseline.dormidas) / varBaseline.dormidas * 100;
+
+    if (y <= 2015) {
+      d['var-populacao'] = (d['pop-residente'] - varBaseline.populacao) / varBaseline.populacao * 100;
+      d['var-dormidas'] = (data.dormidas[idx].value - varBaseline.dormidas) / varBaseline.dormidas * 100;
+    }
 
     return d;
   });

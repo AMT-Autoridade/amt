@@ -5,6 +5,7 @@ import { Bar as BarChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
+import { formatPT } from '../../utils/utils';
 
 import Map from '../map';
 
@@ -61,9 +62,9 @@ var SectionLicencas = React.createClass({
       return (
         <ul>
           <li><span className='tooltip-title'>{datum.name}</span></li>
-          <li><span className='tooltip-label'>Contingente:</span><span className='tooltip-number'>{datum.data.max2016.toLocaleString()}</span></li>
-          <li><span className='tooltip-label'>Licenças activas:</span> <span className='tooltip-number'>{datum.data.licencas2016.toLocaleString()}</span></li>
-          <li><span className='tooltip-label'>Vagas disponíveis:</span> <span className='tooltip-number'>{(datum.data.max2016 - datum.data.licencas2016).toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>Contingente:</span><span className='tooltip-number'>{formatPT(datum.data.max2016)}</span></li>
+          <li><span className='tooltip-label'>Licenças activas:</span> <span className='tooltip-number'>{formatPT(datum.data.licencas2016)}</span></li>
+          <li><span className='tooltip-label'>Vagas disponíveis:</span> <span className='tooltip-number'>{formatPT(datum.data.max2016 - datum.data.licencas2016)}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -168,9 +169,6 @@ var SectionLicencas = React.createClass({
     return (
       <div id='licencas' className='content-wrapper vertical-center'>
         <div className='center'>
-          <div className='map-wrapper'>
-            {this.renderMap()}
-          </div>
           <div className='section-wrapper'>
             <section className='section-container'>
               <header className='section-header'>
@@ -186,15 +184,15 @@ var SectionLicencas = React.createClass({
                 <div className='section-stats'>
                   <ul>
                     <li>
-                      <span className='stat-number'>{licencas2016.toLocaleString()}</span>
+                      <span className='stat-number'>{formatPT(licencas2016)}</span>
                       <span className='stat-description'>Total de táxis licenciados <span className='block'>em agosto de 2016.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{max2016.toLocaleString()}</span>
+                      <span className='stat-number'>{formatPT(max2016)}</span>
                       <span className='stat-description'>Total dos contingentes <span className='block'>em agosto de 2016.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{(max2016 - licencas2016).toLocaleString()}</span>
+                      <span className='stat-number'>{formatPT(max2016 - licencas2016)}</span>
                       <span className='stat-description'>Total de vagas existentes <span className='block'>em agosto de 2016.</span></span>
                     </li>
                   </ul>
@@ -205,6 +203,9 @@ var SectionLicencas = React.createClass({
 
               </div>
             </section>
+          </div>
+          <div className='map-wrapper'>
+            {this.renderMap()}
           </div>
         </div>
       </div>

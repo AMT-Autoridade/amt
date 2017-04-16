@@ -1,73 +1,76 @@
 .section-nav {
-	
-	list-style: none;
-	padding: 20px 0;
-	text-align: right;
-	margin-right: 16px;
-	overflow: hidden;
-	font-size: .875rem;
-	
-	.nav-item {
-		position: relative;
-		padding-right: 30px;
-		margin-bottom: 10px;
+	display: none;
 
-		a {
-			display: block;
-			height: 20px;
-
-			span {
-				display: none;
-				background: rgba(30, 40, 43, .9);
-				background: #0eaeaf;
-				color: white;
-				padding: .25rem .5rem;
-				border-radius: 2px;
-				position: relative;
-				margin-top: -4px;
-
-				&:after {
-					position: absolute;
-					right: -6px;
-					top: 8px;
-					content: ' ';
-					width: 0; 
-					height: 0; 
-					border-top: 6px solid transparent;
-					border-bottom: 6px solid transparent;
-
-					border-left: 6px solid #0eaeaf;
-				}
-			}
-
-			&:hover span{
-				display: inline-block;
-			}
-		}
-
-		a:after {
-			position: absolute;
-			top: 2px;
-			right: 0;
-			width: 10px;
-			height: 10px;
-			display: inline-block;
-			background: rgba(0,0,0,.15);
-			content: "";
-			border-radius: 50%;
-		}
+	@include media (medium-up) { 
+		list-style: none;
+		padding: 20px 0;
+		text-align: right;
+		margin-right: 16px;
+		overflow: hidden;
+		font-size: .875rem;
 		
-		&.active {
-			a {
+		.nav-item {
+			position: relative;
+			padding-right: 30px;
+			margin-bottom: 10px;
 
-				&:after {
-					border: 2px solid rgba(30, 40, 43, .9);
-					border: 2px solid #0eaeaf;
-					background-color: #0eaeaf;
-					padding: 2px;
+			a {
+				display: block;
+				height: 20px;
+
+				span {
+					display: none;
+					background: rgba(30, 40, 43, .9);
+					background: #0eaeaf;
+					color: white;
+					padding: .25rem .5rem;
+					border-radius: 2px;
+					position: relative;
+					margin-top: -4px;
+
+					&:after {
+						position: absolute;
+						right: -6px;
+						top: 8px;
+						content: ' ';
+						width: 0; 
+						height: 0; 
+						border-top: 6px solid transparent;
+						border-bottom: 6px solid transparent;
+
+						border-left: 6px solid #0eaeaf;
+					}
+				}
+
+				&:hover span{
+					display: inline-block;
 				}
 			}
 
+			a:after {
+				position: absolute;
+				top: 2px;
+				right: 0;
+				width: 10px;
+				height: 10px;
+				display: inline-block;
+				background: rgba(0,0,0,.15);
+				content: "";
+				border-radius: 50%;
+			}
+			
+			&.active {
+				a {
+
+					&:after {
+						border: 2px solid rgba(30, 40, 43, .9);
+						border: 2px solid #0eaeaf;
+						background-color: #0eaeaf;
+						padding: 2px;
+					}
+				}
+
+			}
 		}
 	}
 }

@@ -5,7 +5,7 @@ import { Line as LineChart, Bar as BarChart, Doughnut as DoughnutChart } from 'r
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
-import { round, percent } from '../../utils/utils';
+import { round, percent, formatPT } from '../../utils/utils';
 
 import Map from '../map';
 
@@ -61,9 +61,9 @@ var SectionEvolucao = React.createClass({
       return (
         <ul>
           <li><span className='tooltip-title'>Contingentes:</span></li>
-          <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{year['lic-geral'].toLocaleString()}</span></li>
-          <li><span className='tooltip-label'>Mob. Reduzida:</span> <span className='tooltip-number'>{year['lic-mob-reduzida'].toLocaleString()}</span></li>
-          <li><span className='tooltip-label'>Total Contingentes:</span><span className='tooltip-number'>{(year['lic-geral'] + year['lic-mob-reduzida']).toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{formatPT(year['lic-geral'])}</span></li>
+          <li><span className='tooltip-label'>Mob. Reduzida:</span> <span className='tooltip-number'>{formatPT(year['lic-mob-reduzida'])}</span></li>
+          <li><span style={{backgroundColor: '#FFCC45'}} className='tooltip-marker'></span><span className='tooltip-label'>Total Contingentes:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -206,7 +206,7 @@ var SectionEvolucao = React.createClass({
       let entry = licencasChange[entryIndex];
       return (
         <ul className='small'>
-          <li><span className='tooltip-label'>{keyIndex[entry.key]}:</span><span className='tooltip-number'>{round(entry.percent, 1).toLocaleString()}%</span></li>
+          <li><span className='tooltip-label'>{keyIndex[entry.key]}:</span><span className='tooltip-number'>{formatPT(round(entry.percent, 1))}%</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -290,9 +290,6 @@ var SectionEvolucao = React.createClass({
     return (
       <div id='evolucao' className='content-wrapper vertical-center'>
         <div className='center'>
-          <div className='map-wrapper'>
-            {this.renderMap()}
-          </div>
           <div className='section-wrapper'>
             <section className='section-container'>
               <header className='section-header'>
@@ -310,19 +307,19 @@ var SectionEvolucao = React.createClass({
                     <li>
                       <span className='stat-number'>
                         <span>{newLicencas < 0 ? '-' : '+'}</span>
-                        {Math.abs(newLicencas).toLocaleString()}
+                        {formatPT(Math.abs(newLicencas))}
                       </span>
                       <span className='stat-description'>Variação no número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>
                         <span>{increaseLicencas < 0 ? '-' : '+'}</span>
-                        {round(Math.abs(increaseLicencas), 0).toLocaleString()}%
+                        {formatPT(round(Math.abs(increaseLicencas), 0))}%
                       </span>
                       <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{percent(totalMunicipiosNoChange, totalMunicipios, 0).toLocaleString()}%</span>
+                      <span className='stat-number'>{formatPT(percent(totalMunicipiosNoChange, totalMunicipios, 0))}%</span>
                       <span className='stat-description'>Dos municípios não registaram alteração nos táxis licenciados.</span>
                     </li>
                   </ul>
@@ -348,6 +345,9 @@ var SectionEvolucao = React.createClass({
                 <p><strong>Nota:</strong> Existem dados relativos a 2016 para todos os concelhos. Para os poucos concelhos em que não está disponível informação para todos os anos foram usados valores imputados. <Link to='/dados'>Saber mais</Link></p>
               </footer>
             </section>
+          </div>
+          <div className='map-wrapper'>
+            {this.renderMap()}
           </div>
         </div>
       </div>

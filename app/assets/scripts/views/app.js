@@ -66,6 +66,9 @@ var App = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
+    // Correctly show header.
+    this.setState({showHeader: nextProps.location.pathname !== '/'});
+
     if (this.props.location.hash !== nextProps.location.hash ||
     this.props.location.pathname !== nextProps.location.pathname) {
       if (!this.ignoreNextSectionChange) {

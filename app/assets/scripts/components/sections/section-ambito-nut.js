@@ -6,6 +6,7 @@ import _ from 'lodash';
 import c from 'classnames';
 
 import makeTooltip from '../../utils/tooltip';
+import { formatPT } from '../../utils/utils';
 
 import Map from '../map';
 
@@ -59,7 +60,7 @@ var SectionDistribuicao = React.createClass({
       let year = data[entryIndex];
       return (
         <ul className='x-small'>
-          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{year.value.toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{formatPT(year.value)}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -123,7 +124,7 @@ var SectionDistribuicao = React.createClass({
       <li key={adminArea.id}>
         <span className='table-region'><Link to={url} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
         <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'], adminArea.id)}</div>
-        <span className='table-scope'>{this.contingenteMatrix[adminArea.data.contingente]}</span>
+        <span className='table-scope'>{adminArea.data.contingente ? this.contingenteMatrix[adminArea.data.contingente] : 'Não Definido'}</span>
         <div className='table-parking'>
           <ul className='inline-list'>
             <li className={c('est est-livre', {active: adminArea.data.estacionamento.indexOf('livre') !== -1})}>L</li>
@@ -132,7 +133,7 @@ var SectionDistribuicao = React.createClass({
             <li className={c('est est-escala', {active: adminArea.data.estacionamento.indexOf('escala') !== -1})}>E</li>
           </ul>
         </div>
-        <span className='table-pop'>{pop.toLocaleString()}</span>
+        <span className='table-pop'>{formatPT(pop)}</span>
       </li>
     );
   },
@@ -145,9 +146,9 @@ var SectionDistribuicao = React.createClass({
         <li className='table-header'>
           <span className='table-region'>REGIÃO <span className='block'>(Concelho)</span></span>
           <span className='table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
-          <span className='table-scope'>Âmbito <span className='block'>Geográfico</span></span>
+          <span className='table-scope'>Âmbito Geográfico <span className='block'>do Contingente</span></span>
           <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
-          <span className='table-pop'>População <span className='block'>Total</span></span>
+          <span className='table-pop'>População <span className='block'>Residente (2015)</span></span>
         </li>
         {adminList.map(this.renderTableRow)}
       </ul>
@@ -218,7 +219,7 @@ var SectionDistribuicao = React.createClass({
                   {this.props.adminName}
                 </h3>
                 <h1>Detalhe Geográfico</h1>
-                <p className='lead'>Não obstante as licenças municipais terem âmbito concelhio, apresenta-se a sua distribuição por concelho.</p>
+                <p className='lead'>Apresenta-se informação sobre as licenças, contingentes e regimes de estacionamento existentes a nível concelhio.</p>
               </header>
               <div className='section-content'>
                 {this.renderTable()}

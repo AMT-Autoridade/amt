@@ -5,7 +5,7 @@ import { Pie as PieChart, Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
-import { percent } from '../../utils/utils';
+import { percent, formatPT } from '../../utils/utils';
 
 import Map from '../map';
 
@@ -78,7 +78,7 @@ var SectionMobilidade = React.createClass({
       let datum = data[entryIndex];
       return (
         <ul className='small'>
-          <li><span className='tooltip-label'>{datum.label.toLocaleString()}:</span><span className='tooltip-number'>{datum.percent.toLocaleString()}%</span></li>
+          <li><span className='tooltip-label'>{formatPT(datum.label)}:</span><span className='tooltip-number'>{formatPT(datum.percent)}%</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -119,7 +119,7 @@ var SectionMobilidade = React.createClass({
       let year = timeline[entryIndex];
       return (
         <ul>
-          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{year['lic-mob-reduzida'].toLocaleString()}</span></li>
+          <li><span className='tooltip-label'>{year.year}</span> <span className='tooltip-number'>{formatPT(year['lic-mob-reduzida'])}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -231,9 +231,6 @@ var SectionMobilidade = React.createClass({
     return (
       <div id='mobilidade' className='content-wrapper vertical-center'>
         <div className='center'>
-          <div className='map-wrapper'>
-            {this.renderMap()}
-          </div>
           <div className='section-wrapper'>
             <section className='section-container'>
               <header className='section-header'>
@@ -243,7 +240,7 @@ var SectionMobilidade = React.createClass({
                   {this.props.adminName}
                 </h3>
                 <h1>Mobilidade Reduzida</h1>
-                <p className='lead'>A legislação prevê a possibilidade de criar contingentes de táxis para o transporte de pessoas com mobilidade reduzida (CMR) sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
+                <p className='lead'>A legislação prevê a possibilidade de criar contingentes de táxis para o transporte de pessoas com mobilidade reduzida sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
               </header>
 
               {licencasMobReduzida2016 ? (
@@ -251,15 +248,15 @@ var SectionMobilidade = React.createClass({
                   <div className='section-stats'>
                     <ul>
                       <li>
-                        <span className='stat-number'>{percentMobRed.toLocaleString()}%</span>
-                        <span className='stat-description'>Dos municípios ({totalMunicipiosMobReduzida}) possuem contingentes mobilidade reduzida.</span>
+                        <span className='stat-number'>{formatPT(percentMobRed)}%</span>
+                        <span className='stat-description'>Dos municípios ({totalMunicipiosMobReduzida}) emitiram licenças em contingentes de mobilidade reduzida (CMR).</span>
                       </li>
                       <li>
-                        <span className='stat-number'>{newMobReduzida.toLocaleString()}</span>
+                        <span className='stat-number'>{formatPT(newMobReduzida)}</span>
                         <span className='stat-description'>Novas licenças emitidas <span className='block'>em CMR desde 2006.</span></span>
                       </li>
                       <li>
-                        <span className='stat-number'>{percentNewMobRed.toLocaleString()}%</span>
+                        <span className='stat-number'>{formatPT(percentNewMobRed)}%</span>
                         <span className='stat-description'>Do aumento no total de licenças resulta do crescimento de licenças em CMR.</span>
                       </li>
                     </ul>
@@ -285,6 +282,9 @@ var SectionMobilidade = React.createClass({
                 <p><strong>Nota:</strong> O número de táxis adaptados para o transporte de pessoas com mobilidade reduzida será superior ao apresentado. Estes veículos adaptados podem estar licenciados nos contingentes gerais. A AMT pretende aprofundar o conhecimento sobre esta matéria.</p>
               </footer>
             </section>
+          </div>
+          <div className='map-wrapper'>
+            {this.renderMap()}
           </div>
         </div>
       </div>

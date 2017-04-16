@@ -1,12 +1,15 @@
 #intro-wrapper {
 	height: 100vh;
-	/*background: #fff url('../graphics/layout/amt-bg-13.svg') bottom center repeat-x;*/
+	min-width: 280px;
 	background: #fff url('../graphics/layout/amt-3.png') bottom center repeat-x;
-	background-size: 50%;
+	background-size: 100%;
+	@include media (large-up) {  
+		background-size: 60%;
+	}
 
 	#intro {
 		@include media (large-up) {  
-			padding-top: 100px;
+			padding-top: 80px;
 		}
 	}
 
@@ -16,13 +19,15 @@
 		a {
 			display: block;
 			margin: 0 auto;
-			height: 120px;
-			width: 410px;
 			background: url('../graphics/layout/intro-logo.svg') top center no-repeat;
 			color: transparent;
 			text-indent: 100%;
 			overflow: hidden;
 			margin-bottom: 20px;
+			@include media (large-up) {  
+				height: 120px;
+				width: 410px;
+			}
 		}
 	}
 
@@ -31,16 +36,19 @@
 	}
 
 	section {
-		@include media (large-up) { 
+		/*@include media (large-up) { */
 			max-width: 670px;
 			text-align: center;
 			margin: 0 auto;
+			background: #fff;
+			box-shadow: 20px 20px 20px #fff;
 
 			.lead {
 				max-width: 570px;
 				margin: 0 auto;
+				background-color: #fff;
 			}
-		}
+		/*}*/
 	}
 
 	.social-share {
@@ -50,13 +58,12 @@
 
 		li {
 			display: inline;
-			margin: 0 10px;
+			margin: 0 6px;
 			a {
 				display: inline-block;
 				width: 48px;
 				height: 48px;
 				overflow: hidden;
-				/*text-indent: 100%;*/
 				border-radius: 4px;
 				color: #fff;
 
