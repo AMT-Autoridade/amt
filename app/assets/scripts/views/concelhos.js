@@ -434,8 +434,11 @@ var Concelho = React.createClass({
                     {this.renderLic1000DormidasChart()}
                   </div>
                 </div>
-
               </div>
+              <footer className='section-footer'>
+                <p><strong>Nota I:</strong> Os valores dos indicadores devem ser analisados caso a caso e comparados com particular precaução. A consideração de outros fatores com influência na procura poderá melhor enquadrar as diferenças existentes.</p>
+                <p><strong>Nota II:</strong> Dormidas nos estabelecimentos hoteleiros (estabelecimento cuja atividade principal consiste na prestação de serviços de alojamento e de outros serviços acessórios ou de apoio, mediante pagamento).</p>
+              </footer>
             </section>
           </div>
         </div>

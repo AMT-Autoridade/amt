@@ -249,7 +249,7 @@ var SectionMobilidade = React.createClass({
                     <ul>
                       <li>
                         <span className='stat-number'>{formatPT(percentMobRed)}%</span>
-                        <span className='stat-description'>Dos municípios ({totalMunicipiosMobReduzida}) possuem contingentes mobilidade reduzida (CMR).</span>
+                        <span className='stat-description'>Dos municípios ({totalMunicipiosMobReduzida}) emitiram licenças em contingentes de mobilidade reduzida (CMR).</span>
                       </li>
                       <li>
                         <span className='stat-number'>{formatPT(newMobReduzida)}</span>

@@ -35,13 +35,13 @@
 	.stat-number {
 		color: #0eaeaf;
 	}	
-	/*.section-content {
+	.section-content {
 		@include media (small-up) {
 			> div {
 				@include column(6/12);
 			} 
 		}
-	}*/
+	}
 }
 
 #evolucao {
@@ -80,5 +80,22 @@
 	margin-bottom: 40px;
 	@include media (medium-up) {
 		max-width: 100%;
+	}
+}
+
+#page-nut #indicadores {
+	.section-content {
+		@include media (small-up) {
+			.graph-container,
+			.section-stats {
+				@include column(12/12); 
+				> div,
+				li {
+					@include column(8/12);
+					margin-left: 12.5%;	
+				} 
+			}
+			
+		}
 	}
 }

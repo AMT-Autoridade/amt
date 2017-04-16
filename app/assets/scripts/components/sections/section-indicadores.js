@@ -110,7 +110,7 @@ var SectionResidentes = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={220} ref={this.addChartRef(`chart-lic1000${id}`)}/>;
+    return <LineChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef(`chart-lic1000${id}`)}/>;
   },
 
   renderMap: function () {
