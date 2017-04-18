@@ -99,3 +99,13 @@
 		}
 	}
 }
+
+#page-nut #mobilidade {
+	.section-content {
+		.section-stats {
+			li, div {
+				@include column(6/12, $cycle: 2);
+			}
+		}
+	}
+}
