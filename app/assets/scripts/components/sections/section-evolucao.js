@@ -63,7 +63,7 @@ var SectionEvolucao = React.createClass({
           <li><span className='tooltip-title'>Contingentes:</span></li>
           <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{formatPT(year['lic-geral'])}</span></li>
           <li><span className='tooltip-label'>Mob. Reduzida:</span> <span className='tooltip-number'>{formatPT(year['lic-mob-reduzida'])}</span></li>
-          <li><span style={{backgroundColor: '#FFCC45'}} className='tooltip-marker'></span><span className='tooltip-label'>Total Contingentes:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
+          <li><span style={{backgroundColor: '#FFCC45'}} className='tooltip-marker'></span><span className='tooltip-label'>Total Licenças:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
           <span className='triangle'></span>
         </ul>
       );

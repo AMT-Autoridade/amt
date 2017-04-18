@@ -255,10 +255,12 @@ var SectionMobilidade = React.createClass({
                         <span className='stat-number'>{formatPT(newMobReduzida)}</span>
                         <span className='stat-description'>Novas licenças emitidas <span className='block'>em CMR desde 2006.</span></span>
                       </li>
+                      {this.props.adminLevel === 'national' ? (
                       <li>
                         <span className='stat-number'>{formatPT(percentNewMobRed)}%</span>
                         <span className='stat-description'>Do aumento no total de licenças resulta do crescimento de licenças em CMR.</span>
                       </li>
+                       ) : null }
                     </ul>
                   </div>
 
