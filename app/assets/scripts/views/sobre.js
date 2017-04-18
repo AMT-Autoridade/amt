@@ -26,6 +26,10 @@ var Sobre = React.createClass({
                 <h3>Informações e Contactos</h3>
                 <p>Este projeto foi coordenado pela Divisão dos Mercados da Mobilidade da Direção de Supervisão dos Mercados da Mobilidade. Para mais informações contactar <a href="mailto:dsmm@amt-autoridade.pt
 ">dsmm@amt-autoridade.pt</a></p>
+                
+                <p>AMT - Autoridade da Mobilidade e dos Transportes:</p>
+                <p><a href="mailto:geral@amt-autoridade.pt">geral@amt-autoridade.pt</a></p>
+                <p><a href="http://www.amt-autoridade.pt/" target="_blank">www.amt-autoridade.pt</a></p>
 
             </div>
           </div>
