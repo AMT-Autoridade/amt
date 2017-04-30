@@ -137,7 +137,7 @@ var SectionConclusoes = React.createClass({
             <header className='section-header'>
               <h3 className='section-category'>Portugal</h3>
               <h1>Conclusões</h1>
-              <p className='lead'>A recolha efetuada pela AMT constitui um marco quanto ao conhecimento sobre os serviços de transporte em táxi em Portugal. É necessário continuar a aprofundar o conhecimento sobre o setor.</p>
+              <p className='lead'>A recolha efetuada pela AMT constitui um primeiro passo para o aumento da transparência relativamente às condições de prestação de serviços de táxi em Portugal. É necessário continuar a aprofundar o conhecimento sobre o setor.</p>
             </header>
 
             <div className='section-content'>
@@ -157,7 +157,7 @@ var SectionConclusoes = React.createClass({
                   </li>
                   <li>
                     <h4>Evolução 2006&#8212;2016</h4>
-                    <p>A estrutura da oferta tem-se mantido estável. O número de táxis licenciados e o número de lugares nos contingentes cresceu menos de 1% na última década.</p>
+                    <p>A oferta tem-se mantido estável. O número de táxis licenciados e o número de lugares nos contingentes cresceu menos de 1% na última década.</p>
                   </li>
                   <li>
                     <h4>Indicadores</h4>
