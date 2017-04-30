@@ -22,7 +22,7 @@ var Dados = React.createClass({
             <p>A AMT agradece a colaboração dos municípios na disponibilização da informação. Agradecem-se igualmente os contributos do Instituto da Mobilidade e dos Transportes, da Direção Regional da Economia e Transportes da Região Autónoma da Madeira e da Direção Regional dos Transportes da Região Autónoma dos Açores.</p>
 
             <h3>Tratamento de Dados</h3>
-            <p>Existem dados relativos a 2016 para todos os concelhos. Nos anos anteriores a 2016, para um número marginal de concelhos, não foi possível disponibilizar informação. Para esses concelhos, para os anos em que não existia informação, os valores assumidos na análise decorrem da aplicação, aos dados disponíveis, das taxas de variação anual apuradas para os concelhos com informação.</p>
+            <p>Existem dados relativos a 2016 para todos os concelhos. Para os concelhos em que não existia informação disponível para todo o período compreendido entre 2006 e 2016, os valores assumidos na análise resultam de imputação do primeiro valor disponível aos anos anteriores. Neste caso, a metodologia descrita é equivalente à utilização das taxas de variação anual apuradas para os concelhos com informação, na imputação dos valores dos concelhos sem dados para todos os anos.</p>
           </div>
         </section>
       </div>
