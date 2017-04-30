@@ -2,6 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import config from '../config';
+
 var Sobre = React.createClass({
   propTypes: {
   },
@@ -21,12 +23,12 @@ var Sobre = React.createClass({
             </div>
             <div>
               <h3>Relatório</h3>
-                <p>Este microsite é baseado no Relatório Estatístico - Serviços de Transporte em Táxi: A realidade atual e a evolução na última década.</p>
+                <p>Este microsite é baseado no Relatório Estatístico - <a href={`${config.api}/master/files/amt-servico-transporte-taxis.pdf`} title='Descarregar Relatório'>Serviços de Transporte em Táxi: A realidade atual e a evolução na última década.</a></p>
 
                 <h3>Informações e Contactos</h3>
                 <p>Este projeto foi coordenado pela Divisão dos Mercados da Mobilidade da Direção de Supervisão dos Mercados da Mobilidade. Para mais informações contactar <a href="mailto:dsmm@amt-autoridade.pt
 ">dsmm@amt-autoridade.pt</a></p>
-                
+
                 <p>AMT - Autoridade da Mobilidade e dos Transportes:</p>
                 <p><a href="mailto:geral@amt-autoridade.pt">geral@amt-autoridade.pt</a></p>
                 <p><a href="http://www.amt-autoridade.pt/" target="_blank">www.amt-autoridade.pt</a></p>

@@ -17,8 +17,10 @@ var App = React.createClass({
   },
 
   getInitialState: function () {
+    const pageClass = _.get(_.last(this.props.routes), 'pageClass', '');
+
     return {
-      showHeader: !!this.props.params.nut
+      showHeader: pageClass !== 'page--homepage'
     };
   },
 
