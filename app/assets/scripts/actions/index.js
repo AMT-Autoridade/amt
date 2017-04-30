@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import _ from 'lodash';
 
-import config from '../config';
+// import config from '../config';
 
 var dataCache = null;
 function fetchAndCacheData () {

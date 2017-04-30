@@ -13,7 +13,7 @@ var Glossario = React.createClass({
     return (
       <div id='glossario' className='container-wrapper'>
         <section id='glossario' className='content-wrapper'>
-          <h1>Glossário dos Conceitos Principais </h1>
+          <h1>Glossário dos Principais Conceitos</h1>
           <p className='lead'></p>
 
           <ul>
