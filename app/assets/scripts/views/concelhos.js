@@ -162,9 +162,8 @@ var Concelho = React.createClass({
       return (
         <ul>
           <li><span className='tooltip-title'>Contingentes:</span></li>
-          <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{formatPT(year['lic-geral'])}</span></li>
-          <li><span className='tooltip-label'>Mob. Reduzida:</span> <span className='tooltip-number'>{formatPT(year['lic-mob-reduzida'])}</span></li>
           <li><span style={{backgroundColor: '#1f8d8e'}} className='tooltip-marker'></span><span className='tooltip-label'>Total Licenças:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
+          <li><span className='tooltip-label'>Total Contingentes:</span> <span className='tooltip-number'>{formatPT(year['max-lic-geral'] + year['max-lic-mob-reduzida'])}</span></li>
           <span className='triangle'></span>
         </ul>
       );
