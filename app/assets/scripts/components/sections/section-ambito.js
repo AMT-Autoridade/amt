@@ -1,6 +1,7 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { Link } from 'react-router';
+import { StickyContainer, Sticky } from 'react-sticky';
 import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
@@ -121,11 +122,11 @@ var SectionDistribuicao = React.createClass({
 
     return (
       <li key={adminArea.id}>
-        <span className='table-region'><Link to={`/nuts/${_.kebabCase(adminArea.name)}`} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
-        <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'], adminArea.id)}</div>
-        <span className='table-national'>{formatPT(percentNational)}%</span>
-        <span className='table-residents'>{formatPT(percentPop)}%</span>
-        <span className='table-available'>{formatPT(availableLicencas)}</span>
+        <span className='table-cell table-region'><Link to={`/nuts/${_.kebabCase(adminArea.name)}`} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
+        <div className='table-cell table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'], adminArea.id)}</div>
+        <span className='table-cell table-national'>{formatPT(percentNational)}%</span>
+        <span className='table-cell table-residents'>{formatPT(percentPop)}%</span>
+        <span className='table-cell table-available'>{formatPT(availableLicencas)}</span>
       </li>
     );
   },
@@ -134,16 +135,20 @@ var SectionDistribuicao = React.createClass({
     let adminList = this.props.adminList;
 
     return (
-      <ul className='table-distribution'>
-        <li className='table-header'>
-          <span className='table-region'>REGIÃO <span className='block'>(NUTS III)</span></span>
-          <span className='table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
-          <span className='table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
-          <span className='table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
-          <span className='table-available'>Vagas Disponíveis <span className='block'>(Agosto 2016)</span></span>
-        </li>
-        {adminList.map(this.renderTableRow)}
-      </ul>
+      <StickyContainer>
+        <ul className='table-distribution'>
+          <li className='table-header'>
+            <Sticky>
+              <span className='table-cell table-region'>REGIÃO <span className='block'>(NUTS III)</span></span>
+              <span className='table-cell table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
+              <span className='table-cell table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
+              <span className='table-cell table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
+              <span className='table-cell table-available'>Vagas Disponíveis <span className='block'>(Agosto 2016)</span></span>
+            </Sticky>
+          </li>
+          {adminList.map(this.renderTableRow)}
+        </ul>
+      </StickyContainer>
     );
   },
 

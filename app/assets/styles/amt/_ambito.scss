@@ -13,8 +13,7 @@
 			font-size: 1rem;
 		}
 
-		> span,
-		> div {
+		.table-cell {
 			float: left;
 			width: 18%;
 			text-align: center;
@@ -71,6 +70,14 @@
 			@include media (medium-up) { 
 				font-size: .625rem;
 			}
+
+			.sticky {
+				background-color: #fff;
+				border-bottom: 1px solid #ccc;
+				z-index: 1;
+				padding: 10px 0;
+			}
+
 		}
 
 		.est {
