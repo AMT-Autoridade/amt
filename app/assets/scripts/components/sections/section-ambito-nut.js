@@ -146,7 +146,7 @@ var SectionDistribuicao = React.createClass({
       <StickyContainer>
         <ul className='table-distribution'>
           <li className='table-header'>
-            <Sticky>
+            <Sticky topOffset={-56}>
               <span className='table-cell table-region'>REGIÃO <span className='block'>(Concelho)</span></span>
               <span className='table-cell table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
               <span className='table-cell table-scope'>Âmbito Geográfico <span className='block'>do Contingente</span></span>
