@@ -1,6 +1,13 @@
-#licencas {
-
+#licencas, 
+#mobilidade,
+#evolucao {
 	.section-content {
+		.section-stats {
+			li, div {
+				@include column(6/12, $cycle: 2);
+			}
+		}
+
 		@include media (small-up) {
 			> div {
 				@include column(4/12);
@@ -10,15 +17,95 @@
 				@include column(12/12);
 
 				li, div {
-					@include column(4/12);
+					@include column(4/12, $cycle: 3);
 				}
 			}
 		}
-
-		.stat-number {
-			color: #FFCC45;
-		}	
-
 	}
+}
 
+#licencas,
+#evolucao {
+	.stat-number {
+		color: #FFCC45;
+	}	
+}
+
+#mobilidade {
+	.stat-number {
+		color: #0eaeaf;
+	}	
+	.section-content {
+		@include media (small-up) {
+			> div {
+				@include column(6/12);
+			} 
+		}
+	}
+}
+
+#evolucao {
+	.section-content {
+		@include media (small-up) {
+			.graph-container {
+				@include column(12/12); 
+				> div {
+					@include column(4/12, $cycle: 3);
+				} 
+			}
+			
+		}
+	}
+}
+
+#estacionamento,
+#mobilidade,
+#indicadores {
+	.section-content {
+		@include media (small-up) {
+			.graph-container {
+				@include column(12/12); 
+				> div {
+					@include column(6/12, $cycle: 2);
+				} 
+			}
+			
+		}
+	}
+}
+
+.graph {
+	max-width: 280px;
+	margin: 0 auto;
+	margin-bottom: 40px;
+	@include media (medium-up) {
+		max-width: 100%;
+	}
+}
+
+#page-nut #indicadores {
+	.section-content {
+		@include media (small-up) {
+			.graph-container,
+			.section-stats {
+				@include column(12/12); 
+				> div,
+				li {
+					@include column(8/12);
+					margin-left: 12.5%;	
+				} 
+			}
+			
+		}
+	}
+}
+
+#page-nut #mobilidade {
+	.section-content {
+		.section-stats {
+			li, div {
+				@include column(6/12, $cycle: 2);
+			}
+		}
+	}
 }

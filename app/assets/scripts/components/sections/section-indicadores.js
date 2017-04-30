@@ -110,7 +110,7 @@ var SectionResidentes = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={220} ref={this.addChartRef(`chart-lic1000${id}`)}/>;
+    return <LineChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef(`chart-lic1000${id}`)}/>;
   },
 
   renderMap: function () {
@@ -169,9 +169,6 @@ var SectionResidentes = React.createClass({
     return (
       <div id='indicadores' className='content-wrapper vertical-center'>
         <div className='center'>
-          <div className='map-wrapper'>
-            {this.renderMap()}
-          </div>
            <div className='section-wrapper'>
             <section className='section-container'>
               <header className='section-header'>
@@ -189,25 +186,25 @@ var SectionResidentes = React.createClass({
                   <ul className='two-columns'>
                     <li>
                       <span className='stat-number'>{formatPT(round(this.props.licencasHab, 1))}</span>
-                      <span className='stat-description'>Táxis licenciados por 1 000 residentes.</span>
+                      <span className='stat-description'>Táxis licenciados por 1000 residentes.</span>
                     </li>
                     {this.props.adminLevel === 'national' ? (
                       <li>
                         <span className='stat-number'>{formatPT(dormidas)}</span>
-                        <span className='stat-description'>Táxis licenciados por 1 000 dormidas.</span>
+                        <span className='stat-description'>Táxis licenciados por 1000 dormidas.</span>
                       </li>
                     ) : null }
                   </ul>
                 </div>
 
-                <div className='two-columns'>
+                <div className='graph-container'>
                   <div className='graph'>
-                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1 000 residentes:</h6>
+                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 residentes:</h6>
                     {this.renderLicencas1000Chart(this.props.chartLic1000Hab, 'hab')}
                   </div>
                   {this.props.adminLevel === 'national' ? (
                     <div className='graph'>
-                      <h6 className='legend-title'>Evolução dos táxis licenciados por 1 000 dormidas:</h6>
+                      <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 dormidas:</h6>
                       {this.renderLicencas1000Chart(this.props.chartLic1000Dor, 'dor')}
                     </div>
                   ) : null}
@@ -220,6 +217,9 @@ var SectionResidentes = React.createClass({
                 ) : null }
               </footer>
             </section>
+          </div>
+          <div className='map-wrapper'>
+            {this.renderMap()}
           </div>
         </div>
       </div>

@@ -31,6 +31,10 @@ var Glossario = React.createClass({
               <p>A atribuição de licenças encontra-se limitada pelos contingentes de âmbito municipal, que correspondem ao número máximo de licenças que pode ser concedido num concelho. Este contingente é fixado pelos municípios, com uma periodicidade não inferior a 2 anos.</p>
             </li>
             <li>
+              <h4>Vagas no Contingente</h4>
+              <p>Correspondem à diferença entre o número de táxis licenciados e o contingente definido pelo município. Indicam assim o número de veículos que, potencialmente, poderá ainda ser licenciado, atento o contingente definido. Podem existir diferentes motivos para a existência de vagas, nomeadamente a não abertura de concursos municipais para a atribuição das licenças, a ausência de interessados nas licenças mesmo que tenham sido abertos concursos ou a revogação de licenças já atribuídas.</p>
+            </li>
+            <li>
               <h4>Contingentes especiais para pessoas com mobilidade reduzida</h4>
               <p>Em complemento aos contingentes gerais, a legislação prevê a possibilidade de criação de um contingentes especiais de táxis para pessoas com mobilidade reduzida, sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
             </li>

@@ -164,7 +164,7 @@ var Concelho = React.createClass({
           <li><span className='tooltip-title'>Contingentes:</span></li>
           <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{formatPT(year['lic-geral'])}</span></li>
           <li><span className='tooltip-label'>Mob. Reduzida:</span> <span className='tooltip-number'>{formatPT(year['lic-mob-reduzida'])}</span></li>
-          <li><span style={{backgroundColor: '#1f8d8e'}} className='tooltip-marker'></span><span className='tooltip-label'>Total Contingentes:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
+          <li><span style={{backgroundColor: '#1f8d8e'}} className='tooltip-marker'></span><span className='tooltip-label'>Total Licenças:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -262,13 +262,13 @@ var Concelho = React.createClass({
           data: this.props.national.data.dormidas.filter(o => _.includes(availableYears, o.year)).map(o => o.lic1000),
           label: 'Portugal',
           color: '#1f8d8e',
-          backgroundColor: '#f5f5f5'
+          backgroundColor: 'rgba(245, 245, 245, 0.2)'
         },
         {
           data: this.props.concelho.data.data.dormidas.filter(o => _.includes(availableYears, o.year)).map(o => o.lic1000),
           label: this.props.concelho.data.name,
           color: '#256465',
-          backgroundColor: '#f5f5f5'
+          backgroundColor: 'rgba(245, 245, 245, 0.2)'
         }
       ], d => d.data[0])
     };
@@ -434,8 +434,11 @@ var Concelho = React.createClass({
                     {this.renderLic1000DormidasChart()}
                   </div>
                 </div>
-
               </div>
+              <footer className='section-footer'>
+                <p><strong>Nota I:</strong> Os valores dos indicadores devem ser analisados caso a caso e comparados com particular precaução. A consideração de outros fatores com influência na procura poderá melhor enquadrar as diferenças existentes.</p>
+                <p><strong>Nota II:</strong> Dormidas nos estabelecimentos hoteleiros (estabelecimento cuja atividade principal consiste na prestação de serviços de alojamento e de outros serviços acessórios ou de apoio, mediante pagamento).</p>
+              </footer>
             </section>
           </div>
         </div>

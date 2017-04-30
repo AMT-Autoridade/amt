@@ -63,7 +63,7 @@ var SectionEvolucao = React.createClass({
           <li><span className='tooltip-title'>Contingentes:</span></li>
           <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{formatPT(year['lic-geral'])}</span></li>
           <li><span className='tooltip-label'>Mob. Reduzida:</span> <span className='tooltip-number'>{formatPT(year['lic-mob-reduzida'])}</span></li>
-          <li><span style={{backgroundColor: '#FFCC45'}} className='tooltip-marker'></span><span className='tooltip-label'>Total Contingentes:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
+          <li><span style={{backgroundColor: '#FFCC45'}} className='tooltip-marker'></span><span className='tooltip-label'>Total Licenças:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -290,9 +290,6 @@ var SectionEvolucao = React.createClass({
     return (
       <div id='evolucao' className='content-wrapper vertical-center'>
         <div className='center'>
-          <div className='map-wrapper'>
-            {this.renderMap()}
-          </div>
           <div className='section-wrapper'>
             <section className='section-container'>
               <header className='section-header'>
@@ -348,6 +345,9 @@ var SectionEvolucao = React.createClass({
                 <p><strong>Nota:</strong> Existem dados relativos a 2016 para todos os concelhos. Para os poucos concelhos em que não está disponível informação para todos os anos foram usados valores imputados. <Link to='/dados'>Saber mais</Link></p>
               </footer>
             </section>
+          </div>
+          <div className='map-wrapper'>
+            {this.renderMap()}
           </div>
         </div>
       </div>

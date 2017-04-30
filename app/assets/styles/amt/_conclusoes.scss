@@ -1,19 +1,23 @@
 #conclusoes-wrapper {
 	min-height: 100vh;
   padding-bottom: 90px;
-	/*background: #f9f9f9;*/
 
 	.section-stats {
-    	/*@include column(6/12);*/
-    	/*font-size: .875rem;*/
     	line-height: 1.4;
     	color: tint($text-color, 25);
+
     	ul {
     		margin-bottom: 0;
+
     		li {
     			margin-bottom: 10px;
+          @include media (small-up) { 
+            @include column(6/12, $cycle: 2);
+          }
     		}
+
     	}
+
     	h4 {
     		font-size: 1.125rem;
     		color: $text-color;
@@ -22,7 +26,6 @@
   	}
 
   	.graph {
-    	/*@include column(5/12);*/
     	margin-bottom: 40px;
   	}
 
