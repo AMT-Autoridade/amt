@@ -4,5 +4,5 @@
  */
 module.exports = {
   environment: 'production',
-  api: 'https://raw.githubusercontent.com/olafveerman/taxis/api'
+  api: 'https://raw.githubusercontent.com/olafveerman/taxis'
 };

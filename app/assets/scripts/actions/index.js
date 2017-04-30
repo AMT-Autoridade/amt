@@ -18,7 +18,7 @@ function fetchAndCacheData () {
   //     return resolve(JSON.parse(JSON.stringify(dataCache)));
   //   }
 
-  //   fetchJSON(`${config.api}/national.json`)
+  //   fetchJSON(`${config.api}/api/national.json`)
   //     .then(national => {
   //       dataCache = national;
   //       resolve(dataCache);
