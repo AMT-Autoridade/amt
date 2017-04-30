@@ -36,7 +36,12 @@ export default function reducer (state = initialState, action) {
 function processData (rawData) {
   console.log('processing national');
   let nuts = rawData.results;
-  let data = {nuts, dormidas: rawData.dormidas};
+
+  // The data for dormidas is stored as a result in the results array.
+  // We have to remove it from there and just leave the nuts.
+  let dormidasIdx = _.findIndex(rawData.results, o => parseInt(o.id) === 1);
+  let data = {nuts, dormidas: _.sortBy(rawData.results[dormidasIdx].data.dormidas, 'year')};
+  rawData.results.splice(dormidasIdx, 1);
 
   const getLicencasForYear = (d, year) => {
     return _.find(d.data['lic-geral'], ['year', year]).value + _.find(d.data['lic-mob-reduzida'], ['year', year]).value;

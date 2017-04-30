@@ -290,6 +290,18 @@ var Concelho = React.createClass({
     );
   },
 
+  renderFileLink: function () {
+    let files = this.props.concelho.data.files;
+
+    return (
+      <div>
+        {files.length ? (
+          <p className='aa-doc-download'><a href={files[0]} title='Descarregar documento'>Descarregue o documento relativo a {this.props.concelho.data.name}.</a></p>
+        ) : null}
+      </div>
+    );
+  },
+
   render: function () {
     let { fetched, fetching, error, data: concelho } = this.props.concelho;
     let nut = this.props.nut.data;
@@ -432,6 +444,7 @@ var Concelho = React.createClass({
                     {this.renderLic1000DormidasChart()}
                   </div>
                 </div>
+                {this.renderFileLink()}
               </div>
               <footer className='section-footer'>
                 <p><strong>Nota I:</strong> Os valores dos indicadores devem ser analisados caso a caso e comparados com particular precaução. A consideração de outros fatores com influência na procura poderá melhor enquadrar as diferenças existentes.</p>
