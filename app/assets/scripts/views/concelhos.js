@@ -395,18 +395,18 @@ var Concelho = React.createClass({
                     </li>
                   </ul>
                 </div>
-
+              
                 <ul className='table-distribution'>
                   <li className='table-header'>
-                    <span className='table-scope'>Âmbito Geográfico<span className='block'>do Contingente</span></span>
-                    <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
-                    <span className='table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
-                    <span className='table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
-                    <span className='table-pop'>População <span className='block'>Residente (2015)</span></span>
+                    <span className='table-cell table-scope'>Âmbito Geográfico<span className='block'>do Contingente</span></span>
+                    <span className='table-cell table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
+                    <span className='table-cell table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
+                    <span className='table-cell table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
+                    <span className='table-cell table-pop'>População <span className='block'>Residente (2015)</span></span>
                   </li>
                   <li>
-                    <span className='table-scope'>{contingente ? this.contingenteMatrix[contingente] : 'Não Definido'}</span>
-                    <div className='table-parking'>
+                    <span className='table-cell table-scope'>{contingente ? this.contingenteMatrix[contingente] : 'Não Definido'}</span>
+                    <div className='table-cell table-parking'>
                       <ul className='inline-list'>
                         <li className={c('est est-livre', {active: estacionamento.indexOf('livre') !== -1})}>L</li>
                         <li className={c('est est-condicionado', {active: estacionamento.indexOf('condicionado') !== -1})}>C</li>
@@ -414,12 +414,12 @@ var Concelho = React.createClass({
                         <li className={c('est est-escala', {active: estacionamento.indexOf('escala') !== -1})}>E</li>
                       </ul>
                     </div>
-                    <span className='table-national'>{formatPT(percentNational)}%</span>
-                    <span className='table-residents'>{formatPT(percentPop)}%</span>
-                    <span className='table-pop'>{formatPT(pop)}</span>
+                    <span className='table-cell table-national'>{formatPT(percentNational)}%</span>
+                    <span className='table-cell table-residents'>{formatPT(percentPop)}%</span>
+                    <span className='table-cell table-pop'>{formatPT(pop)}</span>
                   </li>
                 </ul>
-
+                
                 <div className='graph-container'>
                   <div className='graph'>
                     <h6 className='legend-title'>Evolução dos táxis licenciados <span className='block'>de 2006 a 2016</span></h6>
