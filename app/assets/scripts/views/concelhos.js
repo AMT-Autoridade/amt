@@ -350,7 +350,6 @@ var Concelho = React.createClass({
               <header className='section-header'>
                 <h3 className='section-category'><Link to={`/${hash}`} title='Ver Portugal'>Portugal</Link> &rsaquo; <Link to={`/nuts/${nut.slug}${hash}`} title={`Ver ${nut.name}`}>{nut.name}</Link></h3>
                 <h1>{concelho.name}</h1>
-                {/*<p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p> */}
               </header>
               <div className='section-content'>
                 <div className='section-stats'>
@@ -395,7 +394,7 @@ var Concelho = React.createClass({
                     </li>
                   </ul>
                 </div>
-              
+
                 <ul className='table-distribution'>
                   <li className='table-header'>
                     <span className='table-cell table-scope'>Âmbito Geográfico<span className='block'>do Contingente</span></span>
@@ -419,7 +418,7 @@ var Concelho = React.createClass({
                     <span className='table-cell table-pop'>{formatPT(pop)}</span>
                   </li>
                 </ul>
-                
+
                 <div className='graph-container'>
                   <div className='graph'>
                     <h6 className='legend-title'>Evolução dos táxis licenciados <span className='block'>de 2006 a 2016</span></h6>

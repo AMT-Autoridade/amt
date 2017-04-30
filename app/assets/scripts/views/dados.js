@@ -1,16 +1,9 @@
 'use strict';
 import React from 'react';
-import { connect } from 'react-redux';
 
 import config from '../config';
 
 var Dados = React.createClass({
-  propTypes: {
-  },
-
-  componentDidMount: function () {
-  },
-
   render: function () {
     return (
       <div id='dados' className='container-wrapper'>
@@ -32,17 +25,4 @@ var Dados = React.createClass({
   }
 });
 
-// /////////////////////////////////////////////////////////////////// //
-// Connect functions
-
-function selector (state) {
-  return {
-  };
-}
-
-function dispatcher (dispatch) {
-  return {
-  };
-}
-
-module.exports = connect(selector, dispatcher)(Dados);
+module.exports = Dados;
