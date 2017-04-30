@@ -1,6 +1,7 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 import { Link } from 'react-router';
+import { StickyContainer, Sticky } from 'react-sticky';
 import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 import c from 'classnames';
@@ -122,10 +123,10 @@ var SectionDistribuicao = React.createClass({
 
     return (
       <li key={adminArea.id}>
-        <span className='table-region'><Link to={url} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
-        <div className='table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'], adminArea.id)}</div>
-        <span className='table-scope'>{adminArea.data.contingente ? this.contingenteMatrix[adminArea.data.contingente] : 'Não Definido'}</span>
-        <div className='table-parking'>
+        <span className='table-cell table-region'><Link to={url} title={`Ver página de ${adminArea.name}`}>{adminArea.name}</Link></span>
+        <div className='table-cell table-graph'>{this.renderTrendLineChart(adminArea.data['lic-geral'], adminArea.id)}</div>
+        <span className='table-cell table-scope'>{adminArea.data.contingente ? this.contingenteMatrix[adminArea.data.contingente] : 'Não Definido'}</span>
+        <div className='table-cell table-parking'>
           <ul className='inline-list'>
             <li className={c('est est-livre', {active: adminArea.data.estacionamento.indexOf('livre') !== -1})}>L</li>
             <li className={c('est est-condicionado', {active: adminArea.data.estacionamento.indexOf('condicionado') !== -1})}>C</li>
@@ -133,7 +134,7 @@ var SectionDistribuicao = React.createClass({
             <li className={c('est est-escala', {active: adminArea.data.estacionamento.indexOf('escala') !== -1})}>E</li>
           </ul>
         </div>
-        <span className='table-pop'>{formatPT(pop)}</span>
+        <span className='table-cell table-pop'>{formatPT(pop)}</span>
       </li>
     );
   },
@@ -142,16 +143,20 @@ var SectionDistribuicao = React.createClass({
     let adminList = this.props.adminList;
 
     return (
-      <ul className='table-distribution'>
-        <li className='table-header'>
-          <span className='table-region'>REGIÃO <span className='block'>(Concelho)</span></span>
-          <span className='table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
-          <span className='table-scope'>Âmbito Geográfico <span className='block'>do Contingente</span></span>
-          <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
-          <span className='table-pop'>População <span className='block'>Residente (2015)</span></span>
-        </li>
-        {adminList.map(this.renderTableRow)}
-      </ul>
+      <StickyContainer>
+        <ul className='table-distribution'>
+          <li className='table-header'>
+            <Sticky topOffset={-56}>
+              <span className='table-cell table-region'>REGIÃO <span className='block'>(Concelho)</span></span>
+              <span className='table-cell table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
+              <span className='table-cell table-scope'>Âmbito Geográfico <span className='block'>do Contingente</span></span>
+              <span className='table-cell table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
+              <span className='table-cell table-pop'>População <span className='block'>Residente (2015)</span></span>
+            </Sticky>
+          </li>
+          {adminList.map(this.renderTableRow)}
+        </ul>
+      </StickyContainer>
     );
   },
 

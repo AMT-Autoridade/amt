@@ -162,9 +162,8 @@ var Concelho = React.createClass({
       return (
         <ul>
           <li><span className='tooltip-title'>Contingentes:</span></li>
-          <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{formatPT(year['lic-geral'])}</span></li>
-          <li><span className='tooltip-label'>Mob. Reduzida:</span> <span className='tooltip-number'>{formatPT(year['lic-mob-reduzida'])}</span></li>
           <li><span style={{backgroundColor: '#1f8d8e'}} className='tooltip-marker'></span><span className='tooltip-label'>Total Licenças:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
+          <li><span className='tooltip-label'>Total Contingentes:</span> <span className='tooltip-number'>{formatPT(year['max-lic-geral'] + year['max-lic-mob-reduzida'])}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -350,7 +349,6 @@ var Concelho = React.createClass({
               <header className='section-header'>
                 <h3 className='section-category'><Link to={`/${hash}`} title='Ver Portugal'>Portugal</Link> &rsaquo; <Link to={`/nuts/${nut.slug}${hash}`} title={`Ver ${nut.name}`}>{nut.name}</Link></h3>
                 <h1>{concelho.name}</h1>
-                {/*<p className="lead">A prestação de serviços de táxi implica que o prestador de serviço detenha uma licença por cada veículo utilizado. As câmaras municipais atribuem estas licenças e definem o número máximo de veículos que poderá prestar serviços no seu concelho — contingente de táxis.</p> */}
               </header>
               <div className='section-content'>
                 <div className='section-stats'>
@@ -398,15 +396,15 @@ var Concelho = React.createClass({
 
                 <ul className='table-distribution'>
                   <li className='table-header'>
-                    <span className='table-scope'>Âmbito Geográfico<span className='block'>do Contingente</span></span>
-                    <span className='table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
-                    <span className='table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
-                    <span className='table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
-                    <span className='table-pop'>População <span className='block'>Residente (2015)</span></span>
+                    <span className='table-cell table-scope'>Âmbito Geográfico<span className='block'>do Contingente</span></span>
+                    <span className='table-cell table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
+                    <span className='table-cell table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
+                    <span className='table-cell table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
+                    <span className='table-cell table-pop'>População <span className='block'>Residente (2015)</span></span>
                   </li>
                   <li>
-                    <span className='table-scope'>{contingente ? this.contingenteMatrix[contingente] : 'Não Definido'}</span>
-                    <div className='table-parking'>
+                    <span className='table-cell table-scope'>{contingente ? this.contingenteMatrix[contingente] : 'Não Definido'}</span>
+                    <div className='table-cell table-parking'>
                       <ul className='inline-list'>
                         <li className={c('est est-livre', {active: estacionamento.indexOf('livre') !== -1})}>L</li>
                         <li className={c('est est-condicionado', {active: estacionamento.indexOf('condicionado') !== -1})}>C</li>
@@ -414,9 +412,9 @@ var Concelho = React.createClass({
                         <li className={c('est est-escala', {active: estacionamento.indexOf('escala') !== -1})}>E</li>
                       </ul>
                     </div>
-                    <span className='table-national'>{formatPT(percentNational)}%</span>
-                    <span className='table-residents'>{formatPT(percentPop)}%</span>
-                    <span className='table-pop'>{formatPT(pop)}</span>
+                    <span className='table-cell table-national'>{formatPT(percentNational)}%</span>
+                    <span className='table-cell table-residents'>{formatPT(percentPop)}%</span>
+                    <span className='table-cell table-pop'>{formatPT(pop)}</span>
                   </li>
                 </ul>
 

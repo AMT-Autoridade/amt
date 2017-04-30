@@ -170,10 +170,9 @@ var SectionConclusoes = React.createClass({
                   <li>
                     <h4>Regimes de Estacionamento</h4>
                     <p>Sendo comum que num mesmo município coexistam vários regimes de estacionamento, constata-se que o regime fixo é aplicado em cerca de 80% dos municípios.</p>
-                  </li>         
+                  </li>
                 </ul>
               </div>
-              
             </div>
 
             <footer className='section-footer'>

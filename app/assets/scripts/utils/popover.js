@@ -21,9 +21,9 @@ function popover () {
   var _y = null;
   // Previous values. Used to know if we need to reposition or update
   // the popover.
-  var _prev_content = null;
-  var _prev_x = null;
-  var _prev_y = null;
+  var _prevContent = null;
+  var _prevX = null;
+  var _prevY = null;
 
   $popover = document.createElement('div');
   document.getElementById('app-container').appendChild($popover);
@@ -40,7 +40,7 @@ function popover () {
     if (classes) {
       $popover.classList.add(...classes.split(' '));
     }
-    _prev_content = _content;
+    _prevContent = _content;
     _content = ReactDOMServer.renderToStaticMarkup(ReactElement);
     return this;
   };
@@ -57,8 +57,8 @@ function popover () {
    *   Where to position the popover vertically.
    */
   this.show = function (anchorX, anchorY) {
-    _prev_x = _x;
-    _prev_y = _y;
+    _prevX = _x;
+    _prevY = _y;
     _x = anchorX;
     _y = anchorY;
 
@@ -67,15 +67,15 @@ function popover () {
       return this;
     }
 
-    var changePos = !(_prev_x === _x && _prev_y === _y);
+    var changePos = !(_prevX === _x && _prevY === _y);
 
     // Animate only after it was added.
-    if (_prev_x !== null && _prev_y !== null) {
+    if (_prevX !== null && _prevY !== null) {
       $popover.classList.add('chart-popover-animate');
     }
 
     // Different content?
-    if (_content !== _prev_content) {
+    if (_content !== _prevContent) {
       $popover.innerHTML = _content;
       // With a change in content, position has to change.
       changePos = true;
@@ -122,11 +122,11 @@ function popover () {
     $popover.style.opacity = null;
     $popover.classList.remove('chart-popover-animate', 'chart-popover-animate-op');
     _content = null;
-    _prev_content = null;
+    _prevContent = null;
     _x = null;
     _y = null;
-    _prev_x = null;
-    _prev_y = null;
+    _prevX = null;
+    _prevY = null;
     return this;
   };
 

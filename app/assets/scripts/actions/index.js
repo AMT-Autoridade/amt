@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import _ from 'lodash';
 
-import config from '../config';
+// import config from '../config';
 
 var dataCache = null;
 function fetchAndCacheData () {
@@ -18,7 +18,7 @@ function fetchAndCacheData () {
   //     return resolve(JSON.parse(JSON.stringify(dataCache)));
   //   }
 
-  //   fetchJSON(`${config.api}/national.json`)
+  //   fetchJSON(`${config.api}/api/national.json`)
   //     .then(national => {
   //       dataCache = national;
   //       resolve(dataCache);
