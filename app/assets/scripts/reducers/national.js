@@ -36,15 +36,24 @@ export default function reducer (state = initialState, action) {
 function processData (rawData) {
   console.log('processing national');
   let nuts = rawData.results;
-  let data = {nuts, dormidas: rawData.dormidas};
+
+  // The data for dormidas is stored as a result in the results array.
+  // We have to remove it from there and just leave the nuts.
+  let dormidasIdx = _.findIndex(rawData.results, o => parseInt(o.id) === 1);
+  let data = {nuts, dormidas: _.sortBy(rawData.results[dormidasIdx].data.dormidas, 'year')};
+  rawData.results.splice(dormidasIdx, 1);
+
+  const getLicencasForYear = (d, year) => {
+    return _.find(d.data['lic-geral'], ['year', year]).value + _.find(d.data['lic-mob-reduzida'], ['year', year]).value;
+  };
 
   // Sort nuts.
   data.nuts = _.sortBy(nuts, 'slug');
 
   // Licenças and max per district.
   nuts = nuts.map(d => {
-    d.data.licencas2006 = d.data['lic-geral'][0].value + d.data['lic-mob-reduzida'][0].value;
-    d.data.licencas2016 = _.last(d.data['lic-geral']).value + _.last(d.data['lic-mob-reduzida']).value;
+    d.data.licencas2006 = getLicencasForYear(d, 2006);
+    d.data.licencas2016 = getLicencasForYear(d, 2016);
     d.data.max2016 = _.last(d.data['max-lic-geral']).value + _.last(d.data['max-lic-mob-reduzida']).value;
 
     // For each município compute the change on the total number of licenças.
@@ -90,7 +99,8 @@ function processData (rawData) {
 
   // Licenças per 1000 dormidas.
   data.dormidas = data.dormidas.map(d => {
-    d.lic1000 = data.licencas2016 / (d.value / 1000);
+    let licYear = _.sumBy(nuts, n => getLicencasForYear(n, d.year));
+    d.lic1000 = licYear / (d.value / 1000);
     return d;
   });
 

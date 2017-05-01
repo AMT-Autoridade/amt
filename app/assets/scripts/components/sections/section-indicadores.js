@@ -186,12 +186,12 @@ var SectionResidentes = React.createClass({
                   <ul className='two-columns'>
                     <li>
                       <span className='stat-number'>{formatPT(round(this.props.licencasHab, 1))}</span>
-                      <span className='stat-description'>Táxis licenciados por 1 000 residentes.</span>
+                      <span className='stat-description'>Táxis licenciados por 1000 residentes.</span>
                     </li>
                     {this.props.adminLevel === 'national' ? (
                       <li>
                         <span className='stat-number'>{formatPT(dormidas)}</span>
-                        <span className='stat-description'>Táxis licenciados por 1 000 dormidas.</span>
+                        <span className='stat-description'>Táxis licenciados por 1000 dormidas.</span>
                       </li>
                     ) : null }
                   </ul>
@@ -199,12 +199,12 @@ var SectionResidentes = React.createClass({
 
                 <div className='graph-container'>
                   <div className='graph'>
-                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1 000 residentes:</h6>
+                    <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 residentes:</h6>
                     {this.renderLicencas1000Chart(this.props.chartLic1000Hab, 'hab')}
                   </div>
                   {this.props.adminLevel === 'national' ? (
                     <div className='graph'>
-                      <h6 className='legend-title'>Evolução dos táxis licenciados por 1 000 dormidas:</h6>
+                      <h6 className='legend-title'>Evolução dos táxis licenciados por 1000 dormidas:</h6>
                       {this.renderLicencas1000Chart(this.props.chartLic1000Dor, 'dor')}
                     </div>
                   ) : null}
