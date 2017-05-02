@@ -291,6 +291,8 @@ var Concelho = React.createClass({
   },
 
   renderFileLink: function () {
+    if (!this.props.concelho.data.files) return null;
+
     let files = this.props.concelho.data.files;
 
     return (
