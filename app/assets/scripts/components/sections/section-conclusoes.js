@@ -3,6 +3,7 @@ import React, { PropTypes as T } from 'react';
 import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
+import config from '../../config';
 import makeTooltip from '../../utils/tooltip';
 import { round, formatPT } from '../../utils/utils';
 
@@ -176,7 +177,7 @@ var SectionConclusoes = React.createClass({
             </div>
 
             <footer className='section-footer'>
-              <p>Este site foi desenvolvido pela AMT com base no <a href="#">Relatório Estatístico Sobre Serviços de Transporte em Táxi: <span className=''>A Realidade Atual e a Evolução da Última Década.</span></a></p>
+              <p>Este site foi desenvolvido pela AMT com base no <a href={`${config.api}/master/files/amt-servico-transporte-taxis.pdf`} title='Descarregar Relatório'>Relatório Estatístico Sobre Serviços de Transporte em Táxi: A Realidade Atual e a Evolução da Última Década.</a></p>
             </footer>
           </section>
         </div>
