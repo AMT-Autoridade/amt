@@ -16,6 +16,7 @@ export default function (contentFn) {
     // Hide if no tooltip.
     if (tooltip.opacity === 0) {
       tooltipEl.style.opacity = 0;
+      tooltipEl.style.top = 0;
       return;
     }
 
