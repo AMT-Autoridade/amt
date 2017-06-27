@@ -16,10 +16,10 @@ var SectionIntro = React.createClass({
             <h3 className='section-category'>Observatório dos Mercados da Mobilidade,<span className='block'> Preços e Estratégias Empresariais</span></h3>
 
             <ul className='social-share'>
-              <li><a className='facebook' href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`} title="Partilhar no Facebook"><span className='i-facebook'></span></a></li>
-              <li><a className='linkedin' href={`https://www.linkedin.com/shareArticle?mini=true&title=Observat%C3%B3rio%20da%20Mobilidade%20e%20dos%20Transportes%20&url=${window.location.href}`} title="Partilhar no LinkedIn"><span className='i-linkedin2'></span></a></li>
-              <li><a className='twitter' href={`https://twitter.com/home?status=${window.location.href}`} title="Partilhar no Twitter"><span className='i-twitter'></span></a></li>
-              <li><a className='googleplus' href={`https://plus.google.com/share?url=${window.location.href}`} title="Partilhar no Google+"><span className='i-google-plus'></span></a></li>
+              <li><a className='facebook' href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`} title="Partilhar no Facebook"><span className='i-facebook'></span></a></li>
+              <li><a className='linkedin' href={`https://www.linkedin.com/shareArticle?mini=true&title=Observat%C3%B3rio%20da%20Mobilidade%20e%20dos%20Transportes%20&url=${encodeURIComponent(window.location.href)}`} title="Partilhar no LinkedIn"><span className='i-linkedin2'></span></a></li>
+              <li><a className='twitter' href={`https://twitter.com/home?status=${encodeURIComponent(window.location.href)}`} title="Partilhar no Twitter"><span className='i-twitter'></span></a></li>
+              <li><a className='googleplus' href={`https://plus.google.com/share?url=${encodeURIComponent(window.location.href)}`} title="Partilhar no Google+"><span className='i-google-plus'></span></a></li>
             </ul>
 
           </section>
