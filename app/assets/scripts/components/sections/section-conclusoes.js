@@ -3,7 +3,7 @@ import React, { PropTypes as T } from 'react';
 import { Line as LineChart } from 'react-chartjs-2';
 import _ from 'lodash';
 
-import config from '../../config';
+import { api, startYear, endYear } from '../../config';
 import makeTooltip from '../../utils/tooltip';
 import { round, formatPT } from '../../utils/utils';
 
@@ -39,7 +39,7 @@ var SectionConclusoes = React.createClass({
   },
 
   renderTimeline: function () {
-    let data = this.props.licencasTimeline.filter(y => y.year !== 2006);
+    let data = this.props.licencasTimeline.filter(y => y.year !== startYear);
     let licencasTimeline = {
       labels: data.map(y => y.year),
       datasets: [
@@ -157,7 +157,7 @@ var SectionConclusoes = React.createClass({
                     <p>Existem vagas nos contingentes em cerca de 46% dos concelhos. É comum identificarem-se diferenças entre a % de táxis licenciados numa região e a % da população aí residente.</p>
                   </li>
                   <li>
-                    <h4>Evolução 2006&#8212;2016</h4>
+                    <h4>Evolução {startYear}&#8212;{endYear}</h4>
                     <p>A oferta tem-se mantido estável. O número de táxis licenciados e o número de lugares nos contingentes cresceu menos de 1% na última década.</p>
                   </li>
                   <li>
@@ -177,7 +177,7 @@ var SectionConclusoes = React.createClass({
             </div>
 
             <footer className='section-footer'>
-              <p>Este site foi desenvolvido pela AMT com base no <a href={`${config.api}/master/files/amt-servico-transporte-taxis.pdf`} title='Descarregar Relatório'>Relatório Estatístico Sobre Serviços de Transporte em Táxi: A Realidade Atual e a Evolução da Última Década.</a></p>
+              <p>Este site foi desenvolvido pela AMT com base no <a href={`${api}/master/files/amt-servico-transporte-taxis.pdf`} title='Descarregar Relatório'>Relatório Estatístico Sobre Serviços de Transporte em Táxi: A Realidade Atual e a Evolução da Última Década.</a></p>
             </footer>
           </section>
         </div>

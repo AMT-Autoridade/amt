@@ -6,6 +6,7 @@ import c from 'classnames';
 import _ from 'lodash';
 
 import { fetchNational, fetchMapData } from '../actions';
+import { startYear, endYear } from '../config';
 
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
@@ -146,8 +147,8 @@ var Home = React.createClass({
             adminLevel='national'
             adminName='Portugal'
             adminList={data.nuts}
-            licencas2016={data.licencas2016}
-            max2016={data.max2016}
+            licencasEndY={data.licencasEndY}
+            maxEndY={data.maxEndY}
             licencasHab={data.licencasHab}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
@@ -160,7 +161,7 @@ var Home = React.createClass({
             adminLevel='national'
             adminName='Portugal'
             adminList={data.nuts}
-            licencas2016={data.licencas2016}
+            licencasEndY={data.licencasEndY}
             populacaoNational={data.populacao}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
@@ -172,8 +173,8 @@ var Home = React.createClass({
           <SectionEvolucao
             adminLevel='national'
             adminName='Portugal'
-            licencas2016={data.licencas2016}
-            licencas2006={data.licencas2006}
+            licencasEndY={data.licencasEndY}
+            licencasStartY={data.licencasStartY}
             municipios={data.concelhos}
             totalMunicipios={data.totalMunicipios}
             licencasTimeline={data.licencasTimeline}
@@ -202,10 +203,10 @@ var Home = React.createClass({
             adminName='Portugal'
             totalMunicipiosMobReduzida={data.totalMunicipiosMobReduzida}
             totalMunicipios={data.totalMunicipios}
-            licencas2016={data.licencas2016}
-            licencas2006={data.licencas2006}
-            licencasMobReduzida2016={data.licencasMobReduzida2016}
-            licencasMobReduzida2006={data.licencasMobReduzida2006}
+            licencasEndY={data.licencasEndY}
+            licencasStartY={data.licencasStartY}
+            licencasMobReduzidaEndY={data.licencasMobReduzidaEndY}
+            licencasMobReduzidaStartY={data.licencasMobReduzidaStartY}
             licencasTimeline={data.licencasTimeline}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
@@ -249,7 +250,7 @@ var Home = React.createClass({
           </li>
           <li className={c('nav-item', { active: hash === 'evolucao' })}>
             <Link to='/#evolucao'>
-              <span>Evolução 2006-2016</span>
+              <span>Evolução {startYear}-{endYear}</span>
             </Link>
           </li>
           <li className={c('nav-item', { active: hash === 'indicadores' })}>

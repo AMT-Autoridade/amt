@@ -9,6 +9,7 @@ import { Line as LineChart } from 'react-chartjs-2';
 import { fetchConcelho, fetchMapData } from '../actions';
 import makeTooltip from '../utils/tooltip';
 import { round, percent, formatPT } from '../utils/utils';
+import { startYear, endYear } from '../config';
 
 import Map from '../components/map';
 
@@ -419,9 +420,9 @@ var Concelho = React.createClass({
     let hash = this.props.location.hash || '';
 
     let {
-      licencas2016,
-      licencas2006,
-      max2016,
+      licencasEndY,
+      licencasStartY,
+      maxEndY,
       dormidas,
       licencasTimeline,
       estacionamento,
@@ -436,12 +437,12 @@ var Concelho = React.createClass({
 
     let licMobRed = _.last(concelho.data['lic-mob-reduzida']).value;
 
-    let newLicencas = licencas2016 - licencas2006;
-    let increaseLicencas = (newLicencas / licencas2006) * 100;
+    let newLicencas = licencasEndY - licencasStartY;
+    let increaseLicencas = (newLicencas / licencasStartY) * 100;
 
-    let totNat2016 = this.props.national.data.licencas2016;
+    let totNatEndY = this.props.national.data.licencasEndY;
 
-    let percentNational = percent(licencas2016, totNat2016, 0);
+    let percentNational = percent(licencasEndY, totNatEndY, 0);
     let pop = _.last(concelho.data['pop-residente']).value;
     let percentPop = percent(pop, this.props.national.data.populacao, 0);
 
@@ -470,30 +471,30 @@ var Concelho = React.createClass({
                   <ul>
                     <li>
                       <span className='stat-number'>
-                        {formatPT(licencas2016)}
+                        {formatPT(licencasEndY)}
                       </span>
                       <span className='stat-description'>
-                        Total de táxis licenciados <span className='block'>em agosto de 2016.</span>
+                        Total de táxis licenciados <span className='block'>em agosto de {endYear}.</span>
                       </span>
                     </li>
                     <li>
-                      <span className='stat-number'>{formatPT(max2016)}</span>
+                      <span className='stat-number'>{formatPT(maxEndY)}</span>
                       <span className='stat-description'>
-                        Total dos contingentes <span className='block'>em agosto de 2016.</span>
+                        Total dos contingentes <span className='block'>em agosto de {endYear}.</span>
                       </span>
                     </li>
                     <li>
                       <span className='stat-number'>
-                        {formatPT(max2016 - licencas2016)}
+                        {formatPT(maxEndY - licencasEndY)}
                       </span>
                       <span className='stat-description'>
-                        Total de vagas existentes <span className='block'>em agosto de 2016.</span>
+                        Total de vagas existentes <span className='block'>em agosto de {endYear}.</span>
                       </span>
                     </li>
                     <li>
                       <span className='stat-number'>{licMobRed}</span>
                       <span className='stat-description'>
-                        Licenças existentes no <span className='block'>CMR em Agosto de 2016.</span>
+                        Licenças existentes no <span className='block'>CMR em Agosto de {endYear}.</span>
                       </span>
                     </li>
                     <li>
@@ -502,7 +503,7 @@ var Concelho = React.createClass({
                         {formatPT(Math.abs(newLicencas))}
                       </span>
                       <span className='stat-description'>
-                        Variação no número de <span className='block'> licenças entre 2006 e 2016.
+                        Variação no número de <span className='block'> licenças entre {startYear} e {endYear}.
                         </span>
                       </span>
                     </li>
@@ -513,7 +514,7 @@ var Concelho = React.createClass({
                       </span>
                       <span className='stat-description'>
                         Variação percentual do número de licenças
-                        <span className='block'> entre 2006 e 2016.</span>
+                        <span className='block'> entre {startYear} e {endYear}.</span>
                       </span>
                     </li>
                     <li>
@@ -604,7 +605,7 @@ var Concelho = React.createClass({
                 <div className='graph-container'>
                   <div className='graph'>
                     <h6 className='legend-title'>
-                      Evolução dos táxis licenciados <span className='block'>de 2006 a 2016</span>
+                      Evolução dos táxis licenciados <span className='block'>de {startYear} a {endYear}</span>
                     </h6>
                     {this.renderTimelineChart()}
                   </div>

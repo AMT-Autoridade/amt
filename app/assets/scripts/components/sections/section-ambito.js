@@ -7,6 +7,7 @@ import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
 import { percent, formatPT } from '../../utils/utils';
+import { endYear } from '../../config';
 
 import Map from '../map';
 
@@ -16,7 +17,7 @@ var SectionDistribuicao = React.createClass({
     adminName: T.string,
     adminId: T.oneOfType([T.string, T.number]),
     adminList: T.array,
-    licencas2016: T.number,
+    licencasEndY: T.number,
     populacaoNational: T.number,
     mapGeometries: T.object,
     municipios: T.array,
@@ -112,11 +113,11 @@ var SectionDistribuicao = React.createClass({
   },
 
   renderTableRow: function (adminArea) {
-    let totNat2016 = this.props.licencas2016;
+    let totNatEndY = this.props.licencasEndY;
 
-    let licencas2016 = adminArea.data.licencas2016;
-    let availableLicencas = adminArea.data.max2016 - licencas2016;
-    let percentNational = percent(adminArea.data.licencas2016, totNat2016, 0);
+    let licencasEndY = adminArea.data.licencasEndY;
+    let availableLicencas = adminArea.data.maxEndY - licencasEndY;
+    let percentNational = percent(adminArea.data.licencasEndY, totNatEndY, 0);
     let pop = _.last(adminArea.data['pop-residente']).value;
     let percentPop = percent(pop, this.props.populacaoNational, 0);
 
@@ -143,7 +144,7 @@ var SectionDistribuicao = React.createClass({
               <span className='table-cell table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
               <span className='table-cell table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
               <span className='table-cell table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
-              <span className='table-cell table-available'>Vagas Disponíveis <span className='block'>(Agosto 2016)</span></span>
+              <span className='table-cell table-available'>Vagas Disponíveis <span className='block'>(Agosto {endYear})</span></span>
             </Sticky>
           </li>
           {adminList.map(this.renderTableRow)}
@@ -209,11 +210,11 @@ var SectionDistribuicao = React.createClass({
       return '#FFCC45';
     };
 
-    let percentLicOverPop = this.props.municipios.map(m => {
-      let lic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
-      let percentNational = percent(lic, this.props.licencas2016, 0);
-      let pop = _.last(m.data['pop-residente']).value;
-      let percentPop = percent(pop, this.props.populacaoNational, 0);
+    const percentLicOverPop = this.props.municipios.map(m => {
+      const lic = _.last(m.data['lic-geral']).value + _.last(m.data['lic-mob-reduzida']).value;
+      const percentNational = percent(lic, this.props.licencasEndY, 0);
+      const pop = _.last(m.data['pop-residente']).value;
+      const percentPop = percent(pop, this.props.populacaoNational, 0);
 
       let color = getColor('equal');
       // More relative licenses than population.

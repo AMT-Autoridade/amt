@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
 import { round, percent, formatPT } from '../../utils/utils';
+import { startYear, endYear } from '../../config';
 
 import Map from '../map';
 
@@ -14,8 +15,8 @@ var SectionEvolucao = React.createClass({
     adminLevel: T.string,
     adminName: T.string,
     adminId: T.oneOfType([T.string, T.number]),
-    licencas2016: T.number,
-    licencas2006: T.number,
+    licencasEndY: T.number,
+    licencasStartY: T.number,
     totalMunicipios: T.number,
     municipios: T.array,
     licencasTimeline: T.array,
@@ -279,10 +280,10 @@ var SectionEvolucao = React.createClass({
   },
 
   render: function () {
-    let { licencas2016, licencas2006, totalMunicipios } = this.props;
+    let { licencasEndY, licencasStartY, totalMunicipios } = this.props;
 
-    let newLicencas = licencas2016 - licencas2006;
-    let increaseLicencas = newLicencas / licencas2006 * 100;
+    let newLicencas = licencasEndY - licencasStartY;
+    let increaseLicencas = newLicencas / licencasStartY * 100;
 
     // Municipios without change in number on licenças.
     let totalMunicipiosNoChange = this.props.municipios.reduce((acc, c) => c.data.change === 0 ? acc + 1 : acc, 0);
@@ -298,8 +299,8 @@ var SectionEvolucao = React.createClass({
                   {this.props.adminLevel === 'nut' ? ' › ' : null}
                   {this.props.adminName}
                 </h3>
-                <h1>Evolução 2006&#8212;2016</h1>
-                <p className='lead'>Para além de conhecer a realidade atual importa igualmente conhecer a evolução existente. Analisam-se os desenvolvimentos ocorridos de 2006 a 2016.</p>
+                <h1>Evolução {startYear}&#8212;{endYear}</h1>
+                <p className='lead'>Para além de conhecer a realidade atual importa igualmente conhecer a evolução existente. Analisam-se os desenvolvimentos ocorridos de {startYear} a {endYear}.</p>
               </header>
               <div className='section-content'>
                 <div className='section-stats'>
@@ -309,14 +310,14 @@ var SectionEvolucao = React.createClass({
                         <span>{newLicencas < 0 ? '-' : '+'}</span>
                         {formatPT(Math.abs(newLicencas))}
                       </span>
-                      <span className='stat-description'>Variação no número de <span className='block'>licenças entre 2006 e 2016.</span></span>
+                      <span className='stat-description'>Variação no número de <span className='block'>licenças entre {startYear} e {endYear}.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>
                         <span>{increaseLicencas < 0 ? '-' : '+'}</span>
                         {formatPT(round(Math.abs(increaseLicencas), 0))}%
                       </span>
-                      <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre 2006 e 2016.</span></span>
+                      <span className='stat-description'>Variação da % do número de <span className='block'>licenças entre {startYear} e {endYear}.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>{formatPT(percent(totalMunicipiosNoChange, totalMunicipios, 0))}%</span>
@@ -327,7 +328,7 @@ var SectionEvolucao = React.createClass({
 
                 <div className='graph-container'>
                   <div className='graph'>
-                    <h6 className='legend-title'>Evolução das licenças 2006 a 2016:</h6>
+                    <h6 className='legend-title'>Evolução das licenças {startYear} a {endYear}:</h6>
                     {this.renderTimelineChart()}
                   </div>
                   <div className='graph'>
@@ -342,7 +343,7 @@ var SectionEvolucao = React.createClass({
 
               </div>
               <footer className='section-footer'>
-                <p><strong>Nota:</strong> Existem dados relativos a 2016 para todos os concelhos. Para os poucos concelhos em que não está disponível informação para todos os anos foram usados valores imputados. <Link to='/dados'>Saber mais</Link></p>
+                <p><strong>Nota:</strong> Existem dados relativos a {endYear} para todos os concelhos. Para os poucos concelhos em que não está disponível informação para todos os anos foram usados valores imputados. <Link to='/dados'>Saber mais</Link></p>
               </footer>
             </section>
           </div>

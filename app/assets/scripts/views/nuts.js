@@ -6,6 +6,7 @@ import c from 'classnames';
 import _ from 'lodash';
 
 import { fetchNut, fetchMapData } from '../actions';
+import { startYear, endYear } from '../config';
 
 import SectionLicencas from '../components/sections/section-licencas';
 import SectionIndicadores from '../components/sections/section-indicadores';
@@ -154,8 +155,8 @@ var Nuts = React.createClass({
             adminName={data.name}
             adminId={data.id}
             adminList={data.concelhos}
-            licencas2016={data.data.licencas2016}
-            max2016={data.data.max2016}
+            licencasEndY={data.data.licencasEndY}
+            maxEndY={data.data.maxEndY}
             licencasHab={data.data.licencasHab}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
@@ -181,8 +182,8 @@ var Nuts = React.createClass({
             adminLevel='nut'
             adminName={data.name}
             adminId={data.id}
-            licencas2016={data.data.licencas2016}
-            licencas2006={data.data.licencas2006}
+            licencasEndY={data.data.licencasEndY}
+            licencasStartY={data.data.licencasStartY}
             municipios={data.concelhos}
             totalMunicipios={data.data.totalMunicipios}
             licencasTimeline={data.data.licencasTimeline}
@@ -212,10 +213,10 @@ var Nuts = React.createClass({
             adminId={data.id}
             totalMunicipiosMobReduzida={data.data.totalMunicipiosMobReduzida}
             totalMunicipios={data.data.totalMunicipios}
-            licencas2016={data.data.licencas2016}
-            licencas2006={data.data.licencas2006}
-            licencasMobReduzida2016={data.data.licencasMobReduzida2016}
-            licencasMobReduzida2006={data.data.licencasMobReduzida2006}
+            licencasEndY={data.data.licencasEndY}
+            licencasStartY={data.data.licencasStartY}
+            licencasMobReduzidaEndY={data.data.licencasMobReduzidaEndY}
+            licencasMobReduzidaStartY={data.data.licencasMobReduzidaStartY}
             licencasTimeline={data.data.licencasTimeline}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
@@ -249,7 +250,7 @@ var Nuts = React.createClass({
           </li>
           <li className={c('nav-item', { active: hash === 'evolucao' })}>
             <Link to={`/nuts/${this.props.params.nut}#evolucao`}>
-              <span>Evolução 2006-2016</span>
+              <span>Evolução {startYear}-{endYear}</span>
             </Link>
           </li>
           <li className={c('nav-item', { active: hash === 'indicadores' })}>

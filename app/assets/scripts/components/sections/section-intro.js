@@ -1,6 +1,8 @@
 'use strict';
 import React, { PropTypes as T } from 'react';
 
+import { startYear, endYear } from '../../config';
+
 var SectionIntro = React.createClass({
   propTypes: {
     data: T.object
@@ -12,7 +14,7 @@ var SectionIntro = React.createClass({
         <div id='intro' className='container-wrapper content-wrapper'>
           <section>
             <h2 id='intro-logo'><a href='#'>Autoridade da Mobilidade e dos Transportes</a></h2>
-            <h1>Táxis em Portugal <span className='block'>2006&ndash;2016</span></h1>
+            <h1>Táxis em Portugal <span className='block'>{startYear}&ndash;{endYear}</span></h1>
             <h3 className='section-category'>Observatório dos Mercados da Mobilidade,<span className='block'> Preços e Estratégias Empresariais</span></h3>
 
             <ul className='social-share'>

@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
 import { percent, formatPT } from '../../utils/utils';
+import { startYear } from '../../config';
 
 import Map from '../map';
 
@@ -16,10 +17,10 @@ var SectionMobilidade = React.createClass({
     adminId: T.oneOfType([T.string, T.number]),
     totalMunicipiosMobReduzida: T.number,
     totalMunicipios: T.number,
-    licencas2016: T.number,
-    licencas2006: T.number,
-    licencasMobReduzida2016: T.number,
-    licencasMobReduzida2006: T.number,
+    licencasEndY: T.number,
+    licencasStartY: T.number,
+    licencasMobReduzidaEndY: T.number,
+    licencasMobReduzidaStartY: T.number,
     licencasTimeline: T.array,
     mapGeometries: T.object,
     municipios: T.array,
@@ -55,21 +56,21 @@ var SectionMobilidade = React.createClass({
   },
 
   renderLicencasChart: function () {
-    let licencas2016 = this.props.licencas2016;
-    let licencasMobReduzida2016 = this.props.licencasMobReduzida2016;
-    let licencas2016Geral = licencas2016 - licencasMobReduzida2016;
+    let licencasEndY = this.props.licencasEndY;
+    let licencasMobReduzidaEndY = this.props.licencasMobReduzidaEndY;
+    let licencasEndYGeral = licencasEndY - licencasMobReduzidaEndY;
 
     let data = [
       {
         label: 'Geral',
-        value: licencas2016Geral,
-        percent: percent(licencas2016Geral, licencas2016, 1),
+        value: licencasEndYGeral,
+        percent: percent(licencasEndYGeral, licencasEndY, 1),
         backgroundColor: '#00ced1'
       },
       {
         label: 'CMR',
-        value: licencasMobReduzida2016,
-        percent: percent(licencasMobReduzida2016, licencas2016, 1),
+        value: licencasMobReduzidaEndY,
+        percent: percent(licencasMobReduzidaEndY, licencasEndY, 1),
         backgroundColor: '#256465'
       }
     ];
@@ -217,15 +218,15 @@ var SectionMobilidade = React.createClass({
     let {
       totalMunicipiosMobReduzida,
       totalMunicipios,
-      licencas2016,
-      licencas2006,
-      licencasMobReduzida2016,
-      licencasMobReduzida2006
+      licencasEndY,
+      licencasStartY,
+      licencasMobReduzidaEndY,
+      licencasMobReduzidaStartY
     } = this.props;
 
     let percentMobRed = percent(totalMunicipiosMobReduzida, totalMunicipios, 0);
-    let newLicencas = licencas2016 - licencas2006;
-    let newMobReduzida = licencasMobReduzida2016 - licencasMobReduzida2006;
+    let newLicencas = licencasEndY - licencasStartY;
+    let newMobReduzida = licencasMobReduzidaEndY - licencasMobReduzidaStartY;
     let percentNewMobRed = percent(newMobReduzida, newLicencas, 0);
 
     return (
@@ -243,7 +244,7 @@ var SectionMobilidade = React.createClass({
                 <p className='lead'>A legislação prevê a possibilidade de criar contingentes de táxis para o transporte de pessoas com mobilidade reduzida sempre que a necessidade deste tipo de veículos não possa ser assegurada pela adaptação dos táxis existentes no concelho.</p>
               </header>
 
-              {licencasMobReduzida2016 ? (
+              {licencasMobReduzidaEndY ? (
                 <div className='section-content'>
                   <div className='section-stats'>
                     <ul>
@@ -253,7 +254,7 @@ var SectionMobilidade = React.createClass({
                       </li>
                       <li>
                         <span className='stat-number'>{formatPT(newMobReduzida)}</span>
-                        <span className='stat-description'>Novas licenças emitidas <span className='block'>em CMR desde 2006.</span></span>
+                        <span className='stat-description'>Novas licenças emitidas <span className='block'>em CMR desde {startYear}.</span></span>
                       </li>
                       {this.props.adminLevel === 'national' ? (
                         <li>
