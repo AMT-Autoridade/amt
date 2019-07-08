@@ -4,10 +4,10 @@
  */
 module.exports = {
   environment: 'production',
-  api: 'https://raw.githubusercontent.com/olafveerman/taxis',
-  // From https://rawgit.com/
+  api: 'https://raw.githubusercontent.com/AMT-Autoridade/taxis',
+  // From https://cdn.jsdelivr.net
   // Needed to force the download of text files.
-  rawGitApi: 'https://cdn.rawgit.com/olafveerman/taxis',
+  rawGitApi: 'https://cdn.jsdelivr.net/gh/AMT-Autoridade/taxis',
   startYear: 2006,
   endYear: 2016
 };
