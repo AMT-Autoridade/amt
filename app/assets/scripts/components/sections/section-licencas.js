@@ -149,14 +149,14 @@ var SectionLicencas = React.createClass({
           overlayInfoContent={this.props.overlayInfoContent.bind(null, 'licencas')}
         />
 
-       <div className='map-legend'>
+        <div className='map-legend'>
           <h6 className='legend-title'>Licenças por Município:</h6>
           <ul className='color-legend inline'>
-            <li><span style={{backgroundColor: getColor(10)}}></span> &lt; 10</li>
-            <li><span style={{backgroundColor: getColor(30)}}></span>11 a 30</li>
-            <li><span style={{backgroundColor: getColor(100)}}></span>31 a 100</li>
-            <li><span style={{backgroundColor: getColor(1000)}}></span>101 a 1000</li>
-            <li><span style={{backgroundColor: getColor(10000)}}></span> &gt; 1000 </li>
+            <li><span style={{ backgroundColor: getColor(10) }}></span> &lt; 10</li>
+            <li><span style={{ backgroundColor: getColor(30) }}></span>11 a 30</li>
+            <li><span style={{ backgroundColor: getColor(100) }}></span>31 a 100</li>
+            <li><span style={{ backgroundColor: getColor(1000) }}></span>101 a 1000</li>
+            <li><span style={{ backgroundColor: getColor(10000) }}></span> &gt; 1000 </li>
           </ul>
         </div>
       </div>
@@ -178,7 +178,7 @@ var SectionLicencas = React.createClass({
                   {this.props.adminName}
                 </h3>
                 <h1>Licenças e Contingentes</h1>
-                <p className="lead">A prestação de serviços de táxi implica a posse de uma licença por cada veículo utilizado. Os municípios atribuem estas licenças e definem o número máximo de veículos que pode ser licenciado no seu concelho – o contingente.</p>
+                <p className='lead'>A prestação de serviços de táxi implica a posse de uma licença por cada veículo utilizado. Os municípios atribuem estas licenças e definem o número máximo de veículos que pode ser licenciado no seu concelho – o contingente.</p>
               </header>
               <div className='section-content'>
                 <div className='section-stats'>

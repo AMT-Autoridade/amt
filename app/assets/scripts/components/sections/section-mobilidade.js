@@ -108,7 +108,7 @@ var SectionMobilidade = React.createClass({
       }
     };
 
-    return <PieChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef('chart-lic')}/>;
+    return <PieChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef('chart-lic')} />;
   },
 
   renderTimelineChart: function () {
@@ -175,7 +175,7 @@ var SectionMobilidade = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef('chart-timeline')}/>;
+    return <LineChart data={chartData} options={chartOptions} height={200} ref={this.addChartRef('chart-timeline')} />;
   },
 
   renderMap: function () {
@@ -205,8 +205,8 @@ var SectionMobilidade = React.createClass({
         <div className='map-legend'>
           <h6 className='legend-title'>Municípios com CMR:</h6>
           <ul className='color-legend inline'>
-            <li><span style={{backgroundColor: '#FFCC45'}}></span>Com CMR</li>
-            <li><span style={{backgroundColor: '#f5f5f5'}}></span>Sem CMR</li>
+            <li><span style={{ backgroundColor: '#FFCC45' }}></span>Com CMR</li>
+            <li><span style={{ backgroundColor: '#f5f5f5' }}></span>Sem CMR</li>
           </ul>
         </div>
       </div>
@@ -256,11 +256,11 @@ var SectionMobilidade = React.createClass({
                         <span className='stat-description'>Novas licenças emitidas <span className='block'>em CMR desde 2006.</span></span>
                       </li>
                       {this.props.adminLevel === 'national' ? (
-                      <li>
-                        <span className='stat-number'>{formatPT(percentNewMobRed)}%</span>
-                        <span className='stat-description'>Do aumento no total de licenças resulta do crescimento de licenças em CMR.</span>
-                      </li>
-                       ) : null }
+                        <li>
+                          <span className='stat-number'>{formatPT(percentNewMobRed)}%</span>
+                          <span className='stat-description'>Do aumento no total de licenças resulta do crescimento de licenças em CMR.</span>
+                        </li>
+                      ) : null }
                     </ul>
                   </div>
 

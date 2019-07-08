@@ -31,7 +31,6 @@ export default function reducer (state = initialState, action) {
 }
 
 function processData (concelho) {
-  console.log('processing concelho');
   const getLicencasForYear = (d, year) => {
     return _.find(d.data['lic-geral'], ['year', year]).value + _.find(d.data['lic-mob-reduzida'], ['year', year]).value;
   };

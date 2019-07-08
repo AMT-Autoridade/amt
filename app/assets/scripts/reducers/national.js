@@ -34,13 +34,12 @@ export default function reducer (state = initialState, action) {
 }
 
 function processData (rawData) {
-  console.log('processing national');
   let nuts = rawData.results;
 
   // The data for dormidas is stored as a result in the results array.
   // We have to remove it from there and just leave the nuts.
   let dormidasIdx = _.findIndex(rawData.results, o => parseInt(o.id) === 1);
-  let data = {nuts, dormidas: _.sortBy(rawData.results[dormidasIdx].data.dormidas, 'year')};
+  let data = { nuts, dormidas: _.sortBy(rawData.results[dormidasIdx].data.dormidas, 'year') };
   rawData.results.splice(dormidasIdx, 1);
 
   const getLicencasForYear = (d, year) => {
@@ -60,6 +59,7 @@ function processData (rawData) {
     var indexLast = d.data['lic-geral'].length - 1;
     d.concelhos = d.concelhos.map(c => {
       if (!c.data['lic-geral']) {
+        // eslint-disable-next-line no-console
         console.error(`Concelho: ${c.name} doesn't have data on "lic-geral"`);
       }
       // They all have the same length.
@@ -107,6 +107,7 @@ function processData (rawData) {
   // Number of municípios with lic-mob-reduzida.
   data.totalMunicipiosMobReduzida = _.sumBy(nuts, d => d.concelhos.filter(o => {
     if (!o.data['lic-mob-reduzida']) {
+      // eslint-disable-next-line no-console
       console.error(`Concelho: ${o.name} doesn't have data on "lic-mob-reduzida"`);
       return false;
     }

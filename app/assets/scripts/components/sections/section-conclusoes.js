@@ -75,7 +75,7 @@ var SectionConclusoes = React.createClass({
             let val = o.data[entryIndex] ? formatPT(round(o.data[entryIndex], 0)) + '%' : 'N/D';
             return (
               <li key={o.label}>
-                <span style={{backgroundColor: o.color}} className='tooltip-marker'></span>
+                <span style={{ backgroundColor: o.color }} className='tooltip-marker'></span>
                 <span className='tooltip-label'>{o.label}:</span> <span className='tooltip-number'>{val}</span>
               </li>
             );
@@ -127,7 +127,7 @@ var SectionConclusoes = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={80} ref={this.addChartRef(`chart-timeline`)}/>;
+    return <LineChart data={chartData} options={chartOptions} height={80} ref={this.addChartRef(`chart-timeline`)} />;
   },
 
   render: function () {

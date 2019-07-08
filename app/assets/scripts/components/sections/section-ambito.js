@@ -107,7 +107,7 @@ var SectionDistribuicao = React.createClass({
     };
 
     return (
-      <LineChart data={chartData} options={chartOptions} height={40} ref={this.addChartRef(`chart-trend-${id}`)}/>
+      <LineChart data={chartData} options={chartOptions} height={40} ref={this.addChartRef(`chart-trend-${id}`)} />
     );
   },
 
@@ -189,13 +189,13 @@ var SectionDistribuicao = React.createClass({
         <div className='map-legend'>
           <h6 className='legend-title'>Vagas por Município:</h6>
           <ul className='color-legend inline'>
-            <li><span style={{backgroundColor: getColor(10)}}></span>&lt; 10</li>
-            <li><span style={{backgroundColor: getColor(50)}}></span>11 a 50</li>
-            <li><span style={{backgroundColor: getColor(51)}}></span>50 a 100</li>
-            <li><span style={{backgroundColor: getColor(101)}}></span>&gt; 100</li>
-            <li><span style={{backgroundColor: getColor(0)}}></span>Sem vagas</li>
+            <li><span style={{ backgroundColor: getColor(10) }}></span>&lt; 10</li>
+            <li><span style={{ backgroundColor: getColor(50) }}></span>11 a 50</li>
+            <li><span style={{ backgroundColor: getColor(51) }}></span>50 a 100</li>
+            <li><span style={{ backgroundColor: getColor(101) }}></span>&gt; 100</li>
+            <li><span style={{ backgroundColor: getColor(0) }}></span>Sem vagas</li>
           </ul>
-       </div>
+        </div>
       </div>
     );
   },
@@ -243,11 +243,11 @@ var SectionDistribuicao = React.createClass({
         <div className='map-legend'>
           <h6 className='legend-title'>Percentagem de População vs Percentagem de Licenças:</h6>
           <ul className='color-legend inline'>
-            <li><span style={{backgroundColor: getColor('more-pop')}}></span>&gt; População</li>
-            <li><span style={{backgroundColor: getColor('more-lic')}}></span>&gt; Licenças</li>
-            <li><span style={{backgroundColor: getColor('equal')}}></span>População = Licenças </li>
+            <li><span style={{ backgroundColor: getColor('more-pop') }}></span>&gt; População</li>
+            <li><span style={{ backgroundColor: getColor('more-lic') }}></span>&gt; Licenças</li>
+            <li><span style={{ backgroundColor: getColor('equal') }}></span>População = Licenças </li>
           </ul>
-       </div>
+        </div>
       </div>
     );
   },

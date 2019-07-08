@@ -27,14 +27,14 @@ var Home = React.createClass({
   },
 
   sections: [
-    {id: 'intro', active: false},
-    {id: 'licencas', active: false},
-    {id: 'distribuicao', active: false},
-    {id: 'evolucao', active: false},
-    {id: 'indicadores', active: false},
-    {id: 'mobilidade', active: false},
-    {id: 'estacionamento', active: false},
-    {id: 'conclusoes', active: false}
+    { id: 'intro', active: false },
+    { id: 'licencas', active: false },
+    { id: 'distribuicao', active: false },
+    { id: 'evolucao', active: false },
+    { id: 'indicadores', active: false },
+    { id: 'mobilidade', active: false },
+    { id: 'estacionamento', active: false },
+    { id: 'conclusoes', active: false }
   ],
 
   onMapClick: function (section, data) {
@@ -141,7 +141,7 @@ var Home = React.createClass({
       <div>
         <SectionIntro />
 
-        <div id="page-content" className='container-wrapper'>
+        <div id='page-content' className='container-wrapper'>
           <SectionLicencas
             adminLevel='national'
             adminName='Portugal'
@@ -232,14 +232,46 @@ var Home = React.createClass({
         />
 
         <ul className='section-nav'>
-          <li className={c('nav-item', {active: hash === 'intro'})}><Link to='/#intro'><span>Introdução</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'licencas'})}><Link to='/#licencas'><span>Licenças e Contingentes</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'distribuicao'})}><Link to='/#distribuicao'><span>Detalhe Geográfico</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'evolucao'})}><Link to='/#evolucao'><span>Evolução 2006-2016</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'indicadores'})}><Link to='/#indicadores'><span>Indicadores</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'mobilidade'})}><Link to='/#mobilidade'><span>Mobilidade Reduzida</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'estacionamento'})}><Link to='/#estacionamento'><span>Regime Estacionamento</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'conclusoes'})}><Link to='/#conclusoes'><span>Conclusões</span></Link></li>
+          <li className={c('nav-item', { active: hash === 'intro' })}>
+            <Link to='/#intro'>
+              <span>Introdução</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'licencas' })}>
+            <Link to='/#licencas'>
+              <span>Licenças e Contingentes</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'distribuicao' })}>
+            <Link to='/#distribuicao'>
+              <span>Detalhe Geográfico</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'evolucao' })}>
+            <Link to='/#evolucao'>
+              <span>Evolução 2006-2016</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'indicadores' })}>
+            <Link to='/#indicadores'>
+              <span>Indicadores</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'mobilidade' })}>
+            <Link to='/#mobilidade'>
+              <span>Mobilidade Reduzida</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'estacionamento' })}>
+            <Link to='/#estacionamento'>
+              <span>Regime Estacionamento</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'conclusoes' })}>
+            <Link to='/#conclusoes'>
+              <span>Conclusões</span>
+            </Link>
+          </li>
         </ul>
       </div>
     );

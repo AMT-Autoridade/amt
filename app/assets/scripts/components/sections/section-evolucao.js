@@ -63,7 +63,7 @@ var SectionEvolucao = React.createClass({
           <li><span className='tooltip-title'>Contingentes:</span></li>
           <li><span className='tooltip-label'>Geral:</span> <span className='tooltip-number'>{formatPT(year['lic-geral'])}</span></li>
           <li><span className='tooltip-label'>Mob. Reduzida:</span> <span className='tooltip-number'>{formatPT(year['lic-mob-reduzida'])}</span></li>
-          <li><span style={{backgroundColor: '#FFCC45'}} className='tooltip-marker'></span><span className='tooltip-label'>Total Licenças:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
+          <li><span style={{ backgroundColor: '#FFCC45' }} className='tooltip-marker'></span><span className='tooltip-label'>Total Licenças:</span><span className='tooltip-number'>{formatPT(year['lic-geral'] + year['lic-mob-reduzida'])}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -114,7 +114,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <LineChart data={chartData} options={chartOptions} height={300} ref={this.addChartRef('chart-timeline')}/>;
+    return <LineChart data={chartData} options={chartOptions} height={300} ref={this.addChartRef('chart-timeline')} />;
   },
 
   renderTopMunicipiosChart: function () {
@@ -177,11 +177,11 @@ var SectionEvolucao = React.createClass({
     // Different height depending on the number of datasets
     let height = [300, 300, 370, 370, 370][topMunicipios.length - 1];
 
-    return <BarChart data={chartData} options={chartOptions} height={height} ref={this.addChartRef('chart-municipios')}/>;
+    return <BarChart data={chartData} options={chartOptions} height={height} ref={this.addChartRef('chart-municipios')} />;
   },
 
   renderChangeLicencasChart: function () {
-    const {municipios, totalMunicipios} = this.props;
+    const { municipios, totalMunicipios } = this.props;
 
     const licencasChange = _(municipios)
       .groupBy(d => {
@@ -193,7 +193,7 @@ var SectionEvolucao = React.createClass({
           return 'equal';
         }
       })
-      .map((v, k) => ({key: k, value: v.length, percent: v.length / totalMunicipios * 100}))
+      .map((v, k) => ({ key: k, value: v.length, percent: v.length / totalMunicipios * 100 }))
       .value();
 
     const keyIndex = {
@@ -234,7 +234,7 @@ var SectionEvolucao = React.createClass({
       }
     };
 
-    return <DoughnutChart data={chartData} options={chartOptions} height={280} ref={this.addChartRef('chart-change')}/>;
+    return <DoughnutChart data={chartData} options={chartOptions} height={280} ref={this.addChartRef('chart-change')} />;
   },
 
   renderMap: function () {
@@ -265,13 +265,13 @@ var SectionEvolucao = React.createClass({
           overlayInfoContent={this.props.overlayInfoContent.bind(null, 'evolucao')}
         />
 
-       <div className='map-legend'>
+        <div className='map-legend'>
           <h6 className='legend-title'>Variação de Licenças por Município:</h6>
           <ul className='color-legend inline'>
-            <li><span style={{backgroundColor: getColor(-1)}}></span>Diminuiu</li>
-            <li><span style={{backgroundColor: getColor(0)}}></span>Manteve</li>
-            <li><span style={{backgroundColor: getColor(1)}}></span>Aumentou</li>
-         </ul>
+            <li><span style={{ backgroundColor: getColor(-1) }}></span>Diminuiu</li>
+            <li><span style={{ backgroundColor: getColor(0) }}></span>Manteve</li>
+            <li><span style={{ backgroundColor: getColor(1) }}></span>Aumentou</li>
+          </ul>
         </div>
 
       </div>

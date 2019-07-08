@@ -27,12 +27,12 @@ var Nuts = React.createClass({
   },
 
   sections: [
-    {id: 'licencas', active: false},
-    {id: 'distribuicao', active: false},
-    {id: 'evolucao', active: false},
-    {id: 'indicadores', active: false},
-    {id: 'mobilidade', active: false},
-    {id: 'estacionamento', active: false}
+    { id: 'licencas', active: false },
+    { id: 'distribuicao', active: false },
+    { id: 'evolucao', active: false },
+    { id: 'indicadores', active: false },
+    { id: 'mobilidade', active: false },
+    { id: 'estacionamento', active: false }
   ],
 
   onMapClick: function (section, data) {
@@ -147,8 +147,8 @@ var Nuts = React.createClass({
     };
 
     return (
-      <div id="page-nut">
-        <div id="page-content">
+      <div id='page-nut'>
+        <div id='page-content'>
           <SectionLicencas
             adminLevel='nut'
             adminName={data.name}
@@ -237,12 +237,36 @@ var Nuts = React.createClass({
           />
         </div>
         <ul className='section-nav'>
-          <li className={c('nav-item', {active: hash === 'licencas'})}><Link to={`/nuts/${this.props.params.nut}#licencas`}><span>Licenças e Contingentes</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'distribuicao'})}><Link to={`/nuts/${this.props.params.nut}#distribuicao`}><span>Detalhe Geográfico</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'evolucao'})}><Link to={`/nuts/${this.props.params.nut}#evolucao`}><span>Evolução 2006-2016</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'indicadores'})}><Link to={`/nuts/${this.props.params.nut}#indicadores`}><span>Indicadores</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'mobilidade'})}><Link to={`/nuts/${this.props.params.nut}#mobilidade`}><span>Mobilidade Reduzida</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'estacionamento'})}><Link to={`/nuts/${this.props.params.nut}#estacionamento`}><span>Regime Estacionamento</span></Link></li>
+          <li className={c('nav-item', { active: hash === 'licencas' })}>
+            <Link to={`/nuts/${this.props.params.nut}#licencas`}>
+              <span>Licenças e Contingentes</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'distribuicao' })}>
+            <Link to={`/nuts/${this.props.params.nut}#distribuicao`}>
+              <span>Detalhe Geográfico</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'evolucao' })}>
+            <Link to={`/nuts/${this.props.params.nut}#evolucao`}>
+              <span>Evolução 2006-2016</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'indicadores' })}>
+            <Link to={`/nuts/${this.props.params.nut}#indicadores`}>
+              <span>Indicadores</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'mobilidade' })}>
+            <Link to={`/nuts/${this.props.params.nut}#mobilidade`}>
+              <span>Mobilidade Reduzida</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'estacionamento' })}>
+            <Link to={`/nuts/${this.props.params.nut}#estacionamento`}>
+              <span>Regime Estacionamento</span>
+            </Link>
+          </li>
         </ul>
 
       </div>

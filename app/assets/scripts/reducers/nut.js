@@ -34,7 +34,6 @@ export default function reducer (state = initialState, action) {
 }
 
 function processData (nut) {
-  console.log('processing nut');
   // Sanitize.
   // nut.concelhos = nut.concelhos.map((d, i) => {
   //   if (!d.data['lic-geral']) {
@@ -119,6 +118,5 @@ function processData (nut) {
     return d;
   });
 
-  console.log('nut', nut);
   return nut;
 }

@@ -143,21 +143,22 @@ export function fetchJSON (url, options) {
     .then(response => {
       return response.text()
       // .then(body => ((new Promise(resolve => setTimeout(() => resolve(body), 1000)))))
-      .then(body => {
-        var json;
-        try {
-          json = JSON.parse(body);
-        } catch (e) {
-          console.log('json parse error', e);
-          return Promise.reject({
-            error: e.message,
-            body
-          });
-        }
+        .then(body => {
+          var json;
+          try {
+            json = JSON.parse(body);
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log('json parse error', e);
+            return Promise.reject({
+              error: e.message,
+              body
+            });
+          }
 
-        return response.status >= 400
-          ? Promise.reject(json)
-          : Promise.resolve(json);
-      });
+          return response.status >= 400
+            ? Promise.reject(json)
+            : Promise.resolve(json);
+        });
     });
 }
