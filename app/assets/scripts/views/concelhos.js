@@ -9,9 +9,10 @@ import { Line as LineChart } from 'react-chartjs-2';
 import { fetchConcelho, fetchMapData } from '../actions';
 import makeTooltip from '../utils/tooltip';
 import { round, percent, formatPT } from '../utils/utils';
-import { startYear, endYear } from '../config';
+import { endYear } from '../config';
 
 import Map from '../components/map';
+import LoadingScreen from '../components/loading-screen';
 
 var Concelho = React.createClass({
   propTypes: {
@@ -410,7 +411,9 @@ var Concelho = React.createClass({
     }
 
     if (fetching) {
-      return <p>Loading</p>;
+      return (
+        <LoadingScreen />
+      );
     }
 
     if (error) {
@@ -503,7 +506,7 @@ var Concelho = React.createClass({
                         {formatPT(Math.abs(newLicencas))}
                       </span>
                       <span className='stat-description'>
-                        Variação no número de <span className='block'> licenças entre {startYear} e {endYear}.
+                        Variação no número de <span className='block'> licenças entre {start} e {endYear}.
                         </span>
                       </span>
                     </li>
@@ -514,7 +517,7 @@ var Concelho = React.createClass({
                       </span>
                       <span className='stat-description'>
                         Variação percentual do número de licenças
-                        <span className='block'> entre {startYear} e {endYear}.</span>
+                        <span className='block'> entre {start} e {endYear}.</span>
                       </span>
                     </li>
                     <li>
@@ -605,7 +608,7 @@ var Concelho = React.createClass({
                 <div className='graph-container'>
                   <div className='graph'>
                     <h6 className='legend-title'>
-                      Evolução dos táxis licenciados <span className='block'>de {startYear} a {endYear}</span>
+                      Evolução dos táxis licenciados <span className='block'>de {start} a {endYear}</span>
                     </h6>
                     {this.renderTimelineChart()}
                   </div>

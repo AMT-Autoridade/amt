@@ -14,6 +14,7 @@ import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
 import SectionAmbitoNut from '../components/sections/section-ambito-nut';
 import SectionEvolucao from '../components/sections/section-evolucao';
+import LoadingScreen from '../components/loading-screen';
 
 var Nuts = React.createClass({
   propTypes: {
@@ -120,7 +121,9 @@ var Nuts = React.createClass({
     }
 
     if (fetching) {
-      return <p>Loading</p>;
+      return (
+        <LoadingScreen />
+      );
     }
 
     if (error) {

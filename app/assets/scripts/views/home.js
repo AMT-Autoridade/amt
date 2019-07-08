@@ -16,6 +16,7 @@ import SectionEstacionamento from '../components/sections/section-estacionamento
 import SectionAmbito from '../components/sections/section-ambito';
 import SectionEvolucao from '../components/sections/section-evolucao';
 import SectionConclusoes from '../components/sections/section-conclusoes';
+import LoadingScreen from '../components/loading-screen';
 
 var Home = React.createClass({
   propTypes: {
@@ -95,7 +96,9 @@ var Home = React.createClass({
     }
 
     if (fetching) {
-      return <p>Loading</p>;
+      return (
+        <LoadingScreen />
+      );
     }
 
     if (error) {
