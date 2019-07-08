@@ -4,25 +4,18 @@ import React from 'react';
 var UhOh = React.createClass({
   render: function () {
     return (
-      <section className='section section--page'>
-        <header className='section__header'>
-          <div className='inner'>
-            <div className='section__headline'>
-              <h1 className='section__title'>Uh Oh!</h1>
+      <div className='container-wrapper'>
+        <section className='content-wrapper'>
+          <h1>Página não encontrada</h1>
+          <div className='wrapper'>
+            <div>
+              <p className='lead'>A página que procura não existe ou foi removida mas poderá encontrar todos os dados na <a href='/' title='Visitar página principal'>página principal</a>.</p>
             </div>
           </div>
-        </header>
-        <div className='section__body'>
-          <div className='inner'>
-            You're seaching for something that doesn't exist...
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     );
   }
 });
-
-// /////////////////////////////////////////////////////////////////// //
-// Connect functions
 
 export default UhOh;
