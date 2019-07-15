@@ -9,5 +9,5 @@ module.exports = {
   // Needed to force the download of text files.
   rawGitApi: 'https://cdn.jsdelivr.net/gh/AMT-Autoridade/taxis',
   startYear: 2006,
-  endYear: 2016
+  endYear: 2017
 };

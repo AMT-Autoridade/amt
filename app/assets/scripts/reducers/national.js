@@ -50,11 +50,12 @@ function processData (rawData) {
   // The data for dormidas is stored as a result in the results array.
   // We have to remove it from there and just leave the nuts.
   let dormidasIdx = _.findIndex(rawData.results, o => parseInt(o.id) === 1);
+  nuts = nuts.filter((o, i) => i !== dormidasIdx);
+
   let data = {
     nuts,
     dormidas: _.sortBy(rawData.results[dormidasIdx].data.dormidas, 'year')
   };
-  rawData.results.splice(dormidasIdx, 1);
 
   const getLicencasForYear = (d, year) => {
     return _.find(d.data['lic-geral'], ['year', year]).value + _.find(d.data['lic-mob-reduzida'], ['year', year]).value;
@@ -138,6 +139,7 @@ function processData (rawData) {
     populacao: _.sumBy(nuts, d => d.data['pop-residente'][0].value),
     licencas: data.licencasStartY
   };
+
   data.licencasTimeline = _.range(startYear, endYear + 1).map((y, i) => {
     let d = {
       year: y,
