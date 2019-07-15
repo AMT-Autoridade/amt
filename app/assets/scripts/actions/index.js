@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-import config from '../config';
+import { api } from '../config';
 
 var dataCache = null;
 function fetchAndCacheData () {
@@ -17,7 +17,7 @@ function fetchAndCacheData () {
       return resolve(JSON.parse(JSON.stringify(dataCache)));
     }
 
-    fetchJSON(`${config.api}/api/national.json`)
+    fetchJSON(`${api}/api/national.json`)
       .then(national => {
         dataCache = national;
         resolve(dataCache);
