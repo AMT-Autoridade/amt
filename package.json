@@ -1,22 +1,21 @@
 {
   "name": "taxis-pt",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "Taxis",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/AMT-Autoridade/amt"
   },
   "author": {
-    "name": "Majorland",
-    "url": ""
+    "name": "Major",
+    "url": "http://wegomajor.com/"
   },
   "license": "MIT",
-  "homepage": "",
+  "homepage": "http://taxis.amt-autoridade.pt/",
   "scripts": {
     "postinstall": "[ -f app/assets/scripts/config/local.js ] || echo \"'use strict';\n\nexport default {\n  environment: 'development'\n};\" > app/assets/scripts/config/local.js",
     "serve": "DS_ENV=development NODE_ENV=development gulp serve",
     "build": "DS_ENV=production NODE_ENV=production gulp",
-    "stage": "DS_ENV=staging NODE_ENV=staging gulp",
     "lint": "eslint app/assets/scripts/ --ext .js",
     "lint:css": "stylelint 'app/assets/styles/**/**' 'app/assets/scripts/**/*.js'",
     "test": "echo \"No tests\" && exit 0"
