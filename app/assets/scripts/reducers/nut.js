@@ -115,13 +115,8 @@ function processData (nut) {
       'max-lic-geral': nut.data['max-lic-geral'][i].value,
       'max-lic-mob-reduzida': nut.data['max-lic-mob-reduzida'][i].value
     };
-    // Population is only available until 2015.
-    // when computing for years over 2015 use last available.
-    let idx = nut.data['pop-residente'].length - 1;
-    if (idx > i) {
-      idx = i;
-    }
-    d['pop-residente'] = nut.data['pop-residente'][idx].value;
+
+    d['pop-residente'] = nut.data['pop-residente'][i].value;
 
     d['lic1000'] = (d['lic-geral'] + d['lic-mob-reduzida']) / (d['pop-residente'] / 1000);
 

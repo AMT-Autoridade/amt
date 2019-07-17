@@ -151,7 +151,7 @@ var SectionDistribuicao = React.createClass({
               <span className='table-cell table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
               <span className='table-cell table-scope'>Âmbito Geográfico <span className='block'>do Contingente</span></span>
               <span className='table-cell table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
-              <span className='table-cell table-pop'>População <span className='block'>Residente (2015)</span></span>
+              <span className='table-cell table-pop'>População <span className='block'>Residente</span></span>
             </Sticky>
           </li>
           {adminList.map(this.renderTableRow)}
