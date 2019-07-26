@@ -144,7 +144,7 @@ var SectionDistribuicao = React.createClass({
               <span className='table-cell table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
               <span className='table-cell table-national'>% do Total de <span className='block'>Licenças em Portugal</span></span>
               <span className='table-cell table-residents'>% do Total de Pop. <span className='block'>Residente em Portugal</span></span>
-              <span className='table-cell table-available'>Vagas Disponíveis <span className='block'>(Agosto {endYear})</span></span>
+              <span className='table-cell table-available'>Vagas Disponíveis <span className='block'>(Dezembro {endYear})</span></span>
             </Sticky>
           </li>
           {adminList.map(this.renderTableRow)}
