@@ -186,15 +186,15 @@ var SectionLicencas = React.createClass({
                   <ul>
                     <li>
                       <span className='stat-number'>{formatPT(licencasEndY)}</span>
-                      <span className='stat-description'>Total de táxis licenciados <span className='block'>em agosto de {endYear}.</span></span>
+                      <span className='stat-description'>Total de táxis licenciados <span className='block'>em dezembro de {endYear}.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>{formatPT(maxEndY)}</span>
-                      <span className='stat-description'>Total dos contingentes <span className='block'>em agosto de {endYear}.</span></span>
+                      <span className='stat-description'>Total dos contingentes <span className='block'>em dezembro de {endYear}.</span></span>
                     </li>
                     <li>
                       <span className='stat-number'>{formatPT(maxEndY - licencasEndY)}</span>
-                      <span className='stat-description'>Total de vagas existentes <span className='block'>em agosto de {endYear}.</span></span>
+                      <span className='stat-description'>Total de vagas existentes <span className='block'>em dezembro de {endYear}.</span></span>
                     </li>
                   </ul>
                 </div>
