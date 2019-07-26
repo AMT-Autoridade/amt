@@ -477,13 +477,13 @@ var Concelho = React.createClass({
                         {formatPT(licencasEndY)}
                       </span>
                       <span className='stat-description'>
-                        Total de táxis licenciados <span className='block'>em agosto de {endYear}.</span>
+                        Total de táxis licenciados <span className='block'>em dezembro de {endYear}.</span>
                       </span>
                     </li>
                     <li>
                       <span className='stat-number'>{formatPT(maxEndY)}</span>
                       <span className='stat-description'>
-                        Total dos contingentes <span className='block'>em agosto de {endYear}.</span>
+                        Total dos contingentes <span className='block'>em dezembro de {endYear}.</span>
                       </span>
                     </li>
                     <li>
@@ -491,13 +491,13 @@ var Concelho = React.createClass({
                         {formatPT(maxEndY - licencasEndY)}
                       </span>
                       <span className='stat-description'>
-                        Total de vagas existentes <span className='block'>em agosto de {endYear}.</span>
+                        Total de vagas existentes <span className='block'>em dezembro de {endYear}.</span>
                       </span>
                     </li>
                     <li>
                       <span className='stat-number'>{licMobRed}</span>
                       <span className='stat-description'>
-                        Licenças existentes no <span className='block'>CMR em Agosto de {endYear}.</span>
+                        Licenças existentes no <span className='block'>CMR em dezembro de {endYear}.</span>
                       </span>
                     </li>
                     <li>
