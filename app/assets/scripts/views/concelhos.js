@@ -502,7 +502,7 @@ var Concelho = React.createClass({
                     </li>
                     <li>
                       <span className='stat-number'>
-                        <span>{newLicencas < 0 ? '-' : '+'}</span>
+                        {newLicencas !== 0 ? <span>{newLicencas < 0 ? '-' : '+'}</span> : null}
                         {formatPT(Math.abs(newLicencas))}
                       </span>
                       <span className='stat-description'>
@@ -512,7 +512,7 @@ var Concelho = React.createClass({
                     </li>
                     <li>
                       <span className='stat-number'>
-                        <span>{increaseLicencas < 0 ? '-' : '+'}</span>
+                        {increaseLicencas !== 0 ? <span>{increaseLicencas < 0 ? '-' : '+'}</span> : null}
                         {formatPT(round(Math.abs(increaseLicencas), 0))}%
                       </span>
                       <span className='stat-description'>
