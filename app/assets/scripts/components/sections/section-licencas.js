@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import makeTooltip from '../../utils/tooltip';
 import { formatPT } from '../../utils/utils';
+import { endYear } from '../../config';
 
 import Map from '../map';
 
@@ -15,8 +16,8 @@ var SectionLicencas = React.createClass({
     adminName: T.string,
     adminId: T.oneOfType([T.string, T.number]),
     adminList: T.array,
-    licencas2016: T.number,
-    max2016: T.number,
+    licencasEndY: T.number,
+    maxEndY: T.number,
     licencasHab: T.number,
     mapGeometries: T.object,
     municipios: T.array,
@@ -53,7 +54,7 @@ var SectionLicencas = React.createClass({
 
   renderChart: function () {
     let dataList = _(this.props.adminList)
-      .sortBy('data.licencas2016')
+      .sortBy('data.licencasEndY')
       .reverse()
       .value();
 
@@ -62,9 +63,9 @@ var SectionLicencas = React.createClass({
       return (
         <ul>
           <li><span className='tooltip-title'>{datum.name}</span></li>
-          <li><span className='tooltip-label'>Contingente:</span><span className='tooltip-number'>{formatPT(datum.data.max2016)}</span></li>
-          <li><span className='tooltip-label'>Licenças activas:</span> <span className='tooltip-number'>{formatPT(datum.data.licencas2016)}</span></li>
-          <li><span className='tooltip-label'>Vagas disponíveis:</span> <span className='tooltip-number'>{formatPT(datum.data.max2016 - datum.data.licencas2016)}</span></li>
+          <li><span className='tooltip-label'>Contingente:</span><span className='tooltip-number'>{formatPT(datum.data.maxEndY)}</span></li>
+          <li><span className='tooltip-label'>Licenças activas:</span> <span className='tooltip-number'>{formatPT(datum.data.licencasEndY)}</span></li>
+          <li><span className='tooltip-label'>Vagas disponíveis:</span> <span className='tooltip-number'>{formatPT(datum.data.maxEndY - datum.data.licencasEndY)}</span></li>
           <span className='triangle'></span>
         </ul>
       );
@@ -74,11 +75,11 @@ var SectionLicencas = React.createClass({
       labels: dataList.map(o => o.display),
       datasets: [
         {
-          data: dataList.map(o => o.data.licencas2016),
+          data: dataList.map(o => o.data.licencasEndY),
           backgroundColor: '#FFCC45'
         },
         {
-          data: dataList.map(o => o.data.max2016 - o.data.licencas2016),
+          data: dataList.map(o => o.data.maxEndY - o.data.licencasEndY),
           backgroundColor: '#FDB13C'
         }
       ]
@@ -149,14 +150,14 @@ var SectionLicencas = React.createClass({
           overlayInfoContent={this.props.overlayInfoContent.bind(null, 'licencas')}
         />
 
-       <div className='map-legend'>
+        <div className='map-legend'>
           <h6 className='legend-title'>Licenças por Município:</h6>
           <ul className='color-legend inline'>
-            <li><span style={{backgroundColor: getColor(10)}}></span> &lt; 10</li>
-            <li><span style={{backgroundColor: getColor(30)}}></span>11 a 30</li>
-            <li><span style={{backgroundColor: getColor(100)}}></span>31 a 100</li>
-            <li><span style={{backgroundColor: getColor(1000)}}></span>101 a 1000</li>
-            <li><span style={{backgroundColor: getColor(10000)}}></span> &gt; 1000 </li>
+            <li><span style={{ backgroundColor: getColor(10) }}></span> &lt; 10</li>
+            <li><span style={{ backgroundColor: getColor(30) }}></span>11 a 30</li>
+            <li><span style={{ backgroundColor: getColor(100) }}></span>31 a 100</li>
+            <li><span style={{ backgroundColor: getColor(1000) }}></span>101 a 1000</li>
+            <li><span style={{ backgroundColor: getColor(10000) }}></span> &gt; 1000 </li>
           </ul>
         </div>
       </div>
@@ -164,7 +165,7 @@ var SectionLicencas = React.createClass({
   },
 
   render: function () {
-    let { licencas2016, max2016 } = this.props;
+    let { licencasEndY, maxEndY } = this.props;
 
     return (
       <div id='licencas' className='content-wrapper vertical-center'>
@@ -178,22 +179,22 @@ var SectionLicencas = React.createClass({
                   {this.props.adminName}
                 </h3>
                 <h1>Licenças e Contingentes</h1>
-                <p className="lead">A prestação de serviços de táxi implica a posse de uma licença por cada veículo utilizado. Os municípios atribuem estas licenças e definem o número máximo de veículos que pode ser licenciado no seu concelho – o contingente.</p>
+                <p className='lead'>A prestação de serviços de táxi implica a posse de uma licença por cada veículo utilizado. Os municípios atribuem estas licenças e definem o número máximo de veículos que pode ser licenciado no seu concelho – o contingente.</p>
               </header>
               <div className='section-content'>
                 <div className='section-stats'>
                   <ul>
                     <li>
-                      <span className='stat-number'>{formatPT(licencas2016)}</span>
-                      <span className='stat-description'>Total de táxis licenciados <span className='block'>em agosto de 2016.</span></span>
+                      <span className='stat-number'>{formatPT(licencasEndY)}</span>
+                      <span className='stat-description'>Total de táxis licenciados <span className='block'>em dezembro de {endYear}.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{formatPT(max2016)}</span>
-                      <span className='stat-description'>Total dos contingentes <span className='block'>em agosto de 2016.</span></span>
+                      <span className='stat-number'>{formatPT(maxEndY)}</span>
+                      <span className='stat-description'>Total dos contingentes <span className='block'>em dezembro de {endYear}.</span></span>
                     </li>
                     <li>
-                      <span className='stat-number'>{formatPT(max2016 - licencas2016)}</span>
-                      <span className='stat-description'>Total de vagas existentes <span className='block'>em agosto de 2016.</span></span>
+                      <span className='stat-number'>{formatPT(maxEndY - licencasEndY)}</span>
+                      <span className='stat-description'>Total de vagas existentes <span className='block'>em dezembro de {endYear}.</span></span>
                     </li>
                   </ul>
                 </div>

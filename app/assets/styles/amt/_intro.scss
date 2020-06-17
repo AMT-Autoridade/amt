@@ -88,3 +88,34 @@
 		}
 	}
 }
+
+// Intro screen loading styles
+
+@keyframes moving-fading-car {
+	0% {
+		right: 100%;
+	}
+
+	60% {
+		opacity: 1;
+	}
+
+	100% {
+		right: 0;
+		opacity: 0;
+	}
+}
+
+#intro-wrapper.loading-screen {
+	background: none;
+
+	.loading-car {
+		position: absolute;
+		width: 200px;
+		top: 400px;
+		animation-name: moving-fading-car;
+		animation-timing-function: ease-in;
+		animation-duration: 2s;
+		animation-iteration-count: infinite;
+	}
+}

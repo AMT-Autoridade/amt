@@ -14,6 +14,8 @@ export const reducers = {
   mapData
 };
 
-export default combineReducers(Object.assign({}, reducers, {
-  routing: routerReducer
-}));
+export default combineReducers(
+  Object.assign({}, reducers, {
+    routing: routerReducer
+  })
+);

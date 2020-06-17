@@ -63,6 +63,7 @@ function popover () {
     _y = anchorY;
 
     if (_content === null) {
+      // eslint-disable-next-line no-console
       console.warn('Content must be set before showing the popover.');
       return this;
     }

@@ -86,7 +86,8 @@ var Map = React.createClass({
 
   render: function () {
     return (
-      <div className={this.props.className} ref='container'></div>
+      // eslint-disable-next-line react/no-string-refs
+      <div className={this.props.className} ref='container' />
     );
   }
 });
@@ -120,7 +121,7 @@ var PtMap = function (options) {
   // Containers
   var $el, $svg, $aaOverlayInfo;
   // Var declaration.
-  var margin = {top: 0, right: 0, bottom: 0, left: 0};
+  var margin = { top: 0, right: 0, bottom: 0, left: 0 };
   // width and height refer to the data canvas. To know the svg size the margins
   // must be added.
   var _width, _height;
@@ -169,7 +170,7 @@ var PtMap = function (options) {
     var topoIsland = {
       type: 'GeometryCollection',
       geometries: _topology.objects.all_areas.geometries.filter(o => {
-        let id = id = o.properties.id;
+        let id = o.properties.id;
         if (id.length === 4) {
           id = id.substring(0, 2);
         }
@@ -290,12 +291,12 @@ var PtMap = function (options) {
     let posX = window.pageXOffset + matrix.e;
     let posY = window.pageYOffset + matrix.f;
 
-    return {posX, posY};
+    return { posX, posY };
   };
 
   const showTooltip = (d3El, data) => {
     if (_popoverContentFn) {
-      let {posX, posY} = getElementPos(d3El);
+      let { posX, posY } = getElementPos(d3El);
       chartPopover.setContent(_popoverContentFn(data)).show(posX, posY);
     }
   };
@@ -328,7 +329,7 @@ var PtMap = function (options) {
   //   type: // What this refers to (island|main)
   // }
   function drawFeatureGroup (opts) {
-    let {name, type} = opts;
+    let { name, type } = opts;
     // Return a function to handle each individual island.
     // Wrapped in a closure to include path variables.
     function drawFeature (data) {
@@ -364,7 +365,7 @@ var PtMap = function (options) {
             d3.select(this).style('cursor', 'pointer');
 
             let id = parseInt(d.properties.id);
-            showTooltip(d3.select(this), {type: 'concelho', id: id});
+            showTooltip(d3.select(this), { type: 'concelho', id: id });
             // Get the correct color form the concelho id.
             let color = getConcelhoColor(id);
 
@@ -383,7 +384,7 @@ var PtMap = function (options) {
           .on('click', function (d, i) {
             if (!_onClickFn) return;
             let id = parseInt(d.properties.id);
-            if (id) _onClickFn({type: 'concelho', id});
+            if (id) _onClickFn({ type: 'concelho', id });
           });
 
         // Nuts.
@@ -416,7 +417,7 @@ var PtMap = function (options) {
           .on('mouseover', function (d, i) {
             d3.select(this).style('cursor', 'pointer');
 
-            showTooltip(d3.select(this), {type: 'nut3', id: getNutId(d)});
+            showTooltip(d3.select(this), { type: 'nut3', id: getNutId(d) });
             d3.select(this).transition()
               .attr('fill-opacity', d => {
                 // When there's a nut selected the background is white
@@ -443,7 +444,7 @@ var PtMap = function (options) {
           .on('click', function (d, i) {
             if (!_onClickFn) return;
             let id = getNutId(d);
-            if (id) _onClickFn({type: 'nut3', id});
+            if (id) _onClickFn({ type: 'nut3', id });
           });
 
         // Distritos.
@@ -476,7 +477,7 @@ var PtMap = function (options) {
           .on('mouseover', function (d, i) {
             d3.select(this).style('cursor', 'pointer');
 
-            showTooltip(d3.select(this), {type: 'nut3', id: getNutId(d)});
+            showTooltip(d3.select(this), { type: 'nut3', id: getNutId(d) });
             $svg.selectAll(`.${name} .aa--distrito`).transition()
               .attr('fill-opacity', d => {
                 // When there's a nut selected the background is white
@@ -503,7 +504,7 @@ var PtMap = function (options) {
           .on('click', function (d, i) {
             if (!_onClickFn) return;
             let id = getNutId(d);
-            if (id) _onClickFn({type: 'nut3', id});
+            if (id) _onClickFn({ type: 'nut3', id });
           });
       };
     }
@@ -535,7 +536,7 @@ var PtMap = function (options) {
   // Make charts reusable!
   // Similar to `drawFeatureGroup` but for the overlay.
   function drawFeatureGroupOverlay (opts) {
-    let {type, groupOffset, groupScale} = opts;
+    let { type, groupOffset, groupScale } = opts;
     let aaLevel = type === 'island' ? 'distrito' : 'nut3';
     // Return a function to handle each individual island.
     // Wrapped in a closure to include path variables.
@@ -575,7 +576,7 @@ var PtMap = function (options) {
           .style('pointer-events', d => d.properties.type === 'concelho' ? 'all' : 'none')
           .on('mouseover', function (d, i) {
             let id = parseInt(d.properties.id);
-            showTooltip(d3.select(this), {type: 'concelho', id});
+            showTooltip(d3.select(this), { type: 'concelho', id });
 
             // Get the correct color form the concelho id.
             let color = getConcelhoColor(id);
@@ -583,7 +584,7 @@ var PtMap = function (options) {
             d3.select(this)
               .style('cursor', 'pointer')
               .transition()
-                .attr('fill', d3.color(color).darker(1));
+              .attr('fill', d3.color(color).darker(1));
           })
           .on('mouseout', function (d, i) {
             let id = parseInt(d.properties.id);
@@ -595,12 +596,12 @@ var PtMap = function (options) {
             d3.select(this)
               .style('cursor', 'default')
               .transition()
-                .attr('fill', color);
+              .attr('fill', color);
           })
           .on('click', function (d, i) {
             if (!_onClickFn) return;
             let id = parseInt(d.properties.id);
-            if (id) _onClickFn({type: 'concelho', id});
+            if (id) _onClickFn({ type: 'concelho', id });
           });
       };
     }
@@ -649,9 +650,9 @@ var PtMap = function (options) {
 
         // Draw Açores.
         $acoresG
-            .selectAll('g.feature')
-            .data(getAcoresFC())
-            .call(drawFeatureGroup({name: 'acores', type: 'island'}));
+          .selectAll('g.feature')
+          .data(getAcoresFC())
+          .call(drawFeatureGroup({ name: 'acores', type: 'island' }));
 
         // Add group for Madeira if it doesn't exist.
         let $madeiraG = $svg.select('g.madeira');
@@ -663,9 +664,9 @@ var PtMap = function (options) {
 
         // Draw Madeira
         $madeiraG
-            .selectAll('g.feature')
-            .data(getMadeiraFC())
-            .call(drawFeatureGroup({name: 'madeira', type: 'island'}));
+          .selectAll('g.feature')
+          .data(getMadeiraFC())
+          .call(drawFeatureGroup({ name: 'madeira', type: 'island' }));
 
         // Add group for Portugal if it doesn't exist.
         let $portugalG = $svg.select('g.continente');
@@ -677,14 +678,14 @@ var PtMap = function (options) {
 
         // Draw continental Portugal.
         $portugalG
-            .selectAll('g.feature')
-            .data([{
-              id: 1,
-              center: [-8.2245, 39.3999],
-              feature: _portugalFeature,
-              offset: [-42, 0]
-            }])
-            .call(drawFeatureGroup({name: 'continente', type: 'main'}));
+          .selectAll('g.feature')
+          .data([{
+            id: 1,
+            center: [-8.2245, 39.3999],
+            feature: _portugalFeature,
+            offset: [-42, 0]
+          }])
+          .call(drawFeatureGroup({ name: 'continente', type: 'main' }));
       },
 
       islandsBounds: function () {
@@ -711,10 +712,10 @@ var PtMap = function (options) {
           .attr('stroke', '#ddd')
           .attr('fill', 'none')
           .merge(bounds)
-            .attr('x', d => scalar(d.x))
-            .attr('y', d => scalar(d.y))
-            .attr('width', d => scalar(d.width))
-            .attr('height', d => scalar(d.height));
+          .attr('x', d => scalar(d.x))
+          .attr('y', d => scalar(d.y))
+          .attr('width', d => scalar(d.width))
+          .attr('height', d => scalar(d.height));
       },
 
       aaOverlay: function () {
@@ -759,13 +760,13 @@ var PtMap = function (options) {
 
         overlayAA.merge(overlayAA)
           .select('.overlay-aa-base')
-            .attr('r', _overlayAAr)
-            .attr('cx', _overlayAAcx)
-            .attr('cy', _overlayAAcy)
-            .attr('stroke', '#ccc')
-            .attr('stroke-width', '1px')
-            .attr('fill', 'white')
-            .attr('fill-opacity', 0.8);
+          .attr('r', _overlayAAr)
+          .attr('cx', _overlayAAcx)
+          .attr('cy', _overlayAAcy)
+          .attr('stroke', '#ccc')
+          .attr('stroke-width', '1px')
+          .attr('fill', 'white')
+          .attr('fill-opacity', 0.8);
 
         // Fill in the name of the aa we're seeing.
         // Render element sent by the parent.

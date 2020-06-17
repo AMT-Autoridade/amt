@@ -1,21 +1,12 @@
 'use strict';
 import React from 'react';
-import { connect } from 'react-redux';
 
 var Glossario = React.createClass({
-  propTypes: {
-  },
-
-  componentDidMount: function () {
-  },
-
   render: function () {
     return (
       <div id='glossario' className='container-wrapper'>
         <section id='glossario' className='content-wrapper'>
           <h1>Glossário dos Principais Conceitos</h1>
-          <p className='lead'></p>
-
           <ul>
             <li>
               <h4>Serviços de transporte em táxi</h4>
@@ -23,8 +14,7 @@ var Glossario = React.createClass({
             </li>
             <li>
               <h4>Licenças Municipais</h4>
-              <p>A prestação de serviços de transporte em táxi implica que o prestador detenha um alvará emitido pelo Instituto da Mobilidade e dos Transportes (IMT) e uma licença municipal para cada veículo que utiliza. As licenças podem ser obtidas através de concurso público lançado pelos municípios ou pela sua aquisição no mercado secundário (a quem já as detenha).
-</p>
+              <p>A prestação de serviços de transporte em táxi implica que o prestador detenha um alvará emitido pelo Instituto da Mobilidade e dos Transportes (IMT) e uma licença municipal para cada veículo que utiliza. As licenças podem ser obtidas através de concurso público lançado pelos municípios ou pela sua aquisição no mercado secundário (a quem já as detenha).</p>
             </li>
             <li>
               <h4>Contingentes Municipais</h4>
@@ -52,24 +42,10 @@ var Glossario = React.createClass({
               </ul>
             </li>
           </ul>
-
         </section>
       </div>
     );
   }
 });
 
-// /////////////////////////////////////////////////////////////////// //
-// Connect functions
-
-function selector (state) {
-  return {
-  };
-}
-
-function dispatcher (dispatch) {
-  return {
-  };
-}
-
-module.exports = connect(selector, dispatcher)(Glossario);
+module.exports = Glossario;

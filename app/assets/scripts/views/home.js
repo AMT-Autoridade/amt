@@ -6,6 +6,7 @@ import c from 'classnames';
 import _ from 'lodash';
 
 import { fetchNational, fetchMapData } from '../actions';
+import { startYear, endYear } from '../config';
 
 import SectionIntro from '../components/sections/section-intro';
 import SectionLicencas from '../components/sections/section-licencas';
@@ -15,6 +16,7 @@ import SectionEstacionamento from '../components/sections/section-estacionamento
 import SectionAmbito from '../components/sections/section-ambito';
 import SectionEvolucao from '../components/sections/section-evolucao';
 import SectionConclusoes from '../components/sections/section-conclusoes';
+import LoadingScreen from '../components/loading-screen';
 
 var Home = React.createClass({
   propTypes: {
@@ -27,14 +29,14 @@ var Home = React.createClass({
   },
 
   sections: [
-    {id: 'intro', active: false},
-    {id: 'licencas', active: false},
-    {id: 'distribuicao', active: false},
-    {id: 'evolucao', active: false},
-    {id: 'indicadores', active: false},
-    {id: 'mobilidade', active: false},
-    {id: 'estacionamento', active: false},
-    {id: 'conclusoes', active: false}
+    { id: 'intro', active: false },
+    { id: 'licencas', active: false },
+    { id: 'distribuicao', active: false },
+    { id: 'evolucao', active: false },
+    { id: 'indicadores', active: false },
+    { id: 'mobilidade', active: false },
+    { id: 'estacionamento', active: false },
+    { id: 'conclusoes', active: false }
   ],
 
   onMapClick: function (section, data) {
@@ -94,7 +96,9 @@ var Home = React.createClass({
     }
 
     if (fetching) {
-      return <p>Loading</p>;
+      return (
+        <LoadingScreen />
+      );
     }
 
     if (error) {
@@ -141,13 +145,13 @@ var Home = React.createClass({
       <div>
         <SectionIntro />
 
-        <div id="page-content" className='container-wrapper'>
+        <div id='page-content' className='container-wrapper'>
           <SectionLicencas
             adminLevel='national'
             adminName='Portugal'
             adminList={data.nuts}
-            licencas2016={data.licencas2016}
-            max2016={data.max2016}
+            licencasEndY={data.licencasEndY}
+            maxEndY={data.maxEndY}
             licencasHab={data.licencasHab}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
@@ -160,7 +164,7 @@ var Home = React.createClass({
             adminLevel='national'
             adminName='Portugal'
             adminList={data.nuts}
-            licencas2016={data.licencas2016}
+            licencasEndY={data.licencasEndY}
             populacaoNational={data.populacao}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
@@ -172,8 +176,8 @@ var Home = React.createClass({
           <SectionEvolucao
             adminLevel='national'
             adminName='Portugal'
-            licencas2016={data.licencas2016}
-            licencas2006={data.licencas2006}
+            licencasEndY={data.licencasEndY}
+            licencasStartY={data.licencasStartY}
             municipios={data.concelhos}
             totalMunicipios={data.totalMunicipios}
             licencasTimeline={data.licencasTimeline}
@@ -202,10 +206,10 @@ var Home = React.createClass({
             adminName='Portugal'
             totalMunicipiosMobReduzida={data.totalMunicipiosMobReduzida}
             totalMunicipios={data.totalMunicipios}
-            licencas2016={data.licencas2016}
-            licencas2006={data.licencas2006}
-            licencasMobReduzida2016={data.licencasMobReduzida2016}
-            licencasMobReduzida2006={data.licencasMobReduzida2006}
+            licencasEndY={data.licencasEndY}
+            licencasStartY={data.licencasStartY}
+            licencasMobReduzidaEndY={data.licencasMobReduzidaEndY}
+            licencasMobReduzidaStartY={data.licencasMobReduzidaStartY}
             licencasTimeline={data.licencasTimeline}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
@@ -232,14 +236,46 @@ var Home = React.createClass({
         />
 
         <ul className='section-nav'>
-          <li className={c('nav-item', {active: hash === 'intro'})}><Link to='/#intro'><span>Introdução</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'licencas'})}><Link to='/#licencas'><span>Licenças e Contingentes</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'distribuicao'})}><Link to='/#distribuicao'><span>Detalhe Geográfico</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'evolucao'})}><Link to='/#evolucao'><span>Evolução 2006-2016</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'indicadores'})}><Link to='/#indicadores'><span>Indicadores</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'mobilidade'})}><Link to='/#mobilidade'><span>Mobilidade Reduzida</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'estacionamento'})}><Link to='/#estacionamento'><span>Regime Estacionamento</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'conclusoes'})}><Link to='/#conclusoes'><span>Conclusões</span></Link></li>
+          <li className={c('nav-item', { active: hash === 'intro' })}>
+            <Link to='/#intro'>
+              <span>Introdução</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'licencas' })}>
+            <Link to='/#licencas'>
+              <span>Licenças e Contingentes</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'distribuicao' })}>
+            <Link to='/#distribuicao'>
+              <span>Detalhe Geográfico</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'evolucao' })}>
+            <Link to='/#evolucao'>
+              <span>Evolução {startYear}-{endYear}</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'indicadores' })}>
+            <Link to='/#indicadores'>
+              <span>Indicadores</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'mobilidade' })}>
+            <Link to='/#mobilidade'>
+              <span>Mobilidade Reduzida</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'estacionamento' })}>
+            <Link to='/#estacionamento'>
+              <span>Regime Estacionamento</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'conclusoes' })}>
+            <Link to='/#conclusoes'>
+              <span>Conclusões</span>
+            </Link>
+          </li>
         </ul>
       </div>
     );
