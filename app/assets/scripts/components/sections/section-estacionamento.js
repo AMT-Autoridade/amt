@@ -59,11 +59,11 @@ var SectionEstacionamento = React.createClass({
 
   renderPercentEstacionamento: function () {
     let data = {
-      fixo: {value: 0},
-      condicionado: {value: 0},
-      escala: {value: 0},
-      livre: {value: 0},
-      nd: {value: 0}
+      fixo: { value: 0 },
+      condicionado: { value: 0 },
+      escala: { value: 0 },
+      livre: { value: 0 },
+      nd: { value: 0 }
     };
 
     this.props.municipios.forEach(m => m.data.estacionamento.forEach(e => {
@@ -129,7 +129,7 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <BarChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef('chart-percent-est')}/>;
+    return <BarChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef('chart-percent-est')} />;
   },
 
   renderCountEstacionamento: function () {
@@ -144,7 +144,7 @@ var SectionEstacionamento = React.createClass({
       let k = types.join('-');
 
       if (!countGroup[k]) {
-        countGroup[k] = {value: 0, types: types.map(o => this.estLabels[o]), key: k};
+        countGroup[k] = { value: 0, types: types.map(o => this.estLabels[o]), key: k };
       }
       countGroup[k].value++;
     });
@@ -161,7 +161,7 @@ var SectionEstacionamento = React.createClass({
       .reduce((acc, val) => {
         acc.value += val.value;
         return acc;
-      }, {key: 'outros', types: ['Outros'], value: 0});
+      }, { key: 'outros', types: ['Outros'], value: 0 });
 
     if (rest.value) {
       mainEstacionamento.push(rest);
@@ -212,7 +212,7 @@ var SectionEstacionamento = React.createClass({
       }
     };
 
-    return <PolarChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef('chart-count-est')}/>;
+    return <PolarChart data={chartData} options={chartOptions} height={240} ref={this.addChartRef('chart-count-est')} />;
   },
 
   renderMap: function () {
@@ -254,15 +254,15 @@ var SectionEstacionamento = React.createClass({
           overlayInfoContent={this.props.overlayInfoContent.bind(null, 'estacionamento')}
         />
 
-       <div className='map-legend'>
+        <div className='map-legend'>
           <h6 className='legend-title'>Regime(s) de estacionamento por município:</h6>
           <ul className='color-legend two-by-side'>
-            <li><span style={{backgroundColor: getColor('fixo')}}></span>Fixo</li>
-            <li><span style={{backgroundColor: getColor('condicionado-fixo')}}></span>Fixo e Condicionado</li>
-            <li><span style={{backgroundColor: getColor('condicionado')}}></span>Condicionado</li>
-            <li><span style={{backgroundColor: getColor('fixo-livre')}}></span>Fixo e Livre</li>
-            <li><span style={{backgroundColor: getColor('condicionado-livre')}}></span>Condicionado e Livre</li>
-            <li><span style={{backgroundColor: getColor('outros')}}></span>Outros Regimes</li>
+            <li><span style={{ backgroundColor: getColor('fixo') }}></span>Fixo</li>
+            <li><span style={{ backgroundColor: getColor('condicionado-fixo') }}></span>Fixo e Condicionado</li>
+            <li><span style={{ backgroundColor: getColor('condicionado') }}></span>Condicionado</li>
+            <li><span style={{ backgroundColor: getColor('fixo-livre') }}></span>Fixo e Livre</li>
+            <li><span style={{ backgroundColor: getColor('condicionado-livre') }}></span>Condicionado e Livre</li>
+            <li><span style={{ backgroundColor: getColor('outros') }}></span>Outros Regimes</li>
           </ul>
         </div>
       </div>
@@ -285,17 +285,16 @@ var SectionEstacionamento = React.createClass({
                 <p className='lead'>Os municípios estabelecem os regimes de estacionamento de táxis que se aplicam no seu concelho. Em regra, estas disposições são definidas por regulamento municipal ou aquando da atribuição da licença ao veículo.</p>
               </header>
               <div className='section-content'>
-               <div className='graph-container'>
-                 <div className='graph'>
-                  <h6 className='legend-title'>Municípios por regime de estacionamento (%):</h6>
-                  {this.renderPercentEstacionamento()}
-                 </div>
-
-                 <div className='graph'>
-                  <h6 className='legend-title'>Municípios por regime(s) de estacionamento (Nº):</h6>
-                  {this.renderCountEstacionamento()}
-                 </div>
-               </div>
+                <div className='graph-container'>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Municípios por regime de estacionamento (%):</h6>
+                    {this.renderPercentEstacionamento()}
+                  </div>
+                  <div className='graph'>
+                    <h6 className='legend-title'>Municípios por regime(s) de estacionamento (Nº):</h6>
+                    {this.renderCountEstacionamento()}
+                  </div>
+                </div>
 
               </div>
             </section>

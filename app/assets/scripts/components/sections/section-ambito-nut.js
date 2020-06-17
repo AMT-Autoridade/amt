@@ -128,10 +128,10 @@ var SectionDistribuicao = React.createClass({
         <span className='table-cell table-scope'>{adminArea.data.contingente ? this.contingenteMatrix[adminArea.data.contingente] : 'Não Definido'}</span>
         <div className='table-cell table-parking'>
           <ul className='inline-list'>
-            <li className={c('est est-livre', {active: adminArea.data.estacionamento.indexOf('livre') !== -1})}>L</li>
-            <li className={c('est est-condicionado', {active: adminArea.data.estacionamento.indexOf('condicionado') !== -1})}>C</li>
-            <li className={c('est est-fixo', {active: adminArea.data.estacionamento.indexOf('fixo') !== -1})}>F</li>
-            <li className={c('est est-escala', {active: adminArea.data.estacionamento.indexOf('escala') !== -1})}>E</li>
+            <li className={c('est est-livre', { active: adminArea.data.estacionamento.indexOf('livre') !== -1 })}>L</li>
+            <li className={c('est est-condicionado', { active: adminArea.data.estacionamento.indexOf('condicionado') !== -1 })}>C</li>
+            <li className={c('est est-fixo', { active: adminArea.data.estacionamento.indexOf('fixo') !== -1 })}>F</li>
+            <li className={c('est est-escala', { active: adminArea.data.estacionamento.indexOf('escala') !== -1 })}>E</li>
           </ul>
         </div>
         <span className='table-cell table-pop'>{formatPT(pop)}</span>
@@ -151,7 +151,7 @@ var SectionDistribuicao = React.createClass({
               <span className='table-cell table-graph'>Evolução do <span className='block'>Total de Licenças</span></span>
               <span className='table-cell table-scope'>Âmbito Geográfico <span className='block'>do Contingente</span></span>
               <span className='table-cell table-parking'>Regime(s) de <span className='block'>Estacionamento</span></span>
-              <span className='table-cell table-pop'>População <span className='block'>Residente (2015)</span></span>
+              <span className='table-cell table-pop'>População <span className='block'>Residente</span></span>
             </Sticky>
           </li>
           {adminList.map(this.renderTableRow)}
@@ -197,11 +197,11 @@ var SectionDistribuicao = React.createClass({
         <div className='map-legend'>
           <h6 className='legend-title'>Vagas por município:</h6>
           <ul className='color-legend inline'>
-            <li><span style={{backgroundColor: getColor(10)}}></span>&lt; 10</li>
-            <li><span style={{backgroundColor: getColor(50)}}></span>11 a 50</li>
-            <li><span style={{backgroundColor: getColor(51)}}></span>50 a 100</li>
-            <li><span style={{backgroundColor: getColor(101)}}></span>&gt; 100</li>
-            <li><span style={{backgroundColor: getColor(0)}}></span>Sem vagas</li>
+            <li><span style={{ backgroundColor: getColor(10) }}></span>&lt; 10</li>
+            <li><span style={{ backgroundColor: getColor(50) }}></span>11 a 50</li>
+            <li><span style={{ backgroundColor: getColor(51) }}></span>50 a 100</li>
+            <li><span style={{ backgroundColor: getColor(101) }}></span>&gt; 100</li>
+            <li><span style={{ backgroundColor: getColor(0) }}></span>Sem vagas</li>
           </ul>
         </div>
       </div>

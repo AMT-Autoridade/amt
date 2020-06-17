@@ -6,6 +6,7 @@ import c from 'classnames';
 import _ from 'lodash';
 
 import { fetchNut, fetchMapData } from '../actions';
+import { startYear, endYear } from '../config';
 
 import SectionLicencas from '../components/sections/section-licencas';
 import SectionIndicadores from '../components/sections/section-indicadores';
@@ -13,6 +14,7 @@ import SectionMobilidade from '../components/sections/section-mobilidade';
 import SectionEstacionamento from '../components/sections/section-estacionamento';
 import SectionAmbitoNut from '../components/sections/section-ambito-nut';
 import SectionEvolucao from '../components/sections/section-evolucao';
+import LoadingScreen from '../components/loading-screen';
 
 var Nuts = React.createClass({
   propTypes: {
@@ -27,12 +29,12 @@ var Nuts = React.createClass({
   },
 
   sections: [
-    {id: 'licencas', active: false},
-    {id: 'distribuicao', active: false},
-    {id: 'evolucao', active: false},
-    {id: 'indicadores', active: false},
-    {id: 'mobilidade', active: false},
-    {id: 'estacionamento', active: false}
+    { id: 'licencas', active: false },
+    { id: 'distribuicao', active: false },
+    { id: 'evolucao', active: false },
+    { id: 'indicadores', active: false },
+    { id: 'mobilidade', active: false },
+    { id: 'estacionamento', active: false }
   ],
 
   onMapClick: function (section, data) {
@@ -119,7 +121,9 @@ var Nuts = React.createClass({
     }
 
     if (fetching) {
-      return <p>Loading</p>;
+      return (
+        <LoadingScreen />
+      );
     }
 
     if (error) {
@@ -147,15 +151,15 @@ var Nuts = React.createClass({
     };
 
     return (
-      <div id="page-nut">
-        <div id="page-content">
+      <div id='page-nut'>
+        <div id='page-content'>
           <SectionLicencas
             adminLevel='nut'
             adminName={data.name}
             adminId={data.id}
             adminList={data.concelhos}
-            licencas2016={data.data.licencas2016}
-            max2016={data.data.max2016}
+            licencasEndY={data.data.licencasEndY}
+            maxEndY={data.data.maxEndY}
             licencasHab={data.data.licencasHab}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
@@ -181,8 +185,8 @@ var Nuts = React.createClass({
             adminLevel='nut'
             adminName={data.name}
             adminId={data.id}
-            licencas2016={data.data.licencas2016}
-            licencas2006={data.data.licencas2006}
+            licencasEndY={data.data.licencasEndY}
+            licencasStartY={data.data.licencasStartY}
             municipios={data.concelhos}
             totalMunicipios={data.data.totalMunicipios}
             licencasTimeline={data.data.licencasTimeline}
@@ -212,10 +216,10 @@ var Nuts = React.createClass({
             adminId={data.id}
             totalMunicipiosMobReduzida={data.data.totalMunicipiosMobReduzida}
             totalMunicipios={data.data.totalMunicipios}
-            licencas2016={data.data.licencas2016}
-            licencas2006={data.data.licencas2006}
-            licencasMobReduzida2016={data.data.licencasMobReduzida2016}
-            licencasMobReduzida2006={data.data.licencasMobReduzida2006}
+            licencasEndY={data.data.licencasEndY}
+            licencasStartY={data.data.licencasStartY}
+            licencasMobReduzidaEndY={data.data.licencasMobReduzidaEndY}
+            licencasMobReduzidaStartY={data.data.licencasMobReduzidaStartY}
             licencasTimeline={data.data.licencasTimeline}
             mapGeometries={this.props.mapData}
             municipios={data.concelhos}
@@ -237,12 +241,36 @@ var Nuts = React.createClass({
           />
         </div>
         <ul className='section-nav'>
-          <li className={c('nav-item', {active: hash === 'licencas'})}><Link to={`/nuts/${this.props.params.nut}#licencas`}><span>Licenças e Contingentes</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'distribuicao'})}><Link to={`/nuts/${this.props.params.nut}#distribuicao`}><span>Detalhe Geográfico</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'evolucao'})}><Link to={`/nuts/${this.props.params.nut}#evolucao`}><span>Evolução 2006-2016</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'indicadores'})}><Link to={`/nuts/${this.props.params.nut}#indicadores`}><span>Indicadores</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'mobilidade'})}><Link to={`/nuts/${this.props.params.nut}#mobilidade`}><span>Mobilidade Reduzida</span></Link></li>
-          <li className={c('nav-item', {active: hash === 'estacionamento'})}><Link to={`/nuts/${this.props.params.nut}#estacionamento`}><span>Regime Estacionamento</span></Link></li>
+          <li className={c('nav-item', { active: hash === 'licencas' })}>
+            <Link to={`/nuts/${this.props.params.nut}#licencas`}>
+              <span>Licenças e Contingentes</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'distribuicao' })}>
+            <Link to={`/nuts/${this.props.params.nut}#distribuicao`}>
+              <span>Detalhe Geográfico</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'evolucao' })}>
+            <Link to={`/nuts/${this.props.params.nut}#evolucao`}>
+              <span>Evolução {startYear}-{endYear}</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'indicadores' })}>
+            <Link to={`/nuts/${this.props.params.nut}#indicadores`}>
+              <span>Indicadores</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'mobilidade' })}>
+            <Link to={`/nuts/${this.props.params.nut}#mobilidade`}>
+              <span>Mobilidade Reduzida</span>
+            </Link>
+          </li>
+          <li className={c('nav-item', { active: hash === 'estacionamento' })}>
+            <Link to={`/nuts/${this.props.params.nut}#estacionamento`}>
+              <span>Regime Estacionamento</span>
+            </Link>
+          </li>
         </ul>
 
       </div>

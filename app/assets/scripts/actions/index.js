@@ -1,29 +1,28 @@
 import fetch from 'isomorphic-fetch';
-import _ from 'lodash';
 
-// import config from '../config';
+import { api } from '../config';
 
 var dataCache = null;
 function fetchAndCacheData () {
-  return new Promise((resolve, reject) => {
-    if (dataCache) {
-      return resolve(JSON.parse(JSON.stringify(dataCache)));
-    }
-    dataCache = require('../data/national.json');
-    setTimeout(() => resolve(_.cloneDeep(dataCache)), 300);
-  });
-
   // return new Promise((resolve, reject) => {
   //   if (dataCache) {
   //     return resolve(JSON.parse(JSON.stringify(dataCache)));
   //   }
-
-  //   fetchJSON(`${config.api}/api/national.json`)
-  //     .then(national => {
-  //       dataCache = national;
-  //       resolve(dataCache);
-  //     }, err => reject(err));
+  //   dataCache = require('../data/national.json');
+  //   setTimeout(() => resolve(JSON.parse(JSON.stringify(dataCache))), 300);
   // });
+
+  return new Promise((resolve, reject) => {
+    if (dataCache) {
+      return resolve(JSON.parse(JSON.stringify(dataCache)));
+    }
+
+    fetchJSON(`${api}/api/national.json`)
+      .then(national => {
+        dataCache = national;
+        resolve(dataCache);
+      }, err => reject(err));
+  });
 }
 
 export const REQUEST_NATIONAL = 'REQUEST_NATIONAL';
@@ -142,22 +141,22 @@ export function fetchJSON (url, options) {
   return fetch(url, options)
     .then(response => {
       return response.text()
-      // .then(body => ((new Promise(resolve => setTimeout(() => resolve(body), 1000)))))
-      .then(body => {
-        var json;
-        try {
-          json = JSON.parse(body);
-        } catch (e) {
-          console.log('json parse error', e);
-          return Promise.reject({
-            error: e.message,
-            body
-          });
-        }
+        .then(body => {
+          var json;
+          try {
+            json = JSON.parse(body);
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log('json parse error', e);
+            return Promise.reject({
+              error: e.message,
+              body
+            });
+          }
 
-        return response.status >= 400
-          ? Promise.reject(json)
-          : Promise.resolve(json);
-      });
+          return response.status >= 400
+            ? Promise.reject(json)
+            : Promise.resolve(json);
+        });
     });
 }
