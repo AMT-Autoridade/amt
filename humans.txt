@@ -1,0 +1,15 @@
+/* TEAM */
+	Design + Code: Leihla Pinho
+	Twitter: @leihla
+
+	Maps + Graphs: Daniel Silva
+	Twitter: @danielfdsilva
+
+	Data Structure: Olaf Veerman
+	Twitter: @oBirdman 
+
+	Illustrations: Tânia Pires
+	Twitter: @taniavpires
+
+		
+
