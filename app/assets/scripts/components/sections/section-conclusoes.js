@@ -177,7 +177,7 @@ var SectionConclusoes = React.createClass({
             </div>
 
             <footer className='section-footer'>
-              <p>Este site foi desenvolvido pela AMT com base no <a href={`${api}/master/files/amt-servico-transporte-taxis.pdf`} title='Descarregar Relatório'>Relatório Estatístico Sobre Serviços de Transporte em Táxi: A Realidade Atual e a Evolução da Última Década.</a></p>
+              <p>Este site foi desenvolvido pela AMT. Para mais informações pode ser consultado o documento - <a href='http://amt-autoridade.pt/media/2558/sintese-mercado-taxi-portugal-junho2020.pdf' title='Descarregar Documento' target='_blank'>O Transporte em Táxi em Portugal.</a></p>
             </footer>
           </section>
         </div>
